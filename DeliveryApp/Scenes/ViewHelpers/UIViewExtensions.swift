@@ -30,4 +30,16 @@ extension UIView {
         separatorView.heightAnchor.constraint(equalToConstant: height).isActive = true
         return separatorView
     }
+    
+    func makeButtonStack(buttons: [UIButton]) -> UIStackView {
+        let stack = makeStackView(with: buttons,
+                             aligment: .center,
+                             distribution: .equalSpacing,
+                             spacing: 16,
+                             axis: .horizontal)
+
+        stack.frame.size = .init(width: buttons.last?.frame.width ?? 0,
+                                 height: buttons.last?.frame.height ?? 0)
+        return stack
+    }
 }

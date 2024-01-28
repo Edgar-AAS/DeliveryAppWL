@@ -32,7 +32,6 @@ final class LoginScreen: UIView {
         return view
     }()
     
-    
     private let loginAccountHeadlineLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -49,6 +48,7 @@ final class LoginScreen: UIView {
         label.text = "Please sign in to your account"
         label.font = UIFont(name: "Inter-Medium", size: 14)
         label.textAlignment = .left
+        label.numberOfLines = 0
         label.textColor = UIColor(hexString: "878787")
         return label
     }()
@@ -115,11 +115,6 @@ final class LoginScreen: UIView {
         return label
     }()
     
-    
-    private lazy var signInMethodButton1 = makeLoginMethodButton()
-    private lazy var signInMethodButton2 = makeLoginMethodButton()
-    private lazy var signInMethodButton3 = makeLoginMethodButton()
-    
     private lazy var separatorStackView = makeStackView(with: [makeSeparatorView(color: UIColor(hexString: "878787")),
                                                                orSignInWithLabel,
                                                                makeSeparatorView(color: UIColor(hexString: "878787"))],
@@ -128,14 +123,15 @@ final class LoginScreen: UIView {
                                                         spacing: 16,
                                                         axis: .horizontal)
     
-    private lazy var buttonsStack = makeStackView(with: [signInMethodButton1,
-                                                         signInMethodButton2,
-                                                         signInMethodButton3],
-                                                  aligment: .center,
-                                                  distribution: .equalSpacing,
-                                                  spacing: 16,
-                                                  axis: .horizontal)
+    private lazy var loginMethodButton1 = CircularButton(icon: UIImage(named: "google-logo")!, size: 40)
+    private lazy var loginMethodButton2 = CircularButton(icon: UIImage(named: "facebook-logo")!, size: 40)
+    private lazy var loginMethodButton3 = CircularButton(icon: UIImage(named: "apple-logo")!, size: 40)
     
+    private lazy var buttonsStack = makeButtonStack(buttons: [
+        loginMethodButton1,
+        loginMethodButton2,
+        loginMethodButton3
+    ])
     
     private let dontHaveAccountLabel: UILabel = {
         let label = UILabel()
@@ -154,25 +150,11 @@ final class LoginScreen: UIView {
         return button
     }()
     
-    private lazy var registerStack = makeStackView(with: [dontHaveAccountLabel, registerButton],
+    private lazy var registerStack = makeStackView(with: [dontHaveAccountLabel,
+                                                          registerButton],
                                                    aligment: .center,
                                                    spacing: 2,
                                                    axis: .horizontal)
-    
-    
-    
-    func makeLoginMethodButton() -> UIButton {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor(hexString: "D6D6D6").cgColor
-        button.layer.cornerRadius = 20
-        button.setImage(UIImage(named: "apple-logo"), for: .normal)
-        button.clipsToBounds = true
-        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        return button
-    }
 }
 
 extension LoginScreen: CodeView {
@@ -249,10 +231,8 @@ extension LoginScreen: CodeView {
             
             buttonsStack.topAnchor.constraint(equalTo: separatorStackView.bottomAnchor, constant: 25),
             buttonsStack.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            buttonsStack.widthAnchor.constraint(equalToConstant: 152),
-            buttonsStack.heightAnchor.constraint(equalToConstant: 40),
             
-            registerStack.topAnchor.constraint(equalTo: buttonsStack.bottomAnchor, constant: 34),
+            registerStack.topAnchor.constraint(equalTo: buttonsStack.bottomAnchor, constant: 24),
             registerStack.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             registerStack.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomTextField: UITextField {
+final class CustomTextField: UITextField {
     private let exampleText: String
     private var padding: CGFloat = 20.0
     
