@@ -1,10 +1,10 @@
 import UIKit
 
 protocol CheckBoxDelegate: AnyObject {
-    func checkBoxDidChange(_ checkBox: CheckBox, isChecked: Bool)
+    func checkBoxDidChange(_ checkBox: CheckBoxButton, isChecked: Bool)
 }
 
-final class CheckBox: UIButton {
+final class CheckBoxButton: UIButton {
     weak var delegate: CheckBoxDelegate?
 
     private var isChecked: Bool = false {

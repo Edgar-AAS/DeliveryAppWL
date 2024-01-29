@@ -60,8 +60,7 @@
 		D3528BFD2B62FDF800FD5554 = {
 			isa = PBXGroup;
 			children = (
-				D3528C2A2B631FE200FD5554 /* Inter-SemiBold.ttf */,
-				D3528C302B6332F900FD5554 /* Inter-Medium.ttf */,
+				D375D38E2B67031A009DB3C4 /* Fonts */,
 				D3528C082B62FDF800FD5554 /* DeliveryApp */,
 				D3528C072B62FDF800FD5554 /* Products */,
 			);
@@ -151,6 +150,15 @@
 				D3528C3C2B64389A00FD5554 /* SignUpScreen.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		D375D38E2B67031A009DB3C4 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				D3528C2A2B631FE200FD5554 /* Inter-SemiBold.ttf */,
+				D3528C302B6332F900FD5554 /* Inter-Medium.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

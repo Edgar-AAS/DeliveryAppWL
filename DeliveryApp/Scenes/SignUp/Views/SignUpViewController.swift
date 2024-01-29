@@ -24,7 +24,7 @@ class SignUpViewController: UIViewController {
 }
 
 extension SignUpViewController: CheckBoxDelegate {
-    func checkBoxDidChange(_ checkBox: CheckBox, isChecked: Bool) {
+    func checkBoxDidChange(_ checkBox: CheckBoxButton, isChecked: Bool) {
         
     }
 }

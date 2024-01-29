@@ -64,8 +64,11 @@ final class LoginScreen: UIView {
     
     private lazy var emailTextField: CustomTextField = {
         let textField = CustomTextField(exampleText: "Enter Email")
-        textField.keyboardType = .emailAddress
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.keyboardType = .emailAddress
+        textField.autocapitalizationType = .none
+        textField.returnKeyType = .done
+        textField.autocorrectionType = .no
         return textField
     }()
     
@@ -79,9 +82,9 @@ final class LoginScreen: UIView {
     }()
     
     private lazy var passwordTextField: CustomTextField = {
-        let textField = CustomTextField(exampleText: "Password")
-        textField.isSecureTextEntry = true
+        let textField = CustomTextField(exampleText: "Password", isPassword: true)
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.keyboardType = .asciiCapable
         return textField
     }()
     
@@ -89,7 +92,7 @@ final class LoginScreen: UIView {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Forgot password?", for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitleColor(.orange, for: .normal)
         button.titleLabel?.font = UIFont(name: "Inter-Medium", size: 14)
         button.contentHorizontalAlignment = .right
         return button
@@ -101,7 +104,8 @@ final class LoginScreen: UIView {
         button.setTitle("Sign In", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont(name: "Inter-SemiBold", size: 14)
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = .black
+        
         button.layer.cornerRadius = 26
         return button
     }()
@@ -127,7 +131,7 @@ final class LoginScreen: UIView {
     private lazy var loginMethodButton2 = CircularButton(icon: UIImage(named: "facebook-logo")!, size: 40)
     private lazy var loginMethodButton3 = CircularButton(icon: UIImage(named: "apple-logo")!, size: 40)
     
-    private lazy var buttonsStack = makeButtonStack(buttons: [
+    private lazy var buttonStack = makeButtonStack(buttons: [
         loginMethodButton1,
         loginMethodButton2,
         loginMethodButton3
@@ -145,7 +149,7 @@ final class LoginScreen: UIView {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Register", for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitleColor(.orange, for: .normal)
         button.titleLabel?.font = UIFont(name: "Inter-SemiBold", size: 14)
         return button
     }()
@@ -155,6 +159,14 @@ final class LoginScreen: UIView {
                                                    aligment: .center,
                                                    spacing: 2,
                                                    axis: .horizontal)
+    
+    private lazy var someButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "eye"), for: .normal)
+        button.frame.size = .init(width: 40, height: 40)
+        return button
+    }()
 }
 
 extension LoginScreen: CodeView {
@@ -170,7 +182,7 @@ extension LoginScreen: CodeView {
         containerView.addSubview(forgotPasswordButton)
         containerView.addSubview(signInButton)
         containerView.addSubview(separatorStackView)
-        containerView.addSubview(buttonsStack)
+        containerView.addSubview(buttonStack)
         containerView.addSubview(registerStack)
     }
     
@@ -229,16 +241,16 @@ extension LoginScreen: CodeView {
             separatorStackView.leadingAnchor.constraint(equalTo: loginAccountHeadlineLabel.leadingAnchor),
             separatorStackView.trailingAnchor.constraint(equalTo: loginAccountHeadlineLabel.trailingAnchor),
             
-            buttonsStack.topAnchor.constraint(equalTo: separatorStackView.bottomAnchor, constant: 25),
-            buttonsStack.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            buttonStack.topAnchor.constraint(equalTo: separatorStackView.bottomAnchor, constant: 25),
+            buttonStack.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             
-            registerStack.topAnchor.constraint(equalTo: buttonsStack.bottomAnchor, constant: 24),
+            registerStack.topAnchor.constraint(equalTo: buttonStack.bottomAnchor, constant: 24),
             registerStack.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             registerStack.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
     }
     
     func setupAddiotionalConfiguration() {
-        passwordTextField.addPaddingAndIcon(UIImage(systemName: "eye.slash")!, padding: 16.0)
+    
     }
 }

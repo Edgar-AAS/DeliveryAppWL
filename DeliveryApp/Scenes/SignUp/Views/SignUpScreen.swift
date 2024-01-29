@@ -98,14 +98,14 @@ final class SignUpScreen: UIView {
     }()
     
     private lazy var passwordTextField: CustomTextField = {
-        let textField = CustomTextField(exampleText: "Password")
-        textField.isSecureTextEntry = true
+        let textField = CustomTextField(exampleText: "Password", isPassword: true)
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.keyboardType = .asciiCapable
         return textField
     }()
     
-    private lazy var checkBox: CheckBox = {
-        let checkBox = CheckBox()
+    private lazy var checkBox: CheckBoxButton = {
+        let checkBox = CheckBoxButton()
         checkBox.translatesAutoresizingMaskIntoConstraints = false
         return checkBox
     }()
@@ -127,7 +127,6 @@ final class SignUpScreen: UIView {
         label.attributedText = attributedText
         return label
     }()
-    
     
     private lazy var registerButton: UIButton = {
         let button = UIButton(type: .system)
@@ -161,25 +160,36 @@ final class SignUpScreen: UIView {
     private lazy var loginMethodButton2 = CircularButton(icon: UIImage(named: "facebook-logo")!, size: 40)
     private lazy var loginMethodButton3 = CircularButton(icon: UIImage(named: "apple-logo")!, size: 40)
     
-    private lazy var buttonsStack = makeButtonStack(buttons: [
+    private lazy var buttonStack = makeButtonStack(buttons: [
         loginMethodButton1,
         loginMethodButton2,
         loginMethodButton3
     ])
     
-    private let dontHaveAccountLabel: UILabel = {
+    private let alreadyHaveAccountLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.lineBreakMode = .byClipping
+        label.text = "Already have an account?"
         label.font = UIFont(name: "Inter-Medium", size: 14)
-        
-        let attributedText = NSMutableAttributedString(string: "Already have an account? Login here")
-        let signInRange = NSRange(location: 25, length: 10)
-        attributedText.addAttribute(.foregroundColor, value: UIColor.orange, range: signInRange)
-        label.attributedText = attributedText
         return label
     }()
+    
+    private lazy var loginHereButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Login here", for: .normal)
+        button.setTitleColor(.orange, for: .normal)
+        button.titleLabel?.font = UIFont(name: "Inter-SemiBold", size: 14)
+        return button
+    }()
+    
+    private lazy var loginStack = makeStackView(with: [alreadyHaveAccountLabel,
+                                                       loginHereButton],
+                                                   aligment: .center,
+                                                   spacing: 2,
+                                                   axis: .horizontal)
 
     func setupCheckBoxDelegate(delegate: CheckBoxDelegate) {
         checkBox.delegate = delegate
@@ -202,8 +212,8 @@ extension SignUpScreen: CodeView {
         containerView.addSubview(termsOfServicLabel)
         containerView.addSubview(registerButton)
         containerView.addSubview(separatorStackView)
-        containerView.addSubview(buttonsStack)
-        containerView.addSubview(dontHaveAccountLabel)
+        containerView.addSubview(buttonStack)
+        containerView.addSubview(loginStack)
     }
     
     func setupConstraints() {
@@ -230,7 +240,7 @@ extension SignUpScreen: CodeView {
             createAccountLabel.leadingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.leadingAnchor),
             createAccountLabel.trailingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.trailingAnchor),
             
-            emailAdressLabel.topAnchor.constraint(equalTo: createAccountLabel.bottomAnchor, constant: 12),
+            emailAdressLabel.topAnchor.constraint(equalTo: createAccountLabel.bottomAnchor, constant: 24),
             emailAdressLabel.leadingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.leadingAnchor),
             emailAdressLabel.trailingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.trailingAnchor),
             
@@ -273,16 +283,12 @@ extension SignUpScreen: CodeView {
             separatorStackView.leadingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.leadingAnchor),
             separatorStackView.trailingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.trailingAnchor),
             
-            buttonsStack.topAnchor.constraint(equalTo: separatorStackView.bottomAnchor, constant: 24),
-            buttonsStack.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            
-            dontHaveAccountLabel.topAnchor.constraint(equalTo: buttonsStack.bottomAnchor, constant: 32),
-            dontHaveAccountLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            dontHaveAccountLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            buttonStack.topAnchor.constraint(equalTo: separatorStackView.bottomAnchor, constant: 24),
+            buttonStack.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+        
+            loginStack.topAnchor.constraint(equalTo: buttonStack.bottomAnchor, constant: 32),
+            loginStack.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            loginStack.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
-    }
-    
-    func setupAddiotionalConfiguration() {
-        passwordTextField.addPaddingAndIcon(UIImage(systemName: "eye.slash")!, padding: 16.0)
     }
 }
