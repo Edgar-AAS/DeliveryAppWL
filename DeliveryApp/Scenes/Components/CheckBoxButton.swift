@@ -6,7 +6,6 @@ protocol CheckBoxDelegate: AnyObject {
 
 final class CheckBoxButton: UIButton {
     weak var delegate: CheckBoxDelegate?
-
     private var isChecked: Bool = false {
         didSet {
             isSelected = isChecked

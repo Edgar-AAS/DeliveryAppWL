@@ -8,6 +8,10 @@
 import UIKit
 
 class LoginViewController: UIViewController {
+    private lazy var customView: LoginScreen? = {
+        return view as? LoginScreen
+    }()
+    
     override func loadView() {
         super.loadView()
         view = LoginScreen()
@@ -15,5 +19,10 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        customView?.registerButton.addTarget(self, action: #selector(buttonTap), for: .touchUpInside)
+    }
+    
+    @objc func buttonTap() {
+        
     }
 }

@@ -62,7 +62,7 @@ final class SignUpScreen: UIView {
         return label
     }()
     
-    private lazy var emailTextField: CustomTextField = {
+    lazy var emailTextField: CustomTextField = {
         let textField = CustomTextField(exampleText: "Enter Email")
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.keyboardType = .emailAddress
@@ -71,7 +71,6 @@ final class SignUpScreen: UIView {
         textField.autocorrectionType = .no
         return textField
     }()
-    
     
     private let userNameLabel: UILabel = {
         let label = UILabel()
@@ -82,7 +81,7 @@ final class SignUpScreen: UIView {
         return label
     }()
     
-    private lazy var userNameTextField: CustomTextField = {
+    lazy var userNameTextField: CustomTextField = {
         let textField = CustomTextField(exampleText: "User Name")
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
@@ -97,7 +96,7 @@ final class SignUpScreen: UIView {
         return label
     }()
     
-    private lazy var passwordTextField: CustomTextField = {
+    lazy var passwordTextField: CustomTextField = {
         let textField = CustomTextField(exampleText: "Password", isPassword: true)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.keyboardType = .asciiCapable
@@ -109,7 +108,7 @@ final class SignUpScreen: UIView {
         checkBox.translatesAutoresizingMaskIntoConstraints = false
         return checkBox
     }()
-    
+        
     private let termsOfServicLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -128,7 +127,7 @@ final class SignUpScreen: UIView {
         return label
     }()
     
-    private lazy var registerButton: UIButton = {
+    lazy var registerButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Register", for: .normal)

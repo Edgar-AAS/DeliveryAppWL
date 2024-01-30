@@ -105,7 +105,6 @@ final class LoginScreen: UIView {
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont(name: "Inter-SemiBold", size: 14)
         button.backgroundColor = .black
-        
         button.layer.cornerRadius = 26
         return button
     }()
@@ -145,7 +144,7 @@ final class LoginScreen: UIView {
         return label
     }()
     
-    private lazy var registerButton: UIButton = {
+    lazy var registerButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Register", for: .normal)
@@ -159,14 +158,6 @@ final class LoginScreen: UIView {
                                                    aligment: .center,
                                                    spacing: 2,
                                                    axis: .horizontal)
-    
-    private lazy var someButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "eye"), for: .normal)
-        button.frame.size = .init(width: 40, height: 40)
-        return button
-    }()
 }
 
 extension LoginScreen: CodeView {
@@ -248,9 +239,5 @@ extension LoginScreen: CodeView {
             registerStack.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             registerStack.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
-    }
-    
-    func setupAddiotionalConfiguration() {
-    
     }
 }
