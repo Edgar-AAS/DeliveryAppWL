@@ -1,0 +1,174 @@
+{
+  "categories": [
+    {
+      "name": "Burger",
+      "products": [
+        {
+          "id": "1",
+          "name": "X Dogao",
+          "rate": "4.2",
+          "reviews": 23,
+          "distance": 192,
+          "price": 10.99,
+          "description": "Um delicioso cachorro-quente com salsicha, molho especial, milho, ervilha e batata palha.",
+          "images": ["imagem1.jpg", "imagem2.jpg", "imagem3.jpg"],
+          "isFavorite": false
+        },
+        {
+          "id": "2",
+          "reviews": 49,
+          "name": "Big Tasty",
+          "rate": "4.5",
+          "distance": 100,
+          "price": 21.30,
+          "description": "Um hambúrguer suculento com carne grelhada, queijo derretido, alface, tomate e molho especial.",
+          "images": ["imagem1.jpg", "imagem2.jpg", "imagem3.jpg"],
+          "isFavorite": false
+        },
+        {
+          "id": "3",
+          "name": "X Bacon",
+          "rate": "4.7",
+          "reviews": 32,
+          "distance": 80,
+          "price": 30.29,
+          "description": "Um hambúrguer com bacon crocante, queijo, alface, tomate e molho especial.",
+          "images": ["imagem1.jpg", "imagem2.jpg", "imagem3.jpg"],
+          "isFavorite": true
+        },
+        {
+          "id": "4",
+          "reviews": 92,
+          "name": "X Egg",
+          "rate": "4.6",
+          "distance": 215,
+          "price": 12.92,
+          "description": "Um hambúrguer com ovo frito, queijo, alface, tomate e molho especial.",
+          "images": ["imagem1.jpg", "imagem2.jpg", "imagem3.jpg"],
+          "isFavorite": true
+        },
+        {
+          "id": "5",
+          "name": "Classic Cheeseburger",
+          "rate": "4.8",
+          "reviews": 75,
+          "distance": 310,
+          "price": 15.99,
+          "description": "Um hambúrguer clássico com queijo derretido, alface crocante, tomate fresco e picles em um pão de brioche.",
+          "images": ["cheeseburger1.jpg", "cheeseburger2.jpg", "cheeseburger3.jpg"],
+          "isFavorite": true
+        },
+        {
+          "id": "6",
+          "name": "Veggie Delight",
+          "rate": "4.6",
+          "reviews": 60,
+          "price": 12.99,
+          "distance": 220,
+          "description": "Um hambúrguer vegetariano delicioso, feito com grão-de-bico e especiarias, servido com alface, tomate e molho especial.",
+          "images": ["veggiedelight1.jpg", "veggiedelight2.jpg", "veggiedelight3.jpg"],
+          "isFavorite": false
+        }
+      ]
+    },
+    {
+      "name": "Pizza",
+      "products": [
+        {
+          "id": "7",
+          "name": "Pepperoni Paradise",
+          "rate": "4.9",
+          "reviews": 100,
+          "price": 25.99,
+          "distance": 350,
+          "description": "Uma pizza deliciosa com pepperoni picante, queijo mussarela derretido e molho de tomate especial.",
+          "images": ["pepperoniparadise1.jpg", "pepperoniparadise2.jpg", "pepperoniparadise3.jpg"],
+          "isFavorite": true
+        },
+        {
+          "id": "8",
+          "name": "Margherita Magic",
+          "rate": "4.7",
+          "reviews": 85,
+          "price": 20.99,
+          "distance": 400,
+          "description": "Uma pizza clássica com molho de tomate fresco, queijo mussarela e folhas de manjericão.",
+          "images": ["margheritamagic1.jpg", "margheritamagic2.jpg", "margheritamagic3.jpg"],
+          "isFavorite": false
+        },
+        {
+          "id": "9",
+          "name": "Hawaiian Delight",
+          "rate": "4.6",
+          "reviews": 78,
+          "price": 22.99,
+          "distance": 212,
+          "description": "Uma pizza com presunto, abacaxi, queijo mussarela e molho de tomate.",
+          "images": ["hawaiiandelight1.jpg", "hawaiiandelight2.jpg", "hawaiiandelight3.jpg"],
+          "isFavorite": true
+        },
+        {
+          "id": "10",
+          "name": "BBQ Chicken",
+          "rate": "4.8",
+          "reviews": 90,
+          "price": 24.99,
+          "distance": 91,
+          "description": "Uma pizza com frango ao molho barbecue, queijo mussarela, cebola e coentro.",
+          "images": ["bbqchicken1.jpg", "bbqchicken2.jpg", "bbqchicken3.jpg"],
+          "isFavorite": false
+        }
+      ]
+    },
+    {
+      "name": "Drink",
+      "products": [
+        {
+          "id": "11",
+          "name": "Lemonade Bliss",
+          "rate": "4.8",
+          "reviews": 120,
+          "price": 5.99,
+          "distance": 35,
+          "description": "Uma limonada refrescante feita com limões frescos, água e um toque de açúcar.",
+          "images": ["lemonadebliss1.jpg", "lemonadebliss2.jpg", "lemonadebliss3.jpg"],
+          "isFavorite": true
+        },
+        {
+          "id": "12",
+          "name": "Berry Smoothie",
+          "rate": "4.9",
+          "reviews": 95,
+          "price": 7.99,
+          "distance": 23,
+          "description": "Um smoothie delicioso e saudável feito com uma mistura de frutas vermelhas, iogurte e mel.",
+          "images": ["berrysmoothie1.jpg", "berrysmoothie2.jpg", "berrysmoothie3.jpg"],
+          "isFavorite": false
+        },
+        {
+          "id": "13",
+          "name": "Mango Lassi",
+          "rate": "4.8",
+          "reviews": 80,
+          "price": 6.99,
+          "distance": 453,
+          "description": "Uma bebida cremosa e refrescante feita com manga fresca, iogurte e um toque de cardamomo.",
+          "images": ["mangolassi1.jpg", "mangolassi2.jpg", "mangolassi3.jpg"],
+          "isFavorite": true
+        },
+        {
+          "id": "14",
+          "name": "Iced Coffee",
+          "rate": "4.7",
+          "reviews": 110,
+          "price": 4.99,
+          "distance": 382,
+          "description": "Um café gelado refrescante feito com café expresso, leite e gelo.",
+          "images": ["icedcoffee1.jpg", "icedcoffee2.jpg", "icedcoffee3.jpg"],
+          "isFavorite": false
+        }
+      ]
+    }
+  ]
+}
+

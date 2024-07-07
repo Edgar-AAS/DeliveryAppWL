@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "tasty-pizza-near-ingredients.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
