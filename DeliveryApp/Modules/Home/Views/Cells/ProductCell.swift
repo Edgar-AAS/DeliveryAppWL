@@ -163,7 +163,10 @@ extension ProductCell: CodeView {
     
     func setupAddiotionalConfiguration() {
         backgroundColor = .white
-        clipsToBounds = true
         layer.cornerRadius = 12
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = .init(width: 2, height: 1)
+        layer.shadowRadius = 0.2
+        layer.shadowOpacity = 0.2
     }
 }

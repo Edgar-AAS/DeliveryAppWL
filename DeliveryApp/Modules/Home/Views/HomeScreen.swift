@@ -85,8 +85,8 @@ extension HomeScreen: CodeView {
             categoryLabelAndButtonStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             
             homeTableView.topAnchor.constraint(equalTo: categoryLabelAndButtonStack.bottomAnchor, constant: 24),
-            homeTableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            homeTableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            homeTableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            homeTableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             homeTableView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }

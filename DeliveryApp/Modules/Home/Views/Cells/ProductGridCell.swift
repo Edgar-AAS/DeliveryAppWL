@@ -29,8 +29,10 @@ class ProductGridCell: UITableViewCell {
         let layout = UICollectionViewFlowLayout()
         layout.estimatedItemSize = .zero
         layout.scrollDirection = .vertical
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.contentInset = .init(top: 24, left: 24, bottom: 0, right: 24)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
@@ -59,7 +61,7 @@ extension ProductGridCell: CodeView {
             categoryCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
             categoryCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             categoryCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            categoryCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            categoryCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
     
@@ -82,6 +84,6 @@ extension ProductGridCell: UICollectionViewDataSource {
 
 extension ProductGridCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: collectionView.frame.size.width / 2 - 10, height: 240)
+        return .init(width: collectionView.frame.size.width / 2.4, height: 240)
     }
 }

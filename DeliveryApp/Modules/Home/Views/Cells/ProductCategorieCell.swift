@@ -23,11 +23,11 @@ class ProductCategorieCell: UITableViewCell {
     
     private lazy var categoryCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.estimatedItemSize = .zero
         layout.scrollDirection = .horizontal
         layout.itemSize = .init(width: 65, height: 70)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.contentInset = .init(top: 0, left: 24, bottom: 0, right: 24)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
