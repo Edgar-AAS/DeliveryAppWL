@@ -11,6 +11,11 @@ class ProductGridCell: UITableViewCell {
     static let reuseIdentifier = String(describing: ProductGridCell.self)
     private var foodData: [Food] = []
     
+    func reloadDataCallBack(fooData: [Food]) {
+        self.foodData = fooData
+        categoryCollectionView.reloadData()
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
@@ -33,6 +38,10 @@ class ProductGridCell: UITableViewCell {
         collectionView.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.reuseIdentifier)
         return collectionView
     }()
+    
+    func reloadGridData() {
+        categoryCollectionView.reloadData()
+    }
     
     func setup(foodData: [Food]) {
         self.foodData = foodData

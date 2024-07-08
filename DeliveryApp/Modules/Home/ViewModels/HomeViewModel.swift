@@ -12,18 +12,18 @@ enum FoodCategoryType: String {
     case burger = "Burger"
     case pizza = "Pizza"
     case drink = "Drink"
+    case taco = "Taco"
 }
 
 protocol HomeViewModelProtocol {
-    var foodDataSource: Observable<[Food]> { get }
-    func fetchFoodsBy(category: FoodCategoryType)
+    var foodDataSource: Observable<([Food], [String])> { get }
+    func fetchFoodsBy(category: FoodCategoryType, completion: @escaping ([Food], [String]) -> Void)
     var numberOfRows: Int { get }
 }
 
 class HomeViewModel: HomeViewModelProtocol {
     private let httpGetService: HtttpGetClientProtocol
-    var foodDataSource: Observable<[Food]> = Observable(value: [])
-    
+    var foodDataSource: Observable<([Food], [String])> = Observable(value: ([], []))
     
     init(httpGetService: HtttpGetClientProtocol) {
         self.httpGetService = httpGetService
@@ -32,16 +32,18 @@ class HomeViewModel: HomeViewModelProtocol {
     var numberOfRows: Int {
         return 2
     }
-
-    func fetchFoodsBy(category: FoodCategoryType) {
+    
+    func fetchFoodsBy(category: FoodCategoryType, completion: @escaping ([Food], [String]) -> Void) {
         httpGetService.get(with: URL(string: "any_url")!) { [weak self] result in
             guard self != nil else { return }
             switch result {
             case .success(let foodData):
                 if let foods: ProductCategories = foodData?.toModel(),
                    let foodByCategory = foods.categories.filter({$0.name == category.rawValue}).first?.products {
+                   let categoryNames = foods.categories.map { $0.name }
+    
                     DispatchQueue.main.async {
-                        self?.foodDataSource.setValue(foodByCategory)
+                        completion(foodByCategory, categoryNames)
                     }
                 } else {
                     print("decoding error")

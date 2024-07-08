@@ -8,6 +8,11 @@
 import UIKit
 
 class CategoryCell: UICollectionViewCell {
+    struct CategoryViewModel {
+        let image: String?
+        let name: String
+    }
+    
     static let reuseIdentifier = String(describing: CategoryCell.self)
     
     override init(frame: CGRect) {
@@ -26,15 +31,29 @@ class CategoryCell: UICollectionViewCell {
         return imageView
     }()
     
-    private lazy var categoryName: UILabel = {
+    lazy var categoryName: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Burger"
         label.textAlignment = .center
         label.textColor = .black
-        label.font = UIFont(name: "Inter-Regular", size: 14)
+        label.font = UIFont(name: "Inter-SemiBold", size: 12)
         return label
     }()
+    
+    func selectedStyle() {
+        backgroundColor = .orange
+        categoryName.textColor = .white
+    }
+    
+    func deselectedStyle() {
+        backgroundColor = .white
+        categoryName.textColor = .black
+    }
+    
+    func setup(viewModel: CategoryViewModel) {
+        categoryName.text = viewModel.name
+    }
 }
 
 extension CategoryCell: CodeView {

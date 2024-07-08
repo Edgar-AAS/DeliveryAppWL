@@ -104,7 +104,7 @@ class ProductCell: UICollectionViewCell {
     }()
     
     func setup(food: Food) {
-        let imageAsset = food.isFavorite ? "heart" : "heart.fill"
+        let imageAsset = food.isFavorite ? "heart.fill" : "heart"
         favoriteButton.setImage(UIImage(systemName: imageAsset), for: .normal)
         foodNameLabel.text = food.name
         foodRateLabel.text = food.rate

@@ -168,6 +168,55 @@
           "isFavorite": false
         }
       ]
+    },
+    {
+      "name": "Taco",
+      "products": [
+        {
+          "id": "15",
+          "name": "Classic Beef Taco",
+          "rate": "4.8",
+          "reviews": 200,
+          "price": 3.99,
+          "distance": 150,
+          "description": "Um taco clássico com carne moída temperada, alface, queijo, tomate e sour cream.",
+          "images": ["beeftaco1.jpg", "beeftaco2.jpg", "beeftaco3.jpg"],
+          "isFavorite": true
+        },
+        {
+          "id": "16",
+          "name": "Chicken Taco",
+          "rate": "4.7",
+          "reviews": 180,
+          "price": 4.29,
+          "distance": 120,
+          "description": "Um taco delicioso com frango grelhado, alface, queijo, tomate e guacamole.",
+          "images": ["chickentaco1.jpg", "chickentaco2.jpg", "chickentaco3.jpg"],
+          "isFavorite": false
+        },
+        {
+          "id": "17",
+          "name": "Fish Taco",
+          "rate": "4.6",
+          "reviews": 160,
+          "price": 4.59,
+          "distance": 200,
+          "description": "Um taco leve e fresco com peixe grelhado, repolho, molho de iogurte e limão.",
+          "images": ["fishtaco1.jpg", "fishtaco2.jpg", "fishtaco3.jpg"],
+          "isFavorite": false
+        },
+        {
+          "id": "18",
+          "name": "Veggie Taco",
+          "rate": "4.5",
+          "reviews": 140,
+          "price": 3.79,
+          "distance": 100,
+          "description": "Um taco vegetariano saudável com feijão preto, milho, abacate e salsa.",
+          "images": ["veggietaco1.jpg", "veggietaco2.jpg", "veggietaco3.jpg"],
+          "isFavorite": true
+        }
+      ]
     }
   ]
 }

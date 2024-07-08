@@ -5,7 +5,7 @@ class HomeViewController: UIViewController {
         return view as? HomeScreen
     }()
     
-    private var foodDataSource: [Food] = []
+    private var foodDataSource: (foods: [Food], categories: [String]) = ([],[])
     private var viewModel: HomeViewModelProtocol
     
     init(viewModel: HomeViewModelProtocol) {
@@ -17,6 +17,8 @@ class HomeViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private var dataSourceCallBack: (([Food]) -> ())?
+    
     override func loadView() {
         super.loadView()
         view = HomeScreen()
@@ -26,14 +28,22 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         hideNavigationBar()
         customView?.setupTableViewProtocols(delegate: self, dataSource: self)
-       
-        viewModel.fetchFoodsBy(category: .drink)
-        viewModel.foodDataSource.bind { [weak self] fooData in
-            guard let fooData = fooData else { return }
-            self?.foodDataSource = fooData
+        view.backgroundColor = .white.withAlphaComponent(0.95)
+        
+        viewModel.fetchFoodsBy(category: .burger) { [weak self] foodData, categories in
+            self?.foodDataSource = (foodData, categories)
             self?.customView?.reloadTablewViewData()
         }
-        view.backgroundColor = .white.withAlphaComponent(0.95)
+    }
+}
+
+extension HomeViewController: ProductCategorieCellDelegate {
+    func productCategoryDidTapped(type: FoodCategoryType) {
+        viewModel.fetchFoodsBy(category: type) { [weak self] foodData, categories in
+            guard let self = self else { return }
+            self.foodDataSource = (foodData, categories)
+            self.dataSourceCallBack?(foodDataSource.foods)
+        }
     }
 }
 
@@ -56,10 +66,13 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: ProductCategorieCell.reuseIdentifier, for: indexPath) as? ProductCategorieCell
+            cell?.delegate = self
+            cell?.setup(categories: foodDataSource.categories)
             return cell ?? UITableViewCell()
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: ProductGridCell.reuseIdentifier, for: indexPath) as? ProductGridCell
-            cell?.setup(foodData: foodDataSource)
+            cell?.setup(foodData: foodDataSource.foods)
+            self.dataSourceCallBack = cell?.reloadDataCallBack
             return cell ?? UITableViewCell()
         }
     }

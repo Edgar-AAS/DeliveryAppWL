@@ -1,17 +1,19 @@
-//
-//  ProductCategorieCell.swift
-//  DeliveryApp
-//
-//  Created by Edgar Arlindo on 29/04/24.
-//
-
 import UIKit
+
+protocol ProductCategorieCellDelegate: AnyObject {
+    func productCategoryDidTapped(type: FoodCategoryType)
+}
 
 class ProductCategorieCell: UITableViewCell {
     static let reuseIdentifier = String(describing: ProductCategorieCell.self)
+    private var categories: [String] = []
+    private var selectedIndex: IndexPath?
+    
+    weak var delegate: ProductCategorieCellDelegate?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectedIndex = IndexPath(item: .zero, section: .zero)
         setupView()
     }
     
@@ -33,6 +35,11 @@ class ProductCategorieCell: UITableViewCell {
         collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.reuseIdentifier)
         return collectionView
     }()
+    
+    func setup(categories: [String]) {
+        self.categories = categories
+        categoryCollectionView.reloadData()
+    }
 }
 
 extension ProductCategorieCell: UICollectionViewDelegateFlowLayout {
@@ -43,18 +50,39 @@ extension ProductCategorieCell: UICollectionViewDelegateFlowLayout {
 
 extension ProductCategorieCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return categories.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as? CategoryCell
+        cell?.setup(viewModel: CategoryCell.CategoryViewModel(image: nil, name: categories[indexPath.row]))
+        
+        if indexPath == IndexPath(item: .zero, section: .zero) {
+            cell?.selectedStyle()
+        }
+        
+        if let categoryType = FoodCategoryType(rawValue: categories[indexPath.item]) {
+            delegate?.productCategoryDidTapped(type: categoryType)
+        }
         return cell ?? UICollectionViewCell()
     }
 }
 
 extension ProductCategorieCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("tap category cell")
+        if let cell = collectionView.cellForItem(at: indexPath) as? CategoryCell {
+            cell.selectedStyle()
+            
+            if let previousIndex = selectedIndex, previousIndex != indexPath {
+                if let previousCell = collectionView.cellForItem(at: previousIndex) as? CategoryCell {
+                    previousCell.deselectedStyle()
+                }
+            }
+            selectedIndex = indexPath
+            
+            let category = FoodCategoryType(rawValue: categories[indexPath.item]) ?? .burger
+            delegate?.productCategoryDidTapped(type: category)
+        }
     }
 }
 
@@ -77,3 +105,4 @@ extension ProductCategorieCell: CodeView {
         backgroundColor = .clear
     }
 }
+
