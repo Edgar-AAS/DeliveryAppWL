@@ -165,8 +165,7 @@ extension ProductCell: CodeView {
         backgroundColor = .white
         layer.cornerRadius = 12
         layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = .init(width: 2, height: 1)
-        layer.shadowRadius = 0.2
+        layer.shadowOffset = .init(width: 1, height: 2)
         layer.shadowOpacity = 0.2
     }
 }

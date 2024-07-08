@@ -61,6 +61,9 @@
 		D3AAD8042B68153800DACD81 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D3AAD8032B68153800DACD81 /* FirebaseFirestore */; };
 		D3AAD8082B68153800DACD81 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D3AAD8072B68153800DACD81 /* FirebaseFirestoreSwift */; };
 		D3AAD81E2B68153800DACD81 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = D3AAD81D2B68153800DACD81 /* FirebaseStorage */; };
+		D3BC4A922C3C8428009141C9 /* FoodDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC4A912C3C8428009141C9 /* FoodDetailsViewController.swift */; };
+		D3BC4A942C3C843E009141C9 /* FoodDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC4A932C3C843E009141C9 /* FoodDetailsViewModel.swift */; };
+		D3BC4A962C3C844B009141C9 /* FoodDetailsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC4A952C3C844B009141C9 /* FoodDetailsScreen.swift */; };
 		D3C72D5C2C0E4BB900059B25 /* ForgotPasswordBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C72D5B2C0E4BB900059B25 /* ForgotPasswordBuilder.swift */; };
 		D3C72D5E2C0E544400059B25 /* EmailVerificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C72D5D2C0E544400059B25 /* EmailVerificationViewModel.swift */; };
 		D3C72D602C0E54F800059B25 /* EmailVerificationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C72D5F2C0E54F800059B25 /* EmailVerificationBuilder.swift */; };
@@ -129,6 +132,9 @@
 		D38AD2002BE1AE8A00FEC569 /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
 		D38AD2022BE2992500FEC569 /* Inter-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Bold.ttf"; sourceTree = "<group>"; };
 		D397EE8E2BE019E900EA7E08 /* ProductGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductGridCell.swift; sourceTree = "<group>"; };
+		D3BC4A912C3C8428009141C9 /* FoodDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailsViewController.swift; sourceTree = "<group>"; };
+		D3BC4A932C3C843E009141C9 /* FoodDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailsViewModel.swift; sourceTree = "<group>"; };
+		D3BC4A952C3C844B009141C9 /* FoodDetailsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailsScreen.swift; sourceTree = "<group>"; };
 		D3C72D5B2C0E4BB900059B25 /* ForgotPasswordBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordBuilder.swift; sourceTree = "<group>"; };
 		D3C72D5D2C0E544400059B25 /* EmailVerificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationViewModel.swift; sourceTree = "<group>"; };
 		D3C72D5F2C0E54F800059B25 /* EmailVerificationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationBuilder.swift; sourceTree = "<group>"; };
@@ -161,14 +167,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D32900A22B681D3900D39016 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				D32900A52B681D4E00D39016 /* SignUpViewModel.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
 		D32900A72B681DEB00D39016 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -213,30 +211,6 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
-		D32900B92B68662D00D39016 /* Builder */ = {
-			isa = PBXGroup;
-			children = (
-				D32900BA2B68663800D39016 /* SignUpBuilder.swift */,
-			);
-			path = Builder;
-			sourceTree = "<group>";
-		};
-		D32900BC2B6869F400D39016 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				D32900BD2B686A0200D39016 /* LoginViewModel.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		D34B005B2B692A5900B74069 /* Builder */ = {
-			isa = PBXGroup;
-			children = (
-				D34B005C2B692A6400B74069 /* LoginBuilder.swift */,
-			);
-			path = Builder;
-			sourceTree = "<group>";
-		};
 		D3528BFD2B62FDF800FD5554 = {
 			isa = PBXGroup;
 			children = (
@@ -279,6 +253,7 @@
 		D3528C1D2B6311F600FD5554 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				D3BC4A902C3C8107009141C9 /* FoodDetails */,
 				D381B9232BFAD639009D8010 /* PasswordRecovery */,
 				D37C27412BD98EFC00B97901 /* Home */,
 				D3528C1F2B63121A00FD5554 /* Login */,
@@ -290,21 +265,13 @@
 		D3528C1F2B63121A00FD5554 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				D37C274E2BD9951F00B97901 /* Model */,
-				D34B005B2B692A5900B74069 /* Builder */,
-				D32900BC2B6869F400D39016 /* ViewModels */,
-				D3528C202B6312D700FD5554 /* Views */,
-			);
-			path = Login;
-			sourceTree = "<group>";
-		};
-		D3528C202B6312D700FD5554 /* Views */ = {
-			isa = PBXGroup;
-			children = (
+				D32900BF2B686A7F00D39016 /* LoginUserRequest.swift */,
+				D34B005C2B692A6400B74069 /* LoginBuilder.swift */,
+				D32900BD2B686A0200D39016 /* LoginViewModel.swift */,
 				D3528C232B63137100FD5554 /* LoginViewController.swift */,
 				D3528C252B6314AD00FD5554 /* LoginScreen.swift */,
 			);
-			path = Views;
+			path = Login;
 			sourceTree = "<group>";
 		};
 		D3528C272B63157D00FD5554 /* ViewHelpers */ = {
@@ -332,21 +299,13 @@
 		D3528C382B64383400FD5554 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
-				D37C274D2BD994FD00B97901 /* Model */,
-				D32900B92B68662D00D39016 /* Builder */,
-				D32900A22B681D3900D39016 /* ViewModels */,
-				D3528C3B2B64388200FD5554 /* Views */,
-			);
-			path = SignUp;
-			sourceTree = "<group>";
-		};
-		D3528C3B2B64388200FD5554 /* Views */ = {
-			isa = PBXGroup;
-			children = (
+				D32900AD2B682D7300D39016 /* RegisterUserRequest.swift */,
+				D32900BA2B68663800D39016 /* SignUpBuilder.swift */,
+				D32900A52B681D4E00D39016 /* SignUpViewModel.swift */,
 				D3528C392B64385B00FD5554 /* SignUpViewController.swift */,
 				D3528C3C2B64389A00FD5554 /* SignUpScreen.swift */,
 			);
-			path = Views;
+			path = SignUp;
 			sourceTree = "<group>";
 		};
 		D361B6402C11F6D90043E765 /* ResetPassword */ = {
@@ -356,72 +315,6 @@
 				D361B6432C11F7900043E765 /* ResetPasswordScreen.swift */,
 			);
 			path = ResetPassword;
-			sourceTree = "<group>";
-		};
-		D361B6452C121E980043E765 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				D361B63E2C11F56F0043E765 /* User.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		D361B6462C121E9D0043E765 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				D3814F072BFD8A3200474D99 /* EmailVerificationScreen.swift */,
-				D3814F092BFD933A00474D99 /* EmailVerificationViewController.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		D361B6472C121EA10043E765 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				D3C72D5D2C0E544400059B25 /* EmailVerificationViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		D361B6482C121EAF0043E765 /* Builder */ = {
-			isa = PBXGroup;
-			children = (
-				D3C72D5F2C0E54F800059B25 /* EmailVerificationBuilder.swift */,
-			);
-			path = Builder;
-			sourceTree = "<group>";
-		};
-		D361B6492C121EF50043E765 /* Builder */ = {
-			isa = PBXGroup;
-			children = (
-				D3ED88F62C028FFF009C69F0 /* ForgotPasswordViewModel.swift */,
-			);
-			path = Builder;
-			sourceTree = "<group>";
-		};
-		D361B64A2C121EFB0043E765 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				D3C72D5B2C0E4BB900059B25 /* ForgotPasswordBuilder.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		D361B64B2C121F1A0043E765 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				D381B9242BFAD707009D8010 /* ForgotPasswordViewController.swift */,
-				D381B9262BFAD754009D8010 /* ForgotPasswordScreen.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		D361B64C2C121F200043E765 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				D3ED88F82C0294B4009C69F0 /* ForgotPasswordUserRequest.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		D375D38E2B67031A009DB3C4 /* Fonts */ = {
@@ -438,63 +331,18 @@
 		D37C27412BD98EFC00B97901 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				D37C274F2BD9952D00B97901 /* Model */,
-				D37C27442BD98F2C00B97901 /* Views */,
-				D37C27432BD98F1600B97901 /* ViewModels */,
-				D37C27422BD98F0F00B97901 /* Builder */,
-			);
-			path = Home;
-			sourceTree = "<group>";
-		};
-		D37C27422BD98F0F00B97901 /* Builder */ = {
-			isa = PBXGroup;
-			children = (
-				D37C27492BD98F8100B97901 /* HomeBuilder.swift */,
-			);
-			path = Builder;
-			sourceTree = "<group>";
-		};
-		D37C27432BD98F1600B97901 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				D37C27452BD98F4600B97901 /* HomeViewModel.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		D37C27442BD98F2C00B97901 /* Views */ = {
-			isa = PBXGroup;
-			children = (
+				D37C27502BD9965A00B97901 /* ProductCategories.swift */,
 				D37C27472BD98F6800B97901 /* HomeViewController.swift */,
 				D37C274B2BD98F9400B97901 /* HomeHeaderView.swift */,
 				D37C27632BDC156900B97901 /* HomeScreen.swift */,
-				D38AD1FF2BE1729400FEC569 /* Cells */,
+				D349C2C72BDFD6EA001FBF33 /* ProductCategorieCell.swift */,
+				D349C2C92BDFE269001FBF33 /* CategoryCell.swift */,
+				D397EE8E2BE019E900EA7E08 /* ProductGridCell.swift */,
+				D38AD2002BE1AE8A00FEC569 /* ProductCell.swift */,
+				D37C27452BD98F4600B97901 /* HomeViewModel.swift */,
+				D37C27492BD98F8100B97901 /* HomeBuilder.swift */,
 			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		D37C274D2BD994FD00B97901 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				D32900AD2B682D7300D39016 /* RegisterUserRequest.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		D37C274E2BD9951F00B97901 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				D32900BF2B686A7F00D39016 /* LoginUserRequest.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		D37C274F2BD9952D00B97901 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				D37C27502BD9965A00B97901 /* ProductCategories.swift */,
-			);
-			path = Model;
+			path = Home;
 			sourceTree = "<group>";
 		};
 		D37C27532BD9A1D300B97901 /* Authentication */ = {
@@ -534,22 +382,21 @@
 			path = PasswordRecovery;
 			sourceTree = "<group>";
 		};
-		D38AD1FF2BE1729400FEC569 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				D349C2C72BDFD6EA001FBF33 /* ProductCategorieCell.swift */,
-				D349C2C92BDFE269001FBF33 /* CategoryCell.swift */,
-				D397EE8E2BE019E900EA7E08 /* ProductGridCell.swift */,
-				D38AD2002BE1AE8A00FEC569 /* ProductCell.swift */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
 		D3BC4A8D2C3B3BE5009141C9 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		D3BC4A902C3C8107009141C9 /* FoodDetails */ = {
+			isa = PBXGroup;
+			children = (
+				D3BC4A912C3C8428009141C9 /* FoodDetailsViewController.swift */,
+				D3BC4A932C3C843E009141C9 /* FoodDetailsViewModel.swift */,
+				D3BC4A952C3C844B009141C9 /* FoodDetailsScreen.swift */,
+			);
+			path = FoodDetails;
 			sourceTree = "<group>";
 		};
 		D3C72D612C0FA31F00059B25 /* Observable */ = {
@@ -563,10 +410,11 @@
 		D3ED88FA2C02999E009C69F0 /* ForgotPassword */ = {
 			isa = PBXGroup;
 			children = (
-				D361B64C2C121F200043E765 /* Model */,
-				D361B64B2C121F1A0043E765 /* View */,
-				D361B64A2C121EFB0043E765 /* ViewModel */,
-				D361B6492C121EF50043E765 /* Builder */,
+				D3ED88F82C0294B4009C69F0 /* ForgotPasswordUserRequest.swift */,
+				D381B9242BFAD707009D8010 /* ForgotPasswordViewController.swift */,
+				D381B9262BFAD754009D8010 /* ForgotPasswordScreen.swift */,
+				D3C72D5B2C0E4BB900059B25 /* ForgotPasswordBuilder.swift */,
+				D3ED88F62C028FFF009C69F0 /* ForgotPasswordViewModel.swift */,
 			);
 			path = ForgotPassword;
 			sourceTree = "<group>";
@@ -574,10 +422,11 @@
 		D3ED88FB2C0299C6009C69F0 /* EmailVerification */ = {
 			isa = PBXGroup;
 			children = (
-				D361B6452C121E980043E765 /* Model */,
-				D361B6462C121E9D0043E765 /* Views */,
-				D361B6472C121EA10043E765 /* ViewModel */,
-				D361B6482C121EAF0043E765 /* Builder */,
+				D361B63E2C11F56F0043E765 /* User.swift */,
+				D3814F072BFD8A3200474D99 /* EmailVerificationScreen.swift */,
+				D3814F092BFD933A00474D99 /* EmailVerificationViewController.swift */,
+				D3C72D5D2C0E544400059B25 /* EmailVerificationViewModel.swift */,
+				D3C72D5F2C0E54F800059B25 /* EmailVerificationBuilder.swift */,
 			);
 			path = EmailVerification;
 			sourceTree = "<group>";
@@ -676,8 +525,10 @@
 				D32900AC2B682D4F00D39016 /* Model.swift in Sources */,
 				D3814F082BFD8A3200474D99 /* EmailVerificationScreen.swift in Sources */,
 				D32900AE2B682D7300D39016 /* RegisterUserRequest.swift in Sources */,
+				D3BC4A922C3C8428009141C9 /* FoodDetailsViewController.swift in Sources */,
 				D349C2C82BDFD6EA001FBF33 /* ProductCategorieCell.swift in Sources */,
 				D3D0EC212C234F06004D4FB0 /* CustomNavigationController.swift in Sources */,
+				D3BC4A962C3C844B009141C9 /* FoodDetailsScreen.swift in Sources */,
 				D38AD2012BE1AE8A00FEC569 /* ProductCell.swift in Sources */,
 				D32900C02B686A7F00D39016 /* LoginUserRequest.swift in Sources */,
 				D3528C342B633DF800FD5554 /* CustomTextField.swift in Sources */,
@@ -693,6 +544,7 @@
 				D3528C2F2B63295100FD5554 /* UIColorExtensions.swift in Sources */,
 				D37C274C2BD98F9400B97901 /* HomeHeaderView.swift in Sources */,
 				D3C72D672C0FC7D700059B25 /* FirebaseSignIn.swift in Sources */,
+				D3BC4A942C3C843E009141C9 /* FoodDetailsViewModel.swift in Sources */,
 				D32900BB2B68663800D39016 /* SignUpBuilder.swift in Sources */,
 				D361B6442C11F7900043E765 /* ResetPasswordScreen.swift in Sources */,
 				D37C275E2BD9AF3500B97901 /* LocalData.swift in Sources */,
@@ -793,7 +645,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -850,7 +702,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

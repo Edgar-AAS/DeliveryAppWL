@@ -36,7 +36,7 @@ class CategoryCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Burger"
         label.textAlignment = .center
-        label.textColor = .black
+        label.textColor = UIColor(hexString: "878787")
         label.font = UIFont(name: "Inter-SemiBold", size: 12)
         return label
     }()
@@ -48,7 +48,7 @@ class CategoryCell: UICollectionViewCell {
     
     func deselectedStyle() {
         backgroundColor = .white
-        categoryName.textColor = .black
+        categoryName.textColor = UIColor(hexString: "878787")
     }
     
     func setup(viewModel: CategoryViewModel) {
@@ -79,7 +79,6 @@ extension CategoryCell: CodeView {
     func setupAddiotionalConfiguration() {
         backgroundColor = .white
         layer.cornerRadius = 8
-        clipsToBounds = true
     }
 }
 

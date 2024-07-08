@@ -44,7 +44,7 @@ class HomeScreen: UIView {
         button.setTitle("See All", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont(name: "Inter-Bold", size: 14)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(UIColor(hexString: "FE8C00"), for: .normal)
         return button
     }()
     

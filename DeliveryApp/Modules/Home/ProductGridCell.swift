@@ -32,7 +32,7 @@ class ProductGridCell: UITableViewCell {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.contentInset = .init(top: 24, left: 24, bottom: 0, right: 24)
+        collectionView.contentInset = .init(top: 10, left: 24, bottom: 0, right: 24)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
