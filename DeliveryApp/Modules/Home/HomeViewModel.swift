@@ -18,15 +18,18 @@ enum FoodCategoryType: String {
 protocol HomeViewModelProtocol {
     var foodDataSource: Observable<([Food], [String])> { get }
     func fetchFoodsBy(category: FoodCategoryType, completion: @escaping ([Food], [String]) -> Void)
+    func goToDetailsScreen(food: Food)
     var numberOfRows: Int { get }
 }
 
 class HomeViewModel: HomeViewModelProtocol {
     private let httpGetService: HtttpGetClientProtocol
+    private let coordinator: Coordinator
     var foodDataSource: Observable<([Food], [String])> = Observable(value: ([], []))
     
-    init(httpGetService: HtttpGetClientProtocol) {
+    init(httpGetService: HtttpGetClientProtocol, coordinator: Coordinator) {
         self.httpGetService = httpGetService
+        self.coordinator = coordinator
     }
     
     var numberOfRows: Int {
@@ -41,7 +44,7 @@ class HomeViewModel: HomeViewModelProtocol {
                 if let foods: ProductCategories = foodData?.toModel(),
                    let foodByCategory = foods.categories.filter({$0.name == category.rawValue}).first?.products {
                    let categoryNames = foods.categories.map { $0.name }
-    
+                    
                     DispatchQueue.main.async {
                         completion(foodByCategory, categoryNames)
                     }
@@ -52,6 +55,10 @@ class HomeViewModel: HomeViewModelProtocol {
                 print(error)
             }
         }
+    }
+    
+    func goToDetailsScreen(food: Food) {
+        coordinator.eventOcurred(type: .goToFoodDetails(food))
     }
 }
 

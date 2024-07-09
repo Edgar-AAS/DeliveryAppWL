@@ -12,7 +12,10 @@
           "price": 10.99,
           "description": "Um delicioso cachorro-quente com salsicha, molho especial, milho, ervilha e batata palha.",
           "images": ["imagem1.jpg", "imagem2.jpg", "imagem3.jpg"],
-          "isFavorite": false
+          "isFavorite": false,
+          "firstDeliveryTime": 25,
+          "secondDeliveryTime": 60,
+          "deliveryFee": 0.0
         },
         {
           "id": "2",
@@ -23,7 +26,10 @@
           "price": 21.30,
           "description": "Um hambúrguer suculento com carne grelhada, queijo derretido, alface, tomate e molho especial.",
           "images": ["imagem1.jpg", "imagem2.jpg", "imagem3.jpg"],
-          "isFavorite": false
+          "isFavorite": false,
+          "firstDeliveryTime": 35,
+          "secondDeliveryTime": 45,
+          "deliveryFee": 5.0
         },
         {
           "id": "3",
@@ -34,7 +40,10 @@
           "price": 30.29,
           "description": "Um hambúrguer com bacon crocante, queijo, alface, tomate e molho especial.",
           "images": ["imagem1.jpg", "imagem2.jpg", "imagem3.jpg"],
-          "isFavorite": true
+          "isFavorite": true,
+          "firstDeliveryTime": 30,
+          "secondDeliveryTime": 45,
+          "deliveryFee": 4.0
         },
         {
           "id": "4",
@@ -45,7 +54,10 @@
           "price": 12.92,
           "description": "Um hambúrguer com ovo frito, queijo, alface, tomate e molho especial.",
           "images": ["imagem1.jpg", "imagem2.jpg", "imagem3.jpg"],
-          "isFavorite": true
+          "isFavorite": true,
+          "firstDeliveryTime": 20,
+          "secondDeliveryTime": 30,
+          "deliveryFee": 0.0
         },
         {
           "id": "5",
@@ -56,7 +68,10 @@
           "price": 15.99,
           "description": "Um hambúrguer clássico com queijo derretido, alface crocante, tomate fresco e picles em um pão de brioche.",
           "images": ["cheeseburger1.jpg", "cheeseburger2.jpg", "cheeseburger3.jpg"],
-          "isFavorite": true
+          "isFavorite": true,
+          "firstDeliveryTime": 15,
+          "secondDeliveryTime": 25,
+          "deliveryFee": 6.0
         },
         {
           "id": "6",
@@ -67,7 +82,66 @@
           "distance": 220,
           "description": "Um hambúrguer vegetariano delicioso, feito com grão-de-bico e especiarias, servido com alface, tomate e molho especial.",
           "images": ["veggiedelight1.jpg", "veggiedelight2.jpg", "veggiedelight3.jpg"],
-          "isFavorite": false
+          "isFavorite": false,
+          "firstDeliveryTime": 45,
+          "secondDeliveryTime": 120,
+          "deliveryFee": 0.0
+        },
+        {
+          "id": "7",
+          "name": "Double Cheese Burger",
+          "rate": "4.9",
+          "reviews": 85,
+          "distance": 175,
+          "price": 25.99,
+          "description": "Dois suculentos hambúrgueres com queijo duplo, alface, tomate e molho especial.",
+          "images": ["doublecheese1.jpg", "doublecheese2.jpg", "doublecheese3.jpg"],
+          "isFavorite": true,
+          "firstDeliveryTime": 55,
+          "secondDeliveryTime": 320,
+          "deliveryFee": 7.0
+        },
+        {
+          "id": "8",
+          "name": "Spicy Chicken Burger",
+          "rate": "4.7",
+          "reviews": 95,
+          "distance": 130,
+          "price": 19.99,
+          "description": "Um hambúrguer de frango picante com alface, tomate e maionese.",
+          "images": ["spicychicken1.jpg", "spicychicken2.jpg", "spicychicken3.jpg"],
+          "isFavorite": false,
+          "firstDeliveryTime": 180,
+          "secondDeliveryTime": 240,
+          "deliveryFee": 5.0
+        },
+        {
+          "id": "9",
+          "name": "Mushroom Swiss Burger",
+          "rate": "4.8",
+          "reviews": 72,
+          "distance": 220,
+          "price": 22.99,
+          "description": "Um hambúrguer gourmet com cogumelos salteados, queijo suíço e molho especial.",
+          "images": ["mushroomswiss1.jpg", "mushroomswiss2.jpg", "mushroomswiss3.jpg"],
+          "isFavorite": true,
+          "firstDeliveryTime": 190,
+          "secondDeliveryTime": 260,
+          "deliveryFee": 6.0
+        },
+        {
+          "id": "10",
+          "name": "BBQ Bacon Burger",
+          "rate": "4.6",
+          "reviews": 90,
+          "distance": 180,
+          "price": 24.99,
+          "description": "Um hambúrguer com bacon crocante, queijo cheddar, cebolas fritas e molho barbecue.",
+          "images": ["bbqbacon1.jpg", "bbqbacon2.jpg", "bbqbacon3.jpg"],
+          "isFavorite": false,
+          "firstDeliveryTime": 35,
+          "secondDeliveryTime": 80,
+          "deliveryFee": 8.0
         }
       ]
     },
@@ -83,7 +157,10 @@
           "distance": 350,
           "description": "Uma pizza deliciosa com pepperoni picante, queijo mussarela derretido e molho de tomate especial.",
           "images": ["pepperoniparadise1.jpg", "pepperoniparadise2.jpg", "pepperoniparadise3.jpg"],
-          "isFavorite": true
+          "isFavorite": true,
+          "firstDeliveryTime": 35,
+          "secondDeliveryTime": 45,
+          "deliveryFee": 7.0
         },
         {
           "id": "8",
@@ -94,7 +171,10 @@
           "distance": 400,
           "description": "Uma pizza clássica com molho de tomate fresco, queijo mussarela e folhas de manjericão.",
           "images": ["margheritamagic1.jpg", "margheritamagic2.jpg", "margheritamagic3.jpg"],
-          "isFavorite": false
+          "isFavorite": false,
+          "firstDeliveryTime": 30,
+          "secondDeliveryTime": 60,
+          "deliveryFee": 5.0
         },
         {
           "id": "9",
@@ -105,7 +185,10 @@
           "distance": 212,
           "description": "Uma pizza com presunto, abacaxi, queijo mussarela e molho de tomate.",
           "images": ["hawaiiandelight1.jpg", "hawaiiandelight2.jpg", "hawaiiandelight3.jpg"],
-          "isFavorite": true
+          "isFavorite": true,
+          "firstDeliveryTime": 15,
+          "secondDeliveryTime": 30,
+          "deliveryFee": 6.0
         },
         {
           "id": "10",
@@ -116,7 +199,10 @@
           "distance": 91,
           "description": "Uma pizza com frango ao molho barbecue, queijo mussarela, cebola e coentro.",
           "images": ["bbqchicken1.jpg", "bbqchicken2.jpg", "bbqchicken3.jpg"],
-          "isFavorite": false
+          "isFavorite": false,
+          "firstDeliveryTime": 15,
+          "secondDeliveryTime": 30,
+          "deliveryFee": 5.0
         }
       ]
     },
@@ -132,7 +218,10 @@
           "distance": 35,
           "description": "Uma limonada refrescante feita com limões frescos, água e um toque de açúcar.",
           "images": ["lemonadebliss1.jpg", "lemonadebliss2.jpg", "lemonadebliss3.jpg"],
-          "isFavorite": true
+          "isFavorite": true,
+          "firstDeliveryTime": 30,
+          "secondDeliveryTime": 50,
+          "deliveryFee": 1.0
         },
         {
           "id": "12",
@@ -143,7 +232,10 @@
           "distance": 23,
           "description": "Um smoothie delicioso e saudável feito com uma mistura de frutas vermelhas, iogurte e mel.",
           "images": ["berrysmoothie1.jpg", "berrysmoothie2.jpg", "berrysmoothie3.jpg"],
-          "isFavorite": false
+          "isFavorite": false,
+          "firstDeliveryTime": 120,
+          "secondDeliveryTime": 180,
+          "deliveryFee": 2.0
         },
         {
           "id": "13",
@@ -154,18 +246,24 @@
           "distance": 453,
           "description": "Uma bebida cremosa e refrescante feita com manga fresca, iogurte e um toque de cardamomo.",
           "images": ["mangolassi1.jpg", "mangolassi2.jpg", "mangolassi3.jpg"],
-          "isFavorite": true
+          "isFavorite": true,
+          "firstDeliveryTime": 30,
+          "secondDeliveryTime": 90,
+          "deliveryFee": 3.0
         },
         {
           "id": "14",
           "name": "Iced Coffee",
           "rate": "4.7",
-          "reviews": 110,
+          "reviews": 130,
           "price": 4.99,
-          "distance": 382,
-          "description": "Um café gelado refrescante feito com café expresso, leite e gelo.",
+          "distance": 45,
+          "description": "Um café gelado revigorante feito com grãos de café premium e servido com gelo.",
           "images": ["icedcoffee1.jpg", "icedcoffee2.jpg", "icedcoffee3.jpg"],
-          "isFavorite": false
+          "isFavorite": true,
+          "firstDeliveryTime": 30,
+          "secondDeliveryTime": 90,
+          "deliveryFee": 1.0
         }
       ]
     },
@@ -181,7 +279,10 @@
           "distance": 150,
           "description": "Um taco clássico com carne moída temperada, alface, queijo, tomate e sour cream.",
           "images": ["beeftaco1.jpg", "beeftaco2.jpg", "beeftaco3.jpg"],
-          "isFavorite": true
+          "isFavorite": true,
+          "firstDeliveryTime": 45,
+          "secondDeliveryTime": 55,
+          "deliveryFee": 0.0
         },
         {
           "id": "16",
@@ -192,7 +293,10 @@
           "distance": 120,
           "description": "Um taco delicioso com frango grelhado, alface, queijo, tomate e guacamole.",
           "images": ["chickentaco1.jpg", "chickentaco2.jpg", "chickentaco3.jpg"],
-          "isFavorite": false
+          "isFavorite": false,
+          "firstDeliveryTime": 80,
+          "secondDeliveryTime": 120,
+          "deliveryFee": 0.0
         },
         {
           "id": "17",
@@ -203,7 +307,10 @@
           "distance": 200,
           "description": "Um taco leve e fresco com peixe grelhado, repolho, molho de iogurte e limão.",
           "images": ["fishtaco1.jpg", "fishtaco2.jpg", "fishtaco3.jpg"],
-          "isFavorite": false
+          "isFavorite": false,
+          "firstDeliveryTime": 40,
+          "secondDeliveryTime": 60,
+          "deliveryFee": 0.0
         },
         {
           "id": "18",
@@ -214,10 +321,12 @@
           "distance": 100,
           "description": "Um taco vegetariano saudável com feijão preto, milho, abacate e salsa.",
           "images": ["veggietaco1.jpg", "veggietaco2.jpg", "veggietaco3.jpg"],
-          "isFavorite": true
+          "isFavorite": true,
+          "firstDeliveryTime": 50,
+          "secondDeliveryTime": 125,
+          "deliveryFee": 0.0
         }
       ]
     }
   ]
 }
-

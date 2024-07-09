@@ -60,10 +60,6 @@ extension ProductCategorieCell: UICollectionViewDataSource {
         if indexPath == IndexPath(item: .zero, section: .zero) {
             cell?.selectedStyle()
         }
-        
-        if let categoryType = FoodCategoryType(rawValue: categories[indexPath.item]) {
-            delegate?.productCategoryDidTapped(type: categoryType)
-        }
         return cell ?? UICollectionViewCell()
     }
 }
@@ -80,8 +76,9 @@ extension ProductCategorieCell: UICollectionViewDelegate {
             }
             selectedIndex = indexPath
             
-            let category = FoodCategoryType(rawValue: categories[indexPath.item]) ?? .burger
-            delegate?.productCategoryDidTapped(type: category)
+            if let categoryType = FoodCategoryType(rawValue: categories[indexPath.item]) {
+                delegate?.productCategoryDidTapped(type: categoryType)
+            }
         }
     }
 }

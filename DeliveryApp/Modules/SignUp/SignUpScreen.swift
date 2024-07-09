@@ -231,7 +231,6 @@ final class SignUpScreen: UIView {
             loginMethod = .appleAccount
         default: return
         }
-        
 //        delegate?.alternativeLoginButtonDidTapped(loginMethod: loginMethod)
     }
     

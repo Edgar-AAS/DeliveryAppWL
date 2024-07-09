@@ -17,6 +17,7 @@ enum Event {
     case loginToRegister
     case registerToLogin
     case goToHome
+    case goToFoodDetails(Food)
     case goToForgotPassword
     case goToEmailVerification(User)
 }
@@ -44,6 +45,10 @@ class MainCoordinator: Coordinator {
             navigationController?.pushViewController(viewController)
         case .goToEmailVerification(let user):
             let viewController = EmailVerificationBuilder.build(coordinator: self, user: user)
+            navigationController?.pushViewController(viewController)
+        case .goToFoodDetails(let foodData):
+            let viewModel = FoodDetailsViewModel(foodModel: foodData)
+            let viewController = FoodDetailsViewController(viewModel: viewModel)
             navigationController?.pushViewController(viewController)
         }
     }

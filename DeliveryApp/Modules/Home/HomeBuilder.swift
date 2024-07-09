@@ -10,7 +10,7 @@ import Foundation
 class HomeBuilder {
     static func build(coordinator: Coordinator) -> HomeViewController {
         let localData = LocalData(resource: "ProductCategories")
-        let viewModel = HomeViewModel(httpGetService: localData)
+        let viewModel = HomeViewModel(httpGetService: localData, coordinator: coordinator)
         let viewController = HomeViewController(viewModel: viewModel)
         return viewController
     }

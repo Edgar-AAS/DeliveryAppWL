@@ -8,11 +8,19 @@
 import UIKit
 
 class FoodDetailsViewController: UIViewController {
+    private lazy var customView: FoodDetailsScreen? = {
+        return view as? FoodDetailsScreen
+    }()
+    
     override func loadView() {
         super.loadView()
+        view = FoodDetailsScreen()
     }
     
-    init() {
+    private let viewModel: FoodDetailsViewModel
+    
+    init(viewModel: FoodDetailsViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -22,5 +30,13 @@ class FoodDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        hideNavigationBar()
+        customView?.delegate = self
+    }
+}
+
+extension FoodDetailsViewController: FoodDetailsScreenDelegate {
+    func backButtonDidTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }

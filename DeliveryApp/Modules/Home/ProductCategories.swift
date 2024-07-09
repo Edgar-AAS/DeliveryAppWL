@@ -23,6 +23,9 @@ struct Food: Decodable {
     let rate: String
     let reviews: Int
     let distance: Int
+    let firstDeliveryTime: Int
+    let secondDeliveryTime: Int
+    let deliveryFee: Double
     let name: String
     let price: Double
     let description: String

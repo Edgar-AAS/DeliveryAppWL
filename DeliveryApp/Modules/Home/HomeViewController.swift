@@ -37,16 +37,6 @@ class HomeViewController: UIViewController {
     }
 }
 
-extension HomeViewController: ProductCategorieCellDelegate {
-    func productCategoryDidTapped(type: FoodCategoryType) {
-        viewModel.fetchFoodsBy(category: type) { [weak self] foodData, categories in
-            guard let self = self else { return }
-            self.foodDataSource = (foodData, categories)
-            self.dataSourceCallBack?(foodDataSource.foods)
-        }
-    }
-}
-
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
@@ -72,8 +62,25 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: ProductGridCell.reuseIdentifier, for: indexPath) as? ProductGridCell
             cell?.setup(foodData: foodDataSource.foods)
+            cell?.delegate = self
             self.dataSourceCallBack = cell?.reloadDataCallBack
             return cell ?? UITableViewCell()
         }
+    }
+}
+
+extension HomeViewController: ProductCategorieCellDelegate {
+    func productCategoryDidTapped(type: FoodCategoryType) {
+        viewModel.fetchFoodsBy(category: type) { [weak self] foodData, categories in
+            guard let self = self else { return }
+            self.foodDataSource = (foodData, categories)
+            self.dataSourceCallBack?(foodDataSource.foods)
+        }
+    }
+}
+
+extension HomeViewController: ProductGridCellDelegate {
+    func foodCardDidTapped(foodSelected: Food) {
+        viewModel.goToDetailsScreen(food: foodSelected)
     }
 }

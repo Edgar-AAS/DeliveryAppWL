@@ -9,5 +9,9 @@ import Foundation
 
 
 class FoodDetailsViewModel {
+    private let foodModel: Food
     
+    init(foodModel: Food) {
+        self.foodModel = foodModel
+    }
 }

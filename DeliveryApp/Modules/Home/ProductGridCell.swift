@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol ProductGridCellDelegate: AnyObject {
+    func foodCardDidTapped(foodSelected: Food)
+}
+
 class ProductGridCell: UITableViewCell {
     static let reuseIdentifier = String(describing: ProductGridCell.self)
     private var foodData: [Food] = []
+    
+    weak var delegate: ProductGridCellDelegate?
     
     func reloadDataCallBack(fooData: [Food]) {
         self.foodData = fooData
@@ -29,7 +35,6 @@ class ProductGridCell: UITableViewCell {
         let layout = UICollectionViewFlowLayout()
         layout.estimatedItemSize = .zero
         layout.scrollDirection = .vertical
-        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.contentInset = .init(top: 10, left: 24, bottom: 0, right: 24)
@@ -67,6 +72,12 @@ extension ProductGridCell: CodeView {
     
     func setupAddiotionalConfiguration() {
         backgroundColor = .clear
+    }
+}
+
+extension ProductGridCell: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.foodCardDidTapped(foodSelected: foodData[indexPath.item])
     }
 }
 
