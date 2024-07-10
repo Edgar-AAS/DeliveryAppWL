@@ -29,6 +29,6 @@ struct Food: Decodable {
     let name: String
     let price: Double
     let description: String
-    let images: [String]
+    let image: String
     var isFavorite: Bool
 }

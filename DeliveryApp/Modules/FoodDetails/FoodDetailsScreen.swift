@@ -38,16 +38,15 @@ class FoodDetailsScreen: UIView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "pepperoni-pizza")
         imageView.isUserInteractionEnabled = true
         imageView.layer.cornerRadius = 16
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
     private lazy var foodNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Burger With Meat 🍔"
         label.font = UIFont(name: "Inter-SemiBold", size: 24)
         return label
     }()
@@ -55,7 +54,6 @@ class FoodDetailsScreen: UIView {
     private lazy var foodPriceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "R$ 41,99"
         label.font = UIFont(name: "Inter-Bold", size: 18)
         label.textColor = UIColor(hexString: "FE8C00")
         return label
@@ -103,7 +101,6 @@ class FoodDetailsScreen: UIView {
     private lazy var deliveryTimeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "17:30 - 17:52"
         label.font = UIFont(name: "Inter-Regular", size: 14)
         label.textColor = UIColor(hexString: "878787")
         return label
@@ -112,7 +109,6 @@ class FoodDetailsScreen: UIView {
     private lazy var foodRateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "4.5"
         label.font = UIFont(name: "Inter-Regular", size: 14)
         label.textColor = UIColor(hexString: "878787")
         return label
@@ -183,7 +179,6 @@ class FoodDetailsScreen: UIView {
     private lazy var descriptionTextLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem impsum Lorem"
         label.numberOfLines = 0
         label.font = UIFont(name: "Inter-Regular", size: 16)
         label.textColor = UIColor(hexString: "878787")
@@ -242,7 +237,6 @@ class FoodDetailsScreen: UIView {
     private lazy var foodTotalPriceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "R$ 41,99"
         label.textColor = UIColor(hexString: "FE8C00")
         label.font = UIFont(name: "Inter-Medium", size: 24)
         return label

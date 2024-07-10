@@ -8,11 +8,6 @@
 import Foundation
 
 
-struct StepperDTO {
-    let count: String
-    let amount: String
-}
-
 protocol FoodDetailsViewModelDelegate: AnyObject {
     func stepperDidChange(dto: StepperDTO)
     func favoriteTogleWith(state: Bool)
@@ -76,6 +71,6 @@ class FoodDetailsViewModel: FoodDetailsViewModelProtocol {
             description: foodModel.description,
             quantity: String(stepperCount), 
             isFavorite: foodModel.isFavorite,
-            image: "")
+            image: foodModel.image)
     }
 }

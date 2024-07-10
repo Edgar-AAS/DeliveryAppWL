@@ -42,7 +42,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
             let headerHeight = customView?.headerView.frame.size.height ?? 0.0
             let stackHeight = customView?.categoryLabelAndButtonStack.frame.size.height ?? 0.0
-            let heightRemaning = view.frame.size.height - (stackHeight + headerHeight + 133.0)
+            let heightRemaning = view.frame.size.height - (stackHeight + headerHeight + 130)
             return heightRemaning
         } else {
             return UITableView.automaticDimension

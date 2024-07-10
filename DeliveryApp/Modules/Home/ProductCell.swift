@@ -20,7 +20,8 @@ class ProductCell: UICollectionViewCell {
     }
     
     private lazy var foodImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "burger"))
+        let imageView = UIImageView()
+        imageView.backgroundColor = .gray
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 8
         imageView.clipsToBounds = true

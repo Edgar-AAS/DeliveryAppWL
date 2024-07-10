@@ -65,6 +65,7 @@
 		D3BC4A942C3C843E009141C9 /* FoodDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC4A932C3C843E009141C9 /* FoodDetailsViewModel.swift */; };
 		D3BC4A962C3C844B009141C9 /* FoodDetailsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC4A952C3C844B009141C9 /* FoodDetailsScreen.swift */; };
 		D3BC4A9C2C3DC967009141C9 /* FoodDetailsScreenDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC4A9B2C3DC967009141C9 /* FoodDetailsScreenDTO.swift */; };
+		D3BC4AA02C3F31BE009141C9 /* StepperDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC4A9F2C3F31BE009141C9 /* StepperDTO.swift */; };
 		D3C72D5C2C0E4BB900059B25 /* ForgotPasswordBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C72D5B2C0E4BB900059B25 /* ForgotPasswordBuilder.swift */; };
 		D3C72D5E2C0E544400059B25 /* EmailVerificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C72D5D2C0E544400059B25 /* EmailVerificationViewModel.swift */; };
 		D3C72D602C0E54F800059B25 /* EmailVerificationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C72D5F2C0E54F800059B25 /* EmailVerificationBuilder.swift */; };
@@ -137,6 +138,7 @@
 		D3BC4A932C3C843E009141C9 /* FoodDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailsViewModel.swift; sourceTree = "<group>"; };
 		D3BC4A952C3C844B009141C9 /* FoodDetailsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailsScreen.swift; sourceTree = "<group>"; };
 		D3BC4A9B2C3DC967009141C9 /* FoodDetailsScreenDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailsScreenDTO.swift; sourceTree = "<group>"; };
+		D3BC4A9F2C3F31BE009141C9 /* StepperDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperDTO.swift; sourceTree = "<group>"; };
 		D3C72D5B2C0E4BB900059B25 /* ForgotPasswordBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordBuilder.swift; sourceTree = "<group>"; };
 		D3C72D5D2C0E544400059B25 /* EmailVerificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationViewModel.swift; sourceTree = "<group>"; };
 		D3C72D5F2C0E54F800059B25 /* EmailVerificationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationBuilder.swift; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 				D3BC4A932C3C843E009141C9 /* FoodDetailsViewModel.swift */,
 				D3BC4A952C3C844B009141C9 /* FoodDetailsScreen.swift */,
 				D3BC4A9B2C3DC967009141C9 /* FoodDetailsScreenDTO.swift */,
+				D3BC4A9F2C3F31BE009141C9 /* StepperDTO.swift */,
 			);
 			path = FoodDetails;
 			sourceTree = "<group>";
@@ -578,6 +581,7 @@
 				D3528C0C2B62FDF900FD5554 /* SceneDelegate.swift in Sources */,
 				D37C274A2BD98F8100B97901 /* HomeBuilder.swift in Sources */,
 				D34B005D2B692A6400B74069 /* LoginBuilder.swift in Sources */,
+				D3BC4AA02C3F31BE009141C9 /* StepperDTO.swift in Sources */,
 				D397EE8F2BE019E900EA7E08 /* ProductGridCell.swift in Sources */,
 				D32900BE2B686A0200D39016 /* LoginViewModel.swift in Sources */,
 			);

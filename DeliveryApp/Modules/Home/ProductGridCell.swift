@@ -39,7 +39,7 @@ class ProductGridCell: UITableViewCell {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.contentInset = .init(top: 10, left: 24, bottom: 0, right: 24)
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .clear
+        collectionView.backgroundColor = .green
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.reuseIdentifier)
