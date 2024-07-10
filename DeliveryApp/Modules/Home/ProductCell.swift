@@ -108,19 +108,20 @@ class ProductCell: UICollectionViewCell {
         favoriteButton.setImage(UIImage(systemName: imageAsset), for: .normal)
         foodNameLabel.text = food.name
         foodRateLabel.text = food.rate
-        foodPriceLabel.text = food.price.currencyFormatWith(decimalPlaces: 2)
+        foodPriceLabel.text = food.price.currencyFormatWith(numberStyle: .currency)
         distanceLabel.text = "\(food.distance)m"
     }
 }
 
 
 extension Double {
-    func currencyFormatWith(decimalPlaces: Int) -> String {
+    func currencyFormatWith(numberStyle: NumberFormatter.Style) -> String {
         let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
+        formatter.numberStyle = numberStyle
         formatter.currencySymbol = "R$"
         formatter.currencyCode = "BRL"
-        formatter.minimumFractionDigits = decimalPlaces
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
         formatter.locale = Locale(identifier: "pt_BR")
         return formatter.string(for: self) ?? String(self)
     }

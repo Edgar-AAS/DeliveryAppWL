@@ -20,6 +20,7 @@ enum Event {
     case goToFoodDetails(Food)
     case goToForgotPassword
     case goToEmailVerification(User)
+    case backToHome
 }
 
 class MainCoordinator: Coordinator {
@@ -47,9 +48,12 @@ class MainCoordinator: Coordinator {
             let viewController = EmailVerificationBuilder.build(coordinator: self, user: user)
             navigationController?.pushViewController(viewController)
         case .goToFoodDetails(let foodData):
-            let viewModel = FoodDetailsViewModel(foodModel: foodData)
+            let viewModel = FoodDetailsViewModel(foodModel: foodData, coordinator: self)
             let viewController = FoodDetailsViewController(viewModel: viewModel)
+            viewModel.delegate = viewController
             navigationController?.pushViewController(viewController)
+        case .backToHome:
+            navigationController?.popViewController()
         }
     }
 }

@@ -64,7 +64,7 @@
 		D3BC4A922C3C8428009141C9 /* FoodDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC4A912C3C8428009141C9 /* FoodDetailsViewController.swift */; };
 		D3BC4A942C3C843E009141C9 /* FoodDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC4A932C3C843E009141C9 /* FoodDetailsViewModel.swift */; };
 		D3BC4A962C3C844B009141C9 /* FoodDetailsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC4A952C3C844B009141C9 /* FoodDetailsScreen.swift */; };
-		D3BC4A9C2C3DC967009141C9 /* FoodDetailsScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC4A9B2C3DC967009141C9 /* FoodDetailsScreenViewModel.swift */; };
+		D3BC4A9C2C3DC967009141C9 /* FoodDetailsScreenDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC4A9B2C3DC967009141C9 /* FoodDetailsScreenDTO.swift */; };
 		D3C72D5C2C0E4BB900059B25 /* ForgotPasswordBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C72D5B2C0E4BB900059B25 /* ForgotPasswordBuilder.swift */; };
 		D3C72D5E2C0E544400059B25 /* EmailVerificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C72D5D2C0E544400059B25 /* EmailVerificationViewModel.swift */; };
 		D3C72D602C0E54F800059B25 /* EmailVerificationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C72D5F2C0E54F800059B25 /* EmailVerificationBuilder.swift */; };
@@ -136,7 +136,7 @@
 		D3BC4A912C3C8428009141C9 /* FoodDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailsViewController.swift; sourceTree = "<group>"; };
 		D3BC4A932C3C843E009141C9 /* FoodDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailsViewModel.swift; sourceTree = "<group>"; };
 		D3BC4A952C3C844B009141C9 /* FoodDetailsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailsScreen.swift; sourceTree = "<group>"; };
-		D3BC4A9B2C3DC967009141C9 /* FoodDetailsScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailsScreenViewModel.swift; sourceTree = "<group>"; };
+		D3BC4A9B2C3DC967009141C9 /* FoodDetailsScreenDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailsScreenDTO.swift; sourceTree = "<group>"; };
 		D3C72D5B2C0E4BB900059B25 /* ForgotPasswordBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordBuilder.swift; sourceTree = "<group>"; };
 		D3C72D5D2C0E544400059B25 /* EmailVerificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationViewModel.swift; sourceTree = "<group>"; };
 		D3C72D5F2C0E54F800059B25 /* EmailVerificationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationBuilder.swift; sourceTree = "<group>"; };
@@ -397,7 +397,7 @@
 				D3BC4A912C3C8428009141C9 /* FoodDetailsViewController.swift */,
 				D3BC4A932C3C843E009141C9 /* FoodDetailsViewModel.swift */,
 				D3BC4A952C3C844B009141C9 /* FoodDetailsScreen.swift */,
-				D3BC4A9B2C3DC967009141C9 /* FoodDetailsScreenViewModel.swift */,
+				D3BC4A9B2C3DC967009141C9 /* FoodDetailsScreenDTO.swift */,
 			);
 			path = FoodDetails;
 			sourceTree = "<group>";
@@ -529,7 +529,7 @@
 				D3814F082BFD8A3200474D99 /* EmailVerificationScreen.swift in Sources */,
 				D32900AE2B682D7300D39016 /* RegisterUserRequest.swift in Sources */,
 				D3BC4A922C3C8428009141C9 /* FoodDetailsViewController.swift in Sources */,
-				D3BC4A9C2C3DC967009141C9 /* FoodDetailsScreenViewModel.swift in Sources */,
+				D3BC4A9C2C3DC967009141C9 /* FoodDetailsScreenDTO.swift in Sources */,
 				D349C2C82BDFD6EA001FBF33 /* ProductCategorieCell.swift in Sources */,
 				D3D0EC212C234F06004D4FB0 /* CustomNavigationController.swift in Sources */,
 				D3BC4A962C3C844B009141C9 /* FoodDetailsScreen.swift in Sources */,

@@ -17,9 +17,9 @@ class FoodDetailsViewController: UIViewController {
         view = FoodDetailsScreen()
     }
     
-    private let viewModel: FoodDetailsViewModel
+    private let viewModel: FoodDetailsViewModelProtocol
     
-    init(viewModel: FoodDetailsViewModel) {
+    init(viewModel: FoodDetailsViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -32,11 +32,34 @@ class FoodDetailsViewController: UIViewController {
         super.viewDidLoad()
         hideNavigationBar()
         customView?.delegate = self
+        customView?.updateUI(with: viewModel.getFoodDetailsDTO())
+    }
+}
+
+extension FoodDetailsViewController: FoodDetailsViewModelDelegate {
+    func favoriteTogleWith(state: Bool) {
+        customView?.updateFavoriteButtonState(state)
+    }
+    
+    func stepperDidChange(dto: StepperDTO) {
+        customView?.updateStepper(dto: dto)
     }
 }
 
 extension FoodDetailsViewController: FoodDetailsScreenDelegate {
+    func favoriteButtonDidTapped() {
+        viewModel.isFavoriteToggle()
+    }
+    
+    func minusButtonDidTapped() {
+        viewModel.decrementFood()
+    }
+    
+    func plusButtonDidTapped() {
+        viewModel.incrementFood()
+    }
+    
     func backButtonDidTapped() {
-        navigationController?.popViewController(animated: true)
+        viewModel.backToHome()
     }
 }

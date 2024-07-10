@@ -2,6 +2,9 @@ import UIKit
 
 protocol FoodDetailsScreenDelegate: AnyObject {
     func backButtonDidTapped()
+    func minusButtonDidTapped()
+    func plusButtonDidTapped()
+    func favoriteButtonDidTapped()
 }
 
 class FoodDetailsScreen: UIView {
@@ -35,7 +38,7 @@ class FoodDetailsScreen: UIView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "burger")
+        imageView.image = UIImage(named: "pepperoni-pizza")
         imageView.isUserInteractionEnabled = true
         imageView.layer.cornerRadius = 16
         return imageView
@@ -100,7 +103,7 @@ class FoodDetailsScreen: UIView {
     private lazy var deliveryTimeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "20 - 30"
+        label.text = "17:30 - 17:52"
         label.font = UIFont(name: "Inter-Regular", size: 14)
         label.textColor = UIColor(hexString: "878787")
         return label
@@ -121,9 +124,10 @@ class FoodDetailsScreen: UIView {
         button.tintColor = .white
         button.layer.borderWidth = 1
         
-        let action = UIAction(title: "Calls the delegate backButtonDidTapped function") { [weak self] _ in
+        let action = UIAction { [weak self] _ in
             self?.delegate?.backButtonDidTapped()
         }
+        
         button.addAction(action, for: .touchUpInside)
         return button
     }()
@@ -132,6 +136,11 @@ class FoodDetailsScreen: UIView {
         let button = CircularButton(iconImage: .init(systemName: "heart"), size: 36)
         button.layer.borderColor = UIColor.white.cgColor
         button.tintColor = .white
+        
+        let action = UIAction { [weak self] _ in
+            self?.delegate?.favoriteButtonDidTapped()
+        }
+        button.addAction(action, for: .touchUpInside)
         button.layer.borderWidth = 1
         return button
     }()
@@ -194,6 +203,11 @@ class FoodDetailsScreen: UIView {
         button.heightAnchor.constraint(equalToConstant: 40).isActive = true
         button.widthAnchor.constraint(equalToConstant: 40).isActive = true
         button.tintColor = .black
+        
+        let action = UIAction { [weak self] _ in
+            self?.delegate?.minusButtonDidTapped()
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
     
@@ -202,13 +216,17 @@ class FoodDetailsScreen: UIView {
         button.setImage(UIImage(named: "plus"), for: .normal)
         button.heightAnchor.constraint(equalToConstant: 40).isActive = true
         button.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        let action = UIAction { [weak self] _ in
+            self?.delegate?.plusButtonDidTapped()
+        }
+        button.addAction(action, for: .touchUpInside)
         button.tintColor = .black
         return button
     }()
     
     private lazy var foodQuantityLabel: UILabel = {
         let label = UILabel()
-        label.text = "1"
         label.font = UIFont(name: "Inter-SemiBold", size: 18)
         label.textColor = .black
         return label
@@ -244,13 +262,26 @@ class FoodDetailsScreen: UIView {
         return button
     }()
     
-    func updateUI(with viewModel: FoodDetailsScreenViewModel) {
+    func updateUI(with viewModel: FoodDetailsScreenDTO) {
         foodNameLabel.text = viewModel.title
         foodPriceLabel.text = viewModel.price
         deliveryFeeLabel.text = viewModel.deliveryFee
         deliveryTimeLabel.text = viewModel.estimatedDeliveryTime
+        foodQuantityLabel.text = viewModel.quantity
+        foodTotalPriceLabel.text = viewModel.price
         foodRateLabel.text = viewModel.rate
         descriptionTextLabel.text = viewModel.description
+        updateFavoriteButtonState(viewModel.isFavorite)
+    }
+    
+    func updateFavoriteButtonState(_ state: Bool) {
+        favoriteButton.setImage(state ? UIImage(systemName: "heart.fill")
+                                      : UIImage(systemName: "heart"), for: .normal)
+    }
+    
+    func updateStepper(dto: StepperDTO) {
+        foodTotalPriceLabel.text = dto.amount
+        foodQuantityLabel.text = dto.count
     }
     
     override func layoutSubviews() {
