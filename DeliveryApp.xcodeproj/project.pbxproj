@@ -66,6 +66,7 @@
 		D3BC4A962C3C844B009141C9 /* FoodDetailsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC4A952C3C844B009141C9 /* FoodDetailsScreen.swift */; };
 		D3BC4A9C2C3DC967009141C9 /* FoodDetailsScreenDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC4A9B2C3DC967009141C9 /* FoodDetailsScreenDTO.swift */; };
 		D3BC4AA02C3F31BE009141C9 /* StepperDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC4A9F2C3F31BE009141C9 /* StepperDTO.swift */; };
+		D3BC4AA32C3F34DC009141C9 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = D3BC4AA22C3F34DC009141C9 /* SDWebImage */; };
 		D3C72D5C2C0E4BB900059B25 /* ForgotPasswordBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C72D5B2C0E4BB900059B25 /* ForgotPasswordBuilder.swift */; };
 		D3C72D5E2C0E544400059B25 /* EmailVerificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C72D5D2C0E544400059B25 /* EmailVerificationViewModel.swift */; };
 		D3C72D602C0E54F800059B25 /* EmailVerificationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C72D5F2C0E54F800059B25 /* EmailVerificationBuilder.swift */; };
@@ -160,6 +161,7 @@
 			files = (
 				D3AAD7FE2B68153800DACD81 /* FirebaseDatabase in Frameworks */,
 				D3AAD8042B68153800DACD81 /* FirebaseFirestore in Frameworks */,
+				D3BC4AA32C3F34DC009141C9 /* SDWebImage in Frameworks */,
 				D3FFD39B2BEC8A5A0053A70E /* GoogleSignInSwift in Frameworks */,
 				D3AAD8082B68153800DACD81 /* FirebaseFirestoreSwift in Frameworks */,
 				D3AAD7F82B68153800DACD81 /* FirebaseAuth in Frameworks */,
@@ -461,6 +463,7 @@
 				D3AAD81D2B68153800DACD81 /* FirebaseStorage */,
 				D3FFD3982BEC8A5A0053A70E /* GoogleSignIn */,
 				D3FFD39A2BEC8A5A0053A70E /* GoogleSignInSwift */,
+				D3BC4AA22C3F34DC009141C9 /* SDWebImage */,
 			);
 			productName = DeliveryApp;
 			productReference = D3528C062B62FDF800FD5554 /* DeliveryApp.app */;
@@ -493,6 +496,7 @@
 			packageReferences = (
 				D3AAD7EA2B68153800DACD81 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				D3FFD3972BEC8A5A0053A70E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				D3BC4AA12C3F34DC009141C9 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = D3528C072B62FDF800FD5554 /* Products */;
 			projectDirPath = "";
@@ -812,6 +816,14 @@
 				minimumVersion = 10.20.0;
 			};
 		};
+		D3BC4AA12C3F34DC009141C9 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.19.4;
+			};
+		};
 		D3FFD3972BEC8A5A0053A70E /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
@@ -847,6 +859,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D3AAD7EA2B68153800DACD81 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		D3BC4AA22C3F34DC009141C9 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3BC4AA12C3F34DC009141C9 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
 		};
 		D3FFD3982BEC8A5A0053A70E /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
