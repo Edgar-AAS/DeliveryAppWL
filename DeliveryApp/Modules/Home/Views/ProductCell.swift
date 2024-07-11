@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ProductCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: ProductCell.self)
@@ -21,10 +22,10 @@ class ProductCell: UICollectionViewCell {
     
     private lazy var foodImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .gray
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 8
         imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -56,6 +57,7 @@ class ProductCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.heightAnchor.constraint(equalToConstant: 16).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 16).isActive = true
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -104,16 +106,26 @@ class ProductCell: UICollectionViewCell {
         return label
     }()
     
-    func setup(food: Food) {
-        let imageAsset = food.isFavorite ? "heart.fill" : "heart"
-        favoriteButton.setImage(UIImage(systemName: imageAsset), for: .normal)
-        foodNameLabel.text = food.name
-        foodRateLabel.text = food.rate
-        foodPriceLabel.text = food.price.currencyFormatWith(numberStyle: .currency)
-        distanceLabel.text = "\(food.distance)m"
+    func setup(viewModel: ProductCellViewModel) {
+        let favoriteImage = UIImage(systemName: viewModel.getFavoriteImageString)
+        favoriteButton.setImage(favoriteImage, for: .normal)
+        foodNameLabel.text = viewModel.getName
+        foodRateLabel.text = viewModel.getRate
+        foodPriceLabel.text = viewModel.getformattedPrice
+        distanceLabel.text = viewModel.getFormattedDistance
+        
+        let placeholderImage = UIImage(systemName: viewModel.getPlaceholderImageString)
+        foodImageView.sd_setImage(with: URL(string: viewModel.getFoodImage), placeholderImage: placeholderImage)
+    }
+    
+    private func setupShadow() {
+        backgroundColor = .white
+        layer.cornerRadius = 12
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = .init(width: 1, height: 2)
+        layer.shadowOpacity = 0.2
     }
 }
-
 
 extension Double {
     func currencyFormatWith(numberStyle: NumberFormatter.Style) -> String {
@@ -164,10 +176,6 @@ extension ProductCell: CodeView {
     }
     
     func setupAddiotionalConfiguration() {
-        backgroundColor = .white
-        layer.cornerRadius = 12
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = .init(width: 1, height: 2)
-        layer.shadowOpacity = 0.2
+        setupShadow()
     }
 }

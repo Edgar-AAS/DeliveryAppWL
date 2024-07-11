@@ -16,8 +16,7 @@ enum FoodCategoryType: String {
 }
 
 protocol HomeViewModelProtocol {
-    var foodDataSource: Observable<([Food], [String])> { get }
-    func fetchFoodsBy(category: FoodCategoryType, completion: @escaping ([Food], [String]) -> Void)
+    func fetchFoodsBy(category: FoodCategoryType, completion: @escaping ([Food], [FoodCategoryDTO]) -> Void)
     func goToDetailsScreen(food: Food)
     var numberOfRows: Int { get }
 }
@@ -25,7 +24,6 @@ protocol HomeViewModelProtocol {
 class HomeViewModel: HomeViewModelProtocol {
     private let httpGetService: HtttpGetClientProtocol
     private let coordinator: Coordinator
-    var foodDataSource: Observable<([Food], [String])> = Observable(value: ([], []))
     
     init(httpGetService: HtttpGetClientProtocol, coordinator: Coordinator) {
         self.httpGetService = httpGetService
@@ -36,14 +34,14 @@ class HomeViewModel: HomeViewModelProtocol {
         return 2
     }
     
-    func fetchFoodsBy(category: FoodCategoryType, completion: @escaping ([Food], [String]) -> Void) {
+    func fetchFoodsBy(category: FoodCategoryType, completion: @escaping ([Food], [FoodCategoryDTO]) -> Void) {
         httpGetService.get(with: URL(string: "any_url")!) { [weak self] result in
             guard self != nil else { return }
             switch result {
             case .success(let foodData):
                 if let foods: ProductCategories = foodData?.toModel(),
                    let foodByCategory = foods.categories.filter({$0.name == category.rawValue}).first?.products {
-                   let categoryNames = foods.categories.map { $0.name }
+                    let categoryNames = foods.categories.map { FoodCategoryDTO(name: $0.name, image: $0.image) }
                     
                     DispatchQueue.main.async {
                         completion(foodByCategory, categoryNames)

@@ -18,7 +18,7 @@ class HomeHeaderView: UIView {
     }
     
     private lazy var headerImageView: UIImageView = {
-        let image = UIImage(named: "background-black")
+        let image = UIImage(named: "header_background")
         let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true

@@ -6,7 +6,7 @@ protocol ProductCategorieCellDelegate: AnyObject {
 
 class ProductCategorieCell: UITableViewCell {
     static let reuseIdentifier = String(describing: ProductCategorieCell.self)
-    private var categories: [String] = []
+    private var categories: [FoodCategoryDTO] = []
     private var selectedIndex: IndexPath?
     
     weak var delegate: ProductCategorieCellDelegate?
@@ -36,7 +36,7 @@ class ProductCategorieCell: UITableViewCell {
         return collectionView
     }()
     
-    func setup(categories: [String]) {
+    func setup(categories: [FoodCategoryDTO]) {
         self.categories = categories
         categoryCollectionView.reloadData()
     }
@@ -55,7 +55,7 @@ extension ProductCategorieCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as? CategoryCell
-        cell?.setup(viewModel: CategoryCell.CategoryViewModel(image: nil, name: categories[indexPath.row]))
+        cell?.setup(viewModel: categories[indexPath.item])
         
         if indexPath == IndexPath(item: .zero, section: .zero) {
             cell?.selectedStyle()
@@ -76,7 +76,7 @@ extension ProductCategorieCell: UICollectionViewDelegate {
             }
             selectedIndex = indexPath
             
-            if let categoryType = FoodCategoryType(rawValue: categories[indexPath.item]) {
+            if let categoryType = FoodCategoryType(rawValue: categories[indexPath.item].name) {
                 delegate?.productCategoryDidTapped(type: categoryType)
             }
         }

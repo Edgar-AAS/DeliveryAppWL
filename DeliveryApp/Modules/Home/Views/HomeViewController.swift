@@ -5,7 +5,7 @@ class HomeViewController: UIViewController {
         return view as? HomeScreen
     }()
     
-    private var foodDataSource: (foods: [Food], categories: [String]) = ([],[])
+    private var foodDataSource: (foods: [Food], categories: [FoodCategoryDTO]) = ([],[])
     private var viewModel: HomeViewModelProtocol
     
     init(viewModel: HomeViewModelProtocol) {
@@ -42,7 +42,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
             let headerHeight = customView?.headerView.frame.size.height ?? 0.0
             let stackHeight = customView?.categoryLabelAndButtonStack.frame.size.height ?? 0.0
-            let heightRemaning = view.frame.size.height - (stackHeight + headerHeight + 130)
+            let heightRemaning = view.frame.size.height - (stackHeight + headerHeight + 140)
             return heightRemaning
         } else {
             return UITableView.automaticDimension

@@ -8,11 +8,6 @@
 import UIKit
 
 class CategoryCell: UICollectionViewCell {
-    struct CategoryViewModel {
-        let image: String?
-        let name: String
-    }
-    
     static let reuseIdentifier = String(describing: CategoryCell.self)
     
     override init(frame: CGRect) {
@@ -51,8 +46,9 @@ class CategoryCell: UICollectionViewCell {
         categoryName.textColor = UIColor(hexString: "878787")
     }
     
-    func setup(viewModel: CategoryViewModel) {
+    func setup(viewModel: FoodCategoryDTO) {
         categoryName.text = viewModel.name
+        categoryIconImageView.sd_setImage(with: URL(string: viewModel.image))
     }
 }
 

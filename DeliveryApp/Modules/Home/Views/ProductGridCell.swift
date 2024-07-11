@@ -39,7 +39,7 @@ class ProductGridCell: UITableViewCell {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.contentInset = .init(top: 10, left: 24, bottom: 0, right: 24)
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .green
+        collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.reuseIdentifier)
@@ -88,7 +88,9 @@ extension ProductGridCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath) as? ProductCell
-        cell?.setup(food: foodData[indexPath.row])
+        let food = foodData[indexPath.item]
+        let viewModel = ProductCellViewModel(foodData: food)
+        cell?.setup(viewModel: viewModel)
         return cell ?? UICollectionViewCell()
     }
 }

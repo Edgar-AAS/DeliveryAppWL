@@ -266,6 +266,8 @@ class FoodDetailsScreen: UIView {
         foodRateLabel.text = viewModel.rate
         descriptionTextLabel.text = viewModel.description
         updateFavoriteButtonState(viewModel.isFavorite)
+        let placeholderImage = UIImage(systemName: "photo")
+        foodImageView.sd_setImage(with: URL(string: viewModel.image), placeholderImage: placeholderImage)
     }
     
     func updateFavoriteButtonState(_ state: Bool) {
@@ -353,7 +355,7 @@ extension FoodDetailsScreen: CodeView {
             descriptionTextLabel.topAnchor.constraint(equalTo: descriptionTitleLabel.bottomAnchor, constant: 8),
             descriptionTextLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 24),
             descriptionTextLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -24),
-            descriptionTextLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -120),
+            descriptionTextLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -140),
             
             bottomView.leadingAnchor.constraint(equalTo: leadingAnchor),
             bottomView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -371,7 +373,7 @@ extension FoodDetailsScreen: CodeView {
             addToCardButton.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 24),
             addToCardButton.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -24),
             addToCardButton.heightAnchor.constraint(equalToConstant: 52),
-            addToCardButton.bottomAnchor.constraint(equalTo: bottomView.bottomAnchor, constant: -24)
+            addToCardButton.bottomAnchor.constraint(equalTo: bottomView.bottomAnchor, constant: -48)
         ])
     }
 }

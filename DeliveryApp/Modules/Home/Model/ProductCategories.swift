@@ -14,6 +14,7 @@ struct ProductCategories: Decodable {
 // MARK: - Category
 struct FoodCategory: Decodable {
     let name: String
+    let image: String
     let products: [Food]
 }
 

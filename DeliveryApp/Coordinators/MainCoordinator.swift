@@ -48,9 +48,7 @@ class MainCoordinator: Coordinator {
             let viewController = EmailVerificationBuilder.build(coordinator: self, user: user)
             navigationController?.pushViewController(viewController)
         case .goToFoodDetails(let foodData):
-            let viewModel = FoodDetailsViewModel(foodModel: foodData, coordinator: self)
-            let viewController = FoodDetailsViewController(viewModel: viewModel)
-            viewModel.delegate = viewController
+            let viewController = FoodDetailsBuilder.build(coordinator: self, foodModel: foodData)
             navigationController?.pushViewController(viewController)
         case .backToHome:
             navigationController?.popViewController()
