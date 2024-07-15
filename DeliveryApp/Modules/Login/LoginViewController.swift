@@ -30,7 +30,6 @@ class LoginViewController: UIViewController {
         hideKeyboardOnTap()
     }
     
-    
     private func setupButtonsTarget() {
         customView?.emailTextField.delegate = self
         customView?.passwordTextField.delegate = self
@@ -76,6 +75,7 @@ extension LoginViewController {
     }
 }
 
+//MARK: - Delegate Actions
 extension LoginViewController: LoginScreenDelegateProtocol {
     func loginWithGoogleButtonDidTapped() {
         loginWithGoogleTap()

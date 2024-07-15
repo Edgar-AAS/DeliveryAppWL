@@ -41,19 +41,12 @@ final class LoginScreen: UIView {
         return view
     }()
     
-    private lazy var backgroundImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "")
-        return imageView
-    }()
-    
     private let loginAccountHeadlineLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Login to your account."
+        label.text = "Welcome back"
         label.font = Fonts.semiBold(size: 32).weight
-        label.textAlignment = .left
+        label.textAlignment = .center
         label.textColor = .black
         label.numberOfLines = 0
         return label
@@ -62,9 +55,9 @@ final class LoginScreen: UIView {
     private let signInLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Please sign in to your account."
+        label.text = "Login to your account."
         label.font = Fonts.medium(size: 16).weight
-        label.textAlignment = .left
+        label.textAlignment = .center
         label.numberOfLines = 0
         label.textColor = Colors.descriptionTextColor
         return label
@@ -120,7 +113,6 @@ final class LoginScreen: UIView {
         button.contentHorizontalAlignment = .right
         return button
     }()
-    
     
     private lazy var loginButton: UIButton = {
         let button = UIButton(type: .system)
@@ -256,7 +248,7 @@ extension LoginScreen: CodeView {
             signInLabel.leadingAnchor.constraint(equalTo: loginAccountHeadlineLabel.leadingAnchor),
             signInLabel.trailingAnchor.constraint(equalTo: loginAccountHeadlineLabel.trailingAnchor),
             
-            emailAdressLabel.topAnchor.constraint(equalTo: signInLabel.bottomAnchor, constant: 64),
+            emailAdressLabel.topAnchor.constraint(equalTo: signInLabel.bottomAnchor, constant: 48),
             emailAdressLabel.leadingAnchor.constraint(equalTo: loginAccountHeadlineLabel.leadingAnchor),
             emailAdressLabel.trailingAnchor.constraint(equalTo: loginAccountHeadlineLabel.trailingAnchor),
             
