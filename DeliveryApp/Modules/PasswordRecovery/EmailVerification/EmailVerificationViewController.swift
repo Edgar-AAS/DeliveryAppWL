@@ -8,8 +8,6 @@
 import UIKit
 
 class EmailVerificationViewController: UIViewController {
-    
-    // MARK: - Properties
     private lazy var customView: EmailVerificationScreen? = {
         return view as? EmailVerificationScreen
     }()
@@ -18,7 +16,6 @@ class EmailVerificationViewController: UIViewController {
     
     private let viewModel: EmailVerificationViewModelProtocol
     
-    // MARK: - Initialization
     init(viewModel: EmailVerificationViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -28,7 +25,6 @@ class EmailVerificationViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Lifecycle
     override func loadView() {
         view = EmailVerificationScreen()
     }
@@ -39,7 +35,6 @@ class EmailVerificationViewController: UIViewController {
         bindViewModel()
     }
     
-    // MARK: - Setup
     private func setupView() {
         customView?.setupTextFieldsDelegate(delegate: self)
         customView?.resendCodeButton.addTarget(self, action: #selector(resendButtonTap), for: .touchUpInside)
@@ -47,7 +42,6 @@ class EmailVerificationViewController: UIViewController {
         customView?.appendEmail(email: viewModel.getEmailAdress)
     }
     
-    // MARK: - ViewModel Binding
     private func bindViewModel() {
         viewModel.timerOutput.bind { [weak self] timer in
             DispatchQueue.main.async {
@@ -62,7 +56,6 @@ class EmailVerificationViewController: UIViewController {
         }
     }
     
-    // MARK: - Actions
     @objc private func resendButtonTap() {
         viewModel.sendPasswordReset()
     }
@@ -93,7 +86,6 @@ extension EmailVerificationViewController: UITextFieldDelegate {
         updateOtpCode(for: textField, with: text)
     }
     
-    // MARK: - Private Methods
     private func updateOtpCode(for textField: UITextField, with text: String) {
         guard let customView = customView else { return }
         

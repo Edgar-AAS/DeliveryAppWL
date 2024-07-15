@@ -32,12 +32,9 @@ final class CustomTextField: UITextField {
     }
     
     private func setup() {
-        layer.borderWidth = 1
-        layer.borderColor = UIColor(hexString: "D6D6D6").cgColor
         layer.cornerRadius = 8
         backgroundColor = .white
         tintColor = .black
-        textColor = .black
         borderStyle = .roundedRect
         placeholder = exampleText
         

@@ -34,8 +34,6 @@ class LoginViewController: UIViewController {
     private func setupButtonsTarget() {
         customView?.emailTextField.delegate = self
         customView?.passwordTextField.delegate = self
-        customView?.signInButton.addTarget(self, action: #selector(signInButtonTap), for: .touchUpInside)
-        customView?.registerButton.addTarget(self, action: #selector(goToRegisterButtonTap), for: .touchUpInside)
         customView?.delegate = self
     }
 }
@@ -45,29 +43,16 @@ extension LoginViewController: UITextFieldDelegate {
         if textField.tag == 0  {
             customView?.passwordTextField.becomeFirstResponder()
         } else if textField.tag == 1 {
-            signInButtonTap()
+            signInButtonDidTapped()
             customView?.passwordTextField.resignFirstResponder()
         }
         return true
     }
 }
 
+//MARK: - Google Login
 extension LoginViewController {
-    @objc private func signInButtonTap() {
-        guard 
-            let email = customView?.emailTextField.text,
-            let password = customView?.passwordTextField.text else 
-        { return }
-        
-        let loginRequest = LoginUserRequest(email: email, password: password)
-        viewModel.signIn(loginRequest: loginRequest)
-    }
-    
-    @objc private func goToRegisterButtonTap() {
-        viewModel.goToSignUp()
-    }
-    
-    @objc private func loginWithGoogleTap() {
+    private func loginWithGoogleTap() {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         
         let config = GIDConfiguration(clientID: clientID)
@@ -92,19 +77,24 @@ extension LoginViewController {
 }
 
 extension LoginViewController: LoginScreenDelegateProtocol {
-    func forgotPasswordButtonDidTapped() {
-        viewModel.goToForgotPassword()
+    func loginWithGoogleButtonDidTapped() {
+        loginWithGoogleTap()
     }
     
-    func alternativeLoginButtonDidTapped(loginMethod: LoginMethod) {
-        switch loginMethod {
-        case .googleAccount:
-            loginWithGoogleTap()
-        case .facebookAccount:
-            print("Facebook Account")
-        case .appleAccount:
-            print("Apple Account")
+    func registerButtonDidTapped() {
+        viewModel.goToSignUp()
+    }
+    
+    func signInButtonDidTapped() {
+        if let email = customView?.emailTextField.text,
+           let password = customView?.passwordTextField.text {
+            let loginRequest = LoginUserRequest(email: email, password: password)
+            viewModel.signIn(loginRequest: loginRequest)
         }
+    }
+    
+    func forgotPasswordButtonDidTapped() {
+        viewModel.goToForgotPassword()
     }
 }
 

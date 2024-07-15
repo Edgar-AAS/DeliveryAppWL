@@ -35,7 +35,7 @@ class HomeScreen: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Find by Category"
         label.textColor = .black
-        label.font = UIFont(name: "Inter-SemiBold", size: 16)
+        label.font = Fonts.semiBold(size: 16).weight
         return label
     }()
     
@@ -43,8 +43,8 @@ class HomeScreen: UIView {
         let button = UIButton(type:  .system)
         button.setTitle("See All", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.titleLabel?.font = UIFont(name: "Inter-Bold", size: 14)
-        button.setTitleColor(UIColor(hexString: "FE8C00"), for: .normal)
+        button.titleLabel?.font = Fonts.bold(size: 14).weight
+        button.setTitleColor(Colors.primaryColor, for: .normal)
         return button
     }()
     
@@ -92,6 +92,6 @@ extension HomeScreen: CodeView {
     }
     
     func setupAddiotionalConfiguration() {
-        backgroundColor = .white
+        backgroundColor = Colors.backgroundColor
     }
 }

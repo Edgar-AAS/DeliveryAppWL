@@ -64,6 +64,9 @@
 		D3ABE7F92C4031C4006D74F9 /* FoodCategoryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ABE7F82C4031C4006D74F9 /* FoodCategoryDTO.swift */; };
 		D3ABE7FB2C403782006D74F9 /* FoodDetailsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ABE7FA2C403782006D74F9 /* FoodDetailsBuilder.swift */; };
 		D3ABE8022C403F9B006D74F9 /* ProductCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ABE8012C403F9B006D74F9 /* ProductCellViewModel.swift */; };
+		D3ABE8052C40478F006D74F9 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ABE8042C40478F006D74F9 /* Colors.swift */; };
+		D3ABE8072C404E99006D74F9 /* DoubleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ABE8062C404E99006D74F9 /* DoubleExtensions.swift */; };
+		D3ABE8092C404F7A006D74F9 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ABE8082C404F7A006D74F9 /* Fonts.swift */; };
 		D3BC4A922C3C8428009141C9 /* FoodDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC4A912C3C8428009141C9 /* FoodDetailsViewController.swift */; };
 		D3BC4A942C3C843E009141C9 /* FoodDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC4A932C3C843E009141C9 /* FoodDetailsViewModel.swift */; };
 		D3BC4A962C3C844B009141C9 /* FoodDetailsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC4A952C3C844B009141C9 /* FoodDetailsScreen.swift */; };
@@ -141,6 +144,9 @@
 		D3ABE7F82C4031C4006D74F9 /* FoodCategoryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCategoryDTO.swift; sourceTree = "<group>"; };
 		D3ABE7FA2C403782006D74F9 /* FoodDetailsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailsBuilder.swift; sourceTree = "<group>"; };
 		D3ABE8012C403F9B006D74F9 /* ProductCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCellViewModel.swift; sourceTree = "<group>"; };
+		D3ABE8042C40478F006D74F9 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		D3ABE8062C404E99006D74F9 /* DoubleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExtensions.swift; sourceTree = "<group>"; };
+		D3ABE8082C404F7A006D74F9 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		D3BC4A912C3C8428009141C9 /* FoodDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailsViewController.swift; sourceTree = "<group>"; };
 		D3BC4A932C3C843E009141C9 /* FoodDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailsViewModel.swift; sourceTree = "<group>"; };
 		D3BC4A952C3C844B009141C9 /* FoodDetailsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailsScreen.swift; sourceTree = "<group>"; };
@@ -226,7 +232,6 @@
 		D3528BFD2B62FDF800FD5554 = {
 			isa = PBXGroup;
 			children = (
-				D3BC4A8D2C3B3BE5009141C9 /* Constants */,
 				D375D38E2B67031A009DB3C4 /* Fonts */,
 				D3528C082B62FDF800FD5554 /* DeliveryApp */,
 				D3528C072B62FDF800FD5554 /* Products */,
@@ -244,13 +249,14 @@
 		D3528C082B62FDF800FD5554 /* DeliveryApp */ = {
 			isa = PBXGroup;
 			children = (
+				D3ABE8032C404782006D74F9 /* Constants */,
 				D3C72D612C0FA31F00059B25 /* Observable */,
 				D32900B62B685E8200D39016 /* Coordinators */,
 				D32900AF2B68416200D39016 /* EmailValidator */,
 				D32900A72B681DEB00D39016 /* Services */,
 				D3528C322B633DD900FD5554 /* Components */,
 				D32900B22B6842FC00D39016 /* ViewProtocols */,
-				D3528C272B63157D00FD5554 /* ViewHelpers */,
+				D3528C272B63157D00FD5554 /* Extensions */,
 				D3528C1D2B6311F600FD5554 /* Modules */,
 				D3528C092B62FDF900FD5554 /* AppDelegate.swift */,
 				D3528C0B2B62FDF900FD5554 /* SceneDelegate.swift */,
@@ -286,15 +292,16 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		D3528C272B63157D00FD5554 /* ViewHelpers */ = {
+		D3528C272B63157D00FD5554 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				D3528C282B63159300FD5554 /* CodeView.swift */,
 				D3528C2E2B63295100FD5554 /* UIColorExtensions.swift */,
 				D3528C352B63EB0800FD5554 /* UIViewExtensions.swift */,
 				D34B005E2B693FA800B74069 /* UIViewControllerExtensions.swift */,
+				D3ABE8062C404E99006D74F9 /* DoubleExtensions.swift */,
 			);
-			path = ViewHelpers;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		D3528C322B633DD900FD5554 /* Components */ = {
@@ -428,9 +435,11 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		D3BC4A8D2C3B3BE5009141C9 /* Constants */ = {
+		D3ABE8032C404782006D74F9 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				D3ABE8042C40478F006D74F9 /* Colors.swift */,
+				D3ABE8082C404F7A006D74F9 /* Fonts.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -575,7 +584,9 @@
 				D34411AC2BE58C3200AC85EC /* FieldDescription.swift in Sources */,
 				D32900AC2B682D4F00D39016 /* Model.swift in Sources */,
 				D3814F082BFD8A3200474D99 /* EmailVerificationScreen.swift in Sources */,
+				D3ABE8072C404E99006D74F9 /* DoubleExtensions.swift in Sources */,
 				D3ABE7F92C4031C4006D74F9 /* FoodCategoryDTO.swift in Sources */,
+				D3ABE8052C40478F006D74F9 /* Colors.swift in Sources */,
 				D32900AE2B682D7300D39016 /* RegisterUserRequest.swift in Sources */,
 				D3BC4A922C3C8428009141C9 /* FoodDetailsViewController.swift in Sources */,
 				D3BC4A9C2C3DC967009141C9 /* FoodDetailsScreenDTO.swift in Sources */,
@@ -617,6 +628,7 @@
 				D361B6422C11F7490043E765 /* ResetPasswordViewController.swift in Sources */,
 				D3ABE7FB2C403782006D74F9 /* FoodDetailsBuilder.swift in Sources */,
 				D381B9252BFAD707009D8010 /* ForgotPasswordViewController.swift in Sources */,
+				D3ABE8092C404F7A006D74F9 /* Fonts.swift in Sources */,
 				D3ABE8022C403F9B006D74F9 /* ProductCellViewModel.swift in Sources */,
 				D3F00ED72B66DEFC0029BAF1 /* CircularButton.swift in Sources */,
 				D381B9272BFAD754009D8010 /* ForgotPasswordScreen.swift in Sources */,

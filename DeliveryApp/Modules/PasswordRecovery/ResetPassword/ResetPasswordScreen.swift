@@ -22,7 +22,7 @@ class ResetPasswordScreen: UIView {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.isDirectionalLockEnabled = true
         scrollView.showsVerticalScrollIndicator = false
-        scrollView.backgroundColor = .white
+        scrollView.backgroundColor = Colors.backgroundColor
         return scrollView
     }()
     
@@ -36,7 +36,7 @@ class ResetPasswordScreen: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Reset Password"
-        label.font = UIFont(name: "Inter-SemiBold", size: 32)
+        label.font = Fonts.semiBold(size: 32).weight
         label.textAlignment = .left
         label.textColor = .black
         label.numberOfLines = 0
@@ -47,10 +47,10 @@ class ResetPasswordScreen: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Your new password must be different from the previously used password"
-        label.font = UIFont(name: "Inter-Medium", size: 14)
+        label.font = Fonts.medium(size: 14).weight
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.textColor = UIColor(hexString: "878787")
+        label.textColor = Colors.descriptionTextColor
         return label
     }()
     
@@ -59,12 +59,12 @@ class ResetPasswordScreen: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "New Password"
         label.textColor = .black
-        label.font = UIFont(name: "Inter-Medium", size: 14)
+        label.font = Fonts.medium(size: 14).weight
         label.textAlignment = .left
         return label
     }()
     
-    lazy var newPasswordField: CustomTextField = {
+    private lazy var newPasswordField: CustomTextField = {
         let textField = CustomTextField(exampleText: "New Password", isPassword: true, fieldType: .password)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.keyboardType = .asciiCapable
@@ -76,25 +76,25 @@ class ResetPasswordScreen: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Confirm Password"
         label.textColor = .black
-        label.font = UIFont(name: "Inter-Medium", size: 14)
+        label.font = Fonts.medium(size: 14).weight
         label.textAlignment = .left
         return label
     }()
     
-    lazy var confirmPasswordField: CustomTextField = {
+    private lazy var confirmPasswordField: CustomTextField = {
         let textField = CustomTextField(exampleText: "Confirm Password", isPassword: true, fieldType: .password)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.keyboardType = .asciiCapable
         return textField
     }()
     
-    lazy var continueButton: UIButton = {
+    private  lazy var continueButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Verify Account", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Inter-Bold", size: 14)
-        button.backgroundColor = .black
+        button.titleLabel?.font = Fonts.bold(size: 14).weight
+        button.backgroundColor = Colors.primaryColor
         button.layer.cornerRadius = 26
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOffset = CGSize(width: 0, height: 2)

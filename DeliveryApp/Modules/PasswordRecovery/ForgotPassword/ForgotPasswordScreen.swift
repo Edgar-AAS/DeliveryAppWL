@@ -44,7 +44,7 @@ class ForgotPasswordScreen: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Forgot password?"
-        label.font = UIFont(name: "Inter-SemiBold", size: 32)
+        label.font = Fonts.semiBold(size: 32).weight
         label.textAlignment = .left
         label.textColor = .black
         label.numberOfLines = 0
@@ -55,10 +55,10 @@ class ForgotPasswordScreen: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Enter your email address and we’ll send you confirmation code to reset your password"
-        label.font = UIFont(name: "Inter-Medium", size: 14)
+        label.font = Fonts.medium(size: 14).weight
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.textColor = UIColor(hexString: "878787")
+        label.textColor = Colors.descriptionTextColor
         return label
     }()
     
@@ -67,7 +67,7 @@ class ForgotPasswordScreen: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Email Address"
         label.textColor = .black
-        label.font = UIFont(name: "Inter-Medium", size: 14)
+        label.font = Fonts.medium(size: 14).weight
         label.textAlignment = .left
         return label
     }()
@@ -89,7 +89,7 @@ class ForgotPasswordScreen: UIView {
         button.setTitle("Continue", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(continueButtonTap), for: .touchUpInside)
-        button.titleLabel?.font = UIFont(name: "Inter-Bold", size: 14)
+        button.titleLabel?.font = Fonts.bold(size: 14).weight
         button.backgroundColor = .black
         button.layer.cornerRadius = 26
         button.layer.shadowColor = UIColor.black.cgColor

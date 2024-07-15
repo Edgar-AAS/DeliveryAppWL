@@ -8,7 +8,7 @@
 import Foundation
 
 class LoginBuilder {
-    static func build(coordinator: Coordinator) -> LoginViewController {
+    static func build(coordinator: MainCoordinator) -> LoginViewController {
         let emailValidator = EmailValidatorAdapter()
         let userSignIn = FirebaseSignIn()
         let viewModel = LoginViewModel(emailValidator: emailValidator,

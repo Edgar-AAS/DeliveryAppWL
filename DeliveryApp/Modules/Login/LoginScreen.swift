@@ -7,15 +7,11 @@
 
 import UIKit
 
-enum LoginMethod {
-    case googleAccount
-    case facebookAccount
-    case appleAccount
-}
-
 protocol LoginScreenDelegateProtocol: AnyObject {
-    func alternativeLoginButtonDidTapped(loginMethod: LoginMethod)
     func forgotPasswordButtonDidTapped()
+    func signInButtonDidTapped()
+    func loginWithGoogleButtonDidTapped()
+    func registerButtonDidTapped()
 }
 
 final class LoginScreen: UIView {
@@ -35,7 +31,7 @@ final class LoginScreen: UIView {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.isDirectionalLockEnabled = true
         scrollView.showsVerticalScrollIndicator = false
-        scrollView.backgroundColor = .white
+        scrollView.backgroundColor = Colors.backgroundColor
         return scrollView
     }()
     
@@ -45,11 +41,18 @@ final class LoginScreen: UIView {
         return view
     }()
     
+    private lazy var backgroundImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "")
+        return imageView
+    }()
+    
     private let loginAccountHeadlineLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Login to your account."
-        label.font = UIFont(name: "Inter-SemiBold", size: 32)
+        label.font = Fonts.semiBold(size: 32).weight
         label.textAlignment = .left
         label.textColor = .black
         label.numberOfLines = 0
@@ -59,11 +62,11 @@ final class LoginScreen: UIView {
     private let signInLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Please sign in to your account"
-        label.font = UIFont(name: "Inter-Medium", size: 14)
+        label.text = "Please sign in to your account."
+        label.font = Fonts.medium(size: 16).weight
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.textColor = UIColor(hexString: "878787")
+        label.textColor = Colors.descriptionTextColor
         return label
     }()
     
@@ -72,7 +75,7 @@ final class LoginScreen: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Email Address"
         label.textColor = .black
-        label.font = UIFont(name: "Inter-Medium", size: 14)
+        label.font = Fonts.medium(size: 16).weight
         label.textAlignment = .left
         return label
     }()
@@ -86,7 +89,6 @@ final class LoginScreen: UIView {
         textField.autocapitalizationType = .none
         textField.returnKeyType = .next
         textField.autocorrectionType = .no
-        textField.becomeFirstResponder()
         return textField
     }()
     
@@ -95,7 +97,7 @@ final class LoginScreen: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Password"
         label.textColor = .black
-        label.font = UIFont(name: "Inter-Medium", size: 14)
+        label.font = Fonts.medium(size: 16).weight
         label.textAlignment = .left
         return label
     }()
@@ -113,22 +115,29 @@ final class LoginScreen: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Forgot password?", for: .normal)
         button.addTarget(self, action: #selector(forgotPasswordTap), for: .touchUpInside)
-        button.setTitleColor(.orange, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Inter-Medium", size: 14)
+        button.setTitleColor(Colors.primaryColor, for: .normal)
+        button.titleLabel?.font = Fonts.medium(size: 14).weight
         button.contentHorizontalAlignment = .right
         return button
     }()
     
-    lazy var signInButton: UIButton = {
+    
+    private lazy var loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Sign In", for: .normal)
+        button.setTitle("Login", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Inter-SemiBold", size: 14)
-        button.backgroundColor = .black
+        button.titleLabel?.font = Fonts.semiBold(size: 14).weight
+        button.backgroundColor = Colors.primaryColor
         button.layer.cornerRadius = 26
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        
+        let action = UIAction { [weak self] _ in
+            self?.delegate?.signInButtonDidTapped()
+        }
+        
+        button.addAction(action, for: .touchUpInside)
         button.layer.shadowOpacity = 0.4
         button.layer.shadowRadius = 4
         return button
@@ -136,58 +145,39 @@ final class LoginScreen: UIView {
     
     private let signInOptionsLabel: UILabel = {
         let label = UILabel()
-        label.text = "Or sign in with"
-        label.textColor = UIColor(hexString: "878787")
-        label.font = UIFont(name: "Inter-Medium", size: 14)
+        label.text = "Or Login with"
+        label.textColor = Colors.descriptionTextColor
+        label.font = Fonts.medium(size: 14).weight
         label.textAlignment = .center
         return label
     }()
     
-    private lazy var separatorStackView = makeStackView(with: [makeSeparatorView(color: UIColor(hexString: "878787")),
+    private lazy var separatorStackView = makeStackView(with: [makeSeparatorView(color: Colors.descriptionTextColor),
                                                                signInOptionsLabel,
-                                                               makeSeparatorView(color: UIColor(hexString: "878787"))],
+                                                               makeSeparatorView(color: Colors.descriptionTextColor)],
                                                         aligment: .center,
                                                         distribution: .fillEqually,
                                                         spacing: 16,
                                                         axis: .horizontal)
     
-    lazy var loginWithGoogleButton: CircularButton = {
-        let button = CircularButton(iconImage: UIImage(named: "google-button-icon"), size: 44)
-        button.tag = 1
-        button.addTarget(self, action: #selector(alternativeLoginButtonTap), for: .touchUpInside)
+    private lazy var loginWithGoogleButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "google-icon"), for: .normal)
+        button.setTitle("Login with Google", for: .normal)
+        button.titleLabel?.font = Fonts.medium(size: 14).weight
+        button.layer.borderColor = Colors.grayBorderColor.cgColor
+        button.setTitleColor(.black, for: .normal)
         button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.lightGray.cgColor
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
+        
+        let action = UIAction { [weak self] _ in
+            self?.delegate?.loginWithGoogleButtonDidTapped()
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
     
-    lazy var loginWithFacebookButton: CircularButton = {
-        let button = CircularButton(iconImage: UIImage(named: "facebook-button-icon"), size: 44)
-        button.addTarget(self, action: #selector(alternativeLoginButtonTap), for: .touchUpInside)
-        button.tag = 2
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.lightGray.cgColor
-        return button
-    }()
-    
-    lazy var loginWithAppleButton: CircularButton = {
-        let button = CircularButton(iconImage: UIImage(named: "apple-button-icon"), size: 44)
-        button.tag = 3
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.lightGray.cgColor
-        button.addTarget(self,
-                         action: #selector(alternativeLoginButtonTap),
-                         for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var buttonStack = makeStackView(with: [loginWithGoogleButton,
-                                                        loginWithFacebookButton,
-                                                        loginWithAppleButton],
-                                                 aligment: .center,
-                                                 spacing: 16,
-                                                 axis: .horizontal)
-
-
     private let dontHaveAccountLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -197,12 +187,17 @@ final class LoginScreen: UIView {
         return label
     }()
     
-    lazy var registerButton: UIButton = {
+    private lazy var registerButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Register", for: .normal)
-        button.setTitleColor(.orange, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Inter-SemiBold", size: 14)
+        button.setTitleColor(Colors.primaryColor, for: .normal)
+        button.titleLabel?.font = Fonts.semiBold(size: 14).weight
+        
+        let action = UIAction { [weak self] _ in
+            self?.delegate?.registerButtonDidTapped()
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
     
@@ -216,20 +211,9 @@ final class LoginScreen: UIView {
         delegate?.forgotPasswordButtonDidTapped()
     }
     
-    
-    @objc func alternativeLoginButtonTap(_ sender: UIButton) {
-        let buttonType: LoginMethod
-        
-        switch sender.tag {
-            case 1:
-                buttonType = .googleAccount
-            case 2:
-                buttonType = .facebookAccount
-            case 3:
-                buttonType = .appleAccount
-            default: return
-        }
-        delegate?.alternativeLoginButtonDidTapped(loginMethod: buttonType)
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        loginWithGoogleButton.makeCornerRadius()
     }
 }
 
@@ -244,9 +228,9 @@ extension LoginScreen: CodeView {
         containerView.addSubview(passwordLabel)
         containerView.addSubview(passwordTextField)
         containerView.addSubview(forgotPasswordButton)
-        containerView.addSubview(signInButton)
+        containerView.addSubview(loginButton)
         containerView.addSubview(separatorStackView)
-        containerView.addSubview(buttonStack)
+        containerView.addSubview(loginWithGoogleButton)
         containerView.addSubview(registerStack)
     }
     
@@ -272,7 +256,7 @@ extension LoginScreen: CodeView {
             signInLabel.leadingAnchor.constraint(equalTo: loginAccountHeadlineLabel.leadingAnchor),
             signInLabel.trailingAnchor.constraint(equalTo: loginAccountHeadlineLabel.trailingAnchor),
             
-            emailAdressLabel.topAnchor.constraint(equalTo: signInLabel.bottomAnchor, constant: 24),
+            emailAdressLabel.topAnchor.constraint(equalTo: signInLabel.bottomAnchor, constant: 64),
             emailAdressLabel.leadingAnchor.constraint(equalTo: loginAccountHeadlineLabel.leadingAnchor),
             emailAdressLabel.trailingAnchor.constraint(equalTo: loginAccountHeadlineLabel.trailingAnchor),
             
@@ -281,7 +265,7 @@ extension LoginScreen: CodeView {
             emailTextField.trailingAnchor.constraint(equalTo: loginAccountHeadlineLabel.trailingAnchor),
             emailTextField.heightAnchor.constraint(equalToConstant: 52),
             
-            passwordLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 24),
+            passwordLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 32),
             passwordLabel.leadingAnchor.constraint(equalTo: loginAccountHeadlineLabel.leadingAnchor),
             passwordLabel.trailingAnchor.constraint(equalTo: loginAccountHeadlineLabel.trailingAnchor),
             
@@ -293,22 +277,27 @@ extension LoginScreen: CodeView {
             forgotPasswordButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 8),
             forgotPasswordButton.leadingAnchor.constraint(greaterThanOrEqualTo: loginAccountHeadlineLabel.leadingAnchor),
             forgotPasswordButton.trailingAnchor.constraint(equalTo: loginAccountHeadlineLabel.trailingAnchor),
+            forgotPasswordButton.heightAnchor.constraint(equalToConstant: 44),
             
-            signInButton.topAnchor.constraint(equalTo: forgotPasswordButton.bottomAnchor, constant: 24),
-            signInButton.leadingAnchor.constraint(equalTo: loginAccountHeadlineLabel.leadingAnchor),
-            signInButton.trailingAnchor.constraint(equalTo: loginAccountHeadlineLabel.trailingAnchor),
-            signInButton.heightAnchor.constraint(equalToConstant: 52),
+            loginButton.topAnchor.constraint(equalTo: forgotPasswordButton.bottomAnchor, constant: 24),
+            loginButton.leadingAnchor.constraint(equalTo: loginAccountHeadlineLabel.leadingAnchor),
+            loginButton.trailingAnchor.constraint(equalTo: loginAccountHeadlineLabel.trailingAnchor),
+            loginButton.heightAnchor.constraint(equalToConstant: 52),
             
-            separatorStackView.topAnchor.constraint(equalTo: signInButton.bottomAnchor, constant: 24),
+            separatorStackView.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 48),
             separatorStackView.leadingAnchor.constraint(equalTo: loginAccountHeadlineLabel.leadingAnchor),
             separatorStackView.trailingAnchor.constraint(equalTo: loginAccountHeadlineLabel.trailingAnchor),
+            separatorStackView.heightAnchor.constraint(equalToConstant: 40),
             
-            buttonStack.topAnchor.constraint(equalTo: separatorStackView.bottomAnchor, constant: 25),
-            buttonStack.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            loginWithGoogleButton.topAnchor.constraint(equalTo: separatorStackView.bottomAnchor, constant: 16),
+            loginWithGoogleButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 24),
+            loginWithGoogleButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -24),
+            loginWithGoogleButton.heightAnchor.constraint(equalToConstant: 52),
             
-            registerStack.topAnchor.constraint(equalTo: buttonStack.bottomAnchor, constant: 24),
+            registerStack.topAnchor.constraint(equalTo: loginWithGoogleButton.bottomAnchor, constant: 16),
             registerStack.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            registerStack.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+            registerStack.heightAnchor.constraint(equalToConstant: 44),
+            registerStack.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor)
         ])
     }
 }

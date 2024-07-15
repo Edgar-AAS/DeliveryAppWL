@@ -24,7 +24,7 @@ class FoodDetailsScreen: UIView {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.isDirectionalLockEnabled = true
         scrollView.showsVerticalScrollIndicator = false
-        scrollView.backgroundColor = .white
+        scrollView.backgroundColor = Colors.backgroundColor
         return scrollView
     }()
     
@@ -47,22 +47,23 @@ class FoodDetailsScreen: UIView {
     private lazy var foodNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Inter-SemiBold", size: 24)
+        label.textColor = .black
+        label.font = Fonts.semiBold(size: 24).weight
         return label
     }()
     
     private lazy var foodPriceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Inter-Bold", size: 18)
-        label.textColor = UIColor(hexString: "FE8C00")
+        label.font = Fonts.bold(size: 18).weight
+        label.textColor = Colors.primaryColor
         return label
     }()
     
     private lazy var foodBackgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor(hexString: "FE8C00").withAlphaComponent(0.04)
+        view.backgroundColor = Colors.primaryColor.withAlphaComponent(0.04)
         view.layer.cornerRadius = 8
         view.clipsToBounds = true
         return view
@@ -93,24 +94,24 @@ class FoodDetailsScreen: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Free Delivery"
-        label.font = UIFont(name: "Inter-Regular", size: 14)
-        label.textColor = UIColor(hexString: "878787")
+        label.font = Fonts.regular(size: 14).weight
+        label.textColor = Colors.descriptionTextColor
         return label
     }()
     
     private lazy var deliveryTimeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Inter-Regular", size: 14)
-        label.textColor = UIColor(hexString: "878787")
+        label.font = Fonts.regular(size: 14).weight
+        label.textColor = Colors.descriptionTextColor
         return label
     }()
     
     private lazy var foodRateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Inter-Regular", size: 14)
-        label.textColor = UIColor(hexString: "878787")
+        label.font = Fonts.regular(size: 14).weight
+        label.textColor = Colors.descriptionTextColor
         return label
     }()
     
@@ -171,7 +172,7 @@ class FoodDetailsScreen: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Description"
-        label.font = UIFont(name: "Inter-SemiBold", size: 16)
+        label.font = Fonts.semiBold(size: 16).weight
         label.textColor = .black
         return label
     }()
@@ -180,8 +181,8 @@ class FoodDetailsScreen: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = UIFont(name: "Inter-Regular", size: 16)
-        label.textColor = UIColor(hexString: "878787")
+        label.font = Fonts.regular(size: 16).weight
+        label.textColor = Colors.descriptionTextColor
         return label
     }()
     
@@ -222,7 +223,7 @@ class FoodDetailsScreen: UIView {
     
     private lazy var foodQuantityLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Inter-SemiBold", size: 18)
+        label.font = Fonts.semiBold(size: 18).weight
         label.textColor = .black
         return label
     }()
@@ -237,8 +238,8 @@ class FoodDetailsScreen: UIView {
     private lazy var foodTotalPriceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = UIColor(hexString: "FE8C00")
-        label.font = UIFont(name: "Inter-Medium", size: 24)
+        label.textColor = Colors.primaryColor
+        label.font = Fonts.medium(size: 24).weight
         return label
     }()
     
@@ -246,13 +247,13 @@ class FoodDetailsScreen: UIView {
         let button = UIButton(type:  .system)
         button.setTitle("Add to Cart", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.titleLabel?.font = UIFont(name: "Inter-Bold", size: 14)
+        button.titleLabel?.font = Fonts.bold(size: 14).weight
         
         button.setImage(UIImage(named: "cart"), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
         button.tintColor = .white
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor(hexString: "FE8C00")
+        button.backgroundColor = Colors.primaryColor
         return button
     }()
     
@@ -290,7 +291,6 @@ class FoodDetailsScreen: UIView {
 extension FoodDetailsScreen: CodeView {
     func buildViewHierarchy() {
         addSubview(scrollView)
-        
         scrollView.addSubview(containerView)
         containerView.addSubview(foodImageView)
         foodImageView.addSubview(topButtonStack)

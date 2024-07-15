@@ -8,7 +8,7 @@
 import Foundation
 
 class ForgotPasswordBuilder {
-    static func build(coordinator: Coordinator) -> ForgotPasswordViewController {
+    static func build(coordinator: MainCoordinator) -> ForgotPasswordViewController {
         let emailValidator = EmailValidatorAdapter()
         let passwordReset = FirebasePasswordReset()
         let viewModel = ForgotPasswordViewModel(passwordReset: passwordReset,

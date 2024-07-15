@@ -34,10 +34,6 @@ class ProductCellViewModel {
         return foodData.isFavorite ? "heart.fill" : "heart"
     }
     
-    var getPlaceholderImageString: String {
-        return "photo"
-    }
-    
     var getFoodImage: String {
         return foodData.image
     }

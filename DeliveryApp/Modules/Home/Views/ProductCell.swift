@@ -44,8 +44,7 @@ class ProductCell: UICollectionViewCell {
     private lazy var foodNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Ordinary burger"
-        label.font = UIFont(name: "Inter-Medium", size: 16)
+        label.font = Fonts.medium(size: 16).weight
         label.textColor = .black
         label.numberOfLines = 2
         return label
@@ -53,7 +52,7 @@ class ProductCell: UICollectionViewCell {
     
     private lazy var foodRateImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "star.fill"))
-        imageView.tintColor = .black
+        imageView.tintColor = Colors.primaryColor
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.heightAnchor.constraint(equalToConstant: 16).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 16).isActive = true
@@ -64,15 +63,14 @@ class ProductCell: UICollectionViewCell {
     private lazy var foodRateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "4.9"
-        label.font = UIFont(name: "Inter-Medium", size: 12)
+        label.font = Fonts.medium(size: 12).weight
         label.textColor = .black
         return label
     }()
     
     private lazy var distanceIcon: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "location.north.circle.fill"))
-        imageView.tintColor = .black
+        imageView.tintColor = Colors.primaryColor
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.heightAnchor.constraint(equalToConstant: 16).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 16).isActive = true
@@ -82,8 +80,7 @@ class ProductCell: UICollectionViewCell {
     private lazy var distanceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "190m"
-        label.font = UIFont(name: "Inter-Medium", size: 12)
+        label.font = Fonts.medium(size: 12).weight
         label.textColor = .black
         return label
     }()
@@ -100,9 +97,8 @@ class ProductCell: UICollectionViewCell {
     private lazy var foodPriceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "$ 17,230"
-        label.font = UIFont(name: "Inter-Bold", size: 16)
-        label.textColor = .black
+        label.font = Fonts.bold(size: 16).weight
+        label.textColor = Colors.primaryColor
         return label
     }()
     
@@ -113,9 +109,7 @@ class ProductCell: UICollectionViewCell {
         foodRateLabel.text = viewModel.getRate
         foodPriceLabel.text = viewModel.getformattedPrice
         distanceLabel.text = viewModel.getFormattedDistance
-        
-        let placeholderImage = UIImage(systemName: viewModel.getPlaceholderImageString)
-        foodImageView.sd_setImage(with: URL(string: viewModel.getFoodImage), placeholderImage: placeholderImage)
+        foodImageView.sd_setImage(with: URL(string: viewModel.getFoodImage))
     }
     
     private func setupShadow() {
@@ -126,20 +120,6 @@ class ProductCell: UICollectionViewCell {
         layer.shadowOpacity = 0.2
     }
 }
-
-extension Double {
-    func currencyFormatWith(numberStyle: NumberFormatter.Style) -> String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = numberStyle
-        formatter.currencySymbol = "R$"
-        formatter.currencyCode = "BRL"
-        formatter.minimumFractionDigits = 2
-        formatter.maximumFractionDigits = 2
-        formatter.locale = Locale(identifier: "pt_BR")
-        return formatter.string(for: self) ?? String(self)
-    }
-}
-
 
 extension ProductCell: CodeView {
     func buildViewHierarchy() {

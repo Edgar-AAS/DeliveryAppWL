@@ -22,7 +22,7 @@ final class SignUpScreen: UIView {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.isDirectionalLockEnabled = true
         scrollView.showsVerticalScrollIndicator = false
-        scrollView.backgroundColor = .white
+        scrollView.backgroundColor = Colors.backgroundColor
         return scrollView
     }()
     
@@ -36,7 +36,7 @@ final class SignUpScreen: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Create your new account"
-        label.font = UIFont(name: "Inter-SemiBold", size: 32)
+        label.font = Fonts.semiBold(size: 32).weight
         label.textAlignment = .left
         label.textColor = .black
         label.numberOfLines = 0
@@ -47,10 +47,10 @@ final class SignUpScreen: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Create an account to start looking for the food you like"
-        label.font = UIFont(name: "Inter-Medium", size: 14)
+        label.font = Fonts.medium(size: 14).weight
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.textColor = UIColor(hexString: "878787")
+        label.textColor = Colors.descriptionTextColor
         return label
     }()
     
@@ -58,7 +58,7 @@ final class SignUpScreen: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Email Address"
-        label.font = UIFont(name: "Inter-Medium", size: 14)
+        label.font = Fonts.medium(size: 14).weight
         label.textColor = .black
         label.textAlignment = .left
         return label
@@ -81,7 +81,7 @@ final class SignUpScreen: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "User Name"
         label.textColor = .black
-        label.font = UIFont(name: "Inter-Medium", size: 14)
+        label.font = Fonts.medium(size: 14).weight
         label.textAlignment = .left
         return label
     }()
@@ -99,7 +99,7 @@ final class SignUpScreen: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Password"
         label.textColor = .black
-        label.font = UIFont(name: "Inter-Medium", size: 14)
+        label.font = Fonts.medium(size: 14).weight
         label.textAlignment = .left
         return label
     }()
@@ -118,7 +118,7 @@ final class SignUpScreen: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Password Confirm"
         label.textColor = .black
-        label.font = UIFont(name: "Inter-Medium", size: 14)
+        label.font = Fonts.medium(size: 14).weight
         label.textAlignment = .left
         return label
     }()
@@ -137,21 +137,27 @@ final class SignUpScreen: UIView {
         return checkBox
     }()
 
-    
     private let termsOfServicLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.lineBreakMode = .byClipping
         label.textColor = .black
-        label.font = UIFont(name: "Inter-Medium", size: 14)
-        let attributedText = NSMutableAttributedString(string: "I Agree with Terms of Service and Privacy Policy")
+        label.font = Fonts.medium(size: 14).weight
         
-        let termsOfServiceRange = NSRange(location: 13, length: 16)
-        let privacyPolicy = NSRange(location: 33, length: 15)
+        let text = "I Agree with Terms of Service and Privacy Policy"
+        let attributedText = NSMutableAttributedString(string: text)
         
-        attributedText.addAttribute(.foregroundColor, value: UIColor.orange, range: termsOfServiceRange)
-        attributedText.addAttribute(.foregroundColor, value: UIColor.orange, range: privacyPolicy)
+        let termsOfServiceRange = (text as NSString).range(of: "Terms of Service")
+        let privacyPolicyRange = (text as NSString).range(of: "Privacy Policy")
+        
+        if termsOfServiceRange.location != NSNotFound {
+            attributedText.addAttribute(.foregroundColor, value: Colors.primaryColor, range: termsOfServiceRange)
+        }
+        
+        if privacyPolicyRange.location != NSNotFound {
+            attributedText.addAttribute(.foregroundColor, value: Colors.primaryColor, range: privacyPolicyRange)
+        }
         
         label.attributedText = attributedText
         return label
@@ -162,8 +168,8 @@ final class SignUpScreen: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Register", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Inter-SemiBold", size: 14)
-        button.backgroundColor = .black
+        button.titleLabel?.font = Fonts.semiBold(size: 14).weight
+        button.backgroundColor = Colors.primaryColor
         button.layer.cornerRadius = 26
         
         button.layer.shadowColor = UIColor.black.cgColor
@@ -176,15 +182,15 @@ final class SignUpScreen: UIView {
     private let orSignInWithLabel: UILabel = {
         let label = UILabel()
         label.text = "Or sign in with"
-        label.textColor = UIColor(hexString: "878787")
-        label.font = UIFont(name: "Inter-Medium", size: 14)
+        label.textColor = Colors.descriptionTextColor
+        label.font = Fonts.medium(size: 14).weight
         label.textAlignment = .center
         return label
     }()
     
-    private lazy var separatorStackView = makeStackView(with: [makeSeparatorView(color: UIColor(hexString: "878787")),
+    private lazy var separatorStackView = makeStackView(with: [makeSeparatorView(color: Colors.descriptionTextColor),
                                                                orSignInWithLabel,
-                                                               makeSeparatorView(color: UIColor(hexString: "878787"))],
+                                                               makeSeparatorView(color: Colors.descriptionTextColor)],
                                                         aligment: .center,
                                                         distribution: .fillEqually,
                                                         spacing: 16,
@@ -193,7 +199,6 @@ final class SignUpScreen: UIView {
     lazy var loginWithGoogleButton: CircularButton = {
         let button = CircularButton(iconImage: UIImage(named: "google-button-icon"), size: 44)
         button.tag = 1
-        button.addTarget(self, action: #selector(alternativeLoginButtonTap), for: .touchUpInside)
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.lightGray.cgColor
         return button
@@ -201,7 +206,6 @@ final class SignUpScreen: UIView {
     
     private lazy var loginWithFacebookButton: CircularButton = {
         let button = CircularButton(iconImage: UIImage(named: "facebook-button-icon"), size: 44)
-        button.addTarget(self, action: #selector(alternativeLoginButtonTap), for: .touchUpInside)
         button.tag = 2
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.lightGray.cgColor
@@ -213,26 +217,8 @@ final class SignUpScreen: UIView {
         button.tag = 3
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.lightGray.cgColor
-        button.addTarget(self,
-                         action: #selector(alternativeLoginButtonTap),
-                         for: .touchUpInside)
         return button
     }()
-    
-    @objc func alternativeLoginButtonTap(_ sender: UIButton) {
-        let loginMethod: LoginMethod
-        
-        switch sender.tag {
-        case 1:
-            loginMethod = .googleAccount
-        case 2:
-            loginMethod = .facebookAccount
-        case 3:
-            loginMethod = .appleAccount
-        default: return
-        }
-//        delegate?.alternativeLoginButtonDidTapped(loginMethod: loginMethod)
-    }
     
     private lazy var buttonStack = makeStackView(with: [loginWithGoogleButton,
                                                         loginWithFacebookButton,
@@ -248,7 +234,7 @@ final class SignUpScreen: UIView {
         label.lineBreakMode = .byClipping
         label.text = "Already have an account?"
         label.textColor = .black
-        label.font = UIFont(name: "Inter-Medium", size: 14)
+        label.font = Fonts.medium(size: 14).weight
         return label
     }()
     
@@ -256,8 +242,8 @@ final class SignUpScreen: UIView {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Login here", for: .normal)
-        button.setTitleColor(.orange, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Inter-SemiBold", size: 14)
+        button.setTitleColor(Colors.primaryColor, for: .normal)
+        button.titleLabel?.font = Fonts.semiBold(size: 14).weight
         return button
     }()
     

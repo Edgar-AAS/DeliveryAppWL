@@ -28,7 +28,7 @@ class HomeHeaderView: UIView {
     private lazy var locationLabel: UILabel = {
         let label = UILabel()
         label.text = "Your Location"
-        label.font = UIFont(name: "Inter-Regular", size: 14)
+        label.font = Fonts.regular(size: 14).weight
         label.textColor = .white
         return label
     }()
@@ -51,7 +51,7 @@ class HomeHeaderView: UIView {
     private lazy var adressLabel: UILabel = {
         let label = UILabel()
         label.text = "Rua dos camões, 204"
-        label.font = UIFont(name: "Inter-SemiBold", size: 14)
+        label.font = Fonts.semiBold(size: 14).weight
         label.textColor = .white
         return label
     }()
@@ -86,7 +86,7 @@ class HomeHeaderView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Provide the best food for you"
-        label.font = UIFont(name: "Inter-SemiBold", size: 32)
+        label.font = Fonts.semiBold(size: 32).weight
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.textColor = .white
@@ -139,9 +139,5 @@ extension HomeHeaderView: CodeView {
             descriptionHomeLabel.trailingAnchor.constraint(equalTo: headerImageView.trailingAnchor, constant: -24),
             descriptionHomeLabel.bottomAnchor.constraint(equalTo: headerImageView.bottomAnchor, constant: -10)
         ])
-    }
-    
-    func setupAddiotionalConfiguration() {
-        backgroundColor = .white
     }
 }

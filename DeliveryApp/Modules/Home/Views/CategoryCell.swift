@@ -31,19 +31,19 @@ class CategoryCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Burger"
         label.textAlignment = .center
-        label.textColor = UIColor(hexString: "878787")
-        label.font = UIFont(name: "Inter-SemiBold", size: 12)
+        label.textColor = Colors.descriptionTextColor
+        label.font = Fonts.semiBold(size: 12).weight
         return label
     }()
     
     func selectedStyle() {
-        backgroundColor = .orange
+        backgroundColor = Colors.primaryColor
         categoryName.textColor = .white
     }
     
     func deselectedStyle() {
         backgroundColor = .white
-        categoryName.textColor = UIColor(hexString: "878787")
+        categoryName.textColor = Colors.descriptionTextColor
     }
     
     func setup(viewModel: FoodCategoryDTO) {

@@ -27,7 +27,7 @@ class MainCoordinator: Coordinator {
     var navigationController: CustomNavigationController?
     
     func start() {
-        let viewController = HomeBuilder.build(coordinator: self)
+        let viewController = LoginBuilder.build(coordinator: self)
         navigationController?.setRootViewController(viewController)
     }
     
