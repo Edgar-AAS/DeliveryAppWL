@@ -88,8 +88,8 @@ extension LoginViewController: LoginScreenDelegateProtocol {
     func signInButtonDidTapped() {
         if let email = customView?.emailTextField.text,
            let password = customView?.passwordTextField.text {
-            let loginRequest = LoginUserRequest(email: email, password: password)
-            viewModel.signIn(loginRequest: loginRequest)
+            let authenticationModel = AuthenticationModel(email: email, password: password)
+            viewModel.signIn(authenticationModel: authenticationModel)
         }
     }
     
@@ -98,7 +98,7 @@ extension LoginViewController: LoginScreenDelegateProtocol {
     }
 }
 
-extension LoginViewController: FieldDescription {
+extension LoginViewController: FieldDescriptionProtocol {
     func showMessage(viewModel: FieldDescriptionViewModel) {
         customView?.emailTextField.setDescriptionField(viewModel: viewModel)
         customView?.passwordTextField.setDescriptionField(viewModel: viewModel)

@@ -18,7 +18,7 @@ class SignUpViewModel: SignUpViewModelProtocol {
     private let coordinator: Coordinator
     
     weak var alertView: AlertView?
-    weak var fieldDescription: FieldDescription?
+    weak var fieldDescription: FieldDescriptionProtocol?
     
     init(userSignUp: SignUpProtocol,
          emailValidator: EmailValidator,

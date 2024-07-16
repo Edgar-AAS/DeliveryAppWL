@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User {
+struct User: Equatable {
     var id: String?
     var accessToken: String?
     var fullName: String?

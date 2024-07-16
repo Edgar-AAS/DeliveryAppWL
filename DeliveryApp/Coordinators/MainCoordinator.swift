@@ -13,7 +13,7 @@ protocol Coordinator: AnyObject {
     func eventOcurred(type: Event)
 }
 
-enum Event {
+enum Event: Equatable {
     case loginToRegister
     case registerToLogin
     case goToHome
@@ -21,6 +21,27 @@ enum Event {
     case goToForgotPassword
     case goToEmailVerification(User)
     case backToHome
+
+    static func ==(lhs: Event, rhs: Event) -> Bool {
+        switch (lhs, rhs) {
+        case (.loginToRegister, .loginToRegister):
+            return true
+        case (.registerToLogin, .registerToLogin):
+            return true
+        case (.goToHome, .goToHome):
+            return true
+        case (.goToForgotPassword, .goToForgotPassword):
+            return true
+        case (.backToHome, .backToHome):
+            return true
+        case (.goToFoodDetails(let lhsFood), .goToFoodDetails(let rhsFood)):
+            return lhsFood == rhsFood
+        case (.goToEmailVerification(let lhsUser), .goToEmailVerification(let rhsUser)):
+            return lhsUser == rhsUser
+        default:
+            return false
+        }
+    }
 }
 
 class MainCoordinator: Coordinator {

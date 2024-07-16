@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LoginUserRequest {
+struct AuthenticationModel: Equatable {
     let email: String
     let password: String
 }

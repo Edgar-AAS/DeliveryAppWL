@@ -23,7 +23,7 @@ class ResetPasswordViewController: UIViewController {
     }
 }
 
-extension ResetPasswordViewController: FieldDescription {
+extension ResetPasswordViewController: FieldDescriptionProtocol {
     func showMessage(viewModel: FieldDescriptionViewModel) {
         
     }

@@ -7,16 +7,16 @@
 
 import Foundation
 
-protocol FieldDescription: AnyObject {
+protocol FieldDescriptionProtocol: AnyObject {
     func showMessage(viewModel: FieldDescriptionViewModel)
 }
 
-struct FieldDescriptionViewModel {
+struct FieldDescriptionViewModel: Equatable {
     let message: String
     let fieldType: FieldType
 }
 
-enum FieldType {
+enum FieldType: Equatable {
     case email
     case password
     case passwordConfirm

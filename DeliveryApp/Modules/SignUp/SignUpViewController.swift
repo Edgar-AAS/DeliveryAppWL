@@ -80,7 +80,7 @@ extension SignUpViewController: UITextFieldDelegate {
     }
 }
 
-extension SignUpViewController: FieldDescription {
+extension SignUpViewController: FieldDescriptionProtocol {
     func showMessage(viewModel: FieldDescriptionViewModel) {
         customView?.emailTextField.setDescriptionField(viewModel: viewModel)
         customView?.userNameTextField.setDescriptionField(viewModel: viewModel)

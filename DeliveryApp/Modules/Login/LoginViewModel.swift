@@ -9,7 +9,7 @@ import Foundation
 
 
 protocol LoginViewModelProtocol {
-    func signIn(loginRequest: LoginUserRequest)
+    func signIn(authenticationModel: AuthenticationModel)
     func goToSignUp()
     func goToHome()
     func goToForgotPassword()
@@ -18,38 +18,37 @@ protocol LoginViewModelProtocol {
 class LoginViewModel: LoginViewModelProtocol {
     private let emailValidator: EmailValidator
     private let coordinator: Coordinator
-    private let userSignIn: SignInProtocol
+    private let userLogin: LoginProtocol
     
+    weak var fieldDescription: FieldDescriptionProtocol?
     weak var alertView: AlertView?
-    weak var fieldDescription: FieldDescription?
     
     init(emailValidator: EmailValidator,
          coordinator: Coordinator,
-         userSignIn: SignInProtocol)
+         userLogin: LoginProtocol
+    )
     {
         self.emailValidator = emailValidator
         self.coordinator = coordinator
-        self.userSignIn = userSignIn
+        self.userLogin = userLogin
     }
     
-    func signIn(loginRequest: LoginUserRequest) {
-        if let viewModel = validateFields(loginUserRequest: loginRequest) {
+    func signIn(authenticationModel: AuthenticationModel) {
+        if let viewModel = validateFields(loginUserRequest: authenticationModel) {
             self.fieldDescription?.showMessage(viewModel: viewModel)
         } else {
-            userSignIn.signIn(loginRequest: loginRequest) { [weak self] isLogged, error in
+            userLogin.auth(authenticationModel: authenticationModel) { [weak self] result in
                 guard self != nil else { return }
                 
-                if let error = error {
-                    self?.alertView?.showMessage(viewModel: AlertViewModel(title: "Error", message: error.localizedDescription))
-                } else {
-                    if isLogged {
-                        DispatchQueue.main.async { [weak self] in
-                            self?.coordinator.eventOcurred(type: .goToHome)
-                        }
+                switch result {
+                case .success():
+                    DispatchQueue.main.async { [weak self] in
+                        self?.coordinator.eventOcurred(type: .goToHome)
                     }
+                case .failure(_ ):
+                    self?.alertView?.showMessage(viewModel: AlertViewModel(title: "Error", message: "Algo inesperado aconteceu, tente novamente em instantes."))
                 }
             }
-            self.coordinator.eventOcurred(type: .goToHome)
         }
     }
     
@@ -65,11 +64,11 @@ class LoginViewModel: LoginViewModelProtocol {
         coordinator.eventOcurred(type: .loginToRegister)
     }
     
-    private func validateFields(loginUserRequest: LoginUserRequest) -> FieldDescriptionViewModel? {
+    private func validateFields(loginUserRequest: AuthenticationModel) -> FieldDescriptionViewModel? {
         if loginUserRequest.email.isEmpty {
             return .init(message: "O campo E-mail é obrigatório", fieldType: .email)
         } else if !emailValidator.isValid(email: loginUserRequest.email) {
-            return .init(message: "O campo E-mail esta inválido", fieldType: .email)
+            return .init(message: "O campo E-mail está inválido", fieldType: .email)
         } else if loginUserRequest.password.isEmpty {
             return .init(message: "O campo Senha é obrigatório", fieldType: .password)
         } else { return nil }

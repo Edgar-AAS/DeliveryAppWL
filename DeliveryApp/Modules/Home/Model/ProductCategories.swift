@@ -12,14 +12,14 @@ struct ProductCategories: Decodable {
 }
 
 // MARK: - Category
-struct FoodCategory: Decodable {
+struct FoodCategory: Decodable, Equatable {
     let name: String
     let image: String
     let products: [Food]
 }
 
 // MARK: - Product
-struct Food: Decodable {
+struct Food: Decodable, Equatable {
     let id: String
     let rate: String
     let reviews: Int

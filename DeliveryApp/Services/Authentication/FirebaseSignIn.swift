@@ -8,20 +8,18 @@
 import Foundation
 import Firebase
 
-protocol SignInProtocol {
-    func signIn(loginRequest: LoginUserRequest, completion: @escaping (Bool, Error?) -> Void)
+protocol LoginProtocol {
+    func auth(authenticationModel: AuthenticationModel, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
-class FirebaseSignIn: SignInProtocol {
-    func signIn(loginRequest: LoginUserRequest, completion: @escaping (Bool, Error?) -> Void) {
-        func signIn(loginRequest: LoginUserRequest, completion: @escaping (Bool, Error?) -> Void) {
-            Auth.auth().signIn(withEmail: loginRequest.email, password: loginRequest.password) { [weak self] authResult, error in
-                guard self != nil else { return }
-                if let error = error {
-                    completion(false, error)
-                } else {
-                    completion(true, nil)
-                }
+class FirebaseSignIn: LoginProtocol {
+    func auth(authenticationModel: AuthenticationModel, completion: @escaping (Result<Void, Error>) -> Void) {
+        Auth.auth().signIn(withEmail: authenticationModel.email, password: authenticationModel.password) { [weak self] authResult, error in
+            guard self != nil else { return }
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
             }
         }
     }

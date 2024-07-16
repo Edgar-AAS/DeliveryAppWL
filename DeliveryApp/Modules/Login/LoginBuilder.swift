@@ -10,10 +10,10 @@ import Foundation
 class LoginBuilder {
     static func build(coordinator: MainCoordinator) -> LoginViewController {
         let emailValidator = EmailValidatorAdapter()
-        let userSignIn = FirebaseSignIn()
+        let userLogin = FirebaseSignIn()
         let viewModel = LoginViewModel(emailValidator: emailValidator,
                                        coordinator: coordinator,
-                                       userSignIn: userSignIn)
+                                       userLogin: userLogin)
         let viewController = LoginViewController(viewModel: viewModel)
         viewModel.alertView = viewController
         viewModel.fieldDescription = viewController
