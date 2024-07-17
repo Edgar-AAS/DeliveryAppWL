@@ -16,6 +16,7 @@
 		D32900BB2B68663800D39016 /* SignUpBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32900BA2B68663800D39016 /* SignUpBuilder.swift */; };
 		D32900BE2B686A0200D39016 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32900BD2B686A0200D39016 /* LoginViewModel.swift */; };
 		D32900C02B686A7F00D39016 /* AuthenticationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32900BF2B686A7F00D39016 /* AuthenticationModel.swift */; };
+		D343D0BB2C481BEC00F1A3E0 /* GoogleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D343D0BA2C481BEC00F1A3E0 /* GoogleLogin.swift */; };
 		D34411AC2BE58C3200AC85EC /* FieldDescriptionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34411AB2BE58C3200AC85EC /* FieldDescriptionProtocol.swift */; };
 		D349C2C82BDFD6EA001FBF33 /* ProductCategorieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D349C2C72BDFD6EA001FBF33 /* ProductCategorieCell.swift */; };
 		D349C2CA2BDFE269001FBF33 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D349C2C92BDFE269001FBF33 /* CategoryCell.swift */; };
@@ -117,6 +118,7 @@
 		D32900BA2B68663800D39016 /* SignUpBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBuilder.swift; sourceTree = "<group>"; };
 		D32900BD2B686A0200D39016 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D32900BF2B686A7F00D39016 /* AuthenticationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationModel.swift; sourceTree = "<group>"; };
+		D343D0BA2C481BEC00F1A3E0 /* GoogleLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLogin.swift; sourceTree = "<group>"; };
 		D34411AB2BE58C3200AC85EC /* FieldDescriptionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldDescriptionProtocol.swift; sourceTree = "<group>"; };
 		D349C2C72BDFD6EA001FBF33 /* ProductCategorieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCategorieCell.swift; sourceTree = "<group>"; };
 		D349C2C92BDFE269001FBF33 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
@@ -411,6 +413,7 @@
 				D3C72D642C0FC7CB00059B25 /* FirebaseSignUp.swift */,
 				D3C72D662C0FC7D700059B25 /* FirebaseSignIn.swift */,
 				D3C72D682C0FC7ED00059B25 /* FirebaseResetPassword.swift */,
+				D343D0BA2C481BEC00F1A3E0 /* GoogleLogin.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -741,6 +744,7 @@
 				D349C2CA2BDFE269001FBF33 /* CategoryCell.swift in Sources */,
 				D3ED88F92C0294B4009C69F0 /* ForgotPasswordUserRequest.swift in Sources */,
 				D361B6422C11F7490043E765 /* ResetPasswordViewController.swift in Sources */,
+				D343D0BB2C481BEC00F1A3E0 /* GoogleLogin.swift in Sources */,
 				D3ABE7FB2C403782006D74F9 /* FoodDetailsBuilder.swift in Sources */,
 				D381B9252BFAD707009D8010 /* ForgotPasswordViewController.swift in Sources */,
 				D3ABE8092C404F7A006D74F9 /* Fonts.swift in Sources */,

@@ -121,7 +121,6 @@ final class LoginScreen: UIView {
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = Fonts.semiBold(size: 14).weight
         button.backgroundColor = Colors.primaryColor
-        button.layer.cornerRadius = 26
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOffset = CGSize(width: 0, height: 2)
         
@@ -205,6 +204,7 @@ final class LoginScreen: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        loginButton.makeCornerRadius()
         loginWithGoogleButton.makeCornerRadius()
     }
 }

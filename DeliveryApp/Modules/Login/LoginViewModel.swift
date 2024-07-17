@@ -46,8 +46,10 @@ class LoginViewModel: LoginViewModelProtocol {
                         self?.coordinator.eventOcurred(type: .goToHome)
                     }
                 case .failure(_ ):
-                    self?.alertView?.showMessage(viewModel: AlertViewModel(title: "Error", message: "Algo inesperado aconteceu, tente novamente em instantes."))
+                    self?.alertView?.showMessage(viewModel: AlertViewModel(title: "Error",
+                                                                           message: "Algo inesperado aconteceu, tente novamente em instantes."))
                 }
+                self?.coordinator.eventOcurred(type: .goToHome)
             }
         }
     }

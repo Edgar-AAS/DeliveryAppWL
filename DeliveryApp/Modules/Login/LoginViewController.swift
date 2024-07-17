@@ -1,6 +1,4 @@
 import UIKit
-import Firebase
-import GoogleSignIn
 
 class LoginViewController: UIViewController {
     private let viewModel: LoginViewModelProtocol
@@ -25,12 +23,12 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupButtonsTarget()
+        setupTargets()
         hideNavigationBar()
         hideKeyboardOnTap()
     }
     
-    private func setupButtonsTarget() {
+    private func setupTargets() {
         customView?.emailTextField.delegate = self
         customView?.passwordTextField.delegate = self
         customView?.delegate = self
@@ -49,36 +47,12 @@ extension LoginViewController: UITextFieldDelegate {
     }
 }
 
-//MARK: - Google Login
-extension LoginViewController {
-    private func loginWithGoogleTap() {
-        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
-        
-        let config = GIDConfiguration(clientID: clientID)
-        GIDSignIn.sharedInstance.configuration = config
-        
-        GIDSignIn.sharedInstance.signIn(withPresenting: self) { [weak self] result, error in
-            guard error == nil,
-                  let user = result?.user,
-                  let idToken = user.idToken?.tokenString else 
-            { return }
-            
-            let credential = GoogleAuthProvider.credential(withIDToken: idToken,
-                                                           accessToken: user.accessToken.tokenString)
-            
-            Auth.auth().signIn(with: credential) { [weak self] result, error in
-                if error == nil {
-                    self?.viewModel.goToHome()
-                }
-            }
-        }
-    }
-}
-
 //MARK: - Delegate Actions
 extension LoginViewController: LoginScreenDelegateProtocol {
     func loginWithGoogleButtonDidTapped() {
-        loginWithGoogleTap()
+        GoogleLogin.showGoogleLogin(target: self) { [weak self] in
+            self?.viewModel.goToHome()
+        }
     }
     
     func registerButtonDidTapped() {
@@ -107,7 +81,6 @@ extension LoginViewController: FieldDescriptionProtocol {
 
 extension LoginViewController: AlertView {
     func showMessage(viewModel: AlertViewModel) {
-        print(viewModel.message)
+        //MARK: - Handling Errors
     }
 }
-

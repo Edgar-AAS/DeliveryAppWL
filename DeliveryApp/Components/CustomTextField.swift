@@ -19,7 +19,10 @@ final class CustomTextField: UITextField {
         }
     }
     
-    init(exampleText: String, isPassword: Bool = false, fieldType: FieldType = .regular) {
+    init(exampleText: String,
+         isPassword: Bool = false,
+         fieldType: FieldType = .regular
+    ) {
         self.exampleText = exampleText
         self.isPassword = isPassword
         self.fieldType = fieldType
@@ -32,10 +35,12 @@ final class CustomTextField: UITextField {
     }
     
     private func setup() {
-        layer.cornerRadius = 8
         backgroundColor = .white
         tintColor = .black
-        borderStyle = .roundedRect
+        textColor = .black
+        layer.cornerRadius = 8
+        layer.borderWidth = 1
+        layer.borderColor = Colors.grayBorderColor.cgColor
         placeholder = exampleText
         
         let attributes = [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
@@ -52,6 +57,7 @@ final class CustomTextField: UITextField {
         }
         
         addSubview(feedbackLabel)
+        
         NSLayoutConstraint.activate([
             feedbackLabel.topAnchor.constraint(equalTo: bottomAnchor, constant: 4),
             feedbackLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -74,12 +80,16 @@ final class CustomTextField: UITextField {
         button.setImage(UIImage(systemName: "eye"), for: .selected)
         button.frame.size = .init(width: 24, height: 24)
         button.tintColor = .black
-        button.layoutIfNeeded()
-        button.addTarget(self, action: #selector(eyeButtonTap), for: .touchUpInside)
+    
+        let action = UIAction { [weak self] _ in
+            self?.eyeButtonTap()
+        }
+        
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
-    
-    @objc func eyeButtonTap() {
+
+    private func eyeButtonTap() {
         addTouchFeedback(style: .rigid)
         isHide = !isHide
     }
@@ -91,5 +101,28 @@ final class CustomTextField: UITextField {
         } else {
             feedbackLabel.isHidden = true
         }
+    }
+
+    private func getDynamicPadding() -> CGFloat {
+        if fieldType == .password || fieldType == .passwordConfirm {
+            return 48
+        } else {
+            return 20
+        }
+    }
+    
+    override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+        let bounds = CGRect(x: 10, y: 0, width: bounds.width - getDynamicPadding(), height: bounds.height)
+        return bounds
+    }
+
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        let bounds = CGRect(x: 10, y: 0, width: bounds.width - getDynamicPadding(), height: bounds.height)
+        return bounds
+    }
+    
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
+        let bounds = CGRect(x: 10, y: 0, width: bounds.width - getDynamicPadding(), height: bounds.height)
+        return bounds
     }
 }

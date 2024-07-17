@@ -7,6 +7,12 @@
 
 import UIKit
 
+protocol SignUpScreenDelegateProtocol: AnyObject {
+    func goToLoginButtonDidTapped()
+    func loginWithGoogleButtonDidTapped()
+    func registerButtonDidTapped()
+}
+
 final class SignUpScreen: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -16,6 +22,8 @@ final class SignUpScreen: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    weak var delegate: SignUpScreenDelegateProtocol?
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -163,6 +171,8 @@ final class SignUpScreen: UIView {
         return label
     }()
     
+    
+    
     lazy var registerButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -171,17 +181,21 @@ final class SignUpScreen: UIView {
         button.titleLabel?.font = Fonts.semiBold(size: 14).weight
         button.backgroundColor = Colors.primaryColor
         button.layer.cornerRadius = 26
-        
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOffset = CGSize(width: 0, height: 2)
         button.layer.shadowOpacity = 0.4
         button.layer.shadowRadius = 4
+        
+        let action = UIAction { [weak self] _ in
+            self?.delegate?.registerButtonDidTapped()
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
     
     private let orSignInWithLabel: UILabel = {
         let label = UILabel()
-        label.text = "Or sign in with"
+        label.text = "Or Login with"
         label.textColor = Colors.descriptionTextColor
         label.font = Fonts.medium(size: 14).weight
         label.textAlignment = .center
@@ -196,37 +210,24 @@ final class SignUpScreen: UIView {
                                                         spacing: 16,
                                                         axis: .horizontal)
     
-    lazy var loginWithGoogleButton: CircularButton = {
-        let button = CircularButton(iconImage: UIImage(named: "google-button-icon"), size: 44)
-        button.tag = 1
+    private lazy var loginWithGoogleButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "google-icon"), for: .normal)
+        button.setTitle("Login with Google", for: .normal)
+        button.titleLabel?.font = Fonts.medium(size: 14).weight
+        button.layer.borderColor = Colors.grayBorderColor.cgColor
+        button.setTitleColor(.black, for: .normal)
         button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.lightGray.cgColor
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
+        
+        let action = UIAction { [weak self] _ in
+            self?.delegate?.loginWithGoogleButtonDidTapped()
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
     
-    private lazy var loginWithFacebookButton: CircularButton = {
-        let button = CircularButton(iconImage: UIImage(named: "facebook-button-icon"), size: 44)
-        button.tag = 2
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.lightGray.cgColor
-        return button
-    }()
-    
-    private lazy var loginWithAppleButton: CircularButton = {
-        let button = CircularButton(iconImage: UIImage(named: "apple-button-icon"), size: 44)
-        button.tag = 3
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.lightGray.cgColor
-        return button
-    }()
-    
-    private lazy var buttonStack = makeStackView(with: [loginWithGoogleButton,
-                                                        loginWithFacebookButton,
-                                                        loginWithAppleButton],
-                                                 aligment: .center,
-                                                 spacing: 16,
-                                                 axis: .horizontal)
-
     private let alreadyHaveAccountLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -238,21 +239,32 @@ final class SignUpScreen: UIView {
         return label
     }()
     
-    lazy var loginHereButton: UIButton = {
+    private lazy var goToLoginButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Login here", for: .normal)
         button.setTitleColor(Colors.primaryColor, for: .normal)
         button.titleLabel?.font = Fonts.semiBold(size: 14).weight
+        
+        let action = UIAction { [weak self] _ in
+            self?.delegate?.goToLoginButtonDidTapped()
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
     
     private lazy var loginStack = makeStackView(with: [alreadyHaveAccountLabel,
-                                                       loginHereButton],
+                                                       goToLoginButton],
                                                    aligment: .center,
                                                    spacing: 2,
                                                    axis: .horizontal)
 
+    
+    
+    func setupButtonsDelegate(delegate: SignUpScreenDelegateProtocol) {
+        self.delegate = delegate
+    }
+    
     func setupCheckBoxDelegate(delegate: CheckBoxDelegate) {
         checkBox.delegate = delegate
     }
@@ -262,6 +274,12 @@ final class SignUpScreen: UIView {
         userNameTextField.delegate = delegate
         passwordTextField.delegate = delegate
         passwordConfirmTextField.delegate = delegate
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        loginWithGoogleButton.makeCornerRadius()
+        registerButton.makeCornerRadius()
     }
 }
 
@@ -283,7 +301,7 @@ extension SignUpScreen: CodeView {
         containerView.addSubview(termsOfServicLabel)
         containerView.addSubview(registerButton)
         containerView.addSubview(separatorStackView)
-        containerView.addSubview(buttonStack)
+        containerView.addSubview(loginWithGoogleButton)
         containerView.addSubview(loginStack)
     }
     
@@ -361,11 +379,14 @@ extension SignUpScreen: CodeView {
             separatorStackView.leadingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.leadingAnchor),
             separatorStackView.trailingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.trailingAnchor),
             
-            buttonStack.topAnchor.constraint(equalTo: separatorStackView.bottomAnchor, constant: 24),
-            buttonStack.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-        
-            loginStack.topAnchor.constraint(equalTo: buttonStack.bottomAnchor, constant: 32),
+            loginWithGoogleButton.topAnchor.constraint(equalTo: separatorStackView.bottomAnchor, constant: 16),
+            loginWithGoogleButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 24),
+            loginWithGoogleButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -24),
+            loginWithGoogleButton.heightAnchor.constraint(equalToConstant: 52),
+            
+            loginStack.topAnchor.constraint(equalTo: loginWithGoogleButton.bottomAnchor, constant: 16),
             loginStack.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            loginStack.heightAnchor.constraint(equalToConstant: 44),
             loginStack.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
     }

@@ -10,6 +10,7 @@ import Foundation
 protocol SignUpViewModelProtocol {
     func createUserWith(userRequest: RegisterUserRequest, isCheked: Bool)
     func routeToLogin()
+    func routeToHome()
 }
 
 class SignUpViewModel: SignUpViewModelProtocol {
@@ -49,6 +50,10 @@ class SignUpViewModel: SignUpViewModelProtocol {
         }
     }
     
+    
+    func routeToHome() {
+        coordinator.eventOcurred(type: .goToHome)
+    }
     
     func routeToLogin() {
         coordinator.eventOcurred(type: .registerToLogin)

@@ -9,7 +9,6 @@ import UIKit
 
 extension UIView {
     func makeCornerRadius() {
-        clipsToBounds = true
         layer.cornerRadius = frame.height / 2
     }
     

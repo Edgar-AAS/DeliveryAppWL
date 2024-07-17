@@ -34,18 +34,28 @@ class SignUpViewController: UIViewController {
         super.viewDidLoad()
         hideKeyboardOnTap()
         hideNavigationBar()
-        customView?.setupCheckBoxDelegate(delegate: self)
-        customView?.setupTextFieldsDelegate(delegate: self)
-        customView?.registerButton.addTarget(self, action: #selector(registerButtonTap), for: .touchUpInside)
-        customView?.loginHereButton.addTarget(self, action: #selector(loginHereButtonTap), for: .touchUpInside)
+        setupDelegates()
     }
     
-    
-    @objc func loginHereButtonTap() {
+    private func setupDelegates() {
+        customView?.setupCheckBoxDelegate(delegate: self)
+        customView?.setupTextFieldsDelegate(delegate: self)
+        customView?.setupButtonsDelegate(delegate: self)
+    }
+}
+
+extension SignUpViewController: SignUpScreenDelegateProtocol {
+    func goToLoginButtonDidTapped() {
         viewModel.routeToLogin()
     }
     
-    @objc private func registerButtonTap() {
+    func loginWithGoogleButtonDidTapped() {
+        GoogleLogin.showGoogleLogin(target: self) { [weak self] in
+            self?.viewModel.routeToHome()
+        }
+    }
+    
+    func registerButtonDidTapped() {
         if let email = customView?.emailTextField.text,
            let username = customView?.userNameTextField.text,
            let password = customView?.passwordTextField.text,
@@ -54,9 +64,9 @@ class SignUpViewController: UIViewController {
             let userRequest = RegisterUserRequest(
                 email: email,
                 username: username,
-                password: password, 
-                confirmPassword: confirmPassword
-            )
+                password: password,
+                confirmPassword: confirmPassword)
+            
             viewModel.createUserWith(userRequest: userRequest, isCheked: isCheked)
         }
     }
@@ -96,5 +106,7 @@ extension SignUpViewController: CheckBoxDelegate {
 }
 
 extension SignUpViewController: AlertView {
-    func showMessage(viewModel: AlertViewModel) {}
+    func showMessage(viewModel: AlertViewModel) {
+        //MARK: - Handling Errors
+    }
 }
