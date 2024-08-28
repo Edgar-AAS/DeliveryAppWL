@@ -1,0 +1,337 @@
+{
+    "categories": [
+        {
+            "name": "Burger",
+            "image": "https://i.imgur.com/V7Vo4cq.png",
+            "products": [
+                {
+                    "id": "1",
+                    "name": "Cheese Lover Burger",
+                    "rate": "4.5",
+                    "reviews": 30,
+                    "distance": 150,
+                    "price": 12.99,
+                    "description": "Um hambúrguer delicioso com queijo cheddar, pão de gergelim, bacon, cebola caramelizada, picles e molho especial.",
+                    "image":"https://i.imgur.com/mmFQeHQ.jpeg",
+                    "isFavorite": true,
+                    "firstDeliveryTime": "18:00",
+                    "secondDeliveryTime": "19:00",
+                    "deliveryFee": 2.0
+                },
+                {
+                    "id": "2",
+                    "reviews": 49,
+                    "name": "Dr. Fish",
+                    "rate": "4.5",
+                    "distance": 100,
+                    "price": 21.30,
+                    "description": "Peixe empanado, cebola roxa, alface e um toque de molho agridoce. Simples e saboroso!",
+                    "image": "https://i.imgur.com/fnq41sK.jpeg",
+                    "isFavorite": false,
+                    "firstDeliveryTime": "21:00",
+                    "secondDeliveryTime": "22:30",
+                    "deliveryFee": 5.0
+                },
+                {
+                    "id": "3",
+                    "name": "Monster Bacon",
+                    "rate": "4.7",
+                    "reviews": 32,
+                    "distance": 80,
+                    "price": 30.29,
+                    "description": "Um hambúrguer com bacon crocante, queijo cheddar, alface, tomate e molho especial.",
+                    "image": "https://i.imgur.com/QUelQ9z.jpeg",
+                    "isFavorite": true,
+                    "firstDeliveryTime": "23:00",
+                    "secondDeliveryTime": "23:45",
+                    "deliveryFee": 4.0
+                },
+                {
+                    "id": "4",
+                    "reviews": 92,
+                    "name": "X Egg",
+                    "rate": "4.6",
+                    "distance": 215,
+                    "price": 12.92,
+                    "description": "Um hambúrguer com ovo frito, queijo, alface, tomate e molho especial.",
+                    "image": "https://i.imgur.com/Xx2gEd1.jpeg",
+                    "isFavorite": true,
+                    "firstDeliveryTime": "16:30",
+                    "secondDeliveryTime": "17:15",
+                    "deliveryFee": 0.0
+                },
+                {
+                    "id": "5",
+                    "name": "Classic Cheeseburger",
+                    "rate": "4.8",
+                    "reviews": 75,
+                    "distance": 310,
+                    "price": 15.99,
+                    "description": "Um hambúrguer clássico com queijo derretido, alface crocante, tomate fresco e picles em um pão de brioche.",
+                    "image": "https://i.imgur.com/NfnMUen.jpeg",
+                    "isFavorite": true,
+                    "firstDeliveryTime": "17:50",
+                    "secondDeliveryTime": "18:25",
+                    "deliveryFee": 6.0
+                },
+                {
+                    "id": "6",
+                    "name": "Veggie Delight",
+                    "rate": "4.6",
+                    "reviews": 60,
+                    "price": 12.99,
+                    "distance": 220,
+                    "description": "Um hambúrguer vegetariano delicioso, feito com grão-de-bico e especiarias, servido com alface, tomate e molho especial.",
+                    "image": "https://i.imgur.com/b1S9gOt.jpeg",
+                    "isFavorite": false,
+                    "firstDeliveryTime": "13:35",
+                    "secondDeliveryTime": "14:00",
+                    "deliveryFee": 0.0
+                },
+                {
+                    "id": "7",
+                    "name": "Double Cheese Burger",
+                    "rate": "4.9",
+                    "reviews": 85,
+                    "distance": 175,
+                    "price": 25.99,
+                    "description": "Dois suculentos hambúrgueres com queijo duplo, alface, tomate, cebola e molho especial.",
+                    "image": "https://i.imgur.com/iwVd8Qf_d.webp?maxwidth=760&fidelity=grand",
+                    "isFavorite": true,
+                    "firstDeliveryTime": "12:30",
+                    "secondDeliveryTime": "13:00",
+                    "deliveryFee": 7.0
+                },
+                {
+                    "id": "8",
+                    "name": "Spicy Chicken Burger",
+                    "rate": "4.7",
+                    "reviews": 95,
+                    "distance": 130,
+                    "price": 19.99,
+                    "description": "Um hambúrguer de frango picante com pão de brioche, picles, cebolinha e maionese especial.",
+                    "image": "https://i.imgur.com/DzKqtKT_d.webp?maxwidth=760&fidelity=grand",
+                    "isFavorite": false,
+                    "firstDeliveryTime": "16:30",
+                    "secondDeliveryTime": "16:55",
+                    "deliveryFee": 5.0
+                },
+                {
+                    "id": "9",
+                    "name": "Mushroom Burger",
+                    "rate": "4.8",
+                    "reviews": 72,
+                    "distance": 220,
+                    "price": 22.99,
+                    "description": "Um hambúrguer gourmet com cogumelos salteados, queijo suíço e molho especial.",
+                    "image": "https://i.imgur.com/YJn3yKN_d.webp?maxwidth=760&fidelity=grand",
+                    "isFavorite": true,
+                    "firstDeliveryTime": "12:30",
+                    "secondDeliveryTime": "13:45",
+                    "deliveryFee": 6.0
+                },
+                {
+                    "id": "10",
+                    "name": "BBQ Bacon Burger",
+                    "rate": "4.6",
+                    "reviews": 90,
+                    "distance": 180,
+                    "price": 24.99,
+                    "description": "Um hambúrguer com bacon crocante, queijo cheddar, cebolas fritas, alface, tomate e molho barbecue.",
+                    "image": "https://i.imgur.com/YduxMx4_d.webp?maxwidth=760&fidelity=grand",
+                    "isFavorite": false,
+                    "firstDeliveryTime": "11:10",
+                    "secondDeliveryTime": "11:35",
+                    "deliveryFee": 8.0
+                }
+            ]
+        },
+        {
+            "name": "Pizza",
+            "image": "https://i.imgur.com/LVnmOOM.png",
+            "products": [
+                {
+                    "id": "7",
+                    "name": "Pepperoni Paradise",
+                    "rate": "4.9",
+                    "reviews": 100,
+                    "price": 25.99,
+                    "distance": 350,
+                    "description": "Uma pizza deliciosa com pepperoni picante, queijo mussarela derretido e molho de tomate especial.",
+                    "image": "https://i.imgur.com/QMoq0yE.jpeg",
+                    "isFavorite": true,
+                    "firstDeliveryTime": "17:20",
+                    "secondDeliveryTime": "18:20",
+                    "deliveryFee": 7.0
+                },
+                {
+                    "id": "8",
+                    "name": "Margherita Magic",
+                    "rate": "4.7",
+                    "reviews": 85,
+                    "price": 20.99,
+                    "distance": 400,
+                    "description": "Uma pizza clássica com molho de tomate fresco, queijo mussarela e folhas de manjericão.",
+                    "image": "https://i.imgur.com/kcwFHQ9.jpeg",
+                    "isFavorite": false,
+                    "firstDeliveryTime": "22:10",
+                    "secondDeliveryTime": "22:42",
+                    "deliveryFee": 5.0
+                },
+                {
+                    "id": "9",
+                    "name": "Hawaiian Delight",
+                    "rate": "4.6",
+                    "reviews": 78,
+                    "price": 22.99,
+                    "distance": 212,
+                    "description": "Uma pizza com presunto, abacaxi, queijo mussarela e molho de tomate.",
+                    "image": "https://i.imgur.com/fVvd7bE.jpeg",
+                    "isFavorite": true,
+                    "firstDeliveryTime": "19:20",
+                    "secondDeliveryTime": "20:10",
+                    "deliveryFee": 6.0
+                },
+                {
+                    "id": "10",
+                    "name": "Special Chicken",
+                    "rate": "4.8",
+                    "reviews": 90,
+                    "price": 24.99,
+                    "distance": 91,
+                    "description": "Uma pizza com frango, queijo mussarela, requeijão, azeitona, tomate, cebola e coentro.",
+                    "image": "https://i.imgur.com/LGRE0mW.jpeg",
+                    "isFavorite": false,
+                    "firstDeliveryTime": "20:20",
+                    "secondDeliveryTime": "20:45",
+                    "deliveryFee": 5.0
+                }
+            ]
+        },
+        {
+            "name": "Drink",
+            "image": "https://i.imgur.com/CdfIDe6.png",
+            "products": [
+                {
+                    "id": "11",
+                    "name": "Lemonade Bliss",
+                    "rate": "4.8",
+                    "reviews": 120,
+                    "price": 5.99,
+                    "distance": 35,
+                    "description": "Uma limonada refrescante feita com limões frescos, água e um toque de açúcar.",
+                    "image": "https://i.imgur.com/tdKa59r.jpeg",
+                    "isFavorite": true,
+                    "firstDeliveryTime": "20:20",
+                    "secondDeliveryTime": "20:45",
+                    "deliveryFee": 1.0
+                },
+                {
+                    "id": "12",
+                    "name": "Mimosa",
+                    "rate": "4.9",
+                    "reviews": 95,
+                    "price": 7.99,
+                    "distance": 23,
+                    "description": "Uma deliciosa bebida a base de champanhe e suco de laranja, perfeito para um dia quente.",
+                    "image": "https://i.imgur.com/q06edF2.jpeg",
+                    "isFavorite": false,
+                    "firstDeliveryTime": "14:40",
+                    "secondDeliveryTime": "15:00",
+                    "deliveryFee": 2.0
+                },
+                {
+                    "id": "13",
+                    "name": "Watermelon Juice",
+                    "rate": "4.8",
+                    "reviews": 80,
+                    "price": 6.99,
+                    "distance": 453,
+                    "description": "Uma bebida cremosa e refrescante feita com melância fresca e hortelã.",
+                    "image": "https://i.imgur.com/3f0d9a9.jpeg",
+                    "isFavorite": true,
+                    "firstDeliveryTime": "20:10",
+                    "secondDeliveryTime": "20:45",
+                    "deliveryFee": 3.0
+                },
+                {
+                    "id": "14",
+                    "name": "Iced Coffee",
+                    "rate": "4.7",
+                    "reviews": 130,
+                    "price": 4.99,
+                    "distance": 45,
+                    "description": "Um café gelado revigorante feito com grãos de café premium e servido com gelo.",
+                    "image": "https://i.imgur.com/7pjHziN.jpeg",
+                    "isFavorite": true,
+                    "firstDeliveryTime": "18:25",
+                    "secondDeliveryTime": "19:00",
+                    "deliveryFee": 1.0
+                }
+            ]
+        },
+        {
+            "name": "Taco",
+            "image": "https://i.imgur.com/ZyyeZW0.png",
+            "products": [
+                {
+                    "id": "15",
+                    "name": "Classic Beef Taco",
+                    "rate": "4.8",
+                    "reviews": 200,
+                    "price": 3.99,
+                    "distance": 150,
+                    "description": "Um taco clássico com carne temperada, salsinha, cebola e limão.",
+                    "image": "https://i.imgur.com/y5Hxwde.jpeg",
+                    "isFavorite": true,
+                    "firstDeliveryTime": "14:20",
+                    "secondDeliveryTime": "14:55",
+                    "deliveryFee": 0.0
+                },
+                {
+                    "id": "16",
+                    "name": "Chicken Taco",
+                    "rate": "4.7",
+                    "reviews": 180,
+                    "price": 4.29,
+                    "distance": 120,
+                    "description": "Um taco delicioso com frango grelhado, cebolinha, milho e molho especial.",
+                    "image": "https://i.imgur.com/0GnMrjD.jpeg",
+                    "isFavorite": false,
+                    "firstDeliveryTime": "21:28",
+                    "secondDeliveryTime": "22:00",
+                    "deliveryFee": 0.0
+                },
+                {
+                    "id": "17",
+                    "name": "Shrimp Taco",
+                    "rate": "4.6",
+                    "reviews": 160,
+                    "price": 4.59,
+                    "distance": 200,
+                    "description": "Um taco leve e fresco com camarão grelhado, cebola, abacate, cheiro verde, molho de iogurte e limão.",
+                    "image": "https://i.imgur.com/rQCucl1_d.webp?maxwidth=760&fidelity=grand",
+                    "isFavorite": false,
+                    "firstDeliveryTime": "20:20",
+                    "secondDeliveryTime": "21:00",
+                    "deliveryFee": 0.0
+                },
+                {
+                    "id": "18",
+                    "name": "Veggie Taco",
+                    "rate": "4.5",
+                    "reviews": 140,
+                    "price": 3.79,
+                    "distance": 100,
+                    "description": "Um taco vegetariano saudável com grão de bico, abacate, salsa, cenoura caramelizada e limão.",
+                    "image": "https://i.imgur.com/U5wMOBf_d.webp?maxwidth=760&fidelity=grand",
+                    "isFavorite": true,
+                    "firstDeliveryTime": "20:20",
+                    "secondDeliveryTime": "20:50",
+                    "deliveryFee": 0.0
+                }
+            ]
+        }
+    ]
+}
+

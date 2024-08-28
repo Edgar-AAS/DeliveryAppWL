@@ -1,23 +1,28 @@
-//
-//  UIViewControllerExtensions.swift
-//  DeliveryApp
-//
-//  Created by Edgar Arlindo on 30/01/24.
-//
-
 import UIKit
 
 extension UIViewController {
+    func hideNavigationBar() {
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    func showNavigationBar() {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    func makeAlertVIew(title: String, message: String) -> UIAlertController {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        return alert
+    }
+}
+
+extension UIView {
     func hideKeyboardOnTap() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tapGesture)
+        addGestureRecognizer(tapGesture)
     }
 
     @objc private func dismissKeyboard() {
-        view.endEditing(true)
-    }
-    
-    func hideNavigationBar() {
-        navigationController?.setNavigationBarHidden(true, animated: true)
+        endEditing(true)
     }
 }

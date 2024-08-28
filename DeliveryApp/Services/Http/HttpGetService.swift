@@ -1,23 +1,10 @@
 import Foundation
 
-
-enum HttpError: Error {
-    case noConnectivity
-    case forbidden
-    case badRequest
-    case serverError
-    case noContent
-    case timeout
-    case unknown
-    case unauthorized
-    case notFound
-}
-
-protocol HtttpGetClientProtocol {
+protocol HttpGet {
     func get(with url: URL, completion: @escaping ((Result<Data?, HttpError>) -> Void))
 }
 
-class HttpGetService: HtttpGetClientProtocol {
+class HttpGetService: HttpGet {
     private let urlSession: URLSession
     
     init(urlSession: URLSession = .shared) {
@@ -44,22 +31,21 @@ class HttpGetService: HtttpGetClientProtocol {
             }
 
             switch response.statusCode {
-            case 200...299:
-                completion(.success(data))
-            case 400:
-                completion(.failure(.badRequest))
-            case 401:
-                completion(.failure(.unauthorized))
-            case 403:
-                completion(.failure(.forbidden))
-            case 404:
-                completion(.failure(.notFound))
-            case 500...599:
-                completion(.failure(.serverError))
-            default:
-                completion(.failure(.unknown))
+                case 200...299:
+                    completion(.success(data))
+                case 400:
+                    completion(.failure(.badRequest))
+                case 401:
+                    completion(.failure(.unauthorized))
+                case 403:
+                    completion(.failure(.forbidden))
+                case 404:
+                    completion(.failure(.notFound))
+                case 500...599:
+                    completion(.failure(.serverError))
+                default:
+                    completion(.failure(.unknown))
             }
         }.resume()
     }
 }
-

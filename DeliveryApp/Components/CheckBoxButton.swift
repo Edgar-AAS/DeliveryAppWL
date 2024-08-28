@@ -6,6 +6,7 @@ protocol CheckBoxDelegate: AnyObject {
 
 final class CheckBoxButton: UIButton {
     weak var delegate: CheckBoxDelegate?
+    
     private var isChecked: Bool = false {
         didSet {
             isSelected = isChecked
@@ -13,28 +14,30 @@ final class CheckBoxButton: UIButton {
         }
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(delegate: CheckBoxDelegate?) {
+        self.delegate = delegate
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = false
         setupUI()
     }
-
+    
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupUI()
+        fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func setupUI() {
         let normalImage = UIImage(named: "square-logo")?.resized(to: .init(width: 30, height: 30))
         let selectedImage = UIImage(named: "checkmark-logo")?.resized(to: .init(width: 30, height: 30))
         
         setImage(normalImage, for: .normal)
         setImage(selectedImage, for: .selected)
-        addTarget(self, action: #selector(checkBoxTapped), for: .touchUpInside)
-    }
-
-    @objc private func checkBoxTapped() {
-        addTouchFeedback(style: .rigid)
-        isChecked = !isChecked
+        
+        let action = UIAction { [weak self] _ in
+            guard let self else { return }
+            addTouchFeedback(style: .rigid)
+            isChecked = !isChecked
+        }
+        addAction(action, for: .touchUpInside)
     }
 }
 

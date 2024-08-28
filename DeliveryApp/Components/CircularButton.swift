@@ -1,10 +1,3 @@
-//
-//  CircularButton.swift
-//  DeliveryApp
-//
-//  Created by Edgar Arlindo on 28/01/24.
-//
-
 import UIKit
 
 final class CircularButton: UIButton {

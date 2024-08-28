@@ -8,11 +8,11 @@
 import Foundation
 @testable import DeliveryApp
 
-class UserLoginSpy: LoginProtocol {
-    private(set) var authenticationModel: AuthenticationModel?
+class UserLoginSpy: Authentication {
+    private(set) var authenticationModel: LoginRequest?
     private(set) var emit: ((Result<Void, Error>) -> Void)?
 
-    func auth(authenticationModel: DeliveryApp.AuthenticationModel, completion: @escaping (Result<Void, Error>) -> Void) {
+    func auth(authenticationModel: LoginRequest, completion: @escaping (Result<Void, Error>) -> Void) {
         self.authenticationModel = authenticationModel
         self.emit = completion
     }

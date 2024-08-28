@@ -1,10 +1,3 @@
-//
-//  Fonts.swift
-//  DeliveryApp
-//
-//  Created by Edgar Arlindo on 11/07/24.
-//
-
 import UIKit
 
 enum Fonts {

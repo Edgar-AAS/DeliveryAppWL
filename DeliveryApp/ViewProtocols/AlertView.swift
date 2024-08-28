@@ -1,10 +1,3 @@
-//
-//  AlertView.swift
-//  DeliveryApp
-//
-//  Created by Edgar Arlindo on 29/01/24.
-//
-
 import Foundation
 
 public protocol AlertView: AnyObject {

@@ -1,40 +1,54 @@
-//
-//  CustomTextField.swift
-//  DeliveryApp
-//
-//  Created by Edgar Arlindo on 25/01/24.
-//
-
 import UIKit
+
+
+enum FieldType: Equatable {
+    case email
+    case password
+    case passwordConfirm
+    case regular
+}
 
 final class CustomTextField: UITextField {
     private let exampleText: String
-    private let isPassword: Bool
-    private let fieldType: FieldType
+    private let fieldType: FieldType?
+    private let fieldTag: Int
+    private let returnType: UIReturnKeyType
+    private weak var fieldDelegate: UITextFieldDelegate?
+    
+    private var padding: CGFloat = 20.0
     
     private var isHide: Bool = true {
         didSet {
-            hideAndShowPasswordButton.isSelected = !isHide
+            eyeButton.isSelected = !isHide
             isSecureTextEntry = isHide
         }
     }
     
-    init(exampleText: String,
-         isPassword: Bool = false,
-         fieldType: FieldType = .regular
-    ) {
-        self.exampleText = exampleText
-        self.isPassword = isPassword
+    init(placeholder: String,
+         fieldType: FieldType = .regular,
+         tag: Int = 0,
+         returnKeyType: UIReturnKeyType = .default,
+         delegate: UITextFieldDelegate? = nil
+    )
+    {
+        self.exampleText = placeholder
         self.fieldType = fieldType
+        self.fieldTag = tag
+        self.returnType = returnKeyType
+        self.fieldDelegate = delegate
         super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = false
         setup()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+        
     private func setup() {
+        tag = fieldTag
+        delegate = fieldDelegate
+        returnKeyType = returnType
         backgroundColor = .white
         tintColor = .black
         textColor = .black
@@ -42,27 +56,37 @@ final class CustomTextField: UITextField {
         layer.borderWidth = 1
         layer.borderColor = Colors.grayBorderColor.cgColor
         placeholder = exampleText
+        addSubview(feedbackLabel)
         
         let attributes = [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
         let attributedPlaceholder = NSAttributedString(string: self.placeholder ?? "", attributes: attributes)
         self.attributedPlaceholder = attributedPlaceholder
-        
-        if isPassword {
-            isSecureTextEntry = true
-            let frame = CGRect(x: 0, y: 0, width: hideAndShowPasswordButton.frame.size.width + 10, height: hideAndShowPasswordButton.frame.size.height)
-            let outerView = UIView(frame: frame)
-            outerView.addSubview(hideAndShowPasswordButton)
-            rightViewMode = .always
-            rightView = outerView
+    
+        if let fieldType = fieldType {
+            if fieldType == .email {
+                keyboardType = .emailAddress
+                autocapitalizationType = .none
+                autocorrectionType = .no
+            } else if fieldType == .password || fieldType == .passwordConfirm{
+                isSecureTextEntry = true
+                showEyeButton()
+            }
         }
-        
-        addSubview(feedbackLabel)
         
         NSLayoutConstraint.activate([
             feedbackLabel.topAnchor.constraint(equalTo: bottomAnchor, constant: 4),
             feedbackLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             feedbackLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
+    }
+    
+    private func showEyeButton() {
+        padding = 48.0
+        let frame = CGRect(x: 0, y: 0, width: eyeButton.frame.size.width + 10, height: eyeButton.frame.size.height)
+        let outerView = UIView(frame: frame)
+        outerView.addSubview(eyeButton)
+        rightViewMode = .always
+        rightView = outerView
     }
     
     private lazy var feedbackLabel: UILabel = {
@@ -74,7 +98,7 @@ final class CustomTextField: UITextField {
         return label
     }()
         
-    private lazy var hideAndShowPasswordButton: UIButton = {
+    private lazy var eyeButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "eye.slash"), for: .normal)
         button.setImage(UIImage(systemName: "eye"), for: .selected)
@@ -94,35 +118,28 @@ final class CustomTextField: UITextField {
         isHide = !isHide
     }
     
-    func setDescriptionField(viewModel: FieldDescriptionViewModel) {
-        if fieldType == viewModel.fieldType {
-            feedbackLabel.isHidden = false
-            feedbackLabel.text = viewModel.message
-        } else {
+    func setDescriptionField(viewModel: FieldValidationViewModel) {
+        if fieldType != viewModel.type {
             feedbackLabel.isHidden = true
+            return
         }
+        
+        feedbackLabel.isHidden = false
+        feedbackLabel.text = viewModel.message
     }
 
-    private func getDynamicPadding() -> CGFloat {
-        if fieldType == .password || fieldType == .passwordConfirm {
-            return 48
-        } else {
-            return 20
-        }
-    }
-    
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        let bounds = CGRect(x: 10, y: 0, width: bounds.width - getDynamicPadding(), height: bounds.height)
+        let bounds = CGRect(x: 10, y: 0, width: bounds.width - padding, height: bounds.height)
         return bounds
     }
 
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        let bounds = CGRect(x: 10, y: 0, width: bounds.width - getDynamicPadding(), height: bounds.height)
+        let bounds = CGRect(x: 10, y: 0, width: bounds.width - padding, height: bounds.height)
         return bounds
     }
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
-        let bounds = CGRect(x: 10, y: 0, width: bounds.width - getDynamicPadding(), height: bounds.height)
+        let bounds = CGRect(x: 10, y: 0, width: bounds.width - padding, height: bounds.height)
         return bounds
     }
 }

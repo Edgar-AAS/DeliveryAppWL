@@ -1,10 +1,3 @@
-//
-//  AuthCoordinator.swift
-//  DeliveryApp
-//
-//  Created by Edgar Arlindo on 29/01/24.
-//
-
 import UIKit
 
 protocol Coordinator: AnyObject {
@@ -17,11 +10,14 @@ enum Event: Equatable {
     case loginToRegister
     case registerToLogin
     case goToHome
-    case goToFoodDetails(Food)
     case goToForgotPassword
+    case goToResetPassword
     case goToEmailVerification(User)
+    case goToFoodDetails(Food)
     case backToHome
-
+    case goToRegistrationSuccess(RegistrationSuccessModel)
+    case backToLogin
+    
     static func ==(lhs: Event, rhs: Event) -> Bool {
         switch (lhs, rhs) {
         case (.loginToRegister, .loginToRegister):
@@ -38,6 +34,8 @@ enum Event: Equatable {
             return lhsFood == rhsFood
         case (.goToEmailVerification(let lhsUser), .goToEmailVerification(let rhsUser)):
             return lhsUser == rhsUser
+        case (.goToRegistrationSuccess(let lhsSuccessModel), .goToRegistrationSuccess(let rhsSuccessModel)):
+            return lhsSuccessModel == rhsSuccessModel
         default:
             return false
         }
@@ -55,7 +53,7 @@ class MainCoordinator: Coordinator {
     func eventOcurred(type: Event) {
         switch type {
         case .loginToRegister:
-            let viewController = SignUpBuilder.build(coordinator: self)
+            let viewController = RegisterBuilder.build(coordinator: self)
             navigationController?.pushViewController(viewController)
         case .registerToLogin:
             navigationController?.popViewController()
@@ -73,6 +71,15 @@ class MainCoordinator: Coordinator {
             navigationController?.pushViewController(viewController)
         case .backToHome:
             navigationController?.popViewController()
+        case .goToResetPassword:
+            let viewController = ResetPasswordBuilder.build(coordinator: self)
+            navigationController?.pushViewController(viewController)
+        case .goToRegistrationSuccess(let successModel):
+            let viewController = RegistrationSuccessBuilder.build(model: successModel, coordinator: self)
+            navigationController?.pushViewController(viewController)
+        case .backToLogin:
+            guard let viewController = navigationController?.viewControllers.first(where: { $0 is LoginViewController }) else { return }
+            navigationController?.pop(to: viewController)
         }
     }
 }
