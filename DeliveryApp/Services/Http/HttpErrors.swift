@@ -5,9 +5,9 @@ enum HttpError: Error {
     case forbidden
     case badRequest
     case serverError
-    case noContent
     case timeout
     case unknown
     case unauthorized
     case notFound
+    case invalidResponse
 }

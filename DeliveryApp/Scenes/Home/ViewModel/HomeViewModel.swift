@@ -1,12 +1,4 @@
-//
-//  HomeViewModel.swift
-//  DeliveryApp
-//
-//  Created by Edgar Arlindo on 24/04/24.
-//
-
 import Foundation
-
 
 enum FoodCategoryType: String {
     case burger = "Burger"
@@ -22,13 +14,11 @@ protocol HomeViewModelProtocol {
 }
 
 class HomeViewModel: HomeViewModelProtocol {
-    var loadingHandler: ((Bool) -> ())?
-    
-    private let httpGetService: HttpGet
+    private let httpClient: HTTPClientProtocol
     private let coordinator: Coordinator
     
-    init(httpGetService: HttpGet, coordinator: Coordinator) {
-        self.httpGetService = httpGetService
+    init(httpClient: HTTPClientProtocol, coordinator: Coordinator) {
+        self.httpClient = httpClient
         self.coordinator = coordinator
     }
     
@@ -37,35 +27,19 @@ class HomeViewModel: HomeViewModelProtocol {
     }
     
     func fetchFoodsBy(category: FoodCategoryType = .burger, completion: @escaping ([Food], [FoodCategoryDTO]) -> Void) {
-        httpGetService.get(with: URL(string: "any_url")!) { [weak self] result in
-            guard self != nil else { return }
+        let resource = Resource<Food>(url: URL(string: "any_url")!, modelType: Food.self)
+        httpClient.load(resource) { result in
             switch result {
-            case .success(let foodData):
-                if let foods: ProductCategories = foodData?.toModel(),
-                   let foodsByCategory = foods.categories
-                                        .filter({$0.name == category.rawValue})
-                                        .first?.products
-                {
-                    let categories = foods.categories
-                                    .map { FoodCategoryDTO(name: $0.name, image: $0.image) }
-                    
-                    DispatchQueue.main.async {
-                        completion(foodsByCategory, categories)
-                    }
+            case .success(let data):
+                if let data: ProductCategories = data?.toModel() {
+                    print(data)
                 }
-            case .failure(let error):
-                switch error {
-                case .noConnectivity:
-                    DispatchQueue.main.async {
-                        print("ERROR SCREEN HANDLE")
-                    }
-                default: return
-                }
+            case .failure(let error): print(error)
             }
         }
     }
     
     func goToDetailsScreen(food: Food) {
-        coordinator.eventOcurred(type: .goToFoodDetails(food))
+        //
     }
 }

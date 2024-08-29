@@ -10,6 +10,7 @@ final class LoginScreen: UIView {
         super.init(frame: .zero)
         setupView()
         hideKeyboardOnTap()
+        setupResponsiveBehavior(scrollView: customScrollView, referenceView: loginButton)
     }
     
     required init?(coder: NSCoder) {
@@ -26,7 +27,8 @@ final class LoginScreen: UIView {
         text: "Welcome back",
         font: Fonts.semiBold(size: 32).weight,
         color: .black,
-        textAlignment: .center
+        textAlignment: .center,
+        numberOfLines: 0
     )
     
     private lazy var signInLabel = makeLabel(
@@ -43,7 +45,7 @@ final class LoginScreen: UIView {
         textAlignment: .left
     )
     
-    lazy var emailTextField = CustomTextField(
+    private lazy var emailTextField = CustomTextField(
         placeholder: "Enter Email",
         fieldType: .email,
         tag: 0,
@@ -51,7 +53,7 @@ final class LoginScreen: UIView {
         delegate: textFieldDelegate
     )
     
-    lazy var passwordTextField = CustomTextField(
+    private lazy var passwordTextField = CustomTextField(
         placeholder: "Enter Password",
         fieldType: .password,
         tag: 1,
@@ -165,6 +167,11 @@ final class LoginScreen: UIView {
     }
 }
 
+struct KeyboardResponsiveContext {
+    let scrollView: UIScrollView
+    let referenceView: UIView
+}
+
 extension LoginScreen: CodeView {
     func buildViewHierarchy() {
         addSubview(customScrollView)
@@ -225,7 +232,7 @@ extension LoginScreen: CodeView {
             loginButton.trailingAnchor.constraint(equalTo: loginAccountHeadlineLabel.trailingAnchor),
             loginButton.heightAnchor.constraint(equalToConstant: 52),
             
-            separatorStackView.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 48),
+            separatorStackView.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16),
             separatorStackView.leadingAnchor.constraint(equalTo: loginAccountHeadlineLabel.leadingAnchor),
             separatorStackView.trailingAnchor.constraint(equalTo: loginAccountHeadlineLabel.trailingAnchor),
             separatorStackView.heightAnchor.constraint(equalToConstant: 40),

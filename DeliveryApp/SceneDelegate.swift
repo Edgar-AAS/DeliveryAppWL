@@ -1,10 +1,3 @@
-//
-//  SceneDelegate.swift
-//  DeliveryApp
-//
-//  Created by Edgar Arlindo on 25/01/24.
-//
-
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -22,4 +15,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         coordinator.start()
     }
 }
-

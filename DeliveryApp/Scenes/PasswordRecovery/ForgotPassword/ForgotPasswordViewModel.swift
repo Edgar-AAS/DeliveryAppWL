@@ -10,6 +10,7 @@ class ForgotPasswordViewModel: ForgotPasswordViewModelProtocol {
     private let passwordReset: PasswordResetProtocol
     private let emailValidation: EmailValidator
     private let coordinator: Coordinator
+    
     var loadingHandler: ((Bool) -> ())?
     weak var fieldValidationDelegate: FieldValidationDelegate?
     
@@ -22,6 +23,7 @@ class ForgotPasswordViewModel: ForgotPasswordViewModelProtocol {
         self.emailValidation = emailValidator
         self.coordinator = coordinator
     }
+    
 //MARK: - sendPasswordReset
     func sendPasswordReset(with userRequest: ForgotPasswordUserRequest) {
         if let fieldValidationViewModel = validateEmail(userRequest.email) {

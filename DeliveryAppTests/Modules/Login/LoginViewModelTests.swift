@@ -1,10 +1,3 @@
-//
-//  LoginViewModelTests.swift
-//  DeliveryAppTests
-//
-//  Created by Edgar Arlindo on 15/07/24.
-//
-
 import XCTest
 @testable import DeliveryApp
 

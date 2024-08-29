@@ -1,10 +1,3 @@
-//
-//  UserRegisterSpy.swift
-//  DeliveryAppTests
-//
-//  Created by Edgar Arlindo on 05/08/24.
-//
-
 import Foundation
 @testable import DeliveryApp
 

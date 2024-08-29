@@ -1,6 +1,32 @@
 import UIKit
 
 extension UIView {
+    private static var keyboardContext: KeyboardResponsiveContext?
+    
+    func setupResponsiveBehavior(scrollView: UIScrollView, referenceView: UIView) {
+        UIView.keyboardContext = KeyboardResponsiveContext(scrollView: scrollView, referenceView: referenceView)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        guard let context = UIView.keyboardContext else { return }
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        
+        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height + 10, right: 0)
+        context.scrollView.contentInset = contentInsets
+        context.scrollView.scrollIndicatorInsets = contentInsets
+        
+        context.scrollView.scrollRectToVisible(context.referenceView.frame, animated: true)
+    }
+    
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        guard let context = UIView.keyboardContext else { return }
+        
+        context.scrollView.contentInset = .zero
+        context.scrollView.scrollIndicatorInsets = .zero
+    }
+    
     func makeCornerRadius() {
         layer.cornerRadius = frame.height / 2
     }

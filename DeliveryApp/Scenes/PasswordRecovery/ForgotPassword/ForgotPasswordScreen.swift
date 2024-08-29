@@ -12,39 +12,11 @@ class ForgotPasswordScreen: UIView {
         self.delegate = delegate
         super.init(frame: .zero)
         setupView()
-        registerForKeyboardNotifications()
+        setupKeyboardRegister()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func registerForKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    @objc private func keyboardWillShow(notification: NSNotification) {
-        guard let userInfo = notification.userInfo,
-              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
-        
-        continueButtonBottomConstraint?.constant = -keyboardFrame.height + safeAreaInsets.bottom - 16
-        
-        UIView.animate(withDuration: 0.3) {
-            self.layoutIfNeeded()
-        }
-    }
-    
-    @objc private func keyboardWillHide(notification: NSNotification) {
-        continueButtonBottomConstraint?.constant = -16
-        
-        UIView.animate(withDuration: 0.3) {
-            self.layoutIfNeeded()
-        }
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
     
     private lazy var customScrollView: CustomScrollView = {
@@ -112,6 +84,32 @@ class ForgotPasswordScreen: UIView {
     func getForgotPasswordUserRequest() -> ForgotPasswordUserRequest? {
         guard let email = emailTextField.text else { return nil }
         return ForgotPasswordUserRequest(email: email)
+    }
+}
+
+extension ForgotPasswordScreen {
+    private func setupKeyboardRegister() {
+        NotificationCenter.default.addObserver(self, selector: #selector(animateButtonPositionChange), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(animateButtonToOriginalPosition), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func animateButtonPositionChange(notification: NSNotification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+
+        continueButtonBottomConstraint?.constant = -keyboardFrame.height + safeAreaInsets.bottom - 16
+
+        UIView.animate(withDuration: 0.3) {
+            self.layoutIfNeeded()
+        }
+    }
+
+    @objc private func animateButtonToOriginalPosition(notification: NSNotification) {
+        continueButtonBottomConstraint?.constant = -16
+
+        UIView.animate(withDuration: 0.3) {
+            self.layoutIfNeeded()
+        }
     }
 }
 

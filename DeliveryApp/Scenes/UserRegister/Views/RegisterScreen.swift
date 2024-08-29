@@ -15,6 +15,7 @@ final class RegisterScreen: UIView {
         super.init(frame: .zero)
         setupView()
         hideKeyboardOnTap()
+        setupResponsiveBehavior(scrollView: customScrollView, referenceView: emailTextField)
     }
     
     required init?(coder: NSCoder) {
@@ -214,7 +215,7 @@ final class RegisterScreen: UIView {
         axis: .horizontal
     )
     
-    func goToNextField(_ textField: UITextField, action: (() -> Void)) {
+    func goToNextField(_ textField: UITextField) {
         switch textField.tag {
         case 0:
             userNameTextField.becomeFirstResponder()
@@ -223,7 +224,6 @@ final class RegisterScreen: UIView {
         case 2:
             passwordConfirmTextField.becomeFirstResponder()
         case 3:
-            action()
             passwordConfirmTextField.resignFirstResponder()
         default:
             return
@@ -344,7 +344,7 @@ extension RegisterScreen: CodeView {
             registerButton.trailingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.trailingAnchor),
             registerButton.heightAnchor.constraint(equalToConstant: 52),
             
-            separatorStackView.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 24),
+            separatorStackView.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 16),
             separatorStackView.leadingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.leadingAnchor),
             separatorStackView.trailingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.trailingAnchor),
             

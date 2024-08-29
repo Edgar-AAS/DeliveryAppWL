@@ -1,21 +1,14 @@
-//
-//  LocalData.swift
-//  DeliveryApp
-//
-//  Created by Edgar Arlindo on 24/04/24.
-//
-
 import Foundation
 
-class LocalData: HttpGet {
+class LocalData: HTTPClientProtocol {
     private let resource: String
     
     init(resource: String) {
         self.resource = resource
     }
     
-    func get(with url: URL, completion: @escaping ((Result<Data?, HttpError>) -> Void)) {
-        if let url = Bundle.main.url(forResource: resource, withExtension: "json") {
+    func load<T>(_ resource: Resource<T>, completion: @escaping ((Result<Data?, HttpError>) -> Void)) where T : Decodable, T : Encodable {
+        if let url = Bundle.main.url(forResource: self.resource, withExtension: "json") {
             do {
                 let data = try Data(contentsOf: url)
                 DispatchQueue.main.async {
@@ -27,4 +20,3 @@ class LocalData: HttpGet {
         }
     }
 }
-    

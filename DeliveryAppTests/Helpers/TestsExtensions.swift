@@ -1,10 +1,3 @@
-//
-//  TestsExtensions.swift
-//  DeliveryAppTests
-//
-//  Created by Edgar Arlindo on 16/07/24.
-//
-
 import Foundation
 import XCTest
 

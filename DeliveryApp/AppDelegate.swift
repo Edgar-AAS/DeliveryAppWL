@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  DeliveryApp
-//
-//  Created by Edgar Arlindo on 25/01/24.
-//
-
 import UIKit
 import FirebaseCore
 import GoogleSignIn

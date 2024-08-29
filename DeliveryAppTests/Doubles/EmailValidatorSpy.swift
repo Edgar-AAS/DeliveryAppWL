@@ -1,10 +1,3 @@
-//
-//  EmailValidatorSpy.swift
-//  DeliveryAppTests
-//
-//  Created by Edgar Arlindo on 16/07/24.
-//
-
 import Foundation
 @testable import DeliveryApp
 

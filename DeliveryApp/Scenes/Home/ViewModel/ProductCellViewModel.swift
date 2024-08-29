@@ -1,10 +1,3 @@
-//
-//  ProductCellViewModel.swift
-//  DeliveryApp
-//
-//  Created by Edgar Arlindo on 11/07/24.
-//
-
 import Foundation
 
 class ProductCellViewModel {
