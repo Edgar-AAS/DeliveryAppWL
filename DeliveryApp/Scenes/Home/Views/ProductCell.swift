@@ -1,10 +1,3 @@
-//
-//  ProductCell.swift
-//  DeliveryApp
-//
-//  Created by Edgar Arlindo on 30/04/24.
-//
-
 import UIKit
 import SDWebImage
 

@@ -35,6 +35,7 @@ class HomeViewController: UIViewController {
         }
     }
 }
+
 //MARK: - UITableViewDataSource & UITableViewDelegate
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -82,7 +83,7 @@ extension HomeViewController {
 // MARK: - Delegate Actions
 extension HomeViewController: ProductCategorieCellDelegate {
     func productCategoryDidTapped(categoryType: FoodCategoryType) {
-        //
+        
     }
 }
 

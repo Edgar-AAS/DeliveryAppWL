@@ -1,10 +1,3 @@
-//
-//  GoogleLogin.swift
-//  DeliveryApp
-//
-//  Created by Edgar Arlindo on 17/07/24.
-//
-
 import Foundation
 import GoogleSignIn
 import Firebase

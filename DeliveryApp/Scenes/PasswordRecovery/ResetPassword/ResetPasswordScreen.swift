@@ -1,10 +1,3 @@
-//
-//  ResetPasswordScreen.swift
-//  DeliveryApp
-//
-//  Created by Edgar Arlindo on 06/06/24.
-//
-
 import UIKit
 
 class ResetPasswordScreen: UIView {

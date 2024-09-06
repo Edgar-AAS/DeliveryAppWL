@@ -1,10 +1,3 @@
-//
-//  HomeView.swift
-//  DeliveryApp
-//
-//  Created by Edgar Arlindo on 26/04/24.
-//
-
 import UIKit
 
 class HomeScreen: UIView {
