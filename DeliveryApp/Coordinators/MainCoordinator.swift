@@ -10,7 +10,6 @@ enum Event: Equatable {
     case loginToRegister
     case registerToLogin
     case goToHome
-    case goToForgotPassword
     case goToResetPassword
     case goToEmailVerification(User)
     case goToFoodDetails(Food)
@@ -25,8 +24,6 @@ enum Event: Equatable {
         case (.registerToLogin, .registerToLogin):
             return true
         case (.goToHome, .goToHome):
-            return true
-        case (.goToForgotPassword, .goToForgotPassword):
             return true
         case (.backToHome, .backToHome):
             return true
@@ -59,9 +56,6 @@ class MainCoordinator: Coordinator {
             navigationController?.popViewController()
         case .goToHome:
             let viewController = HomeBuilder.build(coordinator: self)
-            navigationController?.pushViewController(viewController)
-        case .goToForgotPassword:
-            let viewController = ForgotPasswordBuilder.build(coordinator: self)
             navigationController?.pushViewController(viewController)
         case .goToEmailVerification(let user):
             let viewController = EmailVerificationBuilder.build(coordinator: self, user: user)

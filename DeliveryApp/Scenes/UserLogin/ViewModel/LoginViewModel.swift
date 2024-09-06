@@ -49,7 +49,7 @@ class LoginViewModel: LoginViewModelProtocol {
     
 //MARK: - goToForgotPassword
     func goToForgotPassword() {
-        coordinator.eventOcurred(type: .goToForgotPassword)
+        
     }
     
 //MARK: - goToHome
