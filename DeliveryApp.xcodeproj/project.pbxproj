@@ -21,10 +21,6 @@
 		D329D89D2C7FA96600EB2733 /* SignUpScreenDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D329D89C2C7FA96600EB2733 /* SignUpScreenDelegate.swift */; };
 		D329D89F2C7FE40D00EB2733 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = D329D89E2C7FE40D00EB2733 /* HTTPMethod.swift */; };
 		D329D8A12C7FE59A00EB2733 /* ResourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D329D8A02C7FE59A00EB2733 /* ResourceModel.swift */; };
-		D32CEA5F2C7513EF001421CF /* MyCartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32CEA5E2C7513EF001421CF /* MyCartViewController.swift */; };
-		D32CEA612C751423001421CF /* MyCartScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32CEA602C751423001421CF /* MyCartScreen.swift */; };
-		D32CEA632C75145A001421CF /* MyCartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32CEA622C75145A001421CF /* MyCartViewModel.swift */; };
-		D32CEA652C75146D001421CF /* MyCartBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32CEA642C75146D001421CF /* MyCartBuilder.swift */; };
 		D343D0BB2C481BEC00F1A3E0 /* GoogleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D343D0BA2C481BEC00F1A3E0 /* GoogleLogin.swift */; };
 		D34411AC2BE58C3200AC85EC /* FieldValidationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34411AB2BE58C3200AC85EC /* FieldValidationDelegate.swift */; };
 		D349C2C82BDFD6EA001FBF33 /* ProductCategorieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D349C2C72BDFD6EA001FBF33 /* ProductCategorieCell.swift */; };
@@ -150,10 +146,6 @@
 		D329D89C2C7FA96600EB2733 /* SignUpScreenDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpScreenDelegate.swift; sourceTree = "<group>"; };
 		D329D89E2C7FE40D00EB2733 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		D329D8A02C7FE59A00EB2733 /* ResourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceModel.swift; sourceTree = "<group>"; };
-		D32CEA5E2C7513EF001421CF /* MyCartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCartViewController.swift; sourceTree = "<group>"; };
-		D32CEA602C751423001421CF /* MyCartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCartScreen.swift; sourceTree = "<group>"; };
-		D32CEA622C75145A001421CF /* MyCartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCartViewModel.swift; sourceTree = "<group>"; };
-		D32CEA642C75146D001421CF /* MyCartBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCartBuilder.swift; sourceTree = "<group>"; };
 		D343D0BA2C481BEC00F1A3E0 /* GoogleLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLogin.swift; sourceTree = "<group>"; };
 		D34411AB2BE58C3200AC85EC /* FieldValidationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldValidationDelegate.swift; sourceTree = "<group>"; };
 		D349C2C72BDFD6EA001FBF33 /* ProductCategorieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCategorieCell.swift; sourceTree = "<group>"; };
@@ -337,17 +329,6 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		D32CEA5D2C7512B0001421CF /* MyCart */ = {
-			isa = PBXGroup;
-			children = (
-				D32CEA5E2C7513EF001421CF /* MyCartViewController.swift */,
-				D32CEA602C751423001421CF /* MyCartScreen.swift */,
-				D32CEA622C75145A001421CF /* MyCartViewModel.swift */,
-				D32CEA642C75146D001421CF /* MyCartBuilder.swift */,
-			);
-			path = MyCart;
-			sourceTree = "<group>";
-		};
 		D3528BFD2B62FDF800FD5554 = {
 			isa = PBXGroup;
 			children = (
@@ -397,7 +378,6 @@
 				D37C27412BD98EFC00B97901 /* Home */,
 				D381B9232BFAD639009D8010 /* PasswordRecovery */,
 				D3BC4A902C3C8107009141C9 /* FoodDetails */,
-				D32CEA5D2C7512B0001421CF /* MyCart */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -999,7 +979,6 @@
 				D32900C02B686A7F00D39016 /* LoginRequest.swift in Sources */,
 				D3528C342B633DF800FD5554 /* CustomTextField.swift in Sources */,
 				D3EA9D862C7E66E9008CA87A /* RegitrationSuccessModel.swift in Sources */,
-				D32CEA612C751423001421CF /* MyCartScreen.swift in Sources */,
 				D3814F0A2BFD933A00474D99 /* EmailVerificationViewController.swift in Sources */,
 				D3C72D5E2C0E544400059B25 /* EmailVerificationViewModel.swift in Sources */,
 				D3EA9D8F2C7E736D008CA87A /* RegistrationSuccessBuilder.swift in Sources */,
@@ -1008,12 +987,10 @@
 				D3528C362B63EB0800FD5554 /* UIViewExtensions.swift in Sources */,
 				D3528C262B6314AD00FD5554 /* LoginScreen.swift in Sources */,
 				D3528C0A2B62FDF900FD5554 /* AppDelegate.swift in Sources */,
-				D32CEA652C75146D001421CF /* MyCartBuilder.swift in Sources */,
 				D3528C3D2B64389A00FD5554 /* RegisterScreen.swift in Sources */,
 				D3528C2F2B63295100FD5554 /* UIColorExtensions.swift in Sources */,
 				D3EA9D922C7E9700008CA87A /* Strings.swift in Sources */,
 				D37C274C2BD98F9400B97901 /* HomeHeaderView.swift in Sources */,
-				D32CEA5F2C7513EF001421CF /* MyCartViewController.swift in Sources */,
 				D329D89F2C7FE40D00EB2733 /* HTTPMethod.swift in Sources */,
 				D37A48E02C7AF99B009A3481 /* EmailValidator.swift in Sources */,
 				D3C72D672C0FC7D700059B25 /* FirebaseLogin.swift in Sources */,
@@ -1030,7 +1007,6 @@
 				D3C72D692C0FC7ED00059B25 /* FirebaseResetPassword.swift in Sources */,
 				D361B63F2C11F56F0043E765 /* User.swift in Sources */,
 				D3ED88F72C028FFF009C69F0 /* ForgotPasswordViewModel.swift in Sources */,
-				D32CEA632C75145A001421CF /* MyCartViewModel.swift in Sources */,
 				D3C72D5C2C0E4BB900059B25 /* ForgotPasswordBuilder.swift in Sources */,
 				D329D89B2C7FA93C00EB2733 /* RegisterViewModelProtocol.swift in Sources */,
 				D3528C412B6446F500FD5554 /* CheckBoxButton.swift in Sources */,

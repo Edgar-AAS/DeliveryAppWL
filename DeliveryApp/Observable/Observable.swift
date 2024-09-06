@@ -1,10 +1,3 @@
-//
-//  Observable.swift
-//  DeliveryApp
-//
-//  Created by Edgar Arlindo on 04/06/24.
-//
-
 import Foundation
 
 class Observable<T> {

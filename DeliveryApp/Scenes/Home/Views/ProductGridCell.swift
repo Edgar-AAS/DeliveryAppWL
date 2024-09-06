@@ -1,10 +1,3 @@
-//
-//  ProductCell.swift
-//  DeliveryApp
-//
-//  Created by Edgar Arlindo on 29/04/24.
-//
-
 import UIKit
 
 protocol ProductGridCellDelegate: AnyObject {
