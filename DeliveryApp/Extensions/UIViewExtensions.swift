@@ -27,10 +27,6 @@ extension UIView {
         context.scrollView.scrollIndicatorInsets = .zero
     }
     
-    func makeCornerRadius() {
-        layer.cornerRadius = frame.height / 2
-    }
-    
     func addTouchFeedback(style: UIImpactFeedbackGenerator.FeedbackStyle) {
         let feedbackGenerator = UIImpactFeedbackGenerator(style: style)
         feedbackGenerator.prepare()

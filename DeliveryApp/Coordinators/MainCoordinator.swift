@@ -78,7 +78,9 @@ class MainCoordinator: Coordinator {
             let viewController = RegistrationSuccessBuilder.build(model: successModel, coordinator: self)
             navigationController?.pushViewController(viewController)
         case .backToLogin:
-            guard let viewController = navigationController?.viewControllers.first(where: { $0 is LoginViewController }) else { return }
+            guard let viewController = navigationController?.viewControllers
+                .first(where: { $0 is LoginViewController })
+            else { return }
             navigationController?.pop(to: viewController)
         }
     }

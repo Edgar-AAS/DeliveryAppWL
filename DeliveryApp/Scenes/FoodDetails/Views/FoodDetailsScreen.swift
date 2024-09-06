@@ -285,7 +285,7 @@ class FoodDetailsScreen: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        addToCardButton.makeCornerRadius()
+        addToCardButton.layer.cornerRadius = addToCardButton.frame.height / 2
         addToCardButton.clipsToBounds = true
     }
 }

@@ -82,12 +82,7 @@ extension HomeViewController {
 // MARK: - Delegate Actions
 extension HomeViewController: ProductCategorieCellDelegate {
     func productCategoryDidTapped(categoryType: FoodCategoryType) {
-//        viewModel.fetchFoodsBy(category: categoryType) { [weak self] foodData, categories in
-//            guard let self = self else { return }
-//            self.foodDataSource = (foodData, categories)
-//            self.dataSourceCallBack?(foodDataSource.foods)
-//        }
-        
+        //
     }
 }
 
