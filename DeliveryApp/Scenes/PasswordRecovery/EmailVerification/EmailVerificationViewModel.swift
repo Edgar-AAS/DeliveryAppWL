@@ -12,7 +12,6 @@ protocol EmailVerificationViewModelProtocol {
 class EmailVerificationViewModel: EmailVerificationViewModelProtocol {
     private let coordinator: Coordinator
     private let user: User?
-    private let passwordReset: PasswordResetProtocol
     
     private var totalTime = 10
     private var timer: Timer?
@@ -20,10 +19,9 @@ class EmailVerificationViewModel: EmailVerificationViewModelProtocol {
     var timerOutput: Observable<String> = Observable(value: nil)
     var isTimerRunning: Observable<Bool> = Observable(value: false)
     
-    init(coordinator: Coordinator, user: User, passwordReset: PasswordResetProtocol) {
+    init(coordinator: Coordinator, user: User) {
         self.coordinator = coordinator
         self.user = user
-        self.passwordReset = passwordReset
         self.timerOutput.setValue("02:30")
     }
     
@@ -44,13 +42,6 @@ class EmailVerificationViewModel: EmailVerificationViewModelProtocol {
     
     func sendPasswordReset() {
         startOtpTimer()
-        
-        guard let email = user?.email, !email.isEmpty else { return }
-        let userRequest = ForgotPasswordUserRequest(email: email)
-        
-        passwordReset.sendPasswordResetWith(userRequest: userRequest) { isSent, error in
-            print("sendPasswordReset")
-        }
     }
     
     private func startOtpTimer() {

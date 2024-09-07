@@ -20,7 +20,7 @@ class HomeViewController: UIViewController {
     private var dataSourceCallBack: (([Food]) -> ())?
     
     override func loadView() {
-        super.loadView()
+        super.loadView() 
         view = HomeScreen()
     }
     

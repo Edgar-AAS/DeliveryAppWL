@@ -3,7 +3,6 @@ import Foundation
 class LoginViewModel: LoginViewModelProtocol {
 //MARK: - Properties
     private let coordinator: Coordinator
-    private let authentication: Authentication
     private let emailValidation: EmailValidator
     var loadingHandler: ((Bool) -> ())?
     
@@ -12,13 +11,11 @@ class LoginViewModel: LoginViewModelProtocol {
 
 //MARK: - Initializers
     init(coordinator: Coordinator,
-         authentication: Authentication,
          emailValidation: EmailValidator
     )
     
     {
         self.coordinator = coordinator
-        self.authentication = authentication
         self.emailValidation = emailValidation
     }
     
@@ -28,22 +25,6 @@ class LoginViewModel: LoginViewModelProtocol {
             fieldValidationDelegate?.showMessage(viewModel: fieldValidationViewModel)
         } else {
             loadingHandler?(true)
-            authentication.auth(authenticationModel: loginRequest) { [weak self] result in
-                DispatchQueue.main.async { [weak self] in
-                    switch result {
-                    case .success():
-                        self?.loadingHandler?(false)
-                        self?.coordinator.eventOcurred(type: .goToHome)
-                    case .failure:
-                        let alertViewModel = AlertViewModel(
-                            title: AlertViewMessages.errorTitle,
-                            message: AlertViewMessages.errorMessage
-                        )
-                        self?.alertView?.showMessage(viewModel: alertViewModel)
-                        self?.loadingHandler?(false)
-                    }
-                }
-            }
         }
     }
     

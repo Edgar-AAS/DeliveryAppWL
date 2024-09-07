@@ -2,7 +2,6 @@ import Foundation
 
 class RegisterViewModel: RegisterViewModelProtocol {
 //MARK: - Properties
-    private let userRegister: RegisterProtocol
     private let emailValidator: EmailValidator
     private let coordinator: Coordinator
     private var hasAssignedTerms = false
@@ -12,11 +11,9 @@ class RegisterViewModel: RegisterViewModelProtocol {
     weak var fieldValidationDelegate: FieldValidationDelegate?
     
 //MARK: - Initializers
-    init(userRegister: RegisterProtocol,
-         emailValidator: EmailValidator,
+    init(emailValidator: EmailValidator,
          coordinator: Coordinator)
     {
-        self.userRegister = userRegister
         self.emailValidator = emailValidator
         self.coordinator = coordinator
     }
@@ -37,25 +34,6 @@ class RegisterViewModel: RegisterViewModelProtocol {
         }
                 
         loadingHandler?(true)
-        userRegister.register(userRequest: userRequest) { [weak self] result in
-            switch result {
-            case .success(()):
-                self?.loadingHandler?(false)
-                let model = RegistrationSuccessModel(
-                    image: RegistrationSuccessMessages.illustrationSuccessImage,
-                    title: RegistrationSuccessMessages.successTitle,
-                    description: RegistrationSuccessMessages.successDescription,
-                    buttonTitle: RegistrationSuccessMessages.successButtonTitle
-                )
-                self?.coordinator.eventOcurred(type: .goToRegistrationSuccess(model))
-            case .failure(_):
-                self?.showAlert(
-                    title: AlertViewMessages.errorTitle,
-                    message: AlertViewMessages.errorMessage
-                )
-                self?.loadingHandler?(false)
-            }
-        }
     }
 
 //MARK: - routeToHome

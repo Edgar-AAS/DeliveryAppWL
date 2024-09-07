@@ -7,7 +7,6 @@ protocol ForgotPasswordViewModelProtocol: AnyObject {
 
 class ForgotPasswordViewModel: ForgotPasswordViewModelProtocol {
 //MARK: - Properties
-    private let passwordReset: PasswordResetProtocol
     private let emailValidation: EmailValidator
     private let coordinator: Coordinator
     
@@ -15,11 +14,9 @@ class ForgotPasswordViewModel: ForgotPasswordViewModelProtocol {
     weak var fieldValidationDelegate: FieldValidationDelegate?
     
 //MARK: - Initializers
-    init(passwordReset: PasswordResetProtocol,
-         emailValidator: EmailValidator,
+    init(emailValidator: EmailValidator,
          coordinator: Coordinator) {
         
-        self.passwordReset = passwordReset
         self.emailValidation = emailValidator
         self.coordinator = coordinator
     }
