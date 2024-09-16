@@ -1,9 +1,9 @@
 import Foundation
 
 class HomeBuilder {
-    static func build(coordinator: MainCoordinator) -> HomeViewController {
-        let localData = LocalData(resource: "ProductCategories")
-        let viewModel = HomeViewModel(httpClient: localData, coordinator: coordinator)
+    static func build() -> HomeViewController {
+        let httpClient: HTTPClientProtocol = HTTPClient()
+        let viewModel = HomeViewModel(httpClient: httpClient)
         let viewController = HomeViewController(viewModel: viewModel)
         return viewController
     }

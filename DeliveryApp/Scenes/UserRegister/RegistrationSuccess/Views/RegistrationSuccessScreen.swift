@@ -1,9 +1,5 @@
 import UIKit
 
-protocol RegistrationSuccessScreenDelegate: AnyObject {
-    func handleButtonDidTapped()
-}
-
 class RegistrationSuccessScreen: UIView {
     private weak var delegate: RegistrationSuccessScreenDelegate?
     
@@ -28,10 +24,12 @@ class RegistrationSuccessScreen: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = Colors.primaryColor
+        imageView.image = UIImage(named: Assets.RegistrationSuccess.image)
         return imageView
     }()
     
     private lazy var titleLabel = makeLabel(
+        text: Strings.RegistrationSuccess.title,
         font: Fonts.semiBold(size: 24).weight,
         color: .black,
         textAlignment: .center,
@@ -39,6 +37,7 @@ class RegistrationSuccessScreen: UIView {
     )
     
     private lazy var descriptionLabel = makeLabel(
+        text: Strings.RegistrationSuccess.description,
         font: Fonts.regular(size: 16).weight,
         color: Colors.descriptionTextColor,
         textAlignment: .center,
@@ -46,7 +45,7 @@ class RegistrationSuccessScreen: UIView {
     )
     
     private lazy var handleButton = RoundedButton(
-        title: nil,
+        title: Strings.RegistrationSuccess.buttonTitle,
         titleColor: .white,
         backgroundColor: Colors.primaryColor,
         icon: nil,
@@ -54,14 +53,6 @@ class RegistrationSuccessScreen: UIView {
             self?.delegate?.handleButtonDidTapped()
         }
     )
-    
-    func setupUI(model: RegistrationSuccessModel) {
-        isHidden = false
-        titleLabel.text = model.title
-        illustrationImageView.image = UIImage(named: model.image)
-        descriptionLabel.text = model.description
-        handleButton.setTitle(model.buttonTitle, for: .normal)
-    }
 }
 
 extension RegistrationSuccessScreen: CodeView {

@@ -1,8 +1,6 @@
 import Foundation
-
-
 protocol HTTPClientProtocol {
-    func load<T: Codable>(_ resource: Resource<T>, completion: @escaping ((Result<Data?, HttpError>) -> Void))
+    func load<T: Codable>(_ resource: Resource<T>, completion: @escaping ((Result<T?, HttpError>) -> Void))
 }
 
 class HTTPClient: HTTPClientProtocol {
@@ -12,24 +10,26 @@ class HTTPClient: HTTPClientProtocol {
         self.session = session
     }
     
-    func load<T: Codable>(_ resource: Resource<T>, completion: @escaping ((Result<Data?, HttpError>) -> Void)) {
+    func load<T: Codable>(_ resource: Resource<T>, completion: @escaping ((Result<T?, HttpError>) -> Void)) {
         var request = URLRequest(url: resource.url)
         
         switch resource.method {
-            case .get(let queryItems):
-                var components = URLComponents(url: resource.url, resolvingAgainstBaseURL: false)
-                components?.queryItems = queryItems
-                
-                guard let url = components?.url else {
+        case .get(let queryItems):
+            var components = URLComponents(url: resource.url, resolvingAgainstBaseURL: false)
+            components?.queryItems = queryItems
+            
+            guard let url = components?.url else {
+                DispatchQueue.main.async {
                     completion(.failure(.badRequest))
-                    return
                 }
-                request.url = url
-            case .post(let data), .put(let data):
-                request.httpMethod = resource.method.name
-                request.httpBody = data
-            case .delete:
-                request.httpMethod = resource.method.name
+                return
+            }
+            request.url = url
+        case .post(let data), .put(let data):
+            request.httpMethod = resource.method.name
+            request.httpBody = data
+        case .delete:
+            request.httpMethod = resource.method.name
         }
         
         if let headers = resource.headers {
@@ -39,26 +39,36 @@ class HTTPClient: HTTPClientProtocol {
         }
         
         session.dataTask(with: request) { data, response, error in
-            if let error = error as NSError? {
-                switch error.code {
+            DispatchQueue.main.async {
+                if let error = error as NSError? {
+                    switch error.code {
                     case NSURLErrorNotConnectedToInternet, NSURLErrorNetworkConnectionLost:
                         completion(.failure(.noConnectivity))
                     case NSURLErrorTimedOut:
                         completion(.failure(.timeout))
                     default:
                         completion(.failure(.unknown))
+                    }
+                    return
                 }
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                completion(.failure(.invalidResponse))
-                return
-            }
-            
-            switch response.statusCode {
+                
+                guard let response = response as? HTTPURLResponse else {
+                    completion(.failure(.invalidResponse))
+                    return
+                }
+                
+                switch response.statusCode {
+                case 204:
+                    completion(.success(nil))
                 case 200...299:
-                    completion(.success(data))
+                    if let data = data, let modelType = resource.modelType {
+                        do {
+                            let decodedData = try JSONDecoder().decode(modelType, from: data)
+                            completion(.success(decodedData))
+                        } catch {
+                            completion(.failure(.decodingFailed))
+                        }
+                    }
                 case 400:
                     completion(.failure(.badRequest))
                 case 401:
@@ -71,6 +81,7 @@ class HTTPClient: HTTPClientProtocol {
                     completion(.failure(.serverError))
                 default:
                     completion(.failure(.unknown))
+                }
             }
         }.resume()
     }

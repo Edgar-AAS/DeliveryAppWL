@@ -10,7 +10,6 @@ protocol EmailVerificationViewModelProtocol {
 }
 
 class EmailVerificationViewModel: EmailVerificationViewModelProtocol {
-    private let coordinator: Coordinator
     private let user: User?
     
     private var totalTime = 10
@@ -19,8 +18,7 @@ class EmailVerificationViewModel: EmailVerificationViewModelProtocol {
     var timerOutput: Observable<String> = Observable(value: nil)
     var isTimerRunning: Observable<Bool> = Observable(value: false)
     
-    init(coordinator: Coordinator, user: User) {
-        self.coordinator = coordinator
+    init(user: User) {
         self.user = user
         self.timerOutput.setValue("02:30")
     }
@@ -67,7 +65,7 @@ class EmailVerificationViewModel: EmailVerificationViewModelProtocol {
     }
     
     func goToResetPassword() {
-        coordinator.eventOcurred(type: .goToResetPassword)
+//        coordinator.eventOcurred(type: .goToResetPassword)
     }
     
     private func timeFormatted(_ totalSeconds: Int) {
@@ -75,9 +73,5 @@ class EmailVerificationViewModel: EmailVerificationViewModelProtocol {
         let minutes: Int = (totalSeconds / 60) % 60
         let timeFormatted = String(format: "%02d:%02d", minutes, seconds)
         self.timerOutput.setValue(timeFormatted)
-    }
-    
-    func goToHome() {
-        coordinator.eventOcurred(type: .goToHome)
     }
 }

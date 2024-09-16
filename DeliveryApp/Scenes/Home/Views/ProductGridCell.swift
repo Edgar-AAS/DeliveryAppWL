@@ -1,19 +1,17 @@
 import UIKit
 
 protocol ProductGridCellDelegate: AnyObject {
-    func foodCardDidTapped(foodSelected: Food)
+    func foodCardDidTapped(foodSelected: Product)
+    func fetchProductsIfNeeded(categoryId: Int)
 }
 
 class ProductGridCell: UITableViewCell {
     static let reuseIdentifier = String(describing: ProductGridCell.self)
-    private var foodData: [Food] = []
+    private var products: [Product] = []
+    private var currentCategoryId: Int?
+    private var debounceTimer: Timer?
     
     weak var delegate: ProductGridCellDelegate?
-    
-    func reloadDataCallBack(fooData: [Food]) {
-        self.foodData = fooData
-        categoryCollectionView.reloadData()
-    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -39,12 +37,9 @@ class ProductGridCell: UITableViewCell {
         return collectionView
     }()
     
-    func reloadGridData() {
-        categoryCollectionView.reloadData()
-    }
-    
-    func setup(foodData: [Food]) {
-        self.foodData = foodData
+    func loadProducts(dataSource: ProductGridCellDataSource) {
+        self.products = dataSource.products
+        self.currentCategoryId = dataSource.categoryId
         categoryCollectionView.reloadData()
     }
 }
@@ -70,21 +65,37 @@ extension ProductGridCell: CodeView {
 
 extension ProductGridCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.foodCardDidTapped(foodSelected: foodData[indexPath.item])
+        let selectedProduct = products[indexPath.item]
+        delegate?.foodCardDidTapped(foodSelected: selectedProduct)
     }
 }
 
 extension ProductGridCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return foodData.count
+        return products.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath) as? ProductCell
-        let food = foodData[indexPath.item]
-        let viewModel = ProductCellViewModel(foodData: food)
-        cell?.setup(viewModel: viewModel)
+        cell?.setup(viewModel: ProductViewModel(product: products[indexPath.item]))
         return cell ?? UICollectionViewCell()
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentHeight = scrollView.contentSize.height
+        let scrollViewHeight = scrollView.frame.size.height
+        let offsetY = scrollView.contentOffset.y
+        
+        if offsetY > contentHeight - scrollViewHeight * 2 {
+            debounceTimer?.invalidate()
+            
+            debounceTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { [weak self] _ in
+                guard let self = self else { return }
+                if let categoryId = self.currentCategoryId {
+                    self.delegate?.fetchProductsIfNeeded(categoryId: categoryId)
+                }
+            }
+        }
     }
 }
 

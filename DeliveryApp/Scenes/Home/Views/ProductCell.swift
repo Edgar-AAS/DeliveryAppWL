@@ -95,14 +95,16 @@ class ProductCell: UICollectionViewCell {
         return label
     }()
     
-    func setup(viewModel: ProductCellViewModel) {
-        let favoriteImage = UIImage(systemName: viewModel.getFavoriteImageString)
-        favoriteButton.setImage(favoriteImage, for: .normal)
-        foodNameLabel.text = viewModel.getName
-        foodRateLabel.text = viewModel.getRate
-        foodPriceLabel.text = viewModel.getformattedPrice
-        distanceLabel.text = viewModel.getFormattedDistance
-        foodImageView.sd_setImage(with: URL(string: viewModel.getFoodImage))
+    func setup(viewModel: ProductViewModel) {
+        foodNameLabel.text = viewModel.name
+        foodPriceLabel.text = viewModel.price
+        favoriteButton.imageView?.image = viewModel.isFavorite ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+        
+        if let image = viewModel.getUrlImages()?.first {
+            foodImageView.sd_setImage(with: URL(string: image.url))
+        } else {
+            foodImageView.image = UIImage(systemName: "photo")
+        }
     }
     
     private func setupShadow() {

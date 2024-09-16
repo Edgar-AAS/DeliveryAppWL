@@ -25,7 +25,7 @@ class FoodDetailsViewController: UIViewController {
         super.viewDidLoad()
         hideNavigationBar()
         customView?.delegate = self
-        customView?.updateUI(with: viewModel.getFoodDetailsDTO())
+//        customView?.updateUI(with: viewModel.getFoodDetailsDTO())
     }
 }
 

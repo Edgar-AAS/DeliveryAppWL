@@ -8,17 +8,13 @@ protocol ForgotPasswordViewModelProtocol: AnyObject {
 class ForgotPasswordViewModel: ForgotPasswordViewModelProtocol {
 //MARK: - Properties
     private let emailValidation: EmailValidator
-    private let coordinator: Coordinator
     
     var loadingHandler: ((Bool) -> ())?
     weak var fieldValidationDelegate: FieldValidationDelegate?
     
 //MARK: - Initializers
-    init(emailValidator: EmailValidator,
-         coordinator: Coordinator) {
-        
+    init(emailValidator: EmailValidator) {
         self.emailValidation = emailValidator
-        self.coordinator = coordinator
     }
     
 //MARK: - sendPasswordReset
@@ -38,9 +34,9 @@ class ForgotPasswordViewModel: ForgotPasswordViewModelProtocol {
 //MARK: - validateEmail
     private func validateEmail(_ email: String) -> FieldValidationViewModel? {
         if email.isEmpty {
-            return FieldValidationViewModel(message: FieldValidationMessages.emailEmpty, type: .email)
+            return FieldValidationViewModel(message: Strings.FieldValidationMessages.emailEmpty, type: .email)
         } else if !emailValidation.isValid(email: email) {
-            return FieldValidationViewModel(message: FieldValidationMessages.emailInvalid, type: .email)
+            return FieldValidationViewModel(message: Strings.FieldValidationMessages.emailInvalid, type: .email)
         }
         return nil
     }

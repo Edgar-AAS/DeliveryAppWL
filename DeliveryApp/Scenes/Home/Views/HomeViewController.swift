@@ -5,8 +5,8 @@ class HomeViewController: UIViewController {
         return view as? HomeScreen
     }()
     
-    private var foodDataSource: (foods: [Food], categories: [FoodCategoryDTO]) = ([],[])
     private var viewModel: HomeViewModelProtocol
+    private var dataSourceCallBack: ((ProductGridCellDataSource) -> Void)?
     
     init(viewModel: HomeViewModelProtocol) {
         self.viewModel = viewModel
@@ -17,10 +17,8 @@ class HomeViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private var dataSourceCallBack: (([Food]) -> ())?
-    
     override func loadView() {
-        super.loadView() 
+        super.loadView()
         view = HomeScreen()
     }
     
@@ -28,11 +26,16 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         hideNavigationBar()
         customView?.setupTableViewProtocols(delegate: self, dataSource: self)
-        
-        viewModel.fetchFoodsBy(category: .burger) { [weak self] foodData, categories in
-            self?.foodDataSource = (foodData, categories)
+                
+        viewModel.categoriesOnComplete = { [weak self] in
             self?.customView?.reloadTablewViewData()
         }
+        
+        viewModel.productsOnComplete = { [weak self] dataSource in
+            self?.dataSourceCallBack?(dataSource)
+        }
+        
+        viewModel.loadInitialData()
     }
 }
 
@@ -67,28 +70,31 @@ extension HomeViewController {
     func makeProductCategorieCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ProductCategorieCell.reuseIdentifier, for: indexPath) as? ProductCategorieCell
         cell?.delegate = self
-        cell?.setup(categories: foodDataSource.categories)
+        cell?.setup(categories: viewModel.getCategories())
         return cell ?? UITableViewCell()
     }
     
     func makeProductGridCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ProductGridCell.reuseIdentifier, for: indexPath) as? ProductGridCell
-        cell?.setup(foodData: foodDataSource.foods)
         cell?.delegate = self
-        self.dataSourceCallBack = cell?.reloadDataCallBack
+        dataSourceCallBack = cell?.loadProducts(dataSource:)
         return cell ?? UITableViewCell()
     }
 }
 
 // MARK: - Delegate Actions
 extension HomeViewController: ProductCategorieCellDelegate {
-    func productCategoryDidTapped(categoryType: FoodCategoryType) {
-        
+    func productCategoryDidTapped(categoryId: Int) {
+        viewModel.switchCategory(to: categoryId)
     }
 }
 
 extension HomeViewController: ProductGridCellDelegate {
-    func foodCardDidTapped(foodSelected: Food) {
-        viewModel.goToDetailsScreen(food: foodSelected)
+    func fetchProductsIfNeeded(categoryId: Int) {
+        viewModel.loadMoreProducts(for: categoryId)
+    }
+    
+    func foodCardDidTapped(foodSelected: Product) {
+        //
     }
 }

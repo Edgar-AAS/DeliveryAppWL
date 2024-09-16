@@ -1,27 +1,16 @@
 import Foundation
 
-protocol RegistrationSuccessViewModelProtocol {
-    func getRegistrationSuccessModel() -> RegistrationSuccessModel
-    func goToLogin()
-}
-
 class RegistrationSuccessViewModel: RegistrationSuccessViewModelProtocol {
 //MARK: - Properties
-    private let registrationSuccessModel: RegistrationSuccessModel
-    private let coordinator: Coordinator
+    private let coordinator: AuthCoordinator
     
 //MARK: - Initializers
-    init(model: RegistrationSuccessModel, coordinator: Coordinator) {
-        self.registrationSuccessModel = model
+    init(coordinator: AuthCoordinator) {
         self.coordinator = coordinator
     }
     
-//MARK: - RegistrationSuccessViewModelProtocol Methods
-    func getRegistrationSuccessModel() -> RegistrationSuccessModel {
-        return registrationSuccessModel
-    }
-    
+//MARK: - goToLogin
     func goToLogin() {
-        coordinator.eventOcurred(type: .backToLogin)
+        coordinator.backToLogin()
     }
 }

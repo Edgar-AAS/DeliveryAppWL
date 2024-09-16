@@ -26,11 +26,6 @@ class RegistrationSuccessViewController: UIViewController {
         super.loadView()
         view = RegistrationSuccessScreen(delegate: self)
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        customView.setupUI(model: viewModel.getRegistrationSuccessModel())
-    }
 }
 
 //MARK: - RegistrationSuccessScreenDelegate

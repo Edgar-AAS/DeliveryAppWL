@@ -262,7 +262,7 @@
                     "price": 4.99,
                     "distance": 45,
                     "description": "Um café gelado revigorante feito com grãos de café premium e servido com gelo.",
-                    "image": "https://i.imgur.com/7pjHziN.jpeg",
+                    "image": "https://imgur.com/7pjHziN",
                     "isFavorite": true,
                     "firstDeliveryTime": "18:25",
                     "secondDeliveryTime": "19:00",

@@ -50,9 +50,7 @@ extension RegisterViewController: SignUpScreenDelegate {
     }
     
     func loginWithGoogleButtonDidTapped() {
-        GoogleLogin.showGoogleLogin(target: self) { [weak self] in
-            self?.viewModel.routeToHome()
-        }
+        
     }
     
     func registerButtonDidTapped() {

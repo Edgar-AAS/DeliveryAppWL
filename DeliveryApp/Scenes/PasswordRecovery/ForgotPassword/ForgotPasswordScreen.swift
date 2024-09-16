@@ -89,8 +89,12 @@ class ForgotPasswordScreen: UIView {
 
 extension ForgotPasswordScreen {
     private func setupKeyboardRegister() {
-        NotificationCenter.default.addObserver(self, selector: #selector(animateButtonPositionChange), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(animateButtonToOriginalPosition), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(animateButtonPositionChange),
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(animateButtonToOriginalPosition),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc private func animateButtonPositionChange(notification: NSNotification) {

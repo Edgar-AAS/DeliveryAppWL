@@ -44,9 +44,7 @@ class LoginViewController: UIViewController {
 //MARK: - LoginScreenDelegateProtocol
 extension LoginViewController: LoginScreenDelegate {
     func loginWithGoogleButtonDidTapped() {
-        GoogleLogin.showGoogleLogin(target: self) { [weak self] in
-            self?.viewModel.goToHome()
-        }
+        //
     }
     
     func registerButtonDidTapped() {

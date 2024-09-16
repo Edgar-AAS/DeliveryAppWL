@@ -1,12 +1,12 @@
 import UIKit
 
 protocol ProductCategorieCellDelegate: AnyObject {
-    func productCategoryDidTapped(categoryType: FoodCategoryType)
+    func productCategoryDidTapped(categoryId: Int)
 }
 
 class ProductCategorieCell: UITableViewCell {
     static let reuseIdentifier = String(describing: ProductCategorieCell.self)
-    private var categories: [FoodCategoryDTO] = []
+    private var categories: [ProductCategory] = []
     private var selectedIndex: IndexPath?
     
     weak var delegate: ProductCategorieCellDelegate?
@@ -36,7 +36,7 @@ class ProductCategorieCell: UITableViewCell {
         return collectionView
     }()
     
-    func setup(categories: [FoodCategoryDTO]) {
+    func setup(categories: [ProductCategory]) {
         self.categories = categories
         categoryCollectionView.reloadData()
     }
@@ -55,11 +55,11 @@ extension ProductCategorieCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as? CategoryCell
-        cell?.setup(dto: categories[indexPath.item])
-        
+    
         if indexPath == IndexPath(item: .zero, section: .zero) {
             cell?.selectedStyle()
         }
+        cell?.setup(viewModel: CategoryViewModel(category: categories[indexPath.item]))
         return cell ?? UICollectionViewCell()
     }
 }
@@ -76,10 +76,7 @@ extension ProductCategorieCell: UICollectionViewDelegate {
             }
             
             selectedIndex = indexPath
-            
-            if let categoryType = FoodCategoryType(rawValue: categories[indexPath.item].name) {
-                delegate?.productCategoryDidTapped(categoryType: categoryType)
-            }
+            delegate?.productCategoryDidTapped(categoryId: categories[indexPath.item].id)
         }
     }
 }

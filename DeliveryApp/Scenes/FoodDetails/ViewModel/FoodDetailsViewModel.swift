@@ -11,19 +11,17 @@ protocol FoodDetailsViewModelProtocol {
     func decrementFood()
     func isFavoriteToggle()
     func backToHome()
-    func getFoodDetailsDTO() -> FoodDetailsScreenDTO
+//    func getFoodDetailsDTO() -> FoodDetailsScreenDTO
 }
 
 class FoodDetailsViewModel: FoodDetailsViewModelProtocol {
-    private var foodModel: Food
-    private let coordinator: Coordinator
+    private var foodModel: Product
     private var stepperCount = 1
 
     weak var delegate: FoodDetailsViewModelDelegate?
     
-    init(foodModel: Food, coordinator: Coordinator) {
+    init(foodModel: Product) {
         self.foodModel = foodModel
-        self.coordinator = coordinator
     }
     
     func incrementFood() {
@@ -44,25 +42,25 @@ class FoodDetailsViewModel: FoodDetailsViewModelProtocol {
     }
     
     func isFavoriteToggle() {
-        foodModel.isFavorite = !foodModel.isFavorite
-        delegate?.favoriteTogleWith(state: foodModel.isFavorite)
+//        foodModel.isFavorite = !foodModel.isFavorite
+//        delegate?.favoriteTogleWith(state: foodModel.isFavorite)
     }
     
     func backToHome() {
-        coordinator.eventOcurred(type: .backToHome)
+//        coordinator.eventOcurred(type: .backToHome)
     }
     
-    func getFoodDetailsDTO() -> FoodDetailsScreenDTO {
-        return FoodDetailsScreenDTO(
-            title: foodModel.name,
-            price: foodModel.price.currencyFormatWith(numberStyle: .currency),
-            deliveryFee: foodModel.deliveryFee == 0 ? "Free Delivery"
-                                                    : foodModel.deliveryFee.currencyFormatWith(numberStyle: .decimal),
-            estimatedDeliveryTime: "\(foodModel.firstDeliveryTime) - \(foodModel.secondDeliveryTime)",
-            rate: foodModel.rate,
-            description: foodModel.description,
-            quantity: String(stepperCount), 
-            isFavorite: foodModel.isFavorite,
-            image: foodModel.image)
-    }
+//    func getFoodDetailsDTO() -> FoodDetailsScreenDTO {
+//        return FoodDetailsScreenDTO(
+//            title: foodModel.name,
+//            price: foodModel.price.currencyFormatWith(numberStyle: .currency),
+//            deliveryFee: foodModel.deliveryFee == 0 ? "Free Delivery"
+//                                                    : foodModel.deliveryFee.currencyFormatWith(numberStyle: .decimal),
+//            estimatedDeliveryTime: "\(foodModel.firstDeliveryTime) - \(foodModel.secondDeliveryTime)",
+//            rate: foodModel.rate,
+//            description: foodModel.description,
+//            quantity: String(stepperCount), 
+//            isFavorite: foodModel.isFavorite,
+//            image: foodModel.image)
+//    }
 }

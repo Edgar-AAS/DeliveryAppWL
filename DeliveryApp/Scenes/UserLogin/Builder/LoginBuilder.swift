@@ -1,10 +1,13 @@
 import Foundation
 
 class LoginBuilder {
-    static func build(coordinator: MainCoordinator) -> LoginViewController {
+    static func build(coordinator: AuthCoordinator) -> LoginViewController {
         let emailValidator: EmailValidator = EmailValidatorAdapter()
+            
+        let httpClient: HTTPClientProtocol = HTTPClient()
         
         let viewModel = LoginViewModel(
+            httpClient: httpClient,
             coordinator: coordinator,
             emailValidation: emailValidator
         )

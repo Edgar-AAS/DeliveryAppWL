@@ -1,11 +1,11 @@
 import UIKit
 
-
 enum FieldType: Equatable {
     case email
     case password
     case passwordConfirm
     case regular
+    case phone
 }
 
 final class CustomTextField: UITextField {
@@ -29,8 +29,7 @@ final class CustomTextField: UITextField {
          tag: Int = 0,
          returnKeyType: UIReturnKeyType = .default,
          delegate: UITextFieldDelegate? = nil
-    )
-    {
+    ) {
         self.exampleText = placeholder
         self.fieldType = fieldType
         self.fieldTag = tag
@@ -47,7 +46,7 @@ final class CustomTextField: UITextField {
         
     private func setup() {
         tag = fieldTag
-        delegate = fieldDelegate
+        delegate = self
         returnKeyType = returnType
         backgroundColor = .white
         tintColor = .black
@@ -63,13 +62,18 @@ final class CustomTextField: UITextField {
         self.attributedPlaceholder = attributedPlaceholder
     
         if let fieldType = fieldType {
-            if fieldType == .email {
+            switch fieldType {
+            case .email:
                 keyboardType = .emailAddress
                 autocapitalizationType = .none
                 autocorrectionType = .no
-            } else if fieldType == .password || fieldType == .passwordConfirm{
+            case .password, .passwordConfirm:
                 isSecureTextEntry = true
                 showEyeButton()
+            case .phone:
+                keyboardType = .numberPad
+            default:
+                break
             }
         }
         
@@ -141,5 +145,40 @@ final class CustomTextField: UITextField {
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         let bounds = CGRect(x: 10, y: 0, width: bounds.width - padding, height: bounds.height)
         return bounds
+    }
+}
+
+extension CustomTextField: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let fieldType = fieldType else { return true }
+        
+        switch fieldType {
+        case .phone:
+            guard let currentText = textField.text as NSString? else { return false }
+            let newString = currentText.replacingCharacters(in: range, with: string)
+            
+            let cleanPhoneNumber = newString.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+            let mask = "(##) #####-####"
+            var formattedString = ""
+            var index = cleanPhoneNumber.startIndex
+            
+            for ch in mask where index < cleanPhoneNumber.endIndex {
+                if ch == "#" {
+                    formattedString.append(cleanPhoneNumber[index])
+                    index = cleanPhoneNumber.index(after: index)
+                } else {
+                    formattedString.append(ch)
+                }
+            }
+            
+            textField.text = formattedString
+            return false
+        default:
+            return true
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return fieldDelegate?.textFieldShouldReturn?(textField) ?? true
     }
 }

@@ -38,9 +38,14 @@ class CategoryCell: UICollectionViewCell {
         categoryName.textColor = Colors.descriptionTextColor
     }
     
-    func setup(dto: FoodCategoryDTO) {
-        categoryName.text = dto.name
-        categoryIconImageView.sd_setImage(with: URL(string: dto.image))
+    func setup(viewModel: CategoryViewModel) {
+        categoryName.text = viewModel.name
+        
+        if let image = viewModel.image, let imageUrl = URL(string: image) {
+            categoryIconImageView.sd_setImage(with: imageUrl)
+        } else {
+            categoryIconImageView.sd_setImage(with: nil, placeholderImage: UIImage(systemName: "photo"))
+        }
     }
 }
 

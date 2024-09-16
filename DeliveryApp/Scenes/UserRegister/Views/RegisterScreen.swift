@@ -77,6 +77,21 @@ final class RegisterScreen: UIView {
         delegate: textFieldDelegate
     )
     
+    private lazy var phoneLabel = makeLabel(
+        text: "Phone",
+        font: Fonts.medium(size: 14).weight,
+        color: .black,
+        textAlignment: .left
+    )
+    
+    private lazy var phoneTextField = CustomTextField(
+        placeholder: "Enter Phone",
+        fieldType: .phone,
+        tag: 1,
+        returnKeyType: .next,
+        delegate: textFieldDelegate
+    )
+    
     private lazy var passwordLabel = makeLabel(
         text: "Password",
         font: Fonts.medium(size: 14).weight,
@@ -197,7 +212,6 @@ final class RegisterScreen: UIView {
         textAlignment: .center
     )
     
-    
     private lazy var goToLoginButton = makeButton(
         title: "Login here",
         titleColor: Colors.primaryColor,
@@ -233,6 +247,7 @@ final class RegisterScreen: UIView {
     func getRegisterUserRequest() -> RegisterUserRequest? {
         guard let email = emailTextField.text,
               let username = userNameTextField.text,
+              let phone = phoneTextField.text,
               let password = passwordTextField.text,
               let confirmPassword = passwordConfirmTextField.text
         else { return nil }
@@ -240,6 +255,7 @@ final class RegisterScreen: UIView {
         let registerRequest = RegisterUserRequest(
             email: email,
             username: username,
+            phone: phone,
             password: password,
             confirmPassword: confirmPassword
         )
@@ -249,6 +265,7 @@ final class RegisterScreen: UIView {
     func setupValidationErrors(viewModel: FieldValidationViewModel) {
         emailTextField.setDescriptionField(viewModel: viewModel)
         userNameTextField.setDescriptionField(viewModel: viewModel)
+        phoneTextField.setDescriptionField(viewModel: viewModel)
         passwordTextField.setDescriptionField(viewModel: viewModel)
         passwordConfirmTextField.setDescriptionField(viewModel: viewModel)
     }
@@ -269,6 +286,8 @@ extension RegisterScreen: CodeView {
         customScrollView.addSubview(emailTextField)
         customScrollView.addSubview(userNameLabel)
         customScrollView.addSubview(userNameTextField)
+        customScrollView.addSubview(phoneLabel)
+        customScrollView.addSubview(phoneTextField)
         customScrollView.addSubview(passwordLabel)
         customScrollView.addSubview(passwordTextField)
         customScrollView.addSubview(passwordConfirmLabel)
@@ -314,7 +333,16 @@ extension RegisterScreen: CodeView {
             userNameTextField.trailingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.trailingAnchor),
             userNameTextField.heightAnchor.constraint(equalToConstant: 52),
             
-            passwordLabel.topAnchor.constraint(equalTo: userNameTextField.bottomAnchor, constant: 24),
+            phoneLabel.topAnchor.constraint(equalTo: userNameTextField.bottomAnchor, constant: 24),
+            phoneLabel.leadingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.leadingAnchor),
+            phoneLabel.trailingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.trailingAnchor),
+            
+            phoneTextField.topAnchor.constraint(equalTo: phoneLabel.bottomAnchor, constant: 8),
+            phoneTextField.leadingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.leadingAnchor),
+            phoneTextField.trailingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.trailingAnchor),
+            phoneTextField.heightAnchor.constraint(equalToConstant: 52),
+            
+            passwordLabel.topAnchor.constraint(equalTo: phoneTextField.bottomAnchor, constant: 24),
             passwordLabel.leadingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.leadingAnchor),
             passwordLabel.trailingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.trailingAnchor),
             
