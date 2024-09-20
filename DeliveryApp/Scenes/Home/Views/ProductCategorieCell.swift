@@ -88,7 +88,7 @@ extension ProductCategorieCell: CodeView {
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            categoryCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            categoryCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
             categoryCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             categoryCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             categoryCollectionView.heightAnchor.constraint(equalToConstant: 85),

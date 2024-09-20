@@ -1,136 +1,116 @@
 import UIKit
 
-class HomeHeaderView: UIView {
+final class HeaderView: UIView {
+    private let menuButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let image = UIImage(systemName: "line.horizontal.3")
+        button.setImage(image, for: .normal)
+        button.tintColor = .black
+        button.backgroundColor = UIColor(white: 0.9, alpha: 1)
+        button.layer.cornerRadius = 25
+        button.layer.masksToBounds = true
+        return button
+    }()
+    
+    private lazy var locationLabel = makeLabel(
+        text: "ENTREGAR EM",
+        font: Fonts.medium(size: 14).weight,
+        color: Colors.primaryColor
+    )
+    
+    private let locationButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Rua Timor leste, 827", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = Fonts.regular(size: 14).weight
+        button.setImage(UIImage(named: "arrow_down"), for: .normal)
+        button.tintColor = .black
+        button.backgroundColor = .clear
+        button.semanticContentAttribute = .forceRightToLeft
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
+        return button
+    }()
+
+    private let cartButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "cart"), for: .normal)
+        button.tintColor = .black
+        return button
+    }()
+    
+    private let notificationBadge: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "2"
+        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+        label.textColor = .white
+        label.backgroundColor = .orange
+        label.textAlignment = .center
+        label.layer.cornerRadius = 10
+        label.clipsToBounds = true
+        return label
+    }()
+    
+    private lazy var searchDishesTextField: CustomSearchTextField = {
+        let texField = CustomSearchTextField()
+        texField.translatesAutoresizingMaskIntoConstraints = false
+        return texField
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        translatesAutoresizingMaskIntoConstraints = false
         setupView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private lazy var headerImageView: UIImageView = {
-        let image = UIImage(named: "header_background")
-        let imageView = UIImageView(image: image)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.clipsToBounds = true
-        return imageView
-    }()
-    
-    private lazy var locationLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Your Location"
-        label.font = Fonts.regular(size: 14).weight
-        label.textColor = .white
-        return label
-    }()
-    
-    private lazy var changeLocationButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.tintColor = .white
-        button.setImage(UIImage(named: "arrow_down"), for: .normal)
-        return button
-    }()
-    
-    private lazy var locationIcon: UIImageView = {
-        let image = UIImage(named: "location-pin")
-        let imageView = UIImageView(image: image)
-        imageView.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 24).isActive = true
-        return UIImageView(image: image)
-    }()
-    
-    private lazy var adressLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Rua dos camões, 204"
-        label.font = Fonts.semiBold(size: 14).weight
-        label.textColor = .white
-        return label
-    }()
-    
-    private lazy var searchButton: UIButton =  {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "search-icon"), for: .normal)
-        button.tintColor = .white
-        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        button.layer.cornerRadius = 20
-        button.layer.borderWidth = 2
-        button.layer.borderColor = UIColor.white.cgColor
-        return button
-    }()
-    
-    private lazy var notificationButton: UIButton =  {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "notification-icon"), for: .normal)
-        button.tintColor = .white
-        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        button.layer.cornerRadius = 20
-        button.layer.borderWidth = 2
-        button.layer.borderColor = UIColor.white.cgColor
-        return button
-    }()
-    
-    private lazy var descriptionHomeLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Provide the best food for you"
-        label.font = Fonts.semiBold(size: 32).weight
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.textColor = .white
-        return label
-    }()
-    
-    private lazy var locationStack = makeStackView(with: [locationLabel, changeLocationButton],
-                                                   spacing: 8,
-                                                   axis: .horizontal)
-    
-    private lazy var adressStack = makeStackView(with: [locationIcon, adressLabel],
-                                                 spacing: 8,
-                                                 axis: .horizontal)
-    
-    private lazy var circularButtonStack = makeStackView(with: [searchButton, notificationButton],
-                                                         spacing: 16,
-                                                         axis: .horizontal)
-
 }
 
-extension HomeHeaderView: CodeView {
+
+extension HeaderView: CodeView {
     func buildViewHierarchy() {
-        addSubview(headerImageView)
-        headerImageView.addSubview(locationStack)
-        headerImageView.addSubview(adressStack)
-        headerImageView.addSubview(searchButton)
-        headerImageView.addSubview(circularButtonStack)
-        headerImageView.addSubview(descriptionHomeLabel)
+        addSubview(menuButton)
+        addSubview(locationLabel)
+        addSubview(locationButton)
+        addSubview(searchDishesTextField)
+        addSubview(cartButton)
+        addSubview(notificationBadge)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            headerImageView.topAnchor.constraint(equalTo: topAnchor),
-            headerImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            headerImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            headerImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            menuButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            menuButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            menuButton.widthAnchor.constraint(equalToConstant: 50),
+            menuButton.heightAnchor.constraint(equalToConstant: 50),
             
-            locationStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
-            locationStack.leadingAnchor.constraint(equalTo: headerImageView.leadingAnchor, constant: 24),
+            locationLabel.leadingAnchor.constraint(equalTo: menuButton.trailingAnchor, constant: 16),
+            locationLabel.centerYAnchor.constraint(equalTo: menuButton.centerYAnchor, constant: -10),
+
+            locationButton.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 4),
+            locationButton.leadingAnchor.constraint(equalTo: locationLabel.leadingAnchor),
+            locationButton.trailingAnchor.constraint(lessThanOrEqualTo: cartButton.leadingAnchor, constant: 24),
             
-            adressStack.topAnchor.constraint(equalTo: locationStack.bottomAnchor, constant: 12),
-            adressStack.leadingAnchor.constraint(equalTo: headerImageView.leadingAnchor, constant: 24),
-            adressStack.trailingAnchor.constraint(lessThanOrEqualTo: circularButtonStack.leadingAnchor, constant: -10),
+            cartButton.centerYAnchor.constraint(equalTo: locationLabel.centerYAnchor),
+            cartButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            cartButton.widthAnchor.constraint(equalToConstant: 35),
+            cartButton.heightAnchor.constraint(equalToConstant: 35),
             
-            circularButtonStack.topAnchor.constraint(equalTo: locationStack.topAnchor),
-            circularButtonStack.trailingAnchor.constraint(equalTo: headerImageView.trailingAnchor, constant: -24),
-            
-            descriptionHomeLabel.topAnchor.constraint(equalTo: adressStack.bottomAnchor, constant: 24),
-            descriptionHomeLabel.leadingAnchor.constraint(equalTo: headerImageView.leadingAnchor, constant: 24),
-            descriptionHomeLabel.trailingAnchor.constraint(equalTo: headerImageView.trailingAnchor, constant: -24),
-            descriptionHomeLabel.bottomAnchor.constraint(equalTo: headerImageView.bottomAnchor, constant: -10)
+            searchDishesTextField.topAnchor.constraint(equalTo: locationButton.bottomAnchor, constant: 24),
+            searchDishesTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            searchDishesTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            searchDishesTextField.heightAnchor.constraint(equalToConstant: 60),
+            searchDishesTextField.bottomAnchor.constraint(equalTo: bottomAnchor),
+        
+            notificationBadge.topAnchor.constraint(equalTo: cartButton.topAnchor, constant: -4),
+            notificationBadge.trailingAnchor.constraint(equalTo: cartButton.trailingAnchor, constant: 4),
+            notificationBadge.widthAnchor.constraint(equalToConstant: 20),
+            notificationBadge.heightAnchor.constraint(equalToConstant: 20),
         ])
     }
 }

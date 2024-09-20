@@ -14,28 +14,5 @@ final class CustomNavigationController: UINavigationController {
         navigationBar.shadowImage = UIImage()
         navigationBar.setBackgroundImage(UIImage(), for: .default)
     }
-    
-    func pushViewController(_ viewController: UIViewController) {
-        pushViewController(viewController, animated: true)
-        hideBackButtonText()
-    }
-       
-    func setRootViewController(_ viewController: UIViewController) {
-        setViewControllers([viewController], animated: true)
-        currentViewController = viewController
-        hideBackButtonText()
-    }
-    
-    func popViewController() {
-        popViewController(animated: true)
-    }
-    
-    func pop(to viewController: UIViewController) {
-        popToViewController(viewController, animated: true)
-    }
-    
-    public func hideBackButtonText() {
-        currentViewController?.navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
-    }
 }
 

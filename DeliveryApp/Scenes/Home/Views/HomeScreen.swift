@@ -6,45 +6,24 @@ class HomeScreen: UIView {
         setupView()
     }
     
-    lazy var headerView: HomeHeaderView = {
-        let header = HomeHeaderView()
-        header.translatesAutoresizingMaskIntoConstraints = false
+    lazy var homeHeader: HeaderView = {
+        let header = HeaderView()
         return header
     }()
-        
+            
     private lazy var homeTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
+        tableView.allowsSelection = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.isScrollEnabled = false
         tableView.backgroundColor = .clear
+        tableView.register(SeeAllCategoriesCell.self, forCellReuseIdentifier: SeeAllCategoriesCell.reuseIdentifier)
         tableView.register(ProductCategorieCell.self, forCellReuseIdentifier: ProductCategorieCell.reuseIdentifier)
         tableView.register(ProductGridCell.self, forCellReuseIdentifier: ProductGridCell.reuseIdentifier)
         return tableView
     }()
-    
-    private lazy var findByCategoryLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Find by Category"
-        label.textColor = .black
-        label.font = Fonts.semiBold(size: 16).weight
-        return label
-    }()
-    
-    private lazy var seeAllButton: UIButton = {
-        let button = UIButton(type:  .system)
-        button.setTitle("See All", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.titleLabel?.font = Fonts.bold(size: 14).weight
-        button.setTitleColor(Colors.primaryColor, for: .normal)
-        return button
-    }()
-    
-    lazy var categoryLabelAndButtonStack = makeStackView(with: [findByCategoryLabel,
-                                                                seeAllButton],
-                                                         axis: .horizontal)
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -61,23 +40,17 @@ class HomeScreen: UIView {
 
 extension HomeScreen: CodeView {
     func buildViewHierarchy() {
-        addSubview(headerView)
-        addSubview(categoryLabelAndButtonStack)
+        addSubview(homeHeader)
         addSubview(homeTableView)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 280),
+            homeHeader.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            homeHeader.leadingAnchor.constraint(equalTo: leadingAnchor),
+            homeHeader.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            categoryLabelAndButtonStack.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 24),
-            categoryLabelAndButtonStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            categoryLabelAndButtonStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
-            
-            homeTableView.topAnchor.constraint(equalTo: categoryLabelAndButtonStack.bottomAnchor, constant: 24),
+            homeTableView.topAnchor.constraint(equalTo: homeHeader.bottomAnchor),
             homeTableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             homeTableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             homeTableView.bottomAnchor.constraint(equalTo: bottomAnchor)
@@ -88,3 +61,4 @@ extension HomeScreen: CodeView {
         backgroundColor = Colors.backgroundColor
     }
 }
+

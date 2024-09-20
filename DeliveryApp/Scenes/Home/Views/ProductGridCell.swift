@@ -1,7 +1,7 @@
 import UIKit
 
 protocol ProductGridCellDelegate: AnyObject {
-    func foodCardDidTapped(foodSelected: Product)
+    func productCardDidTapped(productSelected: Product)
     func fetchProductsIfNeeded(categoryId: Int)
 }
 
@@ -28,7 +28,7 @@ class ProductGridCell: UITableViewCell {
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.contentInset = .init(top: 10, left: 24, bottom: 0, right: 24)
+        collectionView.contentInset = .init(top: 10, left: 24, bottom: 48, right: 24)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
@@ -66,7 +66,7 @@ extension ProductGridCell: CodeView {
 extension ProductGridCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedProduct = products[indexPath.item]
-        delegate?.foodCardDidTapped(foodSelected: selectedProduct)
+        delegate?.productCardDidTapped(productSelected: selectedProduct)
     }
 }
 

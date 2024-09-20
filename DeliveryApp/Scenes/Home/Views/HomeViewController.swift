@@ -6,6 +6,7 @@ class HomeViewController: UIViewController {
     }()
     
     private var viewModel: HomeViewModelProtocol
+    weak var coordinator: HomeCoordinator?
     private var dataSourceCallBack: ((ProductGridCellDataSource) -> Void)?
     
     init(viewModel: HomeViewModelProtocol) {
@@ -26,7 +27,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         hideNavigationBar()
         customView?.setupTableViewProtocols(delegate: self, dataSource: self)
-                
+        
         viewModel.categoriesOnComplete = { [weak self] in
             self?.customView?.reloadTablewViewData()
         }
@@ -41,32 +42,49 @@ class HomeViewController: UIViewController {
 
 //MARK: - UITableViewDataSource & UITableViewDelegate
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
-            let headerHeight = customView?.headerView.frame.size.height ?? .zero
-            let stackHeight = customView?.categoryLabelAndButtonStack.frame.size.height ?? .zero
-            let heightRemaning = view.frame.size.height - (stackHeight + headerHeight + 140)
-            return heightRemaning
-        } else {
-            return UITableView.automaticDimension
-        }
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfRows
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == .zero {
+            return makeSeeAllCategoriesCell(tableView, cellForRowAt: indexPath)
+        } else if indexPath.row == 1 {
             return makeProductCategorieCell(tableView, cellForRowAt: indexPath)
         } else {
             return makeProductGridCell(tableView, cellForRowAt: indexPath)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
+            var otherCellsHeight: CGFloat = 0
+            
+            guard  let headerHeight = customView?.homeHeader.frame.height else {
+                return UITableView.automaticDimension
+            }
+                        
+            for row in 0..<indexPath.row {
+                otherCellsHeight += tableView.rectForRow(at: IndexPath(row: row, section: indexPath.section)).height
+            }
+            
+            let viewHeight = view.frame.size.height
+            let remainingHeight = viewHeight - (otherCellsHeight + headerHeight)
+            return remainingHeight
+        } else {
+            return UITableView.automaticDimension
         }
     }
 }
 
 //MARK: - Setup Cells
 extension HomeViewController {
+    func makeSeeAllCategoriesCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SeeAllCategoriesCell.reuseIdentifier, for: indexPath) as? SeeAllCategoriesCell
+        cell?.delegate = self
+        return cell ?? UITableViewCell()
+    }
+    
     func makeProductCategorieCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ProductCategorieCell.reuseIdentifier, for: indexPath) as? ProductCategorieCell
         cell?.delegate = self
@@ -90,11 +108,17 @@ extension HomeViewController: ProductCategorieCellDelegate {
 }
 
 extension HomeViewController: ProductGridCellDelegate {
+    func productCardDidTapped(productSelected: Product) {
+        
+    }
+    
     func fetchProductsIfNeeded(categoryId: Int) {
         viewModel.loadMoreProducts(for: categoryId)
     }
-    
-    func foodCardDidTapped(foodSelected: Product) {
-        //
+}
+
+extension HomeViewController: SeeAllCategoriesCellDelegate {
+    func seeAllButtonDidTapped(_ cell: SeeAllCategoriesCell) {
+        
     }
 }

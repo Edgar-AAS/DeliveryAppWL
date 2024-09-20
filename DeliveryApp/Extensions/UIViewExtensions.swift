@@ -48,7 +48,7 @@ extension UIView {
         return stack
     }
     
-    func makeButton(title: String,
+    func makeButton(title: String?,
                     titleColor: UIColor,
                     font: UIFont,
                     backgroundColor: UIColor? = nil,

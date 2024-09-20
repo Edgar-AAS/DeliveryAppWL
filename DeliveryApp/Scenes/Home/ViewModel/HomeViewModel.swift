@@ -1,7 +1,6 @@
 import Foundation
 
 protocol HomeViewModelProtocol {
-    func goToDetailsScreen(product: Product)
     func loadInitialData()
     func switchCategory(to categoryId: Int)
     func loadMoreProducts(for categoryId: Int)
@@ -19,8 +18,9 @@ class HomeViewModel: HomeViewModelProtocol {
     private var categoriesDataSource = [ProductCategory]()
     private var totalProducts: Int = 0
     private var currentPage: Int = 0
-    private let pageSize: Int = 3
+    private let pageSize: Int = 10
     private var isFetching = false
+    
     private let httpClient: HTTPClientProtocol
     
     init(httpClient: HTTPClientProtocol) {
@@ -28,11 +28,7 @@ class HomeViewModel: HomeViewModelProtocol {
     }
     
     var numberOfRows: Int {
-        return 2
-    }
-    
-    func goToDetailsScreen(product: Product) {
-        // Implementação futura
+        return 3
     }
     
     func getCategories() -> [ProductCategory] {
