@@ -8,8 +8,7 @@ struct Product: Codable {
     let categoryId: Int
     let name: String
     let price: Double
-    let stockQuantity: Int
-    let description: String
+    let rating: Float
     let isFavorite: Bool
     let images: [ProductImage]
 }
@@ -17,5 +16,4 @@ struct Product: Codable {
 struct ProductImage: Codable {
     let id: Int
     let url: String
-    let productId: Int
 }

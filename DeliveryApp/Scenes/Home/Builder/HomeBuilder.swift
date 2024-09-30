@@ -11,7 +11,6 @@ class HomeBuilder {
             image: UIImage(systemName: "house"),
             selectedImage: UIImage(systemName: "house.fill")
         )
-        viewController.coordinator = coordinator
         return viewController
     }
 }

@@ -68,7 +68,7 @@ final class LoginScreen: UIView {
         textAlignment: .left
     )
     
-    private lazy var forgotPasswordButton = makeButton(
+    private lazy var forgotPasswordButton = makeTitleButton(
         title: "Forgot password?",
         titleColor: Colors.primaryColor,
         font: Fonts.medium(size: 14).weight,
@@ -121,7 +121,7 @@ final class LoginScreen: UIView {
         color: .black
     )
     
-    private lazy var registerButton = makeButton(
+    private lazy var registerButton = makeTitleButton(
         title: "Register",
         titleColor: Colors.primaryColor,
         font: Fonts.semiBold(size: 14).weight,

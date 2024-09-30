@@ -1,6 +1,6 @@
 import UIKit
 
-final class MainCoordinator: NSObject, Coordinator, UINavigationControllerDelegate {
+final class MainCoordinator: Coordinator {
     var navigationController: UINavigationController
     var childCoordinators = [Coordinator]()
     
@@ -9,7 +9,6 @@ final class MainCoordinator: NSObject, Coordinator, UINavigationControllerDelega
     }
     
     func start() {
-        navigationController.delegate = self
         showLoginFlow()
     }
     
@@ -32,19 +31,4 @@ final class MainCoordinator: NSObject, Coordinator, UINavigationControllerDelega
         mainTabController.coordinator = self
         navigationController.pushViewController(mainTabController, animated: false)
     }
-    
-//    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-//        guard let fromViewController = navigationController.transitionCoordinator?.viewController(forKey: .from) else {
-//            return
-//        }
-//        
-//        // Verifica se a viewController foi removida da pilha
-//        if navigationController.viewControllers.contains(fromViewController) {
-//            return
-//        }
-//        
-//        if let registerViewController = fromViewController as? RegisterViewController {
-//            childDidFinish(registerViewController.coordinator)
-//        }
-//    }
 }

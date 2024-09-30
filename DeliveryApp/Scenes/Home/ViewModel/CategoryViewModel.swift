@@ -1,6 +1,6 @@
 import Foundation
 
-class CategoryViewModel {
+class CategoryViewData {
     private let category: ProductCategory
     
     init(category: ProductCategory) {

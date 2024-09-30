@@ -124,7 +124,7 @@ final class RegisterScreen: UIView {
     
     private lazy var checkBox = CheckBoxButton(delegate: checkBoxDelegate)
     
-    private lazy var termsOfServiceButton = makeButton(
+    private lazy var termsOfServiceButton = makeTitleButton(
         title: "Terms of Service",
         titleColor: Colors.primaryColor,
         font:  Fonts.medium(size: 14).weight,
@@ -133,7 +133,7 @@ final class RegisterScreen: UIView {
         }
     )
     
-    private lazy var privacyPolicyButton = makeButton(
+    private lazy var privacyPolicyButton = makeTitleButton(
         title: "Privacy Policy",
         titleColor: Colors.primaryColor,
         font: Fonts.medium(size: 14).weight,
@@ -212,7 +212,7 @@ final class RegisterScreen: UIView {
         textAlignment: .center
     )
     
-    private lazy var goToLoginButton = makeButton(
+    private lazy var goToLoginButton = makeTitleButton(
         title: "Login here",
         titleColor: Colors.primaryColor,
         font: Fonts.semiBold(size: 14).weight,
