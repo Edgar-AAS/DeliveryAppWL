@@ -1,42 +1,47 @@
 import Foundation
 
 final class HeaderViewData {
-    private let productDatailsResponse: ProductDetailsResponse
+    private let name: String
+    private let description: String
+    private let basePrice: Double
+    private let deliveryFee: Double?
+    private let rating: Float
+    private let images: [ProductImage]
     
-    init(productDatailsResponse: ProductDetailsResponse) {
-        self.productDatailsResponse = productDatailsResponse
+    init(name: String, description: String, basePrice: Double, deliveryFee: Double?, rating: Float, images: [ProductImage]) {
+        self.name = name
+        self.description = description
+        self.basePrice = basePrice
+        self.deliveryFee = deliveryFee
+        self.rating = rating
+        self.images = images
     }
     
-    var name: String {
-        productDatailsResponse.name
+    func getName() -> String {
+        return name
     }
     
-    
-    var prefixBasePrice: String {
-        "A partir de "
+    func getBasePrice() -> String {
+        return basePrice.format(with: .currency)
     }
     
-    var basePrice: String {
-        productDatailsResponse.price.format(with: .currency)
+    func getDeliveryFee() -> String {
+        return deliveryFee?.format(with: .currency) ?? "Free Delivery"
     }
     
-    var deliveryFee: String {
-        productDatailsResponse.deliveryFee?.format(with: .currency) ?? "Free Delivery"
+    func getRating() -> String {
+        return String(rating)
     }
     
-    var rating: String {
-        "\(productDatailsResponse.rating)"
+    func getDescription() -> String {
+        return description
     }
     
-    var isFavorite: Bool {
-        productDatailsResponse.isFavorite
+    func getImages() -> [ProductImage] {
+        return images
     }
     
-    var description: String {
-        productDatailsResponse.description
-    }
-    
-    var images: [ProductImage]? {
-        productDatailsResponse.images
+    func getPrefixBasePrice() -> String {
+        return "A partir de "
     }
 }

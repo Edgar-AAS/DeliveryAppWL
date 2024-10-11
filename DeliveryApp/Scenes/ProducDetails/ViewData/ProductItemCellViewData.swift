@@ -1,21 +1,27 @@
 import Foundation
 
-class ProductItemCellViewData {
-    private let item: Item
+struct ProductItemCellViewData {
+    private let name: String
+    private let price: Double
+    private let image: String
+    let isRemovable: Bool
     
-    init(item: Item) {
-        self.item = item
+    init(name: String, price: Double, image: String, isRemovable: Bool) {
+        self.name = name
+        self.price = price
+        self.image = image
+        self.isRemovable = isRemovable
     }
     
-    var name: String {
-        "Adicionar: \(item.name)"
+    func getName() -> String {
+        isRemovable ? "Retirar: \(name)" : "Adicionar: \(name)"
     }
     
-    var image: String {
-        item.imageUrl
+    func getUrlImage() -> String {
+        return image
     }
     
-    var price: String {
-        "+ \(item.price.format(with: .currency))"
+    func getPrice() -> String {
+        "+ \(price.format(with: .currency))"
     }
 }

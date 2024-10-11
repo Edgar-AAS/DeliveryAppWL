@@ -36,7 +36,7 @@ extension UIView {
     func makeStackView(with views: [UIView],
                        aligment: UIStackView.Alignment = .fill,
                        distribution: UIStackView.Distribution = .fill,
-                       spacing: CGFloat = 0.0,
+                       spacing: CGFloat = 8.0,
                        axis: NSLayoutConstraint.Axis) -> UIStackView {
         
         let stack = UIStackView(arrangedSubviews: views)

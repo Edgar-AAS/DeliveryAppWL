@@ -34,7 +34,7 @@ final class ProductDetailsHeader: UIView {
         button.layer.borderWidth = 1
         
         let action = UIAction { [weak self] _ in
-//            self?.delegate?.backButtonDidTapped()
+            //            self?.delegate?.backButtonDidTapped()
         }
         
         button.addAction(action, for: .touchUpInside)
@@ -47,7 +47,7 @@ final class ProductDetailsHeader: UIView {
         button.tintColor = .white
         
         let action = UIAction { [weak self] _ in
-//            self?.delegate?.favoriteButtonDidTapped()
+            //            self?.delegate?.favoriteButtonDidTapped()
         }
         button.addAction(action, for: .touchUpInside)
         button.layer.borderWidth = 1
@@ -55,10 +55,10 @@ final class ProductDetailsHeader: UIView {
     }()
     
     private lazy var topButtonsStack = makeStackView(with: [backButton, favoriteButton],
-                                                    aligment: .fill,
-                                                    distribution: .equalSpacing,
-                                                    spacing: 8,
-                                                    axis: .horizontal)
+                                                     aligment: .fill,
+                                                     distribution: .equalSpacing,
+                                                     spacing: 8,
+                                                     axis: .horizontal)
     
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
@@ -70,7 +70,7 @@ final class ProductDetailsHeader: UIView {
         label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         return label
     }()
-
+    
     private lazy var basePriceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -78,12 +78,14 @@ final class ProductDetailsHeader: UIView {
         label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         return label
     }()
-
+    
     private lazy var productBackgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = Colors.primaryColor.withAlphaComponent(0.04)
+        view.backgroundColor = .white
         view.layer.cornerRadius = 8
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.lightGray.cgColor
         view.clipsToBounds = true
         return view
     }()
@@ -127,6 +129,7 @@ final class ProductDetailsHeader: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = Fonts.semiBold(size: 14).weight
+        label.text = "14-30 Min"
         label.textColor = .darkGray
         return label
     }()
@@ -138,26 +141,37 @@ final class ProductDetailsHeader: UIView {
         label.textColor = .darkGray
         return label
     }()
-    
-    private lazy var deliveryFeeStack = makeStackView(with: [deliveryFeeIcon, deliveryFeeLabel],
-                                                      spacing: 8,
-                                                      axis: .horizontal)
-    
-    private lazy var deliveryTimeStack = makeStackView(with: [estimatedTimeIcon, deliveryTimeLabel],
-                                                       spacing: 8,
-                                                       axis: .horizontal)
-    
-    private lazy var foodRateStack = makeStackView(with: [ratingIcon, ratingLabel],
-                                                   spacing: 8,
-                                                   axis: .horizontal)
-    
-    
-    private lazy var productOrderInformationsStack = makeStackView(with: [deliveryFeeStack,
-                                                                           deliveryTimeStack,
-                                                                           foodRateStack],
-                                                                    distribution: .equalSpacing,
-                                                                    spacing: 8,
-                                                                    axis: .horizontal)
+        
+    private lazy var deliveryFeeStack: UIStackView = {
+        return makeStackView(with: [deliveryFeeIcon, deliveryFeeLabel],
+                             aligment: .center,
+                             distribution: .fill,
+                             spacing: 8,
+                             axis: .horizontal)
+    }()
+
+    private lazy var estimatedTimeStack: UIStackView = {
+        return makeStackView(with: [estimatedTimeIcon, deliveryTimeLabel],
+                             aligment: .center,
+                             distribution: .fill,
+                             spacing: 8,
+                             axis: .horizontal)
+    }()
+
+    private lazy var ratingStack: UIStackView = {
+        return makeStackView(with: [ratingIcon, ratingLabel],
+                             aligment: .center,
+                             distribution: .fill,
+                             spacing: 8,
+                             axis: .horizontal)
+    }()
+
+    private lazy var productOrderInformationsStack = makeStackView(
+        with: [deliveryFeeStack, estimatedTimeStack, ratingStack],
+        aligment: .center,
+        distribution: .equalSpacing,
+        axis: .horizontal
+    )
     
     private func setupBasePriceTextLabel(prefix: String, price: String) {
         let attributedText = NSMutableAttributedString(
@@ -179,17 +193,16 @@ final class ProductDetailsHeader: UIView {
         attributedText.append(priceAttributedText)
         basePriceLabel.attributedText = attributedText
     }
-
     
     func configure(with viewData: HeaderViewData) {
-        productNameLabel.text = viewData.name
-        descriptionLabel.text = viewData.description
-        setupBasePriceTextLabel(prefix: viewData.prefixBasePrice, price: viewData.basePrice)
-        deliveryFeeLabel.text = viewData.deliveryFee
-        ratingLabel.text = viewData.rating
+        productNameLabel.text = viewData.getName()
+        descriptionLabel.text = viewData.getDescription()
+        setupBasePriceTextLabel(prefix: viewData.getPrefixBasePrice(), price: viewData.getBasePrice())
+        deliveryFeeLabel.text = viewData.getDeliveryFee()
+        ratingLabel.text = viewData.getRating()
         
-        guard 
-            let imageUrlString = viewData.images?.first?.url,
+        guard
+            let imageUrlString = viewData.getImages().first?.url,
             let imageUrl = URL(string: imageUrlString)
         else {
             productImageView.image = UIImage(systemName: "photo")

@@ -2,12 +2,17 @@ import UIKit
 
 class ProductItemCell: UITableViewCell {
     static let reuseIdentifier = String(describing: ProductItemCell.self)
-    var plusButtonCellDidTapped: (() -> Void)?
+    var indexPath: IndexPath?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
     }
+    
+    weak var delegate: ProductItemCellDelegate?
+    
+    private var productPriceLabelBottomConstraint: NSLayoutConstraint?
+    private var productNameLabelBottomConstraint: NSLayoutConstraint?
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -25,6 +30,8 @@ class ProductItemCell: UITableViewCell {
     private lazy var productImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
         return imageView
     }()
     
@@ -36,7 +43,7 @@ class ProductItemCell: UITableViewCell {
         return label
     }()
     
-    lazy var plusButton: UIButton = {
+    private lazy var plusButton: UIButton = {
         let button = UIButton(type:  .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "plus"), for: .normal)
@@ -44,29 +51,49 @@ class ProductItemCell: UITableViewCell {
         button.heightAnchor.constraint(equalToConstant: 30).isActive = true
         button.widthAnchor.constraint(equalToConstant: 30).isActive = true
         let action = UIAction { [weak self] _ in
-            self?.plusButtonCellDidTapped?()
+            guard let self else { return }
+            if let indexPath = self.indexPath {
+                self.delegate?.productItemCell(self, didTapStepperWithAction: .add, at: indexPath)
+            }
         }
         button.addAction(action, for: .touchUpInside)
         return button
     }()
     
-    lazy var customStepper: CustomStepper = {
+    private lazy var customStepper: CustomStepper = {
         let stepper = CustomStepper()
         stepper.translatesAutoresizingMaskIntoConstraints = false
-        stepper.isHidden = false
+        stepper.delegate = self
         return stepper
     }()
     
-    func configure(with viewData: ProductItemCellViewData, stepperValue: Int, isVisible: Bool) {
-        productNameLabel.text = viewData.name
-        productPriceLabel.text = viewData.price
-        productImageView.sd_setImage(with: URL(string: viewData.image), placeholderImage: UIImage(systemName: "photo"))
-        customStepper.plusButton.isEnabled = isVisible
-        plusButton.isEnabled = isVisible
-        customStepper.setValue(stepperValue)
-        customStepper.isHidden = customStepper.getValue() == .zero ? true : false
+    func configure(with viewData: ProductItemCellViewData, stepperDto: StepperDTO, indexPath: IndexPath) {
+        self.indexPath = indexPath
+        
+        productNameLabel.text = viewData.getName()
+        productPriceLabel.text = viewData.getPrice()
+        productImageView.sd_setImage(with: URL(string: viewData.getUrlImage()))
+        plusButton.isEnabled = stepperDto.isEnabled
+        
+        customStepper.configure(with: stepperDto)
+        
+        if viewData.isRemovable {
+            productPriceLabel.isHidden = true
+            productPriceLabelBottomConstraint?.isActive = false
+            productNameLabelBottomConstraint?.isActive = true
+        } else {
+            productPriceLabel.isHidden = false
+            productNameLabelBottomConstraint?.isActive = false
+            productPriceLabelBottomConstraint?.isActive = true
+        }
     }
+}
 
+extension ProductItemCell: CustomStepperDelegate {
+    func updateStepper(action: StepperActionType) {
+        guard let indexPath = indexPath else { return }
+        delegate?.productItemCell(self, didTapStepperWithAction: action, at: indexPath)
+    }
 }
 
 extension ProductItemCell: CodeView {
@@ -84,9 +111,8 @@ extension ProductItemCell: CodeView {
             productNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
             
             productImageView.centerYAnchor.constraint(equalTo: productNameLabel.centerYAnchor),
+            
             productImageView.leadingAnchor.constraint(equalTo: productNameLabel.trailingAnchor, constant: 8),
-            productImageView.heightAnchor.constraint(equalToConstant: 60),
-            productImageView.widthAnchor.constraint(equalToConstant: 60),
             
             plusButton.centerYAnchor.constraint(equalTo: productImageView.centerYAnchor),
             plusButton.leadingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: 8),
@@ -95,10 +121,22 @@ extension ProductItemCell: CodeView {
             productPriceLabel.topAnchor.constraint(equalTo: productNameLabel.bottomAnchor, constant: 8),
             productPriceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
             productPriceLabel.trailingAnchor.constraint(equalTo: productImageView.leadingAnchor, constant: -8),
-            productPriceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24),
             
             customStepper.centerYAnchor.constraint(equalTo: plusButton.centerYAnchor),
+            customStepper.widthAnchor.constraint(equalToConstant: 100),
             customStepper.trailingAnchor.constraint(equalTo: plusButton.trailingAnchor),
         ])
+        
+        productNameLabelBottomConstraint = productNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24)
+        productPriceLabelBottomConstraint = productPriceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24)
+    }
+    
+    func setupAddiotionalConfiguration() {
+        selectionStyle = .none
+        customStepper.backgroundColor = .white
+        customStepper.layer.cornerRadius = 8
+        customStepper.layer.shadowColor = UIColor.black.cgColor
+        customStepper.layer.shadowOffset = .init(width: 1, height: 2)
+        customStepper.layer.shadowOpacity = 0.2
     }
 }

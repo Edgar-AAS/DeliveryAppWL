@@ -1,15 +1,23 @@
 import UIKit
 
+
+protocol CustomStepperDelegate: AnyObject {
+    func updateStepper(action: StepperActionType)
+}
+
+
+struct StepperDTO {
+    let currentValue: Int
+    let isEnabled: Bool
+}
+
 class CustomStepper: UIView {
     private var value: Int = 0 {
         didSet {
             valueLabel.text = "\(value)"
         }
     }
-    
-    var plusButtonTapped: (() -> Void)?
-    var minusButtonTapped: (() -> Void)?
-    
+        
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,7 +29,9 @@ class CustomStepper: UIView {
         setupView()
     }
     
-    lazy var plusButton: UIButton = {
+    weak var delegate: CustomStepperDelegate?
+    
+    private lazy var plusButton: UIButton = {
         let button = UIButton(type:  .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "plus"), for: .normal)
@@ -30,14 +40,14 @@ class CustomStepper: UIView {
         button.tintColor = Colors.primaryColor
         
         let action = UIAction { [weak self] _ in
-            self?.plusButtonTapped?()
+            self?.delegate?.updateStepper(action: .add)
         }
         
         button.addAction(action, for: .touchUpInside)
         return button
     }()
     
-    lazy var minusButton: UIButton = {
+    private lazy var minusButton: UIButton = {
         let button = UIButton(type:  .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "minus"), for: .normal)
@@ -46,8 +56,9 @@ class CustomStepper: UIView {
         button.tintColor = Colors.primaryColor
         
         let action = UIAction { [weak self] _ in
-            self?.minusButtonTapped?()
+            self?.delegate?.updateStepper(action: .remove)
         }
+        
         button.addAction(action, for: .touchUpInside)
         return button
     }()
@@ -61,6 +72,16 @@ class CustomStepper: UIView {
         return label
     }()
     
+    func configure(with dto: StepperDTO) {
+        isHidden = dto.currentValue == .zero ? true : false
+        plusButton.isEnabled = dto.isEnabled
+        setValue(dto.currentValue)
+    }
+    
+    func setButtonsState(state: Bool) {
+        plusButton.isEnabled = state
+    }
+    
     func setValue(_ newValue: Int, animated: Bool = true) {
         if animated {
             UIView.transition(with: valueLabel, duration: 0.1, options: .curveLinear, animations: {
@@ -69,10 +90,6 @@ class CustomStepper: UIView {
         } else {
             value = newValue
         }
-    }
-    
-    func getValue() -> Int {
-        return value
     }
 }
 

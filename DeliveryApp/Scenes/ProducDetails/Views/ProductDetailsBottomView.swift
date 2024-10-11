@@ -1,10 +1,5 @@
 import UIKit
 
-protocol ProductDetailsScreenDelegate: AnyObject {
-    func backButtonDidTapped(_ view: ProductDetailsBottomView)
-    func favoriteButtonDidTapped(_ view: ProductDetailsBottomView)
-}
-
 class ProductDetailsBottomView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -87,11 +82,6 @@ class ProductDetailsBottomView: UIView {
         button.backgroundColor = Colors.primaryColor
         return button
     }()
-    
-    func updateStepper() {
-//        productTotalPrice.text = dto.amount
-//        productQuantityLabel.text = dto.count
-    }
 }
 
 extension ProductDetailsBottomView: CodeView {

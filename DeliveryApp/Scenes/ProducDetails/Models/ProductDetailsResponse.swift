@@ -19,15 +19,16 @@ struct Section: Codable {
     let isActive: Bool
     let isRequired: Bool
     let isSideItem: Bool
+    let isRemovable: Bool
     let limitOptions: Int
     let selectionOrder: Int
-    let items: [Item]
+    var items: [Item]
 }
 
 struct Item: Codable {
     let id: Int
     let name: String
     let price: Double
-    let quantity: Int
+    var quantity: Int
     let imageUrl: String
 }
