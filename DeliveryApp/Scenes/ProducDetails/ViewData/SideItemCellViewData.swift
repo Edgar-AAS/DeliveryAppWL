@@ -2,23 +2,25 @@ import Foundation
 
 
 final class SideItemCellViewData {
-    private let item: Item
-    let isSelected: Bool
+    private let sideItem: SideItem
     
-    init(item: Item, isSelected: Bool) {
-        self.item = item
-        self.isSelected = isSelected
+    init(sideItem: SideItem) {
+        self.sideItem = sideItem
+    }
+    
+    var isSelected: Bool {
+        return sideItem.isSelected
     }
     
     var name: String {
-        "\(item.name)"
+        "\(sideItem.name)"
     }
     
     var image: String {
-        item.imageUrl
+        sideItem.imageUrl
     }
     
     var price: String {
-        "+ \(item.price.format(with: .currency))"
+        "+ \(sideItem.price.format(with: .currency))"
     }
 }

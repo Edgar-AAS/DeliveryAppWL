@@ -10,20 +10,20 @@ class HomeScreen: UIView {
         let header = HeaderView()
         return header
     }()
-            
+    
     private lazy var homeTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
-        tableView.allowsSelection = false
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.isScrollEnabled = false
         tableView.backgroundColor = .clear
+        tableView.allowsSelection = false
+        tableView.isScrollEnabled = false
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(SeeAllCategoriesCell.self, forCellReuseIdentifier: SeeAllCategoriesCell.reuseIdentifier)
         tableView.register(ProductCategorieCell.self, forCellReuseIdentifier: ProductCategorieCell.reuseIdentifier)
         tableView.register(ProductGridCell.self, forCellReuseIdentifier: ProductGridCell.reuseIdentifier)
         return tableView
     }()
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

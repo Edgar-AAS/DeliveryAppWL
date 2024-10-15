@@ -1,11 +1,13 @@
 import Foundation
 
 class ProductDetailsViewModel: ProductDetailsViewModelProtocol {
-    private var isSideItemSelected: [IndexPath : Bool] = [:]
     private var optionsReenabled: [Int: Bool] = [:]
     private var lastIndex: [IndexPath : Bool] = [:]
     private var isOptionsEnabled: [Int: Bool] = [:]
     private var activeSections: [Section]?
+    
+    private var productResponse: ProductDetailsResponse?
+    private var sideItems: [IndexPath: SideItem] = [:]
     
     weak var delegate: ProductDetailsViewModelDelegate?
     
@@ -25,6 +27,7 @@ class ProductDetailsViewModel: ProductDetailsViewModelProtocol {
                     .filter({ $0.isActive })
                     .sorted(by: { $0.selectionOrder < $1.selectionOrder })
                 
+                self.productResponse = productDetailsResponse
                 self.updateHeaderView(with: productDetailsResponse)
                 self.delegate?.productDetailsViewModelDidUpdateUI(self)
             case .failure(let error):
@@ -38,11 +41,21 @@ class ProductDetailsViewModel: ProductDetailsViewModelProtocol {
         guard let section = activeSections?[indexPath.section] else  { return nil }
         
         let item = section.items[indexPath.row]
-        let isSelected = isSideItemSelected[indexPath] ?? false
+        let isSelected = sideItems[indexPath]?.isSelected ?? false
         
         if section.isSideItem {
-            return .sideItem(SideItemCellViewData(item: item, isSelected: isSelected))
+            sideItems[indexPath] = .init(
+                name: item.name,
+                price: item.price,
+                imageUrl: item.imageUrl,
+                quantity: item.quantity,
+                isSelected: isSelected
+            )
+            
+            guard let sideItem = sideItems[indexPath] else { return nil }
+            return .sideItem(SideItemCellViewData(sideItem: sideItem))
         }
+        
         return .regularItem(productItemCellViewDataMapper(item: item, isRemovable: section.isRemovable))
     }
     
@@ -65,6 +78,27 @@ class ProductDetailsViewModel: ProductDetailsViewModelProtocol {
         return SectionHeaderViewData(section: sectionData)
     }
     
+    func calculateTotalAmount() {
+        var total: Double = .zero
+    
+        guard let sections = activeSections else { return }
+            
+        for section in sections {
+            if !section.isRemovable && !section.isSideItem {
+                for item in section.items {
+                    total += item.price * Double(item.quantity)
+                    print("total dos items: \(total)")
+                }
+            }
+        }
+        
+        for sideItem in sideItems {
+            if sideItem.value.isSelected {
+                total += sideItem.value.price
+            }
+        }
+    }
+    
     //MARK: - SideItem DataSource
     func updateSideItemState(at indexPath: IndexPath) {
         guard let section = activeSections?[indexPath.section] else  { return }
@@ -76,16 +110,16 @@ class ProductDetailsViewModel: ProductDetailsViewModelProtocol {
     
     //MARK: - SideItem Handle
     private func switchSideItemState(indexPath: IndexPath) {
-        let isSelected = isSideItemSelected[indexPath] ?? false
+        let isSelected = sideItems[indexPath]?.isSelected ?? false
         
         if let lastIndex = lastIndex.first(where: { $0.key.section == indexPath.section }) {
-            isSideItemSelected[lastIndex.key] = false
+            sideItems[lastIndex.key]?.isSelected = false
             self.lastIndex.removeValue(forKey: lastIndex.key)
         }
         
-        isSideItemSelected[indexPath] = !isSelected
+        sideItems[indexPath]?.isSelected = !isSelected
         
-        if isSideItemSelected[indexPath] == true {
+        if sideItems[indexPath]?.isSelected == true {
             lastIndex[indexPath] = true
         }
         
@@ -127,7 +161,6 @@ class ProductDetailsViewModel: ProductDetailsViewModelProtocol {
                 delegate?.productDetailsViewModel(self, didExceedOptionLimitInSection: indexPath.section)
                 return
             }
-            
             delegate?.productDetailsViewModel(self, didChangeStepperValueAt: indexPath)
         }
     }
@@ -162,6 +195,7 @@ class ProductDetailsViewModel: ProductDetailsViewModelProtocol {
             
             if total >= activeSection.limitOptions {
                 optionsReenabled[indexPath.section] = true
+                calculateTotalAmount()
                 return true
             }
         }

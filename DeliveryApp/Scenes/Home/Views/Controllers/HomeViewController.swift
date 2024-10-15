@@ -59,7 +59,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
-            var otherCellsHeight: CGFloat = 0
+            var otherCellsHeight: CGFloat = .zero
             
             guard  let headerHeight = customView?.homeHeader.frame.height else {
                 return UITableView.automaticDimension

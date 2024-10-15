@@ -5,7 +5,6 @@ protocol CustomStepperDelegate: AnyObject {
     func updateStepper(action: StepperActionType)
 }
 
-
 struct StepperDTO {
     let currentValue: Int
     let isEnabled: Bool
