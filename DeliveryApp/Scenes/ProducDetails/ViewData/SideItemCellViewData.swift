@@ -1,13 +1,13 @@
 import Foundation
 
 
-final class SideItemCellViewData {
+struct SideItemCellViewData {
     private let sideItem: SideItem
     
     init(sideItem: SideItem) {
         self.sideItem = sideItem
     }
-    
+        
     var isSelected: Bool {
         return sideItem.isSelected
     }

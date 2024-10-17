@@ -92,7 +92,7 @@ extension RegistrationSuccessScreen: CodeView {
         ])
     }
     
-    func setupAddiotionalConfiguration() {
+    func setupAdditionalConfiguration() {
         backgroundColor = Colors.backgroundColor
     }
 }

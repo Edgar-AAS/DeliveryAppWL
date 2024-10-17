@@ -255,7 +255,7 @@ extension LoginScreen: CodeView {
     }
 
     
-    func setupAddiotionalConfiguration() {
+    func setupAdditionalConfiguration() {
         emailTextField.becomeFirstResponder()
         forgotPasswordButton.contentHorizontalAlignment = .right
     }

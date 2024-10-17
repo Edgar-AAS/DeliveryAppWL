@@ -41,7 +41,7 @@ final class LoadingView: UIView, CodeView {
         ])
     }
     
-    func setupAddiotionalConfiguration() {
+    func setupAdditionalConfiguration() {
         isHidden = true
         backgroundColor = .black.withAlphaComponent(0.6)
     }

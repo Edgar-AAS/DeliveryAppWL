@@ -74,9 +74,10 @@ class ProductItemCell: UITableViewCell {
         productPriceLabel.text = viewData.getPrice()
         productImageView.sd_setImage(with: URL(string: viewData.getUrlImage()))
         plusButton.isEnabled = stepperDto.isEnabled
+        customStepper.isHidden = stepperDto.currentValue == .zero
         
-        customStepper.configure(with: stepperDto)
-        
+        customStepper.configure(with: stepperDto, size: .medium)
+            
         if viewData.isRemovable {
             productPriceLabel.isHidden = true
             productPriceLabelBottomConstraint?.isActive = false
@@ -123,7 +124,6 @@ extension ProductItemCell: CodeView {
             productPriceLabel.trailingAnchor.constraint(equalTo: productImageView.leadingAnchor, constant: -8),
             
             customStepper.centerYAnchor.constraint(equalTo: plusButton.centerYAnchor),
-            customStepper.widthAnchor.constraint(equalToConstant: 100),
             customStepper.trailingAnchor.constraint(equalTo: plusButton.trailingAnchor),
         ])
         
@@ -131,7 +131,7 @@ extension ProductItemCell: CodeView {
         productPriceLabelBottomConstraint = productPriceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24)
     }
     
-    func setupAddiotionalConfiguration() {
+    func setupAdditionalConfiguration() {
         selectionStyle = .none
         customStepper.backgroundColor = .white
         customStepper.layer.cornerRadius = 8

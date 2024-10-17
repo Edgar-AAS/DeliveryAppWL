@@ -61,7 +61,7 @@ extension CategoryCell: CodeView {
         ])
     }
     
-    func setupAddiotionalConfiguration() {
+    func setupAdditionalConfiguration() {
         backgroundColor = .white
         layer.cornerRadius = 8
     }

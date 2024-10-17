@@ -1,117 +1,144 @@
 import UIKit
 
-class ProductDetailsBottomView: UIView {
+final class ProductDetailsBottomView: UIView {
+    private var displayLink: CADisplayLink?
+    private var animationStartValue: Double = 0
+    private var animationEndValue: Double = 0
+    private var animationStartTime: CFTimeInterval = 0
+    private let animationDuration: TimeInterval = 0.25
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
     }
     
+    weak var delegate: ProductDetailsBottomViewDelegate?
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var bottomView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = Colors.backgroundColor
-        return view
+    private lazy var customStepper: CustomStepper = {
+        let stepper = CustomStepper()
+        stepper.translatesAutoresizingMaskIntoConstraints = false
+        stepper.delegate = self
+        stepper.layer.borderColor = UIColor.lightGray.cgColor
+        stepper.layer.borderWidth = 1
+        stepper.layer.cornerRadius = 8
+        return stepper
     }()
     
-    private lazy var minusButton: UIButton = {
-        let button = UIButton(type:  .system)
-        button.setImage(UIImage(named: "minus"), for: .normal)
-        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        button.tintColor = .black
-        
-        let action = UIAction { [weak self] _ in
-
-        }
-        button.addAction(action, for: .touchUpInside)
+    private lazy var addToCartButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 8
+        button.backgroundColor = Colors.primaryColor
+        button.setTitleColor(.white, for: .normal)
         return button
     }()
     
-    private lazy var plusButton: UIButton = {
-        let button = UIButton(type:  .system)
-        button.setImage(UIImage(named: "plus"), for: .normal)
-        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        
-        let action = UIAction { [weak self] _ in
-            
-        }
-        
-        button.addAction(action, for: .touchUpInside)
-        button.tintColor = .black
-        return button
-    }()
-    
-    private lazy var productQuantityLabel: UILabel = {
-        let label = UILabel()
-        label.font = Fonts.semiBold(size: 18).weight
-        label.textColor = .black
-        return label
-    }()
-    
-    private lazy var foodStepperStack = makeStackView(with: [minusButton,
-                                                             productQuantityLabel,
-                                                             plusButton],
-                                                      aligment: .center,
-                                                      spacing: 20,
-                                                      axis: .horizontal)
-    
-    private lazy var productTotalPrice: UILabel = {
+    private lazy var valueLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = Colors.primaryColor
-        label.font = Fonts.bold(size: 24).weight
+        label.font = Fonts.bold(size: 16).weight
+        label.textAlignment = .center
+        label.textColor = .white
         return label
     }()
     
-    private lazy var addToCardButton: UIButton = {
-        let button = UIButton(type:  .system)
-        button.setTitle("Add to Cart", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.titleLabel?.font = Fonts.bold(size: 14).weight
-        button.setImage(UIImage(named: "cart"), for: .normal)
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
-        button.tintColor = .white
-        button.layer.cornerRadius = 26
-        button.clipsToBounds = true
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = Colors.primaryColor
-        return button
-    }()
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setupShadow()
+    }
+    
+    func configureTotalAmount(animateInfo: ValueAnimateInfo) {
+        animateValueIncrement(fromValue: animateInfo.fromValue, toValue: animateInfo.toValue)
+    }
+    
+    func configureButtonState(status: OptionsStatusType) {
+        let isRequiredOptionsSelect = status == .done
+        addToCartButton.isEnabled = isRequiredOptionsSelect
+        addToCartButton.backgroundColor = isRequiredOptionsSelect ? Colors.primaryColor : UIColor.lightGray
+    }
+    
+    func configureStepper(with dto: StepperDTO) {
+        customStepper.configure(with: dto, size: .large)
+    }
+}
+
+extension ProductDetailsBottomView: CustomStepperDelegate {
+    func updateStepper(action: StepperActionType) {
+        delegate?.productDetailsBottomView(self, didTapStepperWithAction: action)
+    }
+}
+
+extension ProductDetailsBottomView {
+    private func animateValueIncrement(fromValue: Double, toValue: Double) {
+        animationStartValue = fromValue
+        animationEndValue = toValue
+        animationStartTime = CACurrentMediaTime()
+        
+        displayLink?.invalidate()
+        
+        displayLink = CADisplayLink(target: self, selector: #selector(updateValueLabel))
+        displayLink?.add(to: .main, forMode: .common)
+    }
+    
+    @objc private func updateValueLabel() {
+        guard let displayLink = displayLink else { return }
+        
+        let elapsedTime = CACurrentMediaTime() - animationStartTime
+        let progress = min(elapsedTime / animationDuration, 1.0)
+        
+        let currentValue = animationStartValue + (progress * (animationEndValue - animationStartValue))
+        valueLabel.text = "Adicionar: \(currentValue.format(with: .currency))"
+        
+        if progress >= 1.0 {
+            displayLink.invalidate()
+            self.displayLink = nil
+        }
+    }
+    
+    private func setupShadow() {
+        layer.cornerRadius = 8
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: -3)
+        layer.shadowOpacity = 0.1
+        
+        let shadowPath = UIBezierPath(
+            roundedRect: bounds,
+            cornerRadius: layer.cornerRadius
+        )
+        
+        layer.shadowPath = shadowPath.cgPath
+    }
 }
 
 extension ProductDetailsBottomView: CodeView {
     func buildViewHierarchy() {
-        addSubview(bottomView)
-        bottomView.addSubview(foodStepperStack)
-        bottomView.addSubview(productTotalPrice)
-        bottomView.addSubview(addToCardButton)
+        addSubview(customStepper)
+        addSubview(addToCartButton)
+        addToCartButton.addSubview(valueLabel)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            bottomView.topAnchor.constraint(equalTo: topAnchor),
-            bottomView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            bottomView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            bottomView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            customStepper.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -10),
+            customStepper.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             
-            foodStepperStack.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 8),
-            foodStepperStack.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 24),
-            foodStepperStack.heightAnchor.constraint(equalToConstant: 44),
+            addToCartButton.centerYAnchor.constraint(equalTo: customStepper.centerYAnchor),
+            addToCartButton.heightAnchor.constraint(equalTo: customStepper.heightAnchor),
+            addToCartButton.leadingAnchor.constraint(equalTo: customStepper.trailingAnchor, constant: 16),
+            addToCartButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             
-            productTotalPrice.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 8),
-            productTotalPrice.leadingAnchor.constraint(greaterThanOrEqualTo: foodStepperStack.trailingAnchor, constant: 8),
-            productTotalPrice.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -24),
-            
-            addToCardButton.topAnchor.constraint(equalTo: foodStepperStack.bottomAnchor, constant: 16),
-            addToCardButton.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 24),
-            addToCardButton.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -24),
-            addToCardButton.heightAnchor.constraint(equalToConstant: 52),
-            addToCardButton.bottomAnchor.constraint(equalTo: bottomView.bottomAnchor, constant: -48)
+            valueLabel.topAnchor.constraint(equalTo: addToCartButton.topAnchor),
+            valueLabel.leadingAnchor.constraint(equalTo: addToCartButton.leadingAnchor),
+            valueLabel.trailingAnchor.constraint(equalTo: addToCartButton.trailingAnchor),
+            valueLabel.bottomAnchor.constraint(equalTo: addToCartButton.bottomAnchor)
         ])
+    }
+    
+    func setupAdditionalConfiguration() {
+        backgroundColor = .white
     }
 }

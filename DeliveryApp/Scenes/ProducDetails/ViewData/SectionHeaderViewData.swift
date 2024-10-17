@@ -1,6 +1,6 @@
 import Foundation
 
-class SectionHeaderViewData {
+struct SectionHeaderViewData {
     private let section: Section
     
     init(section: Section) {

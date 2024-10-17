@@ -73,7 +73,7 @@ extension SectionHeaderCell: CodeView {
         ])
     }
     
-    func setupAddiotionalConfiguration() {
+    func setupAdditionalConfiguration() {
         contentView.backgroundColor = UIColor(hexString: "EFF2F5")
     }
 }

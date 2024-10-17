@@ -1,6 +1,6 @@
 import Foundation
 
-final class HeaderViewData {
+struct HeaderViewData {
     private let name: String
     private let description: String
     private let basePrice: Double

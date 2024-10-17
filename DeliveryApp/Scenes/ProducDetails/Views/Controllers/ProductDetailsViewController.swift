@@ -1,8 +1,17 @@
 import UIKit
 
-class ProductDetailsViewController: UITableViewController {
+class ProductDetailsViewController: UIViewController {
     private var viewModel: ProductDetailsViewModelProtocol
     private var productDetailsHeader: ProductDetailsHeader?
+
+    private lazy var customView: ProducDetailsScreen? = {
+        return view as? ProducDetailsScreen
+    }()
+    
+    override func loadView() {
+        super.loadView()
+        view = ProducDetailsScreen(delegate: self, dataSource: self)
+    }
     
     init(viewModel: ProductDetailsViewModelProtocol) {
         self.viewModel = viewModel
@@ -16,44 +25,23 @@ class ProductDetailsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         hideNavigationBar()
-        hideTabBar()
-        setupTableViewProperties()
+        hideTabBar()        
+        customView?.setupBottomViewDelegate(self)
         viewModel.fetchProductDetails()
     }
-    
-    private func setupTableViewProperties() {
-        tableView.register(ProductItemCell.self, forCellReuseIdentifier: ProductItemCell.reuseIdentifier)
-        tableView.register(SideItemCell.self, forCellReuseIdentifier: SideItemCell.reuseIdentifier)
-        tableView.register(SectionHeaderCell.self, forHeaderFooterViewReuseIdentifier: SectionHeaderCell.reuseIdentifier)
-        tableView.estimatedSectionHeaderHeight = 60
-        
-        productDetailsHeader = ProductDetailsHeader(frame: .init(x: .zero, y: .zero, width: view.frame.width, height: 500))
-        tableView.tableHeaderView = productDetailsHeader
-    }
-    
+}
+
 //MARK: - TableViewDataSource
-    override func numberOfSections(in tableView: UITableView) -> Int {
+extension ProductDetailsViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.getNumberOfSections()
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let sectionHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: SectionHeaderCell.reuseIdentifier) as? SectionHeaderCell
-        guard let sectionViewData = viewModel.getSectionViewData(to: section) else {
-            return nil
-        }
-        sectionHeader?.configure(with: sectionViewData)
-        return sectionHeader
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.updateSideItemState(at: indexPath)
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.getNumberOfItemsBySection(section)
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch viewModel.getItemInSection(indexPath) {
         case .sideItem(let sideItemCellViewData):
             return makeSideItemCell(tableView, cellForRowAt: indexPath, viewData: sideItemCellViewData)
@@ -65,37 +53,73 @@ class ProductDetailsViewController: UITableViewController {
     }
 }
 
+extension ProductDetailsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.updateSideItemState(at: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let sectionHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: SectionHeaderCell.reuseIdentifier) as? SectionHeaderCell
+        guard let sectionViewData = viewModel.getSectionViewData(to: section) else {
+            return nil
+        }
+        sectionHeader?.configure(with: sectionViewData)
+        return sectionHeader
+    }
+}
+
+//MARK: - ProductDetailsBottomViewDelegate
+extension ProductDetailsViewController: ProductDetailsBottomViewDelegate {
+    func productDetailsBottomView(_ view: ProductDetailsBottomView, didTapStepperWithAction action: StepperActionType) {
+        viewModel.updateFooterViewStepper(action: action)
+    }
+}
+
 //MARK: - ProductDetailsViewModelDelegate
 extension ProductDetailsViewController: ProductDetailsViewModelDelegate {
+    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateRequiredOptionsStatus status: OptionsStatusType) {
+        customView?.updateRequiredOptionsStatus(with: status)
+    }
+    
+    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didChangeBottomViewStepperValue stepperDto: StepperDTO) {
+        customView?.updateStepper(dto: stepperDto)
+    }
+    
+    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateTotalAmount amount: ValueAnimateInfo) {
+        customView?.updateAmount(animateInfo: amount)
+    }
+    
     func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateHeaderWith viewData: HeaderViewData) {
-        productDetailsHeader?.configure(with: viewData)
+        let headerView = ProductDetailsHeader(frame: .init(x: .zero, y: .zero, width: view.frame.width, height: 500))
+        customView?.tableView.tableHeaderView = headerView
+        headerView.configure(with: viewData)
     }
     
     func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didExceedOptionLimitInSection section: Int) {
-        tableView.reloadSections([section], with: .none)
+        customView?.reloadSections(at: section)
     }
     
     func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didChangeStepperValueAt indexPath: IndexPath) {
-        tableView.reloadRows(at: [indexPath], with: .none)
+        customView?.reloadRows(at: indexPath)
     }
     
-    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didSelectItemAt indexPath: IndexPath) {
-        tableView.reloadSections([indexPath.section], with: .none)
+    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didSelectItemAt section: Int) {
+        customView?.reloadSections(at: section)
     }
     
     func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didEnableOptionsInSection section: Int) {
-        tableView.reloadSections([section], with: .none)
+        customView?.reloadSections(at: section)
     }
     
     func productDetailsViewModelDidUpdateUI(_ viewModel: ProductDetailsViewModel) {
-        tableView.reloadData()
+        customView?.reloadData()
     }
 }
 
 //MARK: - ProductItemCellDelegate
 extension ProductDetailsViewController: ProductItemCellDelegate {
     func productItemCell(_ cell: ProductItemCell, didTapStepperWithAction action: StepperActionType, at indexPath: IndexPath) {
-        viewModel.updateStepper(action: action, indexPath: indexPath)
+        viewModel.updateAdditionalItemStepper(action: action, indexPath: indexPath)
     }
 }
 

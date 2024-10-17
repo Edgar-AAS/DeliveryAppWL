@@ -127,7 +127,7 @@ extension ProductCell: CodeView {
         ])
     }
     
-    func setupAddiotionalConfiguration() {
+    func setupAdditionalConfiguration() {
         setupShadow()
     }
 }

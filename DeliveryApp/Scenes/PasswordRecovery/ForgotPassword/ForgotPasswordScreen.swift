@@ -167,7 +167,7 @@ extension ForgotPasswordScreen: CodeView {
         continueButtonBottomConstraint?.isActive = true
     }
     
-    func setupAddiotionalConfiguration() {
+    func setupAdditionalConfiguration() {
         emailTextField.becomeFirstResponder()
     }
 }

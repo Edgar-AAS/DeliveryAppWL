@@ -60,7 +60,7 @@ extension SeeAllCategoriesCell: CodeView {
         ])
     }
     
-    func setupAddiotionalConfiguration() {
+    func setupAdditionalConfiguration() {
         backgroundColor = .clear
     }
 }

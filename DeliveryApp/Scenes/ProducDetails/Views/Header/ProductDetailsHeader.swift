@@ -14,6 +14,7 @@ final class ProductDetailsHeader: UIView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
+        imageView.backgroundColor = .red
         imageView.isUserInteractionEnabled = true
         imageView.contentMode = .scaleAspectFill
         return imageView

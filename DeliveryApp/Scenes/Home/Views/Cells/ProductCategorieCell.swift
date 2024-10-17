@@ -96,7 +96,7 @@ extension ProductCategorieCell: CodeView {
         ])
     }
     
-    func setupAddiotionalConfiguration() {
+    func setupAdditionalConfiguration() {
         backgroundColor = .clear
     }
 }

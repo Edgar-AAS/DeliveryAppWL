@@ -57,7 +57,7 @@ extension HomeScreen: CodeView {
         ])
     }
     
-    func setupAddiotionalConfiguration() {
+    func setupAdditionalConfiguration() {
         backgroundColor = Colors.backgroundColor
     }
 }

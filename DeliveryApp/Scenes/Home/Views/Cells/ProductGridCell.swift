@@ -58,7 +58,7 @@ extension ProductGridCell: CodeView {
         ])
     }
     
-    func setupAddiotionalConfiguration() {
+    func setupAdditionalConfiguration() {
         backgroundColor = .clear
     }
 }

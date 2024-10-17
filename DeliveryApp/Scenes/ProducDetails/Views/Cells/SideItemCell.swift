@@ -89,7 +89,7 @@ extension SideItemCell: CodeView {
         ])
     }
     
-    func setupAddiotionalConfiguration() {
+    func setupAdditionalConfiguration() {
         selectionStyle = .none
     }
 }

@@ -393,7 +393,7 @@ extension RegisterScreen: CodeView {
         ])
     }
     
-    func setupAddiotionalConfiguration() {
+    func setupAdditionalConfiguration() {
         emailTextField.becomeFirstResponder()
     }
 }
