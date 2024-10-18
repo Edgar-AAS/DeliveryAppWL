@@ -7,13 +7,13 @@ protocol ForgotPasswordViewModelProtocol: AnyObject {
 
 class ForgotPasswordViewModel: ForgotPasswordViewModelProtocol {
 //MARK: - Properties
-    private let emailValidation: EmailValidator
+    private let emailValidation: EmailValidaton
     
     var loadingHandler: ((Bool) -> ())?
     weak var fieldValidationDelegate: FieldValidationDelegate?
     
 //MARK: - Initializers
-    init(emailValidator: EmailValidator) {
+    init(emailValidator: EmailValidaton) {
         self.emailValidation = emailValidator
     }
     

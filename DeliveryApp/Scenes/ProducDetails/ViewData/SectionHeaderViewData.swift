@@ -1,17 +1,21 @@
 import Foundation
 
 struct SectionHeaderViewData {
-    private let section: Section
+    let name: String
+    let isRequired: Bool
+    let limitOptions: Int
     
-    init(section: Section) {
-        self.section = section
+    init(name: String, limitOptions: Int, isRequired: Bool) {
+        self.name = name
+        self.limitOptions = limitOptions
+        self.isRequired = isRequired
     }
     
-    var name: String {
-        section.name
+    var requiredText: String {
+        return "OBRIGATÓRIO"
     }
-    
-    var limitOptions: String {
-        "Escolha até \(section.limitOptions) opções."
+  
+    var sectionOptionsLimit: String {
+        "Escolha até \(limitOptions) opções."
     }
 }

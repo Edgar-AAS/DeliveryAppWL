@@ -38,7 +38,7 @@ class ForgotPasswordScreen: UIView {
     private lazy var forgotPasswordDescriptionLabel = makeLabel(
         text: "Enter your email address and we’ll send you confirmation code to reset your password",
         font: Fonts.medium(size: 14).weight,
-        color: Colors.descriptionTextColor,
+        color: Colors.descriptionText,
         textAlignment: .left,
         numberOfLines: 0
     )
@@ -61,7 +61,7 @@ class ForgotPasswordScreen: UIView {
     private lazy var continueButton = RoundedButton(
         title: "Continue",
         titleColor: .white,
-        backgroundColor: Colors.primaryColor,
+        backgroundColor: Colors.primary,
         icon: nil,
         action: { [weak self] in
             self?.delegate?.continueButtonDidTapped()
@@ -76,7 +76,7 @@ class ForgotPasswordScreen: UIView {
         isUserInteractionEnabled = !isLoading
         continueButton.isEnabled = !isLoading
         
-        let newBackgroundColor = isLoading ? Colors.primaryColor.withAlphaComponent(0.6) : Colors.primaryColor
+        let newBackgroundColor = isLoading ? Colors.primary.withAlphaComponent(0.6) : Colors.primary
         continueButton.backgroundColor = newBackgroundColor
         isLoading ? loadingView.startLoading() : loadingView.stopLoading()
     }

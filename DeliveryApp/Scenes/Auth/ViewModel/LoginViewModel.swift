@@ -6,14 +6,14 @@ class LoginViewModel: LoginViewModelProtocol {
     var onLoginSuccess: (() -> Void)?
     
     private let httpClient: HTTPClientProtocol
-    private let emailValidation: EmailValidator
+    private let emailValidation: EmailValidaton
 
     weak var fieldValidationDelegate: FieldValidationDelegate?
     weak var alertView: AlertView?
     
     //MARK: - Initializers
     init(httpClient: HTTPClientProtocol,
-         emailValidation: EmailValidator
+         emailValidation: EmailValidaton
     )
     
     {

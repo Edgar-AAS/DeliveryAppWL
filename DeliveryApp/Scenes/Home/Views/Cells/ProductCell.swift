@@ -45,7 +45,7 @@ class ProductCell: UICollectionViewCell {
     private lazy var productRateIcon: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "star.fill"))
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.tintColor = Colors.primaryColor
+        imageView.tintColor = Colors.primary
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()

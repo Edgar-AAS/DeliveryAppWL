@@ -5,7 +5,7 @@ final class ProductDetailsBottomView: UIView {
     private var animationStartValue: Double = 0
     private var animationEndValue: Double = 0
     private var animationStartTime: CFTimeInterval = 0
-    private let animationDuration: TimeInterval = 0.25
+    private let animationDuration: TimeInterval = 0.5
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,7 +32,7 @@ final class ProductDetailsBottomView: UIView {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 8
-        button.backgroundColor = Colors.primaryColor
+        button.backgroundColor = Colors.primary
         button.setTitleColor(.white, for: .normal)
         return button
     }()
@@ -58,7 +58,7 @@ final class ProductDetailsBottomView: UIView {
     func configureButtonState(status: OptionsStatusType) {
         let isRequiredOptionsSelect = status == .done
         addToCartButton.isEnabled = isRequiredOptionsSelect
-        addToCartButton.backgroundColor = isRequiredOptionsSelect ? Colors.primaryColor : UIColor.lightGray
+        addToCartButton.backgroundColor = isRequiredOptionsSelect ? Colors.primary : Colors.inactiveButton
     }
     
     func configureStepper(with dto: StepperDTO) {

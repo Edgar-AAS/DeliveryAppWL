@@ -76,7 +76,7 @@ class CustomStepper: UIView {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "plus"), for: .normal)
-        button.tintColor = Colors.primaryColor
+        button.tintColor = Colors.primary
         
         let action = UIAction { [weak self] _ in
             self?.delegate?.updateStepper(action: .add)
@@ -90,7 +90,7 @@ class CustomStepper: UIView {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "minus"), for: .normal)
-        button.tintColor = Colors.primaryColor
+        button.tintColor = Colors.primary
         
         let action = UIAction { [weak self] _ in
             self?.delegate?.updateStepper(action: .remove)

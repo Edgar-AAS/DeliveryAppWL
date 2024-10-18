@@ -22,7 +22,7 @@ class EmailVerificationScreen: UIView {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.isDirectionalLockEnabled = true
         scrollView.showsVerticalScrollIndicator = false
-        scrollView.backgroundColor = Colors.backgroundColor
+        scrollView.backgroundColor = Colors.background
         return scrollView
     }()
     
@@ -50,7 +50,7 @@ class EmailVerificationScreen: UIView {
         label.font = Fonts.medium(size: 14).weight
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.textColor = Colors.descriptionTextColor
+        label.textColor = Colors.descriptionText
         return label
     }()
     
@@ -115,7 +115,7 @@ class EmailVerificationScreen: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Didn’t receive code?"
-        label.textColor = Colors.descriptionTextColor
+        label.textColor = Colors.descriptionText
         label.font = Fonts.medium(size: 14).weight
         return label
     }()
@@ -146,7 +146,7 @@ class EmailVerificationScreen: UIView {
     private let clockImage: UIImageView = {
         let image = UIImageView(image: UIImage(systemName: "clock"))
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.tintColor = Colors.descriptionTextColor
+        image.tintColor = Colors.descriptionText
         return image
     }()
     
@@ -154,7 +154,7 @@ class EmailVerificationScreen: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = Fonts.medium(size: 14).weight
-        label.textColor = Colors.descriptionTextColor
+        label.textColor = Colors.descriptionText
         return label
     }()
     
@@ -190,7 +190,7 @@ class EmailVerificationScreen: UIView {
     }
     
     func enableResendButton() {
-        resendCodeButton.setTitleColor(Colors.primaryColor, for: .normal)
+        resendCodeButton.setTitleColor(Colors.primary, for: .normal)
         resendCodeButton.isEnabled = true
     }
     

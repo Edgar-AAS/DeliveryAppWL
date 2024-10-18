@@ -28,7 +28,7 @@ class CustomScrollView: UIScrollView {
             container.widthAnchor.constraint(equalTo: self.widthAnchor)
         ])
         
-        backgroundColor = Colors.backgroundColor
+        backgroundColor = Colors.background
     }
     
     override func addSubview(_ view: UIView) {

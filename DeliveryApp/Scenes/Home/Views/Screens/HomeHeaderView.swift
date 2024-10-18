@@ -16,7 +16,7 @@ final class HeaderView: UIView {
     private lazy var locationLabel = makeLabel(
         text: "ENTREGAR EM",
         font: Fonts.medium(size: 14).weight,
-        color: Colors.primaryColor
+        color: Colors.primary
     )
     
     private let locationButton: UIButton = {
@@ -51,11 +51,13 @@ final class HeaderView: UIView {
         label.textAlignment = .center
         label.layer.cornerRadius = 10
         label.clipsToBounds = true
+        label.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        label.heightAnchor.constraint(equalToConstant: 20).isActive = true
         return label
     }()
     
     private lazy var searchDishesTextField: CustomSearchTextField = {
-        let texField = CustomSearchTextField()
+        let texField = CustomSearchTextField(placeholder: "Search Dishes")
         texField.translatesAutoresizingMaskIntoConstraints = false
         return texField
     }()
@@ -70,7 +72,6 @@ final class HeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
 
 extension HeaderView: CodeView {
     func buildViewHierarchy() {
@@ -108,9 +109,7 @@ extension HeaderView: CodeView {
             searchDishesTextField.bottomAnchor.constraint(equalTo: bottomAnchor),
         
             notificationBadge.topAnchor.constraint(equalTo: notificationButton.topAnchor, constant: -5),
-            notificationBadge.trailingAnchor.constraint(equalTo: notificationButton.trailingAnchor, constant: 4),
-            notificationBadge.widthAnchor.constraint(equalToConstant: 20),
-            notificationBadge.heightAnchor.constraint(equalToConstant: 20),
+            notificationBadge.trailingAnchor.constraint(equalTo: notificationButton.trailingAnchor, constant: 4)
         ])
     }
 }

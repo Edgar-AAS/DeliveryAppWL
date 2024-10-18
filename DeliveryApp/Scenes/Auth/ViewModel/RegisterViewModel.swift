@@ -2,8 +2,8 @@ import Foundation
 
 class RegisterViewModel: RegisterViewModelProtocol{
     private let httpClient: HTTPClientProtocol
-    private let emailValidator: EmailValidator
-    private let phoneValidator: PhoneValidator
+    private let emailValidator: EmailValidaton
+    private let phoneValidator: PhoneNumberValidation
     private var hasAssignedTerms = false
     var loadingHandler: ((Bool) -> ())?
     var onRegisterSuccess: (() -> Void)?
@@ -13,8 +13,8 @@ class RegisterViewModel: RegisterViewModelProtocol{
     
     //MARK: - Initializers
     init(httpClient: HTTPClientProtocol,
-         emailValidator: EmailValidator,
-         phoneValidator: PhoneValidator
+         emailValidator: EmailValidaton,
+         phoneValidator: PhoneNumberValidation
     )
     {
         self.httpClient = httpClient

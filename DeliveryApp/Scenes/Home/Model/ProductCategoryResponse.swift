@@ -1,6 +1,6 @@
 import Foundation
 
-struct ProductCategory: Codable {
+struct ProductCategoryResponse: Codable {
     let id: Int
     let name: String
     let isActive: Bool

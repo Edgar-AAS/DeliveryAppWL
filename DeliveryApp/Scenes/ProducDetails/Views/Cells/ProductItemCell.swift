@@ -47,7 +47,7 @@ class ProductItemCell: UITableViewCell {
         let button = UIButton(type:  .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "plus"), for: .normal)
-        button.tintColor = Colors.primaryColor
+        button.tintColor = Colors.primary
         button.heightAnchor.constraint(equalToConstant: 30).isActive = true
         button.widthAnchor.constraint(equalToConstant: 30).isActive = true
         let action = UIAction { [weak self] _ in

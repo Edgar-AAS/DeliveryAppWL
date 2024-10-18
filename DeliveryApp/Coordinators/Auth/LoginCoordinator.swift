@@ -29,8 +29,4 @@ final class LoginCoordinator: Coordinator {
         addChild(registerCoordinator)
         registerCoordinator.start()
     }
-    
-    func navigateToForgotPassword() {
-        // Aqui pode ser implementado o fluxo de senha esquecida
-    }
 }

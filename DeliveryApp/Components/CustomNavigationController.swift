@@ -9,8 +9,8 @@ final class CustomNavigationController: UINavigationController {
     }
     
     private func setup() {
-        navigationBar.barTintColor = Colors.backgroundColor
-        navigationBar.tintColor = Colors.primaryColor
+        navigationBar.barTintColor = Colors.background
+        navigationBar.tintColor = Colors.primary
         navigationBar.shadowImage = UIImage()
         navigationBar.setBackgroundImage(UIImage(), for: .default)
     }

@@ -18,7 +18,7 @@ final class MainTabBarController: UITabBarController {
         super.viewDidLoad()
         
         homeCoordinator.parentCoordinator = coordinator
-        tabBar.tintColor = Colors.primaryColor
+        tabBar.tintColor = Colors.primary
         tabBar.backgroundColor = .white
         tabBar.unselectedItemTintColor = .gray
 

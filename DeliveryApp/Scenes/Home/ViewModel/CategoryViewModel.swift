@@ -1,9 +1,9 @@
 import Foundation
 
 class CategoryViewData {
-    private let category: ProductCategory
+    private let category: ProductCategoryResponse
     
-    init(category: ProductCategory) {
+    init(category: ProductCategoryResponse) {
         self.category = category
     }
     

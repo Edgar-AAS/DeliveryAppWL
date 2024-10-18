@@ -15,7 +15,7 @@ class ResetPasswordScreen: UIView {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.isDirectionalLockEnabled = true
         scrollView.showsVerticalScrollIndicator = false
-        scrollView.backgroundColor = Colors.backgroundColor
+        scrollView.backgroundColor = Colors.background
         return scrollView
     }()
     
@@ -43,7 +43,7 @@ class ResetPasswordScreen: UIView {
         label.font = Fonts.medium(size: 14).weight
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.textColor = Colors.descriptionTextColor
+        label.textColor = Colors.descriptionText
         return label
     }()
     
@@ -80,7 +80,7 @@ class ResetPasswordScreen: UIView {
         button.setTitle("Verify Account", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = Fonts.bold(size: 14).weight
-        button.backgroundColor = Colors.primaryColor
+        button.backgroundColor = Colors.primary
         button.layer.cornerRadius = 26
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOffset = CGSize(width: 0, height: 2)

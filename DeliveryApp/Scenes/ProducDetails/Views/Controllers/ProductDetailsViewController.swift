@@ -4,6 +4,8 @@ class ProductDetailsViewController: UIViewController {
     private var viewModel: ProductDetailsViewModelProtocol
     private var productDetailsHeader: ProductDetailsHeader?
 
+    var routeToHomeCallBack: (() -> Void)?
+    
     private lazy var customView: ProducDetailsScreen? = {
         return view as? ProducDetailsScreen
     }()
@@ -24,8 +26,12 @@ class ProductDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configure()
+    }
+    
+    private func configure() {
         hideNavigationBar()
-        hideTabBar()        
+        hideTabBar()
         customView?.setupBottomViewDelegate(self)
         viewModel.fetchProductDetails()
     }
@@ -53,6 +59,7 @@ extension ProductDetailsViewController: UITableViewDataSource {
     }
 }
 
+//MARK: - UITableViewDelegate
 extension ProductDetailsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.updateSideItemState(at: indexPath)
@@ -75,6 +82,12 @@ extension ProductDetailsViewController: ProductDetailsBottomViewDelegate {
     }
 }
 
+extension ProductDetailsViewController: ProductDetailsHeaderDelegateProtocol {
+    func backButtonDidTapped(_ header: ProductDetailsHeader) {
+        routeToHomeCallBack?()
+    }
+}
+
 //MARK: - ProductDetailsViewModelDelegate
 extension ProductDetailsViewController: ProductDetailsViewModelDelegate {
     func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateRequiredOptionsStatus status: OptionsStatusType) {
@@ -87,12 +100,6 @@ extension ProductDetailsViewController: ProductDetailsViewModelDelegate {
     
     func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateTotalAmount amount: ValueAnimateInfo) {
         customView?.updateAmount(animateInfo: amount)
-    }
-    
-    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateHeaderWith viewData: HeaderViewData) {
-        let headerView = ProductDetailsHeader(frame: .init(x: .zero, y: .zero, width: view.frame.width, height: 500))
-        customView?.tableView.tableHeaderView = headerView
-        headerView.configure(with: viewData)
     }
     
     func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didExceedOptionLimitInSection section: Int) {
@@ -113,6 +120,12 @@ extension ProductDetailsViewController: ProductDetailsViewModelDelegate {
     
     func productDetailsViewModelDidUpdateUI(_ viewModel: ProductDetailsViewModel) {
         customView?.reloadData()
+    }
+    
+    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateHeaderWith viewData: HeaderViewData) {
+        let headerView = ProductDetailsHeader(frame: .init(x: .zero, y: .zero, width: view.frame.width, height: 500))
+        customView?.tableView.tableHeaderView = headerView
+        headerView.configure(with: viewData, delegate: self)
     }
 }
 

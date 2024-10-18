@@ -1,6 +1,6 @@
 import Foundation
 
-protocol PhoneValidator {
+protocol PhoneNumberValidation {
     func isValid(phoneNumber: String) -> Bool
 }
 

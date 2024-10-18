@@ -23,7 +23,7 @@ class RegistrationSuccessScreen: UIView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = Colors.primaryColor
+        imageView.tintColor = Colors.primary
         imageView.image = UIImage(named: Assets.RegistrationSuccess.image)
         return imageView
     }()
@@ -39,7 +39,7 @@ class RegistrationSuccessScreen: UIView {
     private lazy var descriptionLabel = makeLabel(
         text: Strings.RegistrationSuccess.description,
         font: Fonts.regular(size: 16).weight,
-        color: Colors.descriptionTextColor,
+        color: Colors.descriptionText,
         textAlignment: .center,
         numberOfLines: 0
     )
@@ -47,7 +47,7 @@ class RegistrationSuccessScreen: UIView {
     private lazy var handleButton = RoundedButton(
         title: Strings.RegistrationSuccess.buttonTitle,
         titleColor: .white,
-        backgroundColor: Colors.primaryColor,
+        backgroundColor: Colors.primary,
         icon: nil,
         action: { [weak self] in
             self?.delegate?.handleButtonDidTapped()
@@ -93,6 +93,6 @@ extension RegistrationSuccessScreen: CodeView {
     }
     
     func setupAdditionalConfiguration() {
-        backgroundColor = Colors.backgroundColor
+        backgroundColor = Colors.background
     }
 }

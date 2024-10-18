@@ -12,6 +12,12 @@ final class CustomSearchTextField: UITextField {
         setupSearchBar()
     }
     
+    convenience init(placeholder: String) {
+        self.init(frame: .zero)
+        self.placeholder = placeholder
+        setupSearchBar()
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupSearchBar()
@@ -23,7 +29,6 @@ final class CustomSearchTextField: UITextField {
         backgroundColor = UIColor(white: 0.9, alpha: 1)
         tintColor = .black
         font = UIFont.systemFont(ofSize: 16)
-        placeholder = "Search dishes"
         
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: frame.height))
         leftView = paddingView

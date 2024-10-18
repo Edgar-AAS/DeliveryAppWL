@@ -16,8 +16,8 @@ class FetchProductDetails: FetchProductDetailsUseCase {
                 if let productDetailsReponse = response {
                     completion(.success(productDetailsReponse))
                 }
-            case .failure(let error):
-                print(error)
+            case .failure(let httpError):
+                completion(.failure(httpError))
             }
         }
     }

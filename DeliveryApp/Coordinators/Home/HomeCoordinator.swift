@@ -18,7 +18,15 @@ class HomeCoordinator: Coordinator {
     }
     
     func navigateToProductDetails(productId: Int) {
-        let productDetailsViewController = ProductDetailsBuilder.build(productId: productId)
-        navigationController.present(productDetailsViewController, animated: true)
+        let productsDetailsController = ProductDetailsBuilder.build(productId: productId)
+        
+        productsDetailsController.routeToHomeCallBack  = { [weak self] in
+            self?.navigateToHome()
+        }
+        navigationController.present(productsDetailsController, animated: true)
+    }
+    
+    func navigateToHome() {
+        navigationController.dismiss(animated: true)
     }
 }

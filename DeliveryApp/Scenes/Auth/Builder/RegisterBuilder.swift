@@ -2,8 +2,8 @@ import Foundation
 
 class RegisterBuilder {
     static func build() -> RegisterViewController {
-        let emailValidator: EmailValidator = EmailValidatorAdapter()
-        let phoneNumberValidator: PhoneValidator = PhoneNumberValidator()
+        let emailValidator: EmailValidaton = EmailValidator()
+        let phoneNumberValidator: PhoneNumberValidation = PhoneNumberValidator()
         let httpClient: HTTPClientProtocol = HTTPClient()
        
         let viewModel = RegisterViewModel(

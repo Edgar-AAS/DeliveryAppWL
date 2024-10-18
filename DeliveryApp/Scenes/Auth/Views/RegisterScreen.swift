@@ -41,7 +41,7 @@ final class RegisterScreen: UIView {
     private lazy var createAccountLabel = makeLabel(
         text: "Create an account to start looking for the food you like",
         font: Fonts.medium(size: 14).weight,
-        color: Colors.descriptionTextColor,
+        color: Colors.descriptionText,
         textAlignment: .left,
         numberOfLines: 0
     )
@@ -126,7 +126,7 @@ final class RegisterScreen: UIView {
     
     private lazy var termsOfServiceButton = makeTitleButton(
         title: "Terms of Service",
-        titleColor: Colors.primaryColor,
+        titleColor: Colors.primary,
         font:  Fonts.medium(size: 14).weight,
         action: UIAction { [weak self] _ in
             print("show Terms of Service")
@@ -135,7 +135,7 @@ final class RegisterScreen: UIView {
     
     private lazy var privacyPolicyButton = makeTitleButton(
         title: "Privacy Policy",
-        titleColor: Colors.primaryColor,
+        titleColor: Colors.primary,
         font: Fonts.medium(size: 14).weight,
         action: UIAction { [weak self] _ in
             print("show Privacy Policy")
@@ -171,7 +171,7 @@ final class RegisterScreen: UIView {
     private lazy var registerButton = RoundedButton(
         title: "Register",
         titleColor: .white,
-        backgroundColor: Colors.primaryColor,
+        backgroundColor: Colors.primary,
         icon: nil,
         action: { [weak self] in
             self?.delegate?.registerButtonDidTapped()
@@ -186,9 +186,9 @@ final class RegisterScreen: UIView {
     )
     
     private lazy var separatorStackView = makeStackView(
-        with: [makeSeparatorView(color: Colors.descriptionTextColor),
+        with: [makeSeparatorView(color: Colors.descriptionText),
                alternativeLoginLabel,
-               makeSeparatorView(color: Colors.descriptionTextColor)],
+               makeSeparatorView(color: Colors.descriptionText)],
         aligment: .center,
         distribution: .fillEqually,
         spacing: 16,
@@ -198,7 +198,7 @@ final class RegisterScreen: UIView {
     private lazy var loginWithGoogleButton = RoundedButton(
         title: "Login with Google",
         titleColor: .black,
-        backgroundColor: Colors.backgroundColor,
+        backgroundColor: Colors.background,
         icon: UIImage(named: "google-icon"),
         action: { [weak self] in
 
@@ -214,7 +214,7 @@ final class RegisterScreen: UIView {
     
     private lazy var goToLoginButton = makeTitleButton(
         title: "Login here",
-        titleColor: Colors.primaryColor,
+        titleColor: Colors.primary,
         font: Fonts.semiBold(size: 14).weight,
         action: UIAction { [weak self] _ in
             self?.delegate?.goToLoginButtonDidTapped()

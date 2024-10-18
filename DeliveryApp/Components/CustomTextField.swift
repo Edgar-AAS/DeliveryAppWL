@@ -53,7 +53,7 @@ final class CustomTextField: UITextField {
         textColor = .black
         layer.cornerRadius = 8
         layer.borderWidth = 1
-        layer.borderColor = Colors.grayBorderColor.cgColor
+        layer.borderColor = Colors.grayBorder.cgColor
         placeholder = exampleText
         addSubview(feedbackLabel)
         

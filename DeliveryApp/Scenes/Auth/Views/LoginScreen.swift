@@ -34,7 +34,7 @@ final class LoginScreen: UIView {
     private lazy var signInLabel = makeLabel(
         text: "Login to your account.",
         font: Fonts.medium(size: 16).weight,
-        color: Colors.descriptionTextColor,
+        color: Colors.descriptionText,
         textAlignment: .center
     )
     
@@ -70,7 +70,7 @@ final class LoginScreen: UIView {
     
     private lazy var forgotPasswordButton = makeTitleButton(
         title: "Forgot password?",
-        titleColor: Colors.primaryColor,
+        titleColor: Colors.primary,
         font: Fonts.medium(size: 14).weight,
         action: UIAction { [weak self] _ in
             self?.delegate?.forgotPasswordButtonDidTapped()
@@ -80,7 +80,7 @@ final class LoginScreen: UIView {
     private lazy var loginButton = RoundedButton(
         title: "Login",
         titleColor: .white,
-        backgroundColor: Colors.primaryColor,
+        backgroundColor: Colors.primary,
         icon: nil,
         action: { [weak self] in
             self?.delegate?.signInButtonDidTapped()
@@ -96,9 +96,9 @@ final class LoginScreen: UIView {
     
     private lazy var separatorStackView = makeStackView(
         with: [
-            makeSeparatorView(color: Colors.descriptionTextColor),
+            makeSeparatorView(color: Colors.descriptionText),
             signInOptionsLabel,
-            makeSeparatorView(color: Colors.descriptionTextColor)],
+            makeSeparatorView(color: Colors.descriptionText)],
         aligment: .center,
         distribution: .fillEqually,
         spacing: 16,
@@ -108,7 +108,7 @@ final class LoginScreen: UIView {
     private lazy var loginWithGoogleButton = RoundedButton(
         title: "Login with Google",
         titleColor: .black,
-        backgroundColor: Colors.backgroundColor,
+        backgroundColor: Colors.background,
         icon: UIImage(named: "google-icon"),
         action: { [weak self] in
             self?.delegate?.loginWithGoogleButtonDidTapped()
@@ -123,7 +123,7 @@ final class LoginScreen: UIView {
     
     private lazy var registerButton = makeTitleButton(
         title: "Register",
-        titleColor: Colors.primaryColor,
+        titleColor: Colors.primary,
         font: Fonts.semiBold(size: 14).weight,
         action: UIAction { [weak self] _ in
             self?.delegate?.registerButtonDidTapped()

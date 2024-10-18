@@ -26,6 +26,10 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configure()
+    }
+    
+    private func configure() {
         hideNavigationBar()
         customView?.setupTableViewProtocols(delegate: self, dataSource: self)
         

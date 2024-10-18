@@ -18,12 +18,9 @@ class RegisterCoordinator: Coordinator {
     }
     
     func navigateToLogin() {
-        // Verifica se a tela de login já está no navigation stack
         if let loginViewController = navigationController.viewControllers.first(where: { $0 is LoginViewController }) {
-            // Se sim, retorna para a tela de login
             navigationController.popToViewController(loginViewController, animated: true)
         } else {
-            // Caso contrário, cria um novo LoginCoordinator e inicia o fluxo de login
             let loginCoordinator = LoginCoordinator(navigationController: navigationController)
             loginCoordinator.parentCoordinator = parentCoordinator?.parentCoordinator
             parentCoordinator?.addChild(loginCoordinator)
@@ -31,9 +28,5 @@ class RegisterCoordinator: Coordinator {
         }
         
         parentCoordinator?.childDidFinish(self)
-    }
-    
-    func navigateToSuccessScreen() {
-        // Implemente a navegação para a tela de sucesso
     }
 }

@@ -29,15 +29,23 @@ extension ProductDetailsViewModel {
             
             switch result {
             case .success(let response):
-                self.configureActiveSections(from: response)
-                self.updateHeaderView(with: response)
-                self.delegate?.productDetailsViewModelDidUpdateUI(self)
-                delegate?.productDetailsViewModel(self, didChangeBottomViewStepperValue: .init(currentValue: footerViewStepperValue, minValue: footerViewStepperMinValue, isEnabled: true, isAnimated: false))
-                self.updateOrderPrice()
+                configure(with: response)
             case .failure(let error):
                 print(error)
             }
         }
+    }
+    
+    private func configure(with response: ProductDetailsResponse) {
+        configureActiveSections(from: response)
+        updateHeaderView(with: response)
+        delegate?.productDetailsViewModelDidUpdateUI(self)
+        setupInitialStepperValue()
+        updateOrderPrice()
+    }
+    
+    private func setupInitialStepperValue() {
+        delegate?.productDetailsViewModel(self, didChangeBottomViewStepperValue: .init(currentValue: footerViewStepperValue, minValue: footerViewStepperMinValue, isEnabled: true, isAnimated: false))
     }
     
     private func configureActiveSections(from response: ProductDetailsResponse) {
@@ -126,7 +134,6 @@ extension ProductDetailsViewModel {
                 quantity: item.quantity,
                 isSelected: isSelected
             )
-            
             guard let sideItem = sideItems[indexPath] else { return nil }
             return .sideItem(SideItemCellViewData(sideItem: sideItem))
         }
@@ -137,20 +144,21 @@ extension ProductDetailsViewModel {
     func getNumberOfSections() -> Int {
         return activeSections?.count ?? .zero
     }
-    
-    func getSectionName(_ section: Int) -> String {
-        return activeSections?[section].name ?? String()
-    }
-    
+        
     func getNumberOfItemsBySection(_ section: Int) -> Int {
         return activeSections?[section].items.count ?? .zero
     }
     
     func getSectionViewData(to section: Int) -> SectionHeaderViewData? {
-        guard let sectionData = activeSections?[section] else {
+        guard let section = activeSections?[section] else {
             return nil
         }
-        return SectionHeaderViewData(section: sectionData)
+        
+        return SectionHeaderViewData(
+            name: section.name,
+            limitOptions: section.limitOptions,
+            isRequired: section.isRequired
+        )
     }
 }
 
@@ -168,9 +176,9 @@ extension ProductDetailsViewModel {
     private func switchSideItemState(indexPath: IndexPath) {
         let isSelected = sideItems[indexPath]?.isSelected ?? false
         
-        if let lastIndex = lastSelectedIndexPath.first(where: { $0.key.section == indexPath.section }) {
+        if let lastIndex = lastSelectedIndexPath.first(where: { $0.key.section == indexPath.section } ) {
             sideItems[lastIndex.key]?.isSelected = false
-            self.lastSelectedIndexPath.removeValue(forKey: lastIndex.key)
+            lastSelectedIndexPath.removeValue(forKey: lastIndex.key)
         }
         
         sideItems[indexPath]?.isSelected = !isSelected

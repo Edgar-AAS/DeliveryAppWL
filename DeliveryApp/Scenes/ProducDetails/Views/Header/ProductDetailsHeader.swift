@@ -1,5 +1,9 @@
 import UIKit
 
+protocol ProductDetailsHeaderDelegateProtocol: AnyObject {
+    func backButtonDidTapped(_ header: ProductDetailsHeader)
+}
+
 final class ProductDetailsHeader: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -10,11 +14,12 @@ final class ProductDetailsHeader: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private weak var delegate: ProductDetailsHeaderDelegateProtocol?
+    
     private lazy var productImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
-        imageView.backgroundColor = .red
         imageView.isUserInteractionEnabled = true
         imageView.contentMode = .scaleAspectFill
         return imageView
@@ -29,37 +34,35 @@ final class ProductDetailsHeader: UIView {
     }()
     
     private lazy var backButton: CircularButton = {
-        let button = CircularButton(iconImage: .init(systemName: "arrow.left"), size: 36)
-        button.layer.borderColor = UIColor.white.cgColor
+        let button = CircularButton(iconImage: .init(named: "arrow_drop"), size: 44)
         button.tintColor = .white
-        button.layer.borderWidth = 1
-        
+        button.backgroundColor = UIColor(hexString: "0B0C0E").withAlphaComponent(0.5)
         let action = UIAction { [weak self] _ in
-            //            self?.delegate?.backButtonDidTapped()
+            guard let self else { return }
+            self.delegate?.backButtonDidTapped(self)
         }
-        
         button.addAction(action, for: .touchUpInside)
         return button
     }()
     
     private lazy var favoriteButton: CircularButton = {
-        let button = CircularButton(iconImage: .init(systemName: "heart"), size: 36)
-        button.layer.borderColor = UIColor.white.cgColor
+        let button = CircularButton(iconImage: .init(systemName: "heart"), size: 44)
+        button.backgroundColor = UIColor(hexString: "0B0C0E").withAlphaComponent(0.5)
         button.tintColor = .white
-        
         let action = UIAction { [weak self] _ in
             //            self?.delegate?.favoriteButtonDidTapped()
         }
         button.addAction(action, for: .touchUpInside)
-        button.layer.borderWidth = 1
         return button
     }()
     
-    private lazy var topButtonsStack = makeStackView(with: [backButton, favoriteButton],
-                                                     aligment: .fill,
-                                                     distribution: .equalSpacing,
-                                                     spacing: 8,
-                                                     axis: .horizontal)
+    private lazy var topButtonsStack: UIStackView = {
+        return makeStackView(with: [backButton, favoriteButton],
+                             aligment: .fill,
+                             distribution: .equalSpacing,
+                             spacing: 8,
+                             axis: .horizontal)
+    }()
     
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
@@ -75,8 +78,8 @@ final class ProductDetailsHeader: UIView {
     private lazy var basePriceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        label.setContentHuggingPriority(.required, for: .vertical)
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
         return label
     }()
     
@@ -142,7 +145,7 @@ final class ProductDetailsHeader: UIView {
         label.textColor = .darkGray
         return label
     }()
-        
+    
     private lazy var deliveryFeeStack: UIStackView = {
         return makeStackView(with: [deliveryFeeIcon, deliveryFeeLabel],
                              aligment: .center,
@@ -150,7 +153,7 @@ final class ProductDetailsHeader: UIView {
                              spacing: 8,
                              axis: .horizontal)
     }()
-
+    
     private lazy var estimatedTimeStack: UIStackView = {
         return makeStackView(with: [estimatedTimeIcon, deliveryTimeLabel],
                              aligment: .center,
@@ -158,7 +161,7 @@ final class ProductDetailsHeader: UIView {
                              spacing: 8,
                              axis: .horizontal)
     }()
-
+    
     private lazy var ratingStack: UIStackView = {
         return makeStackView(with: [ratingIcon, ratingLabel],
                              aligment: .center,
@@ -166,13 +169,14 @@ final class ProductDetailsHeader: UIView {
                              spacing: 8,
                              axis: .horizontal)
     }()
-
-    private lazy var productOrderInformationsStack = makeStackView(
-        with: [deliveryFeeStack, estimatedTimeStack, ratingStack],
-        aligment: .center,
-        distribution: .equalSpacing,
-        axis: .horizontal
-    )
+    
+    private lazy var productOrderInformationsStack: UIStackView = {
+        return makeStackView(with: [deliveryFeeStack, estimatedTimeStack, ratingStack],
+                             aligment: .center,
+                             distribution: .equalSpacing,
+                             axis: .horizontal)
+    }()
+    
     
     private func setupBasePriceTextLabel(prefix: String, price: String) {
         let attributedText = NSMutableAttributedString(
@@ -195,7 +199,9 @@ final class ProductDetailsHeader: UIView {
         basePriceLabel.attributedText = attributedText
     }
     
-    func configure(with viewData: HeaderViewData) {
+    func configure(with viewData: HeaderViewData, delegate: ProductDetailsHeaderDelegateProtocol) {
+        self.delegate = delegate
+        
         productNameLabel.text = viewData.getName()
         descriptionLabel.text = viewData.getDescription()
         setupBasePriceTextLabel(prefix: viewData.getPrefixBasePrice(), price: viewData.getBasePrice())
@@ -209,6 +215,7 @@ final class ProductDetailsHeader: UIView {
             productImageView.image = UIImage(systemName: "photo")
             return
         }
+        
         productImageView.sd_setImage(with: imageUrl)
     }
 }
@@ -239,18 +246,19 @@ extension ProductDetailsHeader: CodeView {
             productNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             productNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             
-            descriptionLabel.topAnchor.constraint(equalTo: productNameLabel.bottomAnchor, constant: 16),
+            descriptionLabel.topAnchor.constraint(equalTo: productNameLabel.bottomAnchor, constant: 8),
             descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             
-            basePriceLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
+            basePriceLabel.topAnchor.constraint(greaterThanOrEqualTo: descriptionLabel.bottomAnchor, constant: 8),
             basePriceLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             basePriceLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             
-            productBackgroundView.topAnchor.constraint(equalTo: basePriceLabel.bottomAnchor, constant: 16),
+            productBackgroundView.topAnchor.constraint(equalTo: basePriceLabel.bottomAnchor, constant: 8),
             productBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             productBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
-            productBackgroundView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
+            productBackgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            productBackgroundView.heightAnchor.constraint(equalToConstant: 40),
             
             productOrderInformationsStack.topAnchor.constraint(equalTo: productBackgroundView.topAnchor, constant: 8),
             productOrderInformationsStack.leadingAnchor.constraint(equalTo: productBackgroundView.leadingAnchor, constant: 16),

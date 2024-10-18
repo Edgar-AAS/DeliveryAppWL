@@ -6,7 +6,7 @@ protocol ProductCategorieCellDelegate: AnyObject {
 
 class ProductCategorieCell: UITableViewCell {
     static let reuseIdentifier = String(describing: ProductCategorieCell.self)
-    private var categories: [ProductCategory] = []
+    private var categories: [ProductCategoryResponse] = []
     private var selectedIndex: IndexPath?
     
     weak var delegate: ProductCategorieCellDelegate?
@@ -36,7 +36,7 @@ class ProductCategorieCell: UITableViewCell {
         return collectionView
     }()
     
-    func setup(categories: [ProductCategory]) {
+    func setup(categories: [ProductCategoryResponse]) {
         self.categories = categories
         categoryCollectionView.reloadData()
     }

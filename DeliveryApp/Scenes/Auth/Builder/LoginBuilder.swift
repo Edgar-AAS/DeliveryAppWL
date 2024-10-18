@@ -2,7 +2,7 @@ import Foundation
 
 class LoginBuilder {
     static func build() -> LoginViewController {
-        let emailValidator: EmailValidator = EmailValidatorAdapter()
+        let emailValidator: EmailValidaton = EmailValidator()
         let httpClient: HTTPClientProtocol = HTTPClient()
         
         let viewModel = LoginViewModel(

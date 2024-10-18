@@ -16,18 +16,18 @@ class CategoryCell: UICollectionViewCell {
     
     private lazy var categoryNameLabel = makeLabel(
         font: Fonts.semiBold(size: 12).weight,
-        color: Colors.descriptionTextColor,
+        color: Colors.descriptionText,
         textAlignment: .center
     )
         
     func selectedStyle() {
-        backgroundColor = Colors.primaryColor
+        backgroundColor = Colors.primary
         categoryNameLabel.textColor = .white
     }
     
     func deselectedStyle() {
         backgroundColor = .white
-        categoryNameLabel.textColor = Colors.descriptionTextColor
+        categoryNameLabel.textColor = Colors.descriptionText
     }
     
     func setup(viewData: CategoryViewData) {

@@ -1,9 +1,6 @@
 import UIKit
 
 class ProducDetailsScreen: UIView {
-    private weak var delegate: UITableViewDelegate?
-    private weak var dataSource: UITableViewDataSource?
-    
     convenience init(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
         self.init(frame: .zero)
         tableView.delegate = delegate
