@@ -329,7 +329,7 @@ extension ProductDetailsViewModel {
         )
     }
     
-    private func headerViewDataMapper(data: ProductDetailsResponse) -> HeaderViewData {
+    private func headerViewDataMapper(data: ProductDetailsResponse) -> ProductHeaderViewData {
         .init(
             name: data.name,
             description: data.description,

@@ -1,10 +1,5 @@
 import UIKit
 
-protocol ProductGridCellDelegate: AnyObject {
-    func productCardDidTapped(productSelected: Product)
-    func fetchProductsIfNeeded(categoryId: Int)
-}
-
 class ProductGridCell: UITableViewCell {
     static let reuseIdentifier = String(describing: ProductGridCell.self)
     private var products: [Product] = []
@@ -66,7 +61,7 @@ extension ProductGridCell: CodeView {
 extension ProductGridCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedProduct = products[indexPath.item]
-        delegate?.productCardDidTapped(productSelected: selectedProduct)
+        delegate?.productGridCell(self, didTapProductWithId: selectedProduct.id)
     }
 }
 
@@ -78,7 +73,8 @@ extension ProductGridCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath) as? ProductCell
         let product = products[indexPath.item]
-        cell?.setup(viewData: ProductCellViewData(product: product))
+        let viewData = productCellViewDataMapper(from: product)
+        cell?.configure(with: viewData)
         return cell ?? UICollectionViewCell()
     }
     
@@ -93,7 +89,7 @@ extension ProductGridCell: UICollectionViewDataSource {
             debounceTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { [weak self] _ in
                 guard let self = self else { return }
                 if let categoryId = self.currentCategoryId {
-                    self.delegate?.fetchProductsIfNeeded(categoryId: categoryId)
+                    self.delegate?.productGridCell(self, shouldFetchMoreProductsForCategory: categoryId)
                 }
             }
         }
@@ -103,5 +99,17 @@ extension ProductGridCell: UICollectionViewDataSource {
 extension ProductGridCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: collectionView.frame.size.width / 2.4, height: 240)
+    }
+}
+
+extension ProductGridCell {
+    private func productCellViewDataMapper(from product: Product) -> ProductCellViewData {
+        return ProductCellViewData(
+            name: product.name,
+            price: product.price,
+            rating: product.rating,
+            isFavorite: product.isFavorite,
+            images: product.images
+        )
     }
 }

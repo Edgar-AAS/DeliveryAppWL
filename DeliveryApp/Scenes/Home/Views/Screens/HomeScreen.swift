@@ -19,7 +19,7 @@ class HomeScreen: UIView {
         tableView.isScrollEnabled = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(SeeAllCategoriesCell.self, forCellReuseIdentifier: SeeAllCategoriesCell.reuseIdentifier)
-        tableView.register(ProductCategorieCell.self, forCellReuseIdentifier: ProductCategorieCell.reuseIdentifier)
+        tableView.register(ProductCategoryCell.self, forCellReuseIdentifier: ProductCategoryCell.reuseIdentifier)
         tableView.register(ProductGridCell.self, forCellReuseIdentifier: ProductGridCell.reuseIdentifier)
         return tableView
     }()

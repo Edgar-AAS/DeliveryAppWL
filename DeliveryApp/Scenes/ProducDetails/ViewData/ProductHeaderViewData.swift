@@ -1,6 +1,6 @@
 import Foundation
 
-struct HeaderViewData {
+struct ProductHeaderViewData {
     private let name: String
     private let description: String
     private let basePrice: Double
@@ -17,31 +17,31 @@ struct HeaderViewData {
         self.images = images
     }
     
-    func getName() -> String {
+    var displayName: String {
         return name
     }
     
-    func getBasePrice() -> String {
+    var formattedBasePrice: String {
         return basePrice.format(with: .currency)
     }
     
-    func getDeliveryFee() -> String {
+    var displayDeliveryFee: String {
         return deliveryFee?.format(with: .currency) ?? "Free Delivery"
     }
     
-    func getRating() -> String {
-        return String(rating)
+    var stringRating: String {
+        return "\(rating)"
     }
     
-    func getDescription() -> String {
+    var displayDescription: String {
         return description
     }
     
-    func getImages() -> [ProductImage] {
-        return images
+    func sortedImages() -> [ProductImage] {
+        return images.sorted(by: { $0.id < $1.id })
     }
     
-    func getPrefixBasePrice() -> String {
+    var prefixBasePrice: String {
         return "A partir de "
     }
 }

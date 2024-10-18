@@ -199,17 +199,17 @@ final class ProductDetailsHeader: UIView {
         basePriceLabel.attributedText = attributedText
     }
     
-    func configure(with viewData: HeaderViewData, delegate: ProductDetailsHeaderDelegateProtocol) {
+    func configure(with viewData: ProductHeaderViewData, delegate: ProductDetailsHeaderDelegateProtocol) {
         self.delegate = delegate
         
-        productNameLabel.text = viewData.getName()
-        descriptionLabel.text = viewData.getDescription()
-        setupBasePriceTextLabel(prefix: viewData.getPrefixBasePrice(), price: viewData.getBasePrice())
-        deliveryFeeLabel.text = viewData.getDeliveryFee()
-        ratingLabel.text = viewData.getRating()
+        productNameLabel.text = viewData.displayName
+        descriptionLabel.text = viewData.displayDescription
+        setupBasePriceTextLabel(prefix: viewData.prefixBasePrice, price: viewData.formattedBasePrice)
+        deliveryFeeLabel.text = viewData.displayDeliveryFee
+        ratingLabel.text = viewData.stringRating
         
         guard
-            let imageUrlString = viewData.getImages().first?.url,
+            let imageUrlString = viewData.sortedImages().first?.url,
             let imageUrl = URL(string: imageUrlString)
         else {
             productImageView.image = UIImage(systemName: "photo")

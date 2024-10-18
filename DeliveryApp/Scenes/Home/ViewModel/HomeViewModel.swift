@@ -19,8 +19,14 @@ class HomeViewModel: HomeViewModelProtocol {
         return 3
     }
     
-    func getCategories() -> [ProductCategoryResponse] {
-        return categoriesDataSource
+    func getCategories() -> [CategoryCellViewData] {
+        return categoriesDataSource.map { category in
+            return CategoryCellViewData(
+                id: category.id,
+                name: category.name,
+                image: category.image
+            )
+        }
     }
     
     func loadInitialData() {

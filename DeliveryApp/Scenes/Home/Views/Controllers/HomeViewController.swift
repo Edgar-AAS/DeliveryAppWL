@@ -91,7 +91,7 @@ extension HomeViewController {
     }
     
     func makeProductCategorieCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ProductCategorieCell.reuseIdentifier, for: indexPath) as? ProductCategorieCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: ProductCategoryCell.reuseIdentifier, for: indexPath) as? ProductCategoryCell
         cell?.delegate = self
         cell?.setup(categories: viewModel.getCategories())
         return cell ?? UITableViewCell()
@@ -106,18 +106,18 @@ extension HomeViewController {
 }
 
 // MARK: - Delegate Actions
-extension HomeViewController: ProductCategorieCellDelegate {
-    func productCategoryDidTapped(categoryId: Int) {
+extension HomeViewController: ProductCategoryCellDelegate {
+    func productCategoryCell(_ cell: ProductCategoryCell, didTapCategoryWithId categoryId: Int) {
         viewModel.switchCategory(to: categoryId)
     }
 }
 
 extension HomeViewController: ProductGridCellDelegate {
-    func productCardDidTapped(productSelected: Product) {
-        productDetailsCallback?(productSelected.id)
+    func productGridCell(_ cell: ProductGridCell, didTapProductWithId productId: Int) {
+        productDetailsCallback?(productId)
     }
     
-    func fetchProductsIfNeeded(categoryId: Int) {
+    func productGridCell(_ cell: ProductGridCell, shouldFetchMoreProductsForCategory categoryId: Int) {
         viewModel.loadMoreProducts(for: categoryId)
     }
 }

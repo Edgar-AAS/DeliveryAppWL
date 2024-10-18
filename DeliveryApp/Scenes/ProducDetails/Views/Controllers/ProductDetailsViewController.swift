@@ -122,7 +122,7 @@ extension ProductDetailsViewController: ProductDetailsViewModelDelegate {
         customView?.reloadData()
     }
     
-    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateHeaderWith viewData: HeaderViewData) {
+    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateHeaderWith viewData: ProductHeaderViewData) {
         let headerView = ProductDetailsHeader(frame: .init(x: .zero, y: .zero, width: view.frame.width, height: 500))
         customView?.tableView.tableHeaderView = headerView
         headerView.configure(with: viewData, delegate: self)

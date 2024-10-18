@@ -1,15 +1,11 @@
 import UIKit
 
-protocol ProductCategorieCellDelegate: AnyObject {
-    func productCategoryDidTapped(categoryId: Int)
-}
-
-class ProductCategorieCell: UITableViewCell {
-    static let reuseIdentifier = String(describing: ProductCategorieCell.self)
-    private var categories: [ProductCategoryResponse] = []
+class ProductCategoryCell: UITableViewCell {
+    static let reuseIdentifier = String(describing: ProductCategoryCell.self)
+    private var categories: [CategoryCellViewData] = []
     private var selectedIndex: IndexPath?
     
-    weak var delegate: ProductCategorieCellDelegate?
+    weak var delegate: ProductCategoryCellDelegate?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -25,6 +21,7 @@ class ProductCategorieCell: UITableViewCell {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = .init(width: 65, height: 70)
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.contentInset = .init(top: 0, left: 24, bottom: 0, right: 24)
@@ -36,19 +33,19 @@ class ProductCategorieCell: UITableViewCell {
         return collectionView
     }()
     
-    func setup(categories: [ProductCategoryResponse]) {
+    func setup(categories: [CategoryCellViewData]) {
         self.categories = categories
         categoryCollectionView.reloadData()
     }
 }
 
-extension ProductCategorieCell: UICollectionViewDelegateFlowLayout {
+extension ProductCategoryCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 30
     }
 }
 
-extension ProductCategorieCell: UICollectionViewDataSource {
+extension ProductCategoryCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return categories.count
     }
@@ -59,12 +56,14 @@ extension ProductCategorieCell: UICollectionViewDataSource {
         if indexPath == IndexPath(item: .zero, section: .zero) {
             cell?.selectedStyle()
         }
-        cell?.setup(viewData: CategoryViewData(category: categories[indexPath.item]))
+        
+        let viewData = categories[indexPath.item]
+        cell?.configure(with: viewData)
         return cell ?? UICollectionViewCell()
     }
 }
 
-extension ProductCategorieCell: UICollectionViewDelegate {
+extension ProductCategoryCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? CategoryCell {
             cell.selectedStyle()
@@ -76,12 +75,14 @@ extension ProductCategorieCell: UICollectionViewDelegate {
             }
             
             selectedIndex = indexPath
-            delegate?.productCategoryDidTapped(categoryId: categories[indexPath.item].id)
+            
+            let categoryId = categories[indexPath.item].id
+            delegate?.productCategoryCell(self, didTapCategoryWithId: categoryId)
         }
     }
 }
 
-extension ProductCategorieCell: CodeView {
+extension ProductCategoryCell: CodeView {
     func buildViewHierarchy() {
         contentView.addSubview(categoryCollectionView)
     }

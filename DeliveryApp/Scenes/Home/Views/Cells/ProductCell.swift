@@ -66,15 +66,15 @@ class ProductCell: UICollectionViewCell {
         color: .black
     )
     
-    func setup(viewData: ProductCellViewData) {
-        productNameLabel.text = viewData.name
-        productPriceLabel.text = viewData.price
-        productRateLabel.text = viewData.rating
+    func configure(with viewData: ProductCellViewData) {
+        productNameLabel.text = viewData.displayName
+        productPriceLabel.text = viewData.formattedPrice
+        productRateLabel.text = viewData.stringRating
         favoriteButton.imageView?.image = viewData
-            .isFavorite ? UIImage(systemName: "heart.fill")
+            .favoriteStatus ? UIImage(systemName: "heart.fill")
                         : UIImage(systemName: "heart")
         
-        if let image = viewData.getUrlImages()?.first {
+        if let image = viewData.sortedImages()?.first {
             productImageView.sd_setImage(with: URL(string: image.url))
         } else {
             productImageView.image = UIImage(systemName: "photo")
