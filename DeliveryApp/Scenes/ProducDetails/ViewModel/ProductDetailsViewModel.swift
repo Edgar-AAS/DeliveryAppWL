@@ -8,7 +8,6 @@ final class ProductDetailsViewModel: ProductDetailsViewModelProtocol {
     private var sideItems: [IndexPath: SideItem] = [:]
     
     private var fromValue: Double = .zero
-    
     private var footerViewStepperValue = 1
     private var footerViewStepperMinValue = 1
     
@@ -67,7 +66,7 @@ extension ProductDetailsViewModel {
             }
         }
         
-        let stepperDto = StepperDTO(
+        let stepperDto = StepperModel(
             currentValue: footerViewStepperValue,
             minValue: footerViewStepperMinValue,
             isEnabled: true,
@@ -83,10 +82,9 @@ extension ProductDetailsViewModel {
 extension ProductDetailsViewModel {
     private func updateOrderPrice() {
         let total = getOrderPrice() * Double(footerViewStepperValue)
-        
         let valueInfo = ValueAnimateInfo(fromValue: fromValue, toValue: total)
-        fromValue = total
         
+        fromValue = total
         delegate?.productDetailsViewModel(self, didUpdateTotalAmount: valueInfo)
         updateRequiredOptionsStatus()
     }
@@ -130,7 +128,7 @@ extension ProductDetailsViewModel {
                 id: item.id,
                 name: item.name,
                 price: item.price,
-                imageUrl: item.imageUrl,
+                imageUrl: item.imageUrl ?? "",
                 quantity: item.quantity,
                 isSelected: isSelected
             )
@@ -174,9 +172,11 @@ extension ProductDetailsViewModel {
     }
     
     private func switchSideItemState(indexPath: IndexPath) {
+        delegate?.productDetailsViewModel(self, shouldEnableUserInteraction: false)
+        
         let isSelected = sideItems[indexPath]?.isSelected ?? false
         
-        if let lastIndex = lastSelectedIndexPath.first(where: { $0.key.section == indexPath.section } ) {
+        if let lastIndex = lastSelectedIndexPath.first(where: { $0.key.section == indexPath.section }) {
             sideItems[lastIndex.key]?.isSelected = false
             lastSelectedIndexPath.removeValue(forKey: lastIndex.key)
         }
@@ -189,17 +189,22 @@ extension ProductDetailsViewModel {
         
         delegate?.productDetailsViewModel(self, didSelectItemAt: indexPath.section)
         updateOrderPrice()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+            guard let self else { return }
+            delegate?.productDetailsViewModel(self, shouldEnableUserInteraction: true)
+        }
     }
 }
 
 //MARK: - ItemStepper Handle
 extension ProductDetailsViewModel {
-    func getStepperDto(in indexPath: IndexPath) -> StepperDTO? {
+    func getStepperDto(in indexPath: IndexPath) -> StepperModel? {
         guard let section = activeSections?[indexPath.section] else { return nil }
         
         let isEnabled = isSectionOptionsEnabled[indexPath.section] ?? true
         let item = section.items[indexPath.row]
-        let dto: StepperDTO = .init(currentValue: item.quantity, minValue: .zero, isEnabled: isEnabled, isAnimated: false)
+        let dto: StepperModel = .init(currentValue: item.quantity, minValue: .zero, isEnabled: isEnabled, isAnimated: false)
         return dto
     }
     
@@ -210,6 +215,7 @@ extension ProductDetailsViewModel {
         case .remove:
             decrementStepperValue(at: indexPath)
         }
+        
         updateOrderPrice()
     }
     
@@ -228,8 +234,9 @@ extension ProductDetailsViewModel {
                 delegate?.productDetailsViewModel(self, didExceedOptionLimitInSection: indexPath.section)
                 return
             }
-            delegate?.productDetailsViewModel(self, didChangeStepperValueAt: indexPath)
         }
+        
+        delegate?.productDetailsViewModel(self, didChangeStepperValueAt: indexPath)
     }
     
     private func decrementStepperValue(at indexPath: IndexPath) {
@@ -250,7 +257,6 @@ extension ProductDetailsViewModel {
                 delegate?.productDetailsViewModel(self, didEnableOptionsInSection: indexPath.section)
                 return
             }
-            
             delegate?.productDetailsViewModel(self, didChangeStepperValueAt: indexPath)
         }
     }
@@ -272,7 +278,15 @@ extension ProductDetailsViewModel {
 //MARK: - HeaderView DataSource
 extension ProductDetailsViewModel {
     private func updateHeaderView(with data: ProductDetailsResponse) {
-        delegate?.productDetailsViewModel(self, didUpdateHeaderWith: headerViewDataMapper(data: data))
+            let viewData = ProductHeaderViewData(
+                name: data.name,
+                description: data.description,
+                basePrice: data.price,
+                deliveryFee: data.deliveryFee,
+                rating: data.rating,
+                images: data.images
+            )
+            delegate?.productDetailsViewModel(self, didUpdateHeaderWith: viewData)
     }
 }
 
@@ -324,19 +338,8 @@ extension ProductDetailsViewModel {
         .init(
             name: item.name,
             price: item.price,
-            image: item.imageUrl,
+            image: item.imageUrl ?? "",
             isRemovable: isRemovable
-        )
-    }
-    
-    private func headerViewDataMapper(data: ProductDetailsResponse) -> ProductHeaderViewData {
-        .init(
-            name: data.name,
-            description: data.description,
-            basePrice: data.price,
-            deliveryFee: data.deliveryFee,
-            rating: data.rating,
-            images: data.images
         )
     }
 }

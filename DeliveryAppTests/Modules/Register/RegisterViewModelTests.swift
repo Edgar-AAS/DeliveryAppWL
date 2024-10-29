@@ -4,30 +4,44 @@ import XCTest
 final class RegisterViewModelTests: XCTestCase {
     func test_create_user_should_call_with_correct_user_request() {
         let alertViewSpy = AlertViewSpy()
-        let userRegisterSpy = UserRegisterSpy()
-        let sut = makeSut(userRegisterSpy: userRegisterSpy, alertViewSpy: alertViewSpy)
+        let createAccountSpy = CreateAccountUseCaseSpy()
+        let sut = makeSut(userRegisterSpy: createAccountSpy, alertViewSpy: alertViewSpy)
         
-        let userRequest = makeRegisterUserRequest()
+        let userRequest = makeRegisterUserRequest(
+            email: "any_email@gmail.com",
+            username: "any_name",
+            password: "any_password",
+            confirmPassword: "any_password"
+        )
+        
         sut.toggleTerms(assined: true)
+        
+        let accountModel = CreateAccountModel(
+            name: "any_name",
+            email: "any_email@gmail.com",
+            password: "any_password"
+        )
+        
         sut.createUser(userRequest: userRequest)
-        XCTAssertEqual(userRegisterSpy.userRequest, userRequest)
+        XCTAssertEqual(createAccountSpy.userRequest, accountModel)
     }
     
     func test_create_user_should_call_alert_view_with_generic_error_when_register_fails() {
         let alertViewSpy = AlertViewSpy()
-        let userRegisterSpy = UserRegisterSpy()
+        let userRegisterSpy = CreateAccountUseCaseSpy()
         let sut = makeSut(userRegisterSpy: userRegisterSpy, alertViewSpy: alertViewSpy)
                 
         sut.toggleTerms(assined: true)
         
         let exp = expectation(description: "waiting")
         alertViewSpy.observe { viewModel in
-            XCTAssertEqual(viewModel, AlertViewModel(title: "Erro", message: "Algo inesperado aconteceu, tente novamente em instantes."))
+            XCTAssertEqual(viewModel, AlertViewModel(title: "Erro",
+                                                     message: "Algo inesperado aconteceu, tente novamente em instantes."))
             exp.fulfill()
         }
         
         sut.createUser(userRequest: makeRegisterUserRequest())
-        userRegisterSpy.completeWithFailure()
+        userRegisterSpy.completeWithFailure(httpError: .badRequest)
         wait(for: [exp], timeout: 1)
     }
     
@@ -155,126 +169,81 @@ final class RegisterViewModelTests: XCTestCase {
     }
     
     func test_create_user_returns_error_when_terms_of_service_not_accepted() {
-        let userRegisterSpy = UserRegisterSpy()
+        let userRegisterSpy = CreateAccountUseCaseSpy()
         let alertViewSpy = AlertViewSpy()
         let sut = makeSut(userRegisterSpy: userRegisterSpy, alertViewSpy: alertViewSpy)
             
         let exp = expectation(description: "waiting")
         alertViewSpy.observe { viewModel in
-            XCTAssertEqual(viewModel, AlertViewModel(title: "Falha na validação", message: "Para criar sua conta, confirme que você leu e concorda com os Termos de Serviço."))
+            XCTAssertEqual(viewModel, AlertViewModel(
+                title: "Falha na validação",
+                message: "Para criar sua conta, confirme que você leu e concorda com os Termos de Serviço.")
+            )
             exp.fulfill()
         }
         
         sut.createUser(userRequest: makeRegisterUserRequest())
-        wait(for: [exp], timeout: 1)
-    }
-    
-    func test_create_user_should_call_coordinator_with_registerToLogin_type() {
-        let coordinatorSpy = CoordinatorSpy()
-        let userRegisterSpy = UserRegisterSpy()
-        let sut = makeSut(coordinatorSpy: coordinatorSpy, userRegisterSpy: userRegisterSpy)
-        
-        sut.toggleTerms(assined: true)
-    
-        let exp = expectation(description: "waiting")
-        coordinatorSpy.observe { eventType in
-            XCTAssertEqual(eventType, .goToRegistrationSuccess(makeRegistrationSuccessModel()))
-            exp.fulfill()
-        }
-        
-        sut.createUser(userRequest: makeRegisterUserRequest())
-        userRegisterSpy.completeWithSuccess()
-        wait(for: [exp], timeout: 1)
-    }
-    
-    func test_route_to_home_should_call_coordinator_with_goToHome_type() {
-        let coordinatorSpy = CoordinatorSpy()
-        let sut = makeSut(coordinatorSpy: coordinatorSpy)
-    
-        let exp = expectation(description: "waiting")
-        coordinatorSpy.observe { eventType in
-            XCTAssertEqual(eventType, .goToHome)
-            exp.fulfill()
-        }
-        
-        sut.routeToHome()
-        wait(for: [exp], timeout: 1)
-    }
-    
-    func test_register_to_login_should_call_coordinator_with_register_to_login_type() {
-        let coordinatorSpy = CoordinatorSpy()
-        let sut = makeSut(coordinatorSpy: coordinatorSpy)
-        
-        let exp = expectation(description: "waiting")
-        coordinatorSpy.observe { eventType in
-            XCTAssertEqual(eventType, .registerToLogin)
-            exp.fulfill()
-        }
-        
-        sut.routeToLogin()
         wait(for: [exp], timeout: 1)
     }
     
     func test_loadingHandler_startsWithTrue_and_switchesToFalse_when_registerFails() {
-        let userRegisterSpy = UserRegisterSpy()
+        let userRegisterSpy = CreateAccountUseCaseSpy()
         let sut = makeSut(userRegisterSpy: userRegisterSpy)
         
         sut.toggleTerms(assined: true)
         
-        let exp = expectation(description: "waiting")
-        sut.loadingHandler = { isLoading in
-            XCTAssertTrue(isLoading)
-            exp.fulfill()
+        var loadingStates = [Bool]()
+        let exp = expectation(description: "waiting for loading states")
+        
+        sut.loadingHandler = { state in
+            loadingStates.append(state.isLoading)
+            
+            if loadingStates.count == 2 {
+                exp.fulfill()
+            }
         }
         
         sut.createUser(userRequest: makeRegisterUserRequest())
         
-        let exp2 = expectation(description: "waiting")
-        sut.loadingHandler = { isLoading in
-            XCTAssertFalse(isLoading)
-            exp2.fulfill()
-        }
+        userRegisterSpy.completeWithFailure(httpError: .badRequest)
+        wait(for: [exp], timeout: 1)
         
-        userRegisterSpy.completeWithFailure()
-        wait(for: [exp, exp2], timeout: 1)
+        XCTAssertEqual(loadingStates, [true, false])
     }
-    
+
     func test_loadingHandler_startsWithTrue_and_switchesToFalse_when_registerSucceed() {
-        let userRegisterSpy = UserRegisterSpy()
+        let userRegisterSpy = CreateAccountUseCaseSpy()
         let sut = makeSut(userRegisterSpy: userRegisterSpy)
         
         sut.toggleTerms(assined: true)
         
-        let exp = expectation(description: "waiting")
-        sut.loadingHandler = { isLoading in
-            XCTAssertTrue(isLoading)
-            exp.fulfill()
+        var loadingStates = [Bool]()
+        let exp = expectation(description: "waiting for loading states")
+        
+        sut.loadingHandler = { state in
+            loadingStates.append(state.isLoading)
+            
+            if loadingStates.count == 2 {
+                exp.fulfill()
+            }
         }
         
         sut.createUser(userRequest: makeRegisterUserRequest())
         
-        let exp2 = expectation(description: "waiting")
-        sut.loadingHandler = { isLoading in
-            XCTAssertFalse(isLoading)
-            exp2.fulfill()
-        }
-        
-        userRegisterSpy.completeWithSuccess()
-        wait(for: [exp, exp2], timeout: 1)
+        userRegisterSpy.completeWithSuccess(reponse: .init(message: "Conta criada com sucesso"))
+        wait(for: [exp], timeout: 1)
+        XCTAssertEqual(loadingStates, [true, false])
     }
 }
 
 extension RegisterViewModelTests {
     func makeSut(emailValidatorSpy: EmailValidatorSpy = EmailValidatorSpy(),
-                 coordinatorSpy: CoordinatorSpy = CoordinatorSpy(),
-                 userRegisterSpy: UserRegisterSpy = UserRegisterSpy(),
+                 userRegisterSpy: CreateAccountUseCaseSpy = CreateAccountUseCaseSpy(),
                  alertViewSpy: AlertViewSpy = AlertViewSpy(),
                  fieldDescriptionSpy: FieldDescriptionSpy = FieldDescriptionSpy(),
                  file: StaticString = #filePath, line: UInt = #line) -> RegisterViewModel
     {
-        let sut = RegisterViewModel(userRegister: userRegisterSpy,
-                                    emailValidator: emailValidatorSpy,
-                                    coordinator: coordinatorSpy)
+        let sut = RegisterViewModel(emailValidator: emailValidatorSpy, createAccount: userRegisterSpy)
         
         sut.fieldValidationDelegate = fieldDescriptionSpy
         sut.alertView = alertViewSpy

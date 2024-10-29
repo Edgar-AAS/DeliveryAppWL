@@ -9,6 +9,6 @@ protocol ProductDetailsViewModelProtocol {
     func updateAdditionalItemStepper(action: StepperActionType, indexPath: IndexPath)
     func updateFooterViewStepper(action: StepperActionType)
     func fetchProductDetails()
-    func getStepperDto(in indexPath: IndexPath) -> StepperDTO?
+    func getStepperDto(in indexPath: IndexPath) -> StepperModel?
 }
     

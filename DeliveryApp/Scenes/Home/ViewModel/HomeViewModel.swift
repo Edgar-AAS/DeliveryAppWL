@@ -50,7 +50,6 @@ class HomeViewModel: HomeViewModelProtocol {
     }
     
     private func loadCategories(completion: @escaping ([ProductCategoryResponse]) -> Void) {
-        //IMPLEMENTAR LOGICA DE RESTIÇAO DE CATEGORIAS NA ROTA
         fetchCategories.fetch { result in
             switch result {
             case .success(let activeCategories):

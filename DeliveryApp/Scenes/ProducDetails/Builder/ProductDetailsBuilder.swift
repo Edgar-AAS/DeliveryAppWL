@@ -4,8 +4,7 @@ class ProductDetailsBuilder {
     static func build(productId: Int) -> ProductDetailsViewController {
         let resource = Resource(
             url: URL(string: "http://localhost:5177/v1/products/details/\(productId)")!,
-            headers: ["Content-Type": "application/json"],
-            modelType: ProductDetailsResponse.self
+            headers: ["Content-Type": "application/json"]
         )
         
         let httpClient: HTTPClientProtocol = HTTPClient()

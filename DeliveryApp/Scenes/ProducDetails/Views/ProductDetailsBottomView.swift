@@ -19,7 +19,7 @@ final class ProductDetailsBottomView: UIView {
     }
     
     private lazy var customStepper: CustomStepper = {
-        let stepper = CustomStepper()
+        let stepper = CustomStepper(size: .large)
         stepper.translatesAutoresizingMaskIntoConstraints = false
         stepper.delegate = self
         stepper.layer.borderColor = UIColor.lightGray.cgColor
@@ -61,13 +61,13 @@ final class ProductDetailsBottomView: UIView {
         addToCartButton.backgroundColor = isRequiredOptionsSelect ? Colors.primary : Colors.inactiveButton
     }
     
-    func configureStepper(with dto: StepperDTO) {
-        customStepper.configure(with: dto, size: .large)
+    func configureStepper(with dto: StepperModel) {
+        customStepper.configure(with: dto)
     }
 }
 
 extension ProductDetailsBottomView: CustomStepperDelegate {
-    func updateStepper(action: StepperActionType) {
+    func customStepper(_ stepper: CustomStepper, stepperDidTapped action: StepperActionType) {
         delegate?.productDetailsBottomView(self, didTapStepperWithAction: action)
     }
 }

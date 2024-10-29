@@ -49,9 +49,7 @@ final class ProductDetailsHeader: UIView {
         let button = CircularButton(iconImage: .init(systemName: "heart"), size: 44)
         button.backgroundColor = UIColor(hexString: "0B0C0E").withAlphaComponent(0.5)
         button.tintColor = .white
-        let action = UIAction { [weak self] _ in
-            //            self?.delegate?.favoriteButtonDidTapped()
-        }
+        let action = UIAction { [weak self] _ in }
         button.addAction(action, for: .touchUpInside)
         return button
     }()
@@ -233,10 +231,10 @@ extension ProductDetailsHeader: CodeView {
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            productImageView.topAnchor.constraint(equalTo: topAnchor),
-            productImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            productImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            productImageView.heightAnchor.constraint(equalToConstant: 280),
+            productImageView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            productImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            productImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            productImageView.heightAnchor.constraint(equalToConstant: 300),
             
             topButtonsStack.topAnchor.constraint(equalTo: productImageView.topAnchor, constant: 16),
             topButtonsStack.leadingAnchor.constraint(equalTo: productImageView.leadingAnchor, constant: 16),
@@ -250,7 +248,7 @@ extension ProductDetailsHeader: CodeView {
             descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             
-            basePriceLabel.topAnchor.constraint(greaterThanOrEqualTo: descriptionLabel.bottomAnchor, constant: 8),
+            basePriceLabel.topAnchor.constraint(greaterThanOrEqualTo: descriptionLabel.bottomAnchor, constant: 16),
             basePriceLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             basePriceLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             

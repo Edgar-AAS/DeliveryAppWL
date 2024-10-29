@@ -6,7 +6,7 @@ class FetchPaginatedProducts: FetchPaginatedProductsUseCase {
     private var productsDataSource = [Product]()
     private var isFetching = false
     
-    var resourceCallBack: ((ResourceProductsPagination) -> Resource<ProductResponse>)?
+    var productsResponseCallBack: ((ResourceProductsPagination) -> Resource)?
     
     private var currentPage: Int = .zero
     private var totalProducts: Int = .zero
@@ -34,7 +34,7 @@ class FetchPaginatedProducts: FetchPaginatedProductsUseCase {
         
         isFetching = true
         
-        guard let httpResource = resourceCallBack?(
+        guard let httpResource = productsResponseCallBack?(
             .init(categoryId: categoryId,
                   pageSize: pageSize,
                   currentPage: currentPage)
@@ -51,12 +51,12 @@ class FetchPaginatedProducts: FetchPaginatedProductsUseCase {
             switch result {
             case .failure(let httpError):
                 completion(.failure(httpError))
-            case .success(let response):
-                guard let productResponse = response else {
-                    completion(.failure(.invalidResponse))
+            case .success(let data):
+                guard let productResponse: ProductResponse = data?.toModel() else {
+                    completion(.failure(.unknown))
                     return
                 }
-                
+                                
                 self.currentPage += 1
                 self.totalProducts = productResponse.total
                 self.productsDataSource.append(contentsOf: productResponse.products)

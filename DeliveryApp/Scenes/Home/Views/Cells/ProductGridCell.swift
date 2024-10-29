@@ -17,13 +17,13 @@ class ProductGridCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var categoryCollectionView: UICollectionView = {
+    private lazy var productCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.estimatedItemSize = .zero
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.contentInset = .init(top: 10, left: 24, bottom: 48, right: 24)
+        collectionView.contentInset = .init(top: 10, left: 24, bottom: 60, right: 24)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
@@ -35,21 +35,21 @@ class ProductGridCell: UITableViewCell {
     func loadProducts(dataSource: ProductGridCellDataSource) {
         self.products = dataSource.products
         self.currentCategoryId = dataSource.categoryId
-        categoryCollectionView.reloadData()
+        productCollectionView.reloadData()
     }
 }
 
 extension ProductGridCell: CodeView {
     func buildViewHierarchy() {
-        contentView.addSubview(categoryCollectionView)
+        contentView.addSubview(productCollectionView)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            categoryCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            categoryCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            categoryCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            categoryCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            productCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            productCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            productCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            productCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
     
@@ -60,8 +60,8 @@ extension ProductGridCell: CodeView {
 
 extension ProductGridCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedProduct = products[indexPath.item]
-        delegate?.productGridCell(self, didTapProductWithId: selectedProduct.id)
+        let selectedProductId = products[indexPath.item].id
+        delegate?.productGridCell(self, didTapProductWithId: selectedProductId)
     }
 }
 
@@ -98,7 +98,7 @@ extension ProductGridCell: UICollectionViewDataSource {
 
 extension ProductGridCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: collectionView.frame.size.width / 2.4, height: 240)
+        return .init(width: collectionView.frame.size.width / 2.4, height: 230)
     }
 }
 

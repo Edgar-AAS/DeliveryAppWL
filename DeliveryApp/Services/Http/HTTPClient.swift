@@ -1,6 +1,6 @@
 import Foundation
 protocol HTTPClientProtocol {
-    func load<T: Codable>(_ resource: Resource<T>, completion: @escaping ((Result<T?, HttpError>) -> Void))
+    func load(_ resource: Resource, completion: @escaping ((Result<Data?, HttpError>) -> Void))
 }
 
 class HTTPClient: HTTPClientProtocol {
@@ -10,21 +10,21 @@ class HTTPClient: HTTPClientProtocol {
         self.session = session
     }
     
-    func load<T: Codable>(_ resource: Resource<T>, completion: @escaping ((Result<T?, HttpError>) -> Void)) {
+    func load(_ resource: Resource, completion: @escaping ((Result<Data?, HttpError>) -> Void)) {
         var request = URLRequest(url: resource.url)
         
         switch resource.method {
         case .get(let queryItems):
             var components = URLComponents(url: resource.url, resolvingAgainstBaseURL: false)
-            components?.queryItems = queryItems
-            
-            guard let url = components?.url else {
-                DispatchQueue.main.async {
-                    completion(.failure(.badRequest))
+                components?.queryItems = queryItems.isEmpty ? nil : queryItems
+                
+                guard let url = components?.url else {
+                    DispatchQueue.main.async {
+                        completion(.failure(.badRequest))
+                    }
+                    return
                 }
-                return
-            }
-            request.url = url
+                request.url = url
         case .post(let data), .put(let data):
             request.httpMethod = resource.method.name
             request.httpBody = data
@@ -61,13 +61,8 @@ class HTTPClient: HTTPClientProtocol {
                 case 204:
                     completion(.success(nil))
                 case 200...299:
-                    if let data = data, let modelType = resource.modelType {
-                        do {
-                            let decodedData = try JSONDecoder().decode(modelType, from: data)
-                            completion(.success(decodedData))
-                        } catch {
-                            completion(.failure(.decodingFailed))
-                        }
+                    if let data = data {
+                        completion(.success(data))
                     }
                 case 400:
                     completion(.failure(.badRequest))

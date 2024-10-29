@@ -24,6 +24,7 @@ class ProducDetailsScreen: UIView {
         tableView.register(ProductItemCell.self, forCellReuseIdentifier: ProductItemCell.reuseIdentifier)
         tableView.register(SideItemCell.self, forCellReuseIdentifier: SideItemCell.reuseIdentifier)
         tableView.register(SectionHeaderCell.self, forHeaderFooterViewReuseIdentifier: SectionHeaderCell.reuseIdentifier)
+        tableView.backgroundColor = .white
         return tableView
     }()
     
@@ -33,6 +34,11 @@ class ProducDetailsScreen: UIView {
         return bottomView
     }()
     
+    
+    func handleUserInteraction(isEnable: Bool) {
+        isUserInteractionEnabled = isEnable
+    }
+    
     func setupBottomViewDelegate(_ delegate: ProductDetailsBottomViewDelegate) {
         bottomView.delegate = delegate
     }
@@ -41,7 +47,7 @@ class ProducDetailsScreen: UIView {
         bottomView.configureTotalAmount(animateInfo: animateInfo)
     }
     
-    func updateStepper(dto: StepperDTO) {
+    func updateStepper(dto: StepperModel) {
         bottomView.configureStepper(with: dto)
     }
     
@@ -54,7 +60,9 @@ class ProducDetailsScreen: UIView {
     }
     
     func reloadSections(at section: Int) {
-        tableView.reloadSections([section], with: .none)
+        UIView.setAnimationsEnabled(false)
+        tableView.reloadSections(IndexSet(integer: section), with: .none)
+        UIView.setAnimationsEnabled(true)
     }
     
     func reloadRows(at indexPath: IndexPath) {

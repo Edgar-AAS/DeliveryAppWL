@@ -61,4 +61,3 @@ extension HomeScreen: CodeView {
         backgroundColor = Colors.background
     }
 }
-

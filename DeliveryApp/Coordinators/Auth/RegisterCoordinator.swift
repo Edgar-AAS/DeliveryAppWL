@@ -11,7 +11,7 @@ class RegisterCoordinator: Coordinator {
     
     func start() {
         let registerViewController = RegisterBuilder.build()
-        registerViewController.loginAction = { [weak self] in
+        registerViewController.routeToLoginCallBack = { [weak self] in
             self?.navigateToLogin()
         }
         navigationController.pushViewController(registerViewController, animated: true)

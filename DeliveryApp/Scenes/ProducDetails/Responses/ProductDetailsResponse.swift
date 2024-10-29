@@ -30,5 +30,5 @@ struct Item: Codable {
     let name: String
     let price: Double
     var quantity: Int
-    let imageUrl: String
+    let imageUrl: String?
 }

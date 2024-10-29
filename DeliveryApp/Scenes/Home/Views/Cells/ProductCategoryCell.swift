@@ -33,7 +33,18 @@ class ProductCategoryCell: UITableViewCell {
         return collectionView
     }()
     
-    func setup(categories: [CategoryCellViewData]) {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setupShadow()
+    }
+    
+    private func setupShadow() {
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = .init(width: 1, height: 2)
+        layer.shadowOpacity = 0.2
+    }
+    
+    func configure(with categories: [CategoryCellViewData]) {
         self.categories = categories
         categoryCollectionView.reloadData()
     }
@@ -65,6 +76,8 @@ extension ProductCategoryCell: UICollectionViewDataSource {
 
 extension ProductCategoryCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        addTouchFeedback(style: .light)
+        
         if let cell = collectionView.cellForItem(at: indexPath) as? CategoryCell {
             cell.selectedStyle()
             

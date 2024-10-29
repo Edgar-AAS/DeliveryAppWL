@@ -13,10 +13,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
         let navigationController = CustomNavigationController()
         navigationController.setNavigationBarHidden(true, animated: false)
-//        let coordinator = HomeCoordinator(navigationController: navigationController)
-        
-//        coordinator.start()
-        appWindow.rootViewController = MainTabBarController()
+        let coordinator = MainCoordinator(navigationController: navigationController)
+        coordinator.start()
+        appWindow.rootViewController = coordinator.navigationController
         appWindow.makeKeyAndVisible()
         window = appWindow
     }

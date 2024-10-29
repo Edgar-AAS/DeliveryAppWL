@@ -90,11 +90,15 @@ extension ProductDetailsViewController: ProductDetailsHeaderDelegateProtocol {
 
 //MARK: - ProductDetailsViewModelDelegate
 extension ProductDetailsViewController: ProductDetailsViewModelDelegate {
+    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, shouldEnableUserInteraction: Bool) {
+        customView?.handleUserInteraction(isEnable: shouldEnableUserInteraction)
+    }
+    
     func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateRequiredOptionsStatus status: OptionsStatusType) {
         customView?.updateRequiredOptionsStatus(with: status)
     }
     
-    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didChangeBottomViewStepperValue stepperDto: StepperDTO) {
+    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didChangeBottomViewStepperValue stepperDto: StepperModel) {
         customView?.updateStepper(dto: stepperDto)
     }
     
@@ -123,7 +127,7 @@ extension ProductDetailsViewController: ProductDetailsViewModelDelegate {
     }
     
     func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateHeaderWith viewData: ProductHeaderViewData) {
-        let headerView = ProductDetailsHeader(frame: .init(x: .zero, y: .zero, width: view.frame.width, height: 500))
+        let headerView = ProductDetailsHeader(frame: .init(x: .zero, y: .zero, width: view.frame.width, height: 540))
         customView?.tableView.tableHeaderView = headerView
         headerView.configure(with: viewData, delegate: self)
     }
@@ -145,12 +149,13 @@ extension ProductDetailsViewController {
             cell?.delegate = self
             cell?.configure(with: viewData, stepperDto: stepperDto, indexPath: indexPath)
         }
+        
         return cell ?? UITableViewCell()
     }
     
     func makeSideItemCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, viewData: SideItemCellViewData) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SideItemCell.reuseIdentifier, for: indexPath) as? SideItemCell
-        cell?.configure(with: viewData, indexPath: indexPath)
+        cell?.configure(with: viewData)
         return cell ?? UITableViewCell()
     }
 }

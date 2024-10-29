@@ -7,21 +7,19 @@ class HomeBuilder {
         
         let categoriesResource = Resource(
             url: URL(string: "http://localhost:5177/v1/categories")!,
-            headers: ["Content-Type": "application/json"],
-            modelType: [ProductCategoryResponse].self
+            headers: ["Content-Type": "application/json"]
         )
         
         let fetchPaginatedProducts = FetchPaginatedProducts(httpClient: httpClient)
         
-        fetchPaginatedProducts.resourceCallBack = { resource in
+        fetchPaginatedProducts.productsResponseCallBack = { resource in
             return Resource(
                 url: URL(string: "http://localhost:5177/v1/products/category/\(resource.categoryId)")!,
                 method: .get([
                     URLQueryItem(name: "page", value: "\(resource.currentPage)"),
                     URLQueryItem(name: "pageSize", value: "\(resource.pageSize)")
                 ]),
-                headers: ["Content-Type": "application/json"],
-                modelType: ProductResponse.self
+                headers: ["Content-Type": "application/json"]
             )
         }
         

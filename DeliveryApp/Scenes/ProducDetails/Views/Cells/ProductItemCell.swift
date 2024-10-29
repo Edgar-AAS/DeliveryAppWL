@@ -51,6 +51,7 @@ class ProductItemCell: UITableViewCell {
         button.heightAnchor.constraint(equalToConstant: 30).isActive = true
         button.widthAnchor.constraint(equalToConstant: 30).isActive = true
         let action = UIAction { [weak self] _ in
+            self?.addTouchFeedback(style: .light)
             guard let self else { return }
             if let indexPath = self.indexPath {
                 self.delegate?.productItemCell(self, didTapStepperWithAction: .add, at: indexPath)
@@ -67,7 +68,7 @@ class ProductItemCell: UITableViewCell {
         return stepper
     }()
     
-    func configure(with viewData: ProductItemCellViewData, stepperDto: StepperDTO, indexPath: IndexPath) {
+    func configure(with viewData: ProductItemCellViewData, stepperDto: StepperModel, indexPath: IndexPath) {
         self.indexPath = indexPath
         
         productNameLabel.text = viewData.getName()
@@ -76,7 +77,7 @@ class ProductItemCell: UITableViewCell {
         plusButton.isEnabled = stepperDto.isEnabled
         customStepper.isHidden = stepperDto.currentValue == .zero
         
-        customStepper.configure(with: stepperDto, size: .medium)
+        customStepper.configure(with: stepperDto)
             
         if viewData.isRemovable {
             productPriceLabel.isHidden = true
@@ -91,7 +92,7 @@ class ProductItemCell: UITableViewCell {
 }
 
 extension ProductItemCell: CustomStepperDelegate {
-    func updateStepper(action: StepperActionType) {
+    func customStepper(_ stepper: CustomStepper, stepperDidTapped action: StepperActionType) {
         guard let indexPath = indexPath else { return }
         delegate?.productItemCell(self, didTapStepperWithAction: action, at: indexPath)
     }
@@ -133,6 +134,7 @@ extension ProductItemCell: CodeView {
     
     func setupAdditionalConfiguration() {
         selectionStyle = .none
+        backgroundColor = .white
         customStepper.backgroundColor = .white
         customStepper.layer.cornerRadius = 8
         customStepper.layer.shadowColor = UIColor.black.cgColor

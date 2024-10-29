@@ -17,10 +17,8 @@ final class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureTabBarAppearance()
         homeCoordinator.parentCoordinator = coordinator
-        tabBar.tintColor = Colors.primary
-        tabBar.backgroundColor = .white
-        tabBar.unselectedItemTintColor = .gray
 
         viewControllers = [homeCoordinator.navigationController]
         
@@ -29,7 +27,20 @@ final class MainTabBarController: UITabBarController {
         }
         
         homeCoordinator.start()
-        viewControllers = [homeCoordinator.navigationController]
+    }
+    
+    private func configureTabBarAppearance() {
+        tabBar.tintColor = Colors.primary
+        tabBar.backgroundColor = .white
+        tabBar.unselectedItemTintColor = .gray
+        
+        tabBar.layer.shadowColor = UIColor.black.cgColor
+        tabBar.layer.shadowOffset = CGSize(width: 0, height: 2)
+        tabBar.layer.shadowRadius = 4
+        tabBar.layer.shadowOpacity = 0.3
+        tabBar.layer.masksToBounds = false
+        
+        tabBar.layer.cornerRadius = 8
     }
     
     func hideNavigationController() {

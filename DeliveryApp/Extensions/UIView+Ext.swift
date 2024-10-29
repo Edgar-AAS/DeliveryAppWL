@@ -1,5 +1,10 @@
 import UIKit
 
+struct KeyboardResponsiveContext {
+    let scrollView: UIScrollView
+    let referenceView: UIView
+}
+
 extension UIView {
     private static var keyboardContext: KeyboardResponsiveContext?
     

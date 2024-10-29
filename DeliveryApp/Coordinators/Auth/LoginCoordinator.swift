@@ -12,12 +12,14 @@ final class LoginCoordinator: Coordinator {
     func start() {
         let loginViewController = LoginBuilder.build()
         
-        loginViewController.registerAction =  { [weak self] in
+        loginViewController.routeToRegisterCallBack = { [weak self] in
             self?.navigateToRegister()
         }
         
-        loginViewController.mainAction = { [weak self]  in
-            self?.parentCoordinator?.showMainTabBarFlow()
+        loginViewController.routeToMainFlowCallBack = { [weak self]  in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+                self?.parentCoordinator?.showMainTabBarFlow()
+            })
         }
         
         navigationController.pushViewController(loginViewController, animated: true)

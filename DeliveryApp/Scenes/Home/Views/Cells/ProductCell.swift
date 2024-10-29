@@ -29,16 +29,29 @@ class ProductCell: UICollectionViewCell {
         button.heightAnchor.constraint(equalToConstant: 35).isActive = true
         button.widthAnchor.constraint(equalToConstant: 35).isActive = true
         button.layer.cornerRadius = 17.5
-        button.layer.masksToBounds = true
+        button.layer.borderColor = UIColor.lightGray.cgColor
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOffset = .init(width: 1, height: 1)
+        button.layer.shadowOpacity = 0.2
         button.backgroundColor = .white
         return button
     }()
     
     private lazy var productNameLabel: UILabel = {
-        let label = makeLabel(
+        return makeLabel(
             font: Fonts.medium(size: 16).weight,
-            color: .black)
-        label.adjustsFontSizeToFitWidth = true
+            color: .black,
+            numberOfLines: 0
+        )
+    }()
+    
+    private lazy var valueTitleLabel: UILabel = {
+        let label = makeLabel(
+            text: "A partir de",
+            font: Fonts.regular(size: 14).weight,
+            color: .black,
+            numberOfLines: 0
+        )
         return label
     }()
     
@@ -54,12 +67,11 @@ class ProductCell: UICollectionViewCell {
     
     private lazy var distanceLabel = makeLabel(font: Fonts.medium(size: 12).weight, color: .black)
     
-    private lazy var productInfoStack = makeStackView(with: [productRateIcon,
-                                                             productRateLabel,
-                                                             UIView()],
+    private lazy var productInfoStack = makeStackView(with: [productPriceLabel,
+                                                             productRateIcon,
+                                                             productRateLabel],
                                                       spacing: 4,
                                                       axis: .horizontal)
-    
     
     private lazy var productPriceLabel = makeLabel(
         font: Fonts.bold(size: 16).weight,
@@ -70,16 +82,14 @@ class ProductCell: UICollectionViewCell {
         productNameLabel.text = viewData.displayName
         productPriceLabel.text = viewData.formattedPrice
         productRateLabel.text = viewData.stringRating
-        favoriteButton.imageView?.image = viewData
-            .favoriteStatus ? UIImage(systemName: "heart.fill")
-                        : UIImage(systemName: "heart")
+        favoriteButton.imageView?.image = viewData.favoriteStatus ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
         
-        if let image = viewData.sortedImages()?.first {
-            productImageView.sd_setImage(with: URL(string: image.url))
-        } else {
-            productImageView.image = UIImage(systemName: "photo")
-        }
+        let imageUrl = viewData.sortedImages()?.first?.url ?? String()
+        
+        productImageView.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
+        productImageView.sd_setImage(with: URL(string: imageUrl))
     }
+
     
     private func setupShadow() {
         backgroundColor = .white
@@ -95,35 +105,35 @@ extension ProductCell: CodeView {
         contentView.addSubview(productImageView)
         productImageView.addSubview(favoriteButton)
         contentView.addSubview(productNameLabel)
+        contentView.addSubview(valueTitleLabel)
         contentView.addSubview(productInfoStack)
-        contentView.addSubview(productPriceLabel)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
             productImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            productImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            productImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            productImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            productImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             productImageView.heightAnchor.constraint(equalToConstant: 120),
             
             favoriteButton.topAnchor.constraint(equalTo: productImageView.topAnchor, constant: 8),
             favoriteButton.trailingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: -8),
             
-            productNameLabel.topAnchor.constraint(equalTo: productImageView.bottomAnchor, constant: 8),
-            productNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            productNameLabel.topAnchor.constraint(equalTo: productImageView.bottomAnchor, constant: 16),
+            productNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             productNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            
+            valueTitleLabel.topAnchor.constraint(greaterThanOrEqualTo: productNameLabel.topAnchor, constant: 8),
+            valueTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            valueTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
             productRateIcon.heightAnchor.constraint(equalToConstant: 16),
             productRateIcon.widthAnchor.constraint(equalToConstant: 16),
             
-            productInfoStack.topAnchor.constraint(equalTo: productNameLabel.bottomAnchor, constant: 8),
-            productInfoStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            productInfoStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            
-            productPriceLabel.topAnchor.constraint(equalTo: productInfoStack.bottomAnchor, constant: 8),
-            productPriceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            productPriceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            productPriceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            productInfoStack.topAnchor.constraint(equalTo: valueTitleLabel.bottomAnchor, constant: 4),
+            productInfoStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            productInfoStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            productInfoStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
         ])
     }
     

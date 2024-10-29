@@ -2,8 +2,7 @@ import UIKit
 
 class SideItemCell: UITableViewCell {
     static let reuseIdentifier = String(describing: SideItemCell.self)
-    private var indexPath: IndexPath?
-
+    
     private lazy var productNameLabel: UILabel = {
         let label = makeLabel(
             font: Fonts.regular(size: 16).weight,
@@ -64,9 +63,7 @@ class SideItemCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with viewData: SideItemCellViewData, indexPath: IndexPath) {
-        self.indexPath = indexPath
-        
+    func configure(with viewData: SideItemCellViewData) {
         radioButton.isSelected = viewData.isSelected
         productNameLabel.text = viewData.name
         productPriceLabel.text = viewData.price
@@ -91,5 +88,6 @@ extension SideItemCell: CodeView {
     
     func setupAdditionalConfiguration() {
         selectionStyle = .none
+        backgroundColor = .white
     }
 }

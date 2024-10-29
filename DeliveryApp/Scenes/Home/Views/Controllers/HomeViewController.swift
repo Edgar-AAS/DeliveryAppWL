@@ -93,7 +93,7 @@ extension HomeViewController {
     func makeProductCategorieCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ProductCategoryCell.reuseIdentifier, for: indexPath) as? ProductCategoryCell
         cell?.delegate = self
-        cell?.setup(categories: viewModel.getCategories())
+        cell?.configure(with: viewModel.getCategories())
         return cell ?? UITableViewCell()
     }
     
