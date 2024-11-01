@@ -10,7 +10,8 @@ class HomeViewModel: HomeViewModelProtocol {
     private let fetchCategories: FetchProductCategoriesUseCase
     private let fetchPaginatedProducts: FetchPaginatedProductsUseCase
     
-    init(fetchCategories: FetchProductCategoriesUseCase, fetchPaginatedProducts: FetchPaginatedProductsUseCase) {
+    init(fetchCategories: FetchProductCategoriesUseCase,
+         fetchPaginatedProducts: FetchPaginatedProductsUseCase) {
         self.fetchCategories = fetchCategories
         self.fetchPaginatedProducts = fetchPaginatedProducts
     }

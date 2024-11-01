@@ -43,7 +43,7 @@ final class CustomTextField: UITextField {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-        
+    
     private func setup() {
         tag = fieldTag
         delegate = self
@@ -60,7 +60,8 @@ final class CustomTextField: UITextField {
         let attributes = [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
         let attributedPlaceholder = NSAttributedString(string: self.placeholder ?? "", attributes: attributes)
         self.attributedPlaceholder = attributedPlaceholder
-    
+        
+        
         if let fieldType = fieldType {
             switch fieldType {
             case .email:
@@ -80,7 +81,7 @@ final class CustomTextField: UITextField {
         
         NSLayoutConstraint.activate([
             feedbackLabel.topAnchor.constraint(equalTo: bottomAnchor, constant: 4),
-            feedbackLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            feedbackLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             feedbackLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
@@ -99,17 +100,17 @@ final class CustomTextField: UITextField {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .red
         label.isHidden = true
-        label.font = UIFont.systemFont(ofSize: 10, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
         return label
     }()
-        
+    
     private lazy var eyeButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "eye.slash"), for: .normal)
         button.setImage(UIImage(systemName: "eye"), for: .selected)
         button.frame.size = .init(width: 24, height: 24)
         button.tintColor = .black
-    
+        
         let action = UIAction { [weak self] _ in
             self?.eyeButtonTap()
         }
@@ -117,7 +118,7 @@ final class CustomTextField: UITextField {
         button.addAction(action, for: .touchUpInside)
         return button
     }()
-
+    
     private func eyeButtonTap() {
         addTouchFeedback(style: .rigid)
         isHide = !isHide
@@ -132,12 +133,12 @@ final class CustomTextField: UITextField {
         feedbackLabel.isHidden = false
         feedbackLabel.text = viewModel.message
     }
-
+    
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
         let bounds = CGRect(x: 10, y: 0, width: bounds.width - padding, height: bounds.height)
         return bounds
     }
-
+    
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
         let bounds = CGRect(x: 10, y: 0, width: bounds.width - padding, height: bounds.height)
         return bounds
@@ -177,6 +178,14 @@ extension CustomTextField: UITextFieldDelegate {
         default:
             return true
         }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        layer.borderColor = Colors.primary.cgColor
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        layer.borderColor = Colors.grayBorder.cgColor
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

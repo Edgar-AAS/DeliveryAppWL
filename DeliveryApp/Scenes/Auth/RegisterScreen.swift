@@ -16,7 +16,7 @@ final class RegisterScreen: UIView {
         
         setupView()
         hideKeyboardOnTap()
-        setupResponsiveBehavior(scrollView: customScrollView, referenceView: registerButton)
+        setupKeyboardHandling(scrollView: customScrollView)
     }
     
     required init?(coder: NSCoder) {

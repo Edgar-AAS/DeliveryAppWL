@@ -10,7 +10,7 @@ final class LoginScreen: UIView {
         super.init(frame: .zero)
         setupView()
         hideKeyboardOnTap()
-        setupResponsiveBehavior(scrollView: customScrollView, referenceView: loginButton)
+        setupKeyboardHandling(scrollView: customScrollView)
     }
     
     required init?(coder: NSCoder) {
@@ -138,14 +138,15 @@ final class LoginScreen: UIView {
     
     private lazy var loadingView = LoadingView()
     
-    func skipField(_ textField: UITextField, action: (() -> Void)) {
+    func goToNextField(_ textField: UITextField, action: (() -> Void)) {
         switch textField.tag {
         case 0:
             passwordTextField.becomeFirstResponder()
         case 1:
             action()
             passwordTextField.resignFirstResponder()
-        default: return
+        default:
+            return
         }
     }
     

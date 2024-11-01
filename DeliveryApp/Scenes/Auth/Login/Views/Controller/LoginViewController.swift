@@ -74,11 +74,12 @@ extension LoginViewController: LoginScreenDelegate {
 //MARK: - UITextFieldDelegate
 extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        customView.skipField(
+        customView.goToNextField(
             textField,
             action: { [weak self] in
-                guard let loginRequest = self?.customView.getUserLoginRequest() else { return }
-                self?.viewModel.signIn(credential: loginRequest)
+                if let loginRequest = self?.customView.getUserLoginRequest() {
+                    self?.viewModel.signIn(credential: loginRequest)
+                }
             }
         )
         return true

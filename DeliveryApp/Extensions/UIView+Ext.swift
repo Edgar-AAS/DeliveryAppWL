@@ -1,35 +1,64 @@
 import UIKit
 
 struct KeyboardResponsiveContext {
-    let scrollView: UIScrollView
-    let referenceView: UIView
+    var scrollView: UIScrollView
 }
 
 extension UIView {
     private static var keyboardContext: KeyboardResponsiveContext?
     
-    func setupResponsiveBehavior(scrollView: UIScrollView, referenceView: UIView) {
-        UIView.keyboardContext = KeyboardResponsiveContext(scrollView: scrollView, referenceView: referenceView)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    func setupKeyboardHandling(scrollView: UIScrollView) {
+        UIView.keyboardContext = KeyboardResponsiveContext(scrollView: scrollView)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {
-        guard let context = UIView.keyboardContext else { return }
-        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
+              let scrollView = UIView.keyboardContext?.scrollView else {
+            return
+        }
         
-        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height + 10, right: 0)
-        context.scrollView.contentInset = contentInsets
-        context.scrollView.scrollIndicatorInsets = contentInsets
+        let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height + 10, right: 0.0)
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
         
-        context.scrollView.scrollRectToVisible(context.referenceView.frame, animated: true)
+        var aRect = frame
+        aRect.size.height -= keyboardSize.height
+        
+        if let activeField = firstResponder as? UITextField {
+            let frameInContentView = activeField.convert(activeField.bounds, to: scrollView)
+            if !aRect.contains(frameInContentView.origin) {
+                scrollView.scrollRectToVisible(frameInContentView, animated: true)
+            }
+        }
     }
     
     @objc private func keyboardWillHide(notification: NSNotification) {
-        guard let context = UIView.keyboardContext else { return }
+        guard let scrollView = UIView.keyboardContext?.scrollView else {
+            return
+        }
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
+    }
+    
+    private var firstResponder: UIView? {
+        guard !isFirstResponder else { return self }
         
-        context.scrollView.contentInset = .zero
-        context.scrollView.scrollIndicatorInsets = .zero
+        for subview in subviews {
+            if let firstResponder = subview.firstResponder {
+                return firstResponder
+            }
+        }
+        
+        return nil
     }
     
     func addTouchFeedback(style: UIImpactFeedbackGenerator.FeedbackStyle) {
@@ -54,10 +83,10 @@ extension UIView {
     }
     
     func makeTitleButton(title: String? = "",
-                    titleColor: UIColor,
-                    font: UIFont,
-                    backgroundColor: UIColor? = nil,
-                    action: UIAction? = nil) -> UIButton {
+                         titleColor: UIColor,
+                         font: UIFont,
+                         backgroundColor: UIColor? = nil,
+                         action: UIAction? = nil) -> UIButton {
         
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -116,7 +145,7 @@ extension UIView {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         addGestureRecognizer(tapGesture)
     }
-
+    
     @objc private func dismissKeyboard() {
         endEditing(true)
     }

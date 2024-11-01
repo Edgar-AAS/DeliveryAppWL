@@ -9,21 +9,21 @@ final class CustomSearchTextField: UITextField {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupSearchBar()
+        setup()
     }
     
     convenience init(placeholder: String) {
         self.init(frame: .zero)
         self.placeholder = placeholder
-        setupSearchBar()
+        setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setupSearchBar()
+        setup()
     }
     
-    private func setupSearchBar() {
+    private func setup() {
         borderStyle = .none
         layer.cornerRadius = 16
         backgroundColor = UIColor(white: 0.9, alpha: 0.6)

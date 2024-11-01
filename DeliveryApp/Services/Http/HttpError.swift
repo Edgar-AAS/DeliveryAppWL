@@ -10,5 +10,4 @@ enum HttpError: Error {
     case unauthorized
     case notFound
     case invalidResponse
-    case decodingFailed
 }

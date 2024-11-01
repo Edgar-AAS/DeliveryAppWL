@@ -25,8 +25,6 @@ class UserAccountLogin: AccountLoginUseCase {
             case .success(let data):
                 if let model: AccountModelResponse = data?.toModel() {
                     completion(.success(model))
-                } else {
-                    completion(.failure(.unknown))
                 }
             }
         }
