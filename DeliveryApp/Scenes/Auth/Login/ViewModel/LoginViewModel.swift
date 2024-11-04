@@ -5,22 +5,22 @@ class LoginViewModel: LoginViewModelProtocol {
     var loadingHandler: ((LoadingState) -> ())?
     var onLoginSuccess: (() -> Void)?
     
-    private let emailValidator: EmailValidaton
+    private let validatorComposite: Validation
     private let userAccountLogin: AccountLoginUseCase
     
     weak var fieldValidationDelegate: FieldValidationDelegate?
     weak var alertView: AlertView?
     
     //MARK: - Initializers
-    init(userAccountLogin: AccountLoginUseCase, emailValidation: EmailValidaton) {
+    init(userAccountLogin: AccountLoginUseCase, validatorComposite: Validation) {
         self.userAccountLogin = userAccountLogin
-        self.emailValidator = emailValidation
+        self.validatorComposite = validatorComposite
     }
     
     //MARK: - signIn
     func signIn(credential: LoginCredential) {
-        if let fieldValidationViewModel = validateFields(loginRequest: credential) {
-            fieldValidationDelegate?.showMessage(viewModel: fieldValidationViewModel)
+        if let fieldValidatorModel = validatorComposite.validate(data: credential.toJson()) {
+            print(fieldValidatorModel)
         } else {
             loadingHandler?(LoadingState(isLoading: true))
             
@@ -50,23 +50,23 @@ class LoginViewModel: LoginViewModelProtocol {
 
 //MARK: - validateFields
 extension LoginViewModel {
-    private func validateFields(loginRequest: LoginCredential) -> FieldValidationViewModel? {
-        if let emailError = validateEmail(loginRequest.email) {
-            return emailError
-        }
-        
-        if loginRequest.password.isEmpty {
-            return FieldValidationViewModel(message: Strings.FieldValidationMessages.passwordEmpty, type: .password)
-        }
-        return nil
-    }
-    
-    private func validateEmail(_ email: String) -> FieldValidationViewModel? {
-        if email.isEmpty {
-            return FieldValidationViewModel(message: Strings.FieldValidationMessages.emailEmpty, type: .email)
-        } else if !emailValidator.isValid(email: email) {
-            return FieldValidationViewModel(message: Strings.FieldValidationMessages.emailInvalid, type: .email)
-        }
-        return nil
-    }
+//    private func validateFields(loginRequest: LoginCredential) -> FieldValidationViewModel? {
+//        if let emailError = validateEmail(loginRequest.email) {
+//            return emailError
+//        }
+//        
+//        if loginRequest.password.isEmpty {
+//            return FieldValidationViewModel(message: Strings.FieldValidationMessages.passwordEmpty, type: .password)
+//        }
+//        return nil
+//    }
+//    
+//    private func validateEmail(_ email: String) -> FieldValidationViewModel? {
+//        if email.isEmpty {
+//            return FieldValidationViewModel(message: Strings.FieldValidationMessages.emailEmpty, type: .email)
+//        } else if !emailValidator.isValid(email: email) {
+//            return FieldValidationViewModel(message: Strings.FieldValidationMessages.emailInvalid, type: .email)
+//        }
+//        return nil
+//    }
 }

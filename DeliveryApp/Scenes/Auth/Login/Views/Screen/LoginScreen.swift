@@ -150,6 +150,12 @@ final class LoginScreen: UIView {
         }
     }
     
+    func clearFields() {
+        emailTextField.becomeFirstResponder()
+        emailTextField.resetField()
+        passwordTextField.resetField()
+    }
+    
     func getUserLoginRequest() -> LoginCredential? {
         guard let email = emailTextField.text,
               let password = passwordTextField.text

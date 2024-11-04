@@ -222,7 +222,7 @@ final class RegisterScreen: UIView {
         return stackView
     }()
     
-    func goToNextField(_ textField: UITextField) {
+    func goToNextField(_ textField: UITextField, action: (() -> Void)) {
         switch textField.tag {
         case 0:
             userNameTextField.becomeFirstResponder()
@@ -231,6 +231,7 @@ final class RegisterScreen: UIView {
         case 2:
             passwordConfirmTextField.becomeFirstResponder()
         case 3:
+            action()
             passwordConfirmTextField.resignFirstResponder()
         default:
             return

@@ -1,9 +1,8 @@
 import Foundation
 
 final class RegisterViewModel: RegisterViewModelProtocol{
-    private let emailValidator: EmailValidaton
-    
     private var hasAssignedTerms = false
+    
     var loadingHandler: ((LoadingState) -> ())?
     var createdAccountCallBack: (() -> Void)?
     
@@ -11,18 +10,18 @@ final class RegisterViewModel: RegisterViewModelProtocol{
     weak var fieldValidationDelegate: FieldValidationDelegate?
     
     private let createAccount: CreateAccountUseCase
+    private let validatorComposite: Validation
     
     //MARK: - Initializers
-    init(emailValidator: EmailValidaton, createAccount: CreateAccountUseCase)
-    {
+    init(validatorComposite: Validation, createAccount: CreateAccountUseCase) {
         self.createAccount = createAccount
-        self.emailValidator = emailValidator
+        self.validatorComposite = validatorComposite
     }
     
     //MARK: - createUsers
     func createUser(userRequest: RegisterUserRequest) {
-        if let validationViewModel = validateFields(userRequest: userRequest) {
-            fieldValidationDelegate?.showMessage(viewModel: validationViewModel)
+        if let validationFieldModel = validatorComposite.validate(data: userRequest.toJson()) {
+            print(validationFieldModel)
             return
         }
         
@@ -62,21 +61,21 @@ final class RegisterViewModel: RegisterViewModelProtocol{
         hasAssignedTerms = assined
     }
     
-    private func validateFields(userRequest: RegisterUserRequest) -> FieldValidationViewModel? {
-        if userRequest.email.isEmpty {
-            return FieldValidationViewModel(message: Strings.FieldValidationMessages.emailEmpty, type: .email)
-        } else if !emailValidator.isValid(email: userRequest.email) {
-            return FieldValidationViewModel(message: Strings.FieldValidationMessages.emailInvalid, type: .email)
-        } else if userRequest.username.isEmpty {
-            return FieldValidationViewModel(message: Strings.FieldValidationMessages.usernameEmpty, type: .regular)
-        } else if userRequest.password.isEmpty {
-            return FieldValidationViewModel(message: Strings.FieldValidationMessages.passwordEmpty, type: .password)
-        } else if userRequest.confirmPassword.isEmpty {
-            return FieldValidationViewModel(message: Strings.FieldValidationMessages.confirmPasswordEmpty, type: .passwordConfirm)
-        } else if userRequest.password != userRequest.confirmPassword {
-            return FieldValidationViewModel(message: Strings.FieldValidationMessages.passwordsDoNotMatch, type: .passwordConfirm)
-        }  else { return nil }
-    }
+//    private func validateFields(userRequest: RegisterUserRequest) -> FieldValidationViewModel? {
+//        if userRequest.email.isEmpty {
+//            return FieldValidationViewModel(message: Strings.FieldValidationMessages.emailEmpty, type: .email)
+//        } else if !emailValidator.isValid(email: userRequest.email) {
+//            return FieldValidationViewModel(message: Strings.FieldValidationMessages.emailInvalid, type: .email)
+//        } else if userRequest.username.isEmpty {
+//            return FieldValidationViewModel(message: Strings.FieldValidationMessages.usernameEmpty, type: .regular)
+//        } else if userRequest.password.isEmpty {
+//            return FieldValidationViewModel(message: Strings.FieldValidationMessages.passwordEmpty, type: .password)
+//        } else if userRequest.confirmPassword.isEmpty {
+//            return FieldValidationViewModel(message: Strings.FieldValidationMessages.confirmPasswordEmpty, type: .passwordConfirm)
+//        } else if userRequest.password != userRequest.confirmPassword {
+//            return FieldValidationViewModel(message: Strings.FieldValidationMessages.passwordsDoNotMatch, type: .passwordConfirm)
+//        }  else { return nil }
+//    }
     
     private func showAlert(title: String, message: String) {
         let alertViewModel = AlertViewModel(title: title, message: message)

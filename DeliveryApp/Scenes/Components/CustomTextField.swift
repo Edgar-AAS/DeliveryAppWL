@@ -191,4 +191,10 @@ extension CustomTextField: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return fieldDelegate?.textFieldShouldReturn?(textField) ?? true
     }
+    
+    func resetField() {
+        layer.borderColor = Colors.grayBorder.cgColor
+        text = ""
+        feedbackLabel.text = ""
+    }
 }

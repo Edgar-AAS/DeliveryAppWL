@@ -59,7 +59,11 @@ extension RegisterViewController: RegisterScreenDelegate {
 //MARK: - UITextFieldDelegate
 extension RegisterViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        customView.goToNextField(textField)
+        customView.goToNextField(textField) { [weak self] in
+            if let registerRequest = self?.customView.getRegisterUserRequest() {
+                self?.viewModel.createUser(userRequest: registerRequest)
+            }
+        }
         return true
     }
 }

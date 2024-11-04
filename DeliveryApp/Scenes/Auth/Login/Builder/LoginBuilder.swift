@@ -11,11 +11,18 @@ class LoginBuilder {
                                     headers: ["Content-Type": "application/json"])
         }
         
-        let emailValidator: EmailValidaton = EmailValidator()
+        
+        let emailValidator = EmailValidatorAdapter()
+        
+        let validatorComposite = ValidationComposite(validations: [
+            RequiredFieldValidator(fieldName: "email", fieldLabel: "Email", fieldType: .email),
+            EmailFieldValidator(fieldName: "email", fieldLabel: "Email", fieldType: .email, emailValidator: emailValidator),
+            RequiredFieldValidator(fieldName: "password", fieldLabel: "Senha", fieldType: .password)
+        ])
         
         let viewModel = LoginViewModel(
             userAccountLogin: userAccountLogin,
-            emailValidation: emailValidator)
+            validatorComposite: validatorComposite)
         
         let viewController = LoginViewController(viewModel: viewModel)
         viewModel.alertView = viewController

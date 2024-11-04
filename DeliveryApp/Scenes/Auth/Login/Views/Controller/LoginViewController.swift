@@ -38,6 +38,11 @@ class LoginViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         hideNavigationBar()
+        resetTextFields()
+    }
+    
+    private func resetTextFields() {
+        customView.clearFields()
     }
     
     private func configure() {
