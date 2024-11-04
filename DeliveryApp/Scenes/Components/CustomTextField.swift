@@ -124,7 +124,7 @@ final class CustomTextField: UITextField {
         isHide = !isHide
     }
     
-    func setDescriptionField(viewModel: FieldValidationViewModel) {
+    func setDescriptionField(viewModel: ValidationFieldModel) {
         if fieldType != viewModel.type {
             feedbackLabel.isHidden = true
             return

@@ -42,7 +42,7 @@ class LoginViewController: UIViewController {
     }
     
     private func resetTextFields() {
-        customView.clearFields()
+        customView.resetTextFieldState()
     }
     
     private func configure() {
@@ -93,7 +93,7 @@ extension LoginViewController: UITextFieldDelegate {
 
 //MARK: - FieldValidationDelegate
 extension LoginViewController: FieldValidationDelegate {
-    func showMessage(viewModel: FieldValidationViewModel) {
+    func display(viewModel: ValidationFieldModel) {
         customView.setupValidationErrors(viewModel: viewModel)
     }
 }

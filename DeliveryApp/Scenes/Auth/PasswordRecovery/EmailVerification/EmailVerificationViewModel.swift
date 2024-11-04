@@ -3,7 +3,6 @@ import Foundation
 protocol EmailVerificationViewModelProtocol {
     func sendPasswordReset()
     func checkOtpCode(_ otpCode: String)
-    func goToResetPassword()
     var getEmailAdress: String { get }
     var timerOutput: Observable<String> { get }
     var isTimerRunning: Observable<Bool> { get }
@@ -63,11 +62,7 @@ class EmailVerificationViewModel: EmailVerificationViewModelProtocol {
             }
         }
     }
-    
-    func goToResetPassword() {
-//        coordinator.eventOcurred(type: .goToResetPassword)
-    }
-    
+        
     private func timeFormatted(_ totalSeconds: Int) {
         let seconds: Int = totalSeconds % 60
         let minutes: Int = (totalSeconds / 60) % 60

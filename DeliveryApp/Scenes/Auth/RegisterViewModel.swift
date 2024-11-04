@@ -21,7 +21,7 @@ final class RegisterViewModel: RegisterViewModelProtocol{
     //MARK: - createUsers
     func createUser(userRequest: RegisterUserRequest) {
         if let validationFieldModel = validatorComposite.validate(data: userRequest.toJson()) {
-            print(validationFieldModel)
+            fieldValidationDelegate?.display(viewModel: validationFieldModel)
             return
         }
         
@@ -48,7 +48,7 @@ final class RegisterViewModel: RegisterViewModelProtocol{
                     self?.alertView?.showMessage(viewModel: AlertViewModel(title: "Conta Criada",
                                                                            message: accountStatusResponse.message))
                     self?.createdAccountCallBack?()
-                case .failure(let error):
+                case .failure(_):
                     self?.loadingHandler?(.init(isLoading: false))
                     self?.alertView?.showMessage(viewModel: AlertViewModel(
                         title: "Erro",
@@ -60,22 +60,6 @@ final class RegisterViewModel: RegisterViewModelProtocol{
     func toggleTerms(assined: Bool) {
         hasAssignedTerms = assined
     }
-    
-//    private func validateFields(userRequest: RegisterUserRequest) -> FieldValidationViewModel? {
-//        if userRequest.email.isEmpty {
-//            return FieldValidationViewModel(message: Strings.FieldValidationMessages.emailEmpty, type: .email)
-//        } else if !emailValidator.isValid(email: userRequest.email) {
-//            return FieldValidationViewModel(message: Strings.FieldValidationMessages.emailInvalid, type: .email)
-//        } else if userRequest.username.isEmpty {
-//            return FieldValidationViewModel(message: Strings.FieldValidationMessages.usernameEmpty, type: .regular)
-//        } else if userRequest.password.isEmpty {
-//            return FieldValidationViewModel(message: Strings.FieldValidationMessages.passwordEmpty, type: .password)
-//        } else if userRequest.confirmPassword.isEmpty {
-//            return FieldValidationViewModel(message: Strings.FieldValidationMessages.confirmPasswordEmpty, type: .passwordConfirm)
-//        } else if userRequest.password != userRequest.confirmPassword {
-//            return FieldValidationViewModel(message: Strings.FieldValidationMessages.passwordsDoNotMatch, type: .passwordConfirm)
-//        }  else { return nil }
-//    }
     
     private func showAlert(title: String, message: String) {
         let alertViewModel = AlertViewModel(title: title, message: message)

@@ -134,7 +134,6 @@
 		D3C99C1F2CD961D20052DBBB /* ValidationComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C99C1E2CD961D20052DBBB /* ValidationComposite.swift */; };
 		D3CEA0662CC4741B00F2C4C4 /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CEA0652CC4741B00F2C4C4 /* LoadingState.swift */; };
 		D3CEA0682CC474C100F2C4C4 /* UserAccountLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CEA0672CC474C100F2C4C4 /* UserAccountLogin.swift */; };
-		D3CEA06A2CC4776A00F2C4C4 /* AccountLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CEA0692CC4776A00F2C4C4 /* AccountLoginUseCase.swift */; };
 		D3D0EC212C234F06004D4FB0 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0EC202C234F06004D4FB0 /* CustomNavigationController.swift */; };
 		D3EA6F672C9FD60F00298675 /* ProductDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EA6F662C9FD60F00298675 /* ProductDetailsHeader.swift */; };
 		D3EA6F6C2CA45E1C00298675 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EA6F6B2CA45E1C00298675 /* SectionHeader.swift */; };
@@ -303,7 +302,6 @@
 		D3C99C1E2CD961D20052DBBB /* ValidationComposite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationComposite.swift; sourceTree = "<group>"; };
 		D3CEA0652CC4741B00F2C4C4 /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
 		D3CEA0672CC474C100F2C4C4 /* UserAccountLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountLogin.swift; sourceTree = "<group>"; };
-		D3CEA0692CC4776A00F2C4C4 /* AccountLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLoginUseCase.swift; sourceTree = "<group>"; };
 		D3D0EC202C234F06004D4FB0 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		D3EA6F662C9FD60F00298675 /* ProductDetailsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsHeader.swift; sourceTree = "<group>"; };
 		D3EA6F6B2CA45E1C00298675 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
@@ -936,7 +934,6 @@
 			children = (
 				D329D8972C7FA7ED00EB2733 /* LoginScreenDelegate.swift */,
 				D329D8952C7FA7AA00EB2733 /* LoginViewModelProtocol.swift */,
-				D3CEA0692CC4776A00F2C4C4 /* AccountLoginUseCase.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1425,7 +1422,6 @@
 				D30CE3FE2CB9CDCE0070AD73 /* FetchProductDetails.swift in Sources */,
 				D329D8982C7FA7ED00EB2733 /* LoginScreenDelegate.swift in Sources */,
 				D3ABE7FB2C403782006D74F9 /* ProductDetailsBuilder.swift in Sources */,
-				D3CEA06A2CC4776A00F2C4C4 /* AccountLoginUseCase.swift in Sources */,
 				D30CE3F82CB9BBAE0070AD73 /* ProductDetailsViewModelProtocol.swift in Sources */,
 				D3AABB432CC2E82C000234E4 /* FetchPaginatedProducts.swift in Sources */,
 				D38DF5182C93D8A4006131EF /* ProductCellViewData.swift in Sources */,

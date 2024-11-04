@@ -150,7 +150,7 @@ final class LoginScreen: UIView {
         }
     }
     
-    func clearFields() {
+    func resetTextFieldState() {
         emailTextField.becomeFirstResponder()
         emailTextField.resetField()
         passwordTextField.resetField()
@@ -163,7 +163,7 @@ final class LoginScreen: UIView {
         return LoginCredential(email: email, password: password)
     }
     
-    func setupValidationErrors(viewModel: FieldValidationViewModel) {
+    func setupValidationErrors(viewModel: ValidationFieldModel) {
         emailTextField.setDescriptionField(viewModel: viewModel)
         passwordTextField.setDescriptionField(viewModel: viewModel)
     }

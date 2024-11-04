@@ -70,7 +70,7 @@ extension RegisterViewController: UITextFieldDelegate {
 
 //MARK: - FieldValidationDelegate
 extension RegisterViewController: FieldValidationDelegate {
-    func showMessage(viewModel: FieldValidationViewModel) {
+    func display(viewModel: ValidationFieldModel) {
         customView.setupValidationErrors(viewModel: viewModel)
     }
 }

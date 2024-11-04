@@ -1,6 +1,6 @@
 import Foundation
 
-class LoginViewModel: LoginViewModelProtocol {
+final class LoginViewModel: LoginViewModelProtocol {
     //MARK: - Properties
     var loadingHandler: ((LoadingState) -> ())?
     var onLoginSuccess: (() -> Void)?
@@ -20,7 +20,7 @@ class LoginViewModel: LoginViewModelProtocol {
     //MARK: - signIn
     func signIn(credential: LoginCredential) {
         if let fieldValidatorModel = validatorComposite.validate(data: credential.toJson()) {
-            print(fieldValidatorModel)
+            fieldValidationDelegate?.display(viewModel: fieldValidatorModel)
         } else {
             loadingHandler?(LoadingState(isLoading: true))
             
@@ -46,27 +46,4 @@ class LoginViewModel: LoginViewModelProtocol {
             }
         }
     }
-}
-
-//MARK: - validateFields
-extension LoginViewModel {
-//    private func validateFields(loginRequest: LoginCredential) -> FieldValidationViewModel? {
-//        if let emailError = validateEmail(loginRequest.email) {
-//            return emailError
-//        }
-//        
-//        if loginRequest.password.isEmpty {
-//            return FieldValidationViewModel(message: Strings.FieldValidationMessages.passwordEmpty, type: .password)
-//        }
-//        return nil
-//    }
-//    
-//    private func validateEmail(_ email: String) -> FieldValidationViewModel? {
-//        if email.isEmpty {
-//            return FieldValidationViewModel(message: Strings.FieldValidationMessages.emailEmpty, type: .email)
-//        } else if !emailValidator.isValid(email: email) {
-//            return FieldValidationViewModel(message: Strings.FieldValidationMessages.emailInvalid, type: .email)
-//        }
-//        return nil
-//    }
 }

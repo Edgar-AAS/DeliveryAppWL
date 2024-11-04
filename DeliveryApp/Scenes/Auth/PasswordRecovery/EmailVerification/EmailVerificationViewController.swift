@@ -108,6 +108,6 @@ extension EmailVerificationViewController: UITextFieldDelegate {
 //MARK: - Delegate Actions
 extension EmailVerificationViewController: EmailVerificationScreenDelegateProtocol {
     func continueButtonDidTapped() {
-        viewModel.goToResetPassword()
+        
     }
 }

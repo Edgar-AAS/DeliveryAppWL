@@ -254,10 +254,9 @@ final class RegisterScreen: UIView {
         return registerRequest
     }
     
-    func setupValidationErrors(viewModel: FieldValidationViewModel) {
+    func setupValidationErrors(viewModel: ValidationFieldModel) {
         emailTextField.setDescriptionField(viewModel: viewModel)
         userNameTextField.setDescriptionField(viewModel: viewModel)
-        phoneTextField.setDescriptionField(viewModel: viewModel)
         passwordTextField.setDescriptionField(viewModel: viewModel)
         passwordConfirmTextField.setDescriptionField(viewModel: viewModel)
     }

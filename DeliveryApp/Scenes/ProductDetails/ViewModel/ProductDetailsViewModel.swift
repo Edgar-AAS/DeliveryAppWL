@@ -88,7 +88,7 @@ extension ProductDetailsViewModel {
         delegate?.productDetailsViewModel(self, didUpdateTotalAmount: valueInfo)
         updateRequiredOptionsStatus()
     }
-
+    
     private func getOrderPrice() -> Double {
         var total: Double = .zero
         
@@ -142,7 +142,7 @@ extension ProductDetailsViewModel {
     func getNumberOfSections() -> Int {
         return activeSections?.count ?? .zero
     }
-        
+    
     func getNumberOfItemsBySection(_ section: Int) -> Int {
         return activeSections?[section].items.count ?? .zero
     }
@@ -278,15 +278,15 @@ extension ProductDetailsViewModel {
 //MARK: - HeaderView DataSource
 extension ProductDetailsViewModel {
     private func updateHeaderView(with data: ProductDetailsResponse) {
-            let viewData = ProductHeaderViewData(
-                name: data.name,
-                description: data.description,
-                basePrice: data.price,
-                deliveryFee: data.deliveryFee,
-                rating: data.rating,
-                images: data.images
-            )
-            delegate?.productDetailsViewModel(self, didUpdateHeaderWith: viewData)
+        let viewData = ProductHeaderViewData(
+            name: data.name,
+            description: data.description,
+            basePrice: data.price,
+            deliveryFee: data.deliveryFee,
+            rating: data.rating,
+            images: data.images
+        )
+        delegate?.productDetailsViewModel(self, didUpdateHeaderWith: viewData)
     }
 }
 
@@ -321,7 +321,7 @@ extension ProductDetailsViewModel {
             requiredAdditionalItemsCount
         ) ? .done : .pending
     }
-
+    
     
     private func areAllRequiredOptionsSelected(sections: [Section], _ requiredSideItemSections: Int, _ requiredAdditionalItemsSections: Int) -> Bool {
         let requiredSideItemsSectionsCount = sections.filter { $0.isRequired && $0.isSideItem }.count
@@ -332,7 +332,7 @@ extension ProductDetailsViewModel {
     }
 }
 
-// MARK: - Mappers
+//MARK: - Mappers
 extension ProductDetailsViewModel {
     private func productItemCellViewDataMapper(item: Item, isRemovable: Bool) -> ProductItemCellViewData {
         .init(

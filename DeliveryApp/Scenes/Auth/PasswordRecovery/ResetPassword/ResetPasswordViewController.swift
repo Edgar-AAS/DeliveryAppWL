@@ -16,7 +16,7 @@ class ResetPasswordViewController: UIViewController {
 }
 
 extension ResetPasswordViewController: FieldValidationDelegate {
-    func showMessage(viewModel: FieldValidationViewModel) {
+    func display(viewModel: ValidationFieldModel) {
         
     }
 }
