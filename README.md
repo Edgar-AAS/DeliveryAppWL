@@ -12,12 +12,10 @@ DeliveryApp é um projeto white label para mobile desenvolvido em Swift, com o o
 <img src="https://github.com/user-attachments/assets/de2e9d19-ad3a-4b46-94eb-83cfdcf50da1" width="150"/>
 <img src="https://github.com/user-attachments/assets/49b85e73-1d7a-40d4-b7b8-7ea5063a95a0" width="150"/>
 
-
 # 🛠 Tecnologias e Arquitetura
   * Linguagem: Swift
   * Arquitetura: MVVM-C (Model-View-ViewModel-Coordinator)
-  * Construção de UI: ViewCode, sem uso de Storyboards
-  * Persistência de Dados: Realm e UserDefaults
+  * Construção de UI: ViewCode, sem uso de Storyboards ou Xibs
   * Testes Unitários: XCTest, cobrindo funcionalidades principais
   *  Design Patterns: Aplicação de padrões como Factory e Composite para promover reutilização e manutenção de código
 
