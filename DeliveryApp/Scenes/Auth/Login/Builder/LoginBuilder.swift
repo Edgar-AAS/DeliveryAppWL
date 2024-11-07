@@ -12,7 +12,7 @@ class LoginBuilder {
         }
         
         
-        let emailValidator = EmailValidatorAdapter()
+        let emailValidator = EmailValidator()
         
         let validatorComposite = ValidationComposite(validations: [
             RequiredFieldValidator(fieldName: "email", fieldLabel: "Email", fieldType: .email),

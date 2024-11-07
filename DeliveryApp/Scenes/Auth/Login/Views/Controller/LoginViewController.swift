@@ -99,7 +99,7 @@ extension LoginViewController: FieldValidationDelegate {
 }
 
 //MARK: - AlertView
-extension LoginViewController: AlertView {
+extension LoginViewController: AlertViewProtocol {
     func showMessage(viewModel: AlertViewModel) {
         let alert = makeAlertVIew(title: viewModel.title, message: viewModel.message)
         present(alert, animated: true)

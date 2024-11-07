@@ -261,7 +261,7 @@ final class RegisterScreen: UIView {
         passwordConfirmTextField.setDescriptionField(viewModel: viewModel)
     }
     
-    func handleLoadingView(with state: LoadingState) {
+    func handleLoadingView(with state: LoadingStateModel) {
         loadingView.handleLoading(with: state)
     }
 }
@@ -359,5 +359,9 @@ extension RegisterScreen: CodeView {
             loadingView.trailingAnchor.constraint(equalTo: trailingAnchor),
             loadingView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+    }
+    
+    func setupAdditionalConfiguration() {
+        emailTextField.becomeFirstResponder()
     }
 }

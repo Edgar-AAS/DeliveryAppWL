@@ -1,9 +1,9 @@
 import Foundation
 @testable import DeliveryApp
 
-class EmailValidatorSpy: EmailValidaton {
-    private (set)var isValid: Bool = true
-    private (set)var email: String = ""
+class EmailValidatorSpy: EmailValidationProtocol {
+    private(set)var isValid: Bool = true
+    private(set)var email: String = ""
     
     func isValid(email: String) -> Bool {
         self.email = email
@@ -14,7 +14,7 @@ class EmailValidatorSpy: EmailValidaton {
         isValid = true
     }
     
-    func completeWithFailure() {
+    func simulateError() {
         isValid = false
     }
 }

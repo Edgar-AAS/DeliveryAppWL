@@ -3,17 +3,17 @@ import Foundation
 final class RegisterViewModel: RegisterViewModelProtocol{
     private var hasAssignedTerms = false
     
-    var loadingHandler: ((LoadingState) -> ())?
+    var loadingHandler: ((LoadingStateModel) -> ())?
     var createdAccountCallBack: (() -> Void)?
     
-    weak var alertView: AlertView?
+    weak var alertView: AlertViewProtocol?
     weak var fieldValidationDelegate: FieldValidationDelegate?
     
     private let createAccount: CreateAccountUseCase
-    private let validatorComposite: Validation
+    private let validatorComposite: ValidationProtocol
     
     //MARK: - Initializers
-    init(validatorComposite: Validation, createAccount: CreateAccountUseCase) {
+    init(validatorComposite: ValidationProtocol, createAccount: CreateAccountUseCase) {
         self.createAccount = createAccount
         self.validatorComposite = validatorComposite
     }

@@ -83,7 +83,7 @@ extension RegisterViewController: CheckBoxDelegate {
 }
 
 //MARK: - AlertView
-extension RegisterViewController: AlertView {
+extension RegisterViewController: AlertViewProtocol {
     func showMessage(viewModel: AlertViewModel) {
         let alert = makeAlertVIew(title: viewModel.title, message: viewModel.message)
         present(alert, animated: true)

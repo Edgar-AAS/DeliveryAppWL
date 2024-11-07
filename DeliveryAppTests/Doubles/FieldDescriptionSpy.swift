@@ -2,13 +2,13 @@ import Foundation
 @testable import DeliveryApp
 
 class FieldDescriptionSpy: FieldValidationDelegate {
-    private(set) var emit: ((FieldValidationViewModel) -> Void)?
+    private(set) var emit: ((ValidationFieldModel) -> Void)?
     
-    func observe(completion: @escaping (FieldValidationViewModel) -> Void) {
+    func observe(completion: @escaping (ValidationFieldModel) -> Void) {
         self.emit = completion
     }
-
-    func showMessage(viewModel: DeliveryApp.FieldValidationViewModel) {
+    
+    func display(viewModel: ValidationFieldModel) {
         self.emit?(viewModel)
     }
 }

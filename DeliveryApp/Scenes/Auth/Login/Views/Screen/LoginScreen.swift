@@ -168,7 +168,7 @@ final class LoginScreen: UIView {
         passwordTextField.setDescriptionField(viewModel: viewModel)
     }
     
-    func handleLoadingView(with state: LoadingState) {
+    func handleLoadingView(with state: LoadingStateModel) {
         loadingView.handleLoading(with: state)
     }
 }

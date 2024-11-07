@@ -13,7 +13,7 @@ class RegisterBuilder {
             )
         }
         
-        let emailValidator = EmailValidatorAdapter()
+        let emailValidator = EmailValidator()
         
         let validatorComposite = ValidationComposite(validations: [
             RequiredFieldValidator(fieldName: "email", fieldLabel: "Email", fieldType: .email),
@@ -21,7 +21,7 @@ class RegisterBuilder {
             RequiredFieldValidator(fieldName: "username", fieldLabel: "Nome de Usuário", fieldType: .regular),
             RequiredFieldValidator(fieldName: "password", fieldLabel: "Senha", fieldType: .password),
             RequiredFieldValidator(fieldName: "confirmPassword", fieldLabel: "Confirmação de Senha", fieldType: .passwordConfirm),
-            CompareFieldsValidator(fieldName: "confirmPassword", fieldLabel: "Senha", fieldNameToCompare: "password", fieldLabelToCompare: "Confirmação de Senha", fieldType: .passwordConfirm)
+            CompareFieldsValidator(fieldName: "confirmPassword", fieldLabel: "Senha", fieldNameToCompare: "password", fieldType: .passwordConfirm)
         ])
         
         let viewModel = RegisterViewModel(validatorComposite: validatorComposite, createAccount: createAccountUseCase)

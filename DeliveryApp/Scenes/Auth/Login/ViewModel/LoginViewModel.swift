@@ -2,17 +2,17 @@ import Foundation
 
 final class LoginViewModel: LoginViewModelProtocol {
     //MARK: - Properties
-    var loadingHandler: ((LoadingState) -> ())?
+    var loadingHandler: ((LoadingStateModel) -> ())?
     var onLoginSuccess: (() -> Void)?
     
-    private let validatorComposite: Validation
+    private let validatorComposite: ValidationProtocol
     private let userAccountLogin: AccountLoginUseCase
     
     weak var fieldValidationDelegate: FieldValidationDelegate?
-    weak var alertView: AlertView?
+    weak var alertView: AlertViewProtocol?
     
     //MARK: - Initializers
-    init(userAccountLogin: AccountLoginUseCase, validatorComposite: Validation) {
+    init(userAccountLogin: AccountLoginUseCase, validatorComposite: ValidationProtocol) {
         self.userAccountLogin = userAccountLogin
         self.validatorComposite = validatorComposite
     }
@@ -22,15 +22,15 @@ final class LoginViewModel: LoginViewModelProtocol {
         if let fieldValidatorModel = validatorComposite.validate(data: credential.toJson()) {
             fieldValidationDelegate?.display(viewModel: fieldValidatorModel)
         } else {
-            loadingHandler?(LoadingState(isLoading: true))
+            loadingHandler?(LoadingStateModel(isLoading: true))
             
             userAccountLogin.login(with: credential) { [weak self] result in
                 switch result {
                 case .success(_):
-                    self?.loadingHandler?(LoadingState(isLoading: false))
+                    self?.loadingHandler?(LoadingStateModel(isLoading: false))
                     self?.onLoginSuccess?()
                 case .failure(let httpError):
-                    self?.loadingHandler?(LoadingState(isLoading: false))
+                    self?.loadingHandler?(LoadingStateModel(isLoading: false))
                     switch httpError {
                     case .badRequest:
                         self?.alertView?.showMessage(
