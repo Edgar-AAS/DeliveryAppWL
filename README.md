@@ -1,3 +1,5 @@
+[![Language](https://img.shields.io/badge/Swift-5.0-brightgreen.svg)](http://swift.org)
+[![Xcode](https://img.shields.io/badge/Xcode-16.1-brightgreen.svg)](https://developer.apple.com/download/more/)
 ![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
 
 # 🍔 DeliveryAppWL - Aplicação de Delivery Personalizável
