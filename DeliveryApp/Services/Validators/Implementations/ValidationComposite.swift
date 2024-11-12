@@ -1,6 +1,6 @@
 import Foundation
 
-class ValidationComposite: ValidationProtocol {
+final class ValidationComposite: ValidationProtocol {
     private let validations: [ValidationProtocol]
     
     init(validations: [ValidationProtocol]) {

@@ -11,10 +11,26 @@ class RegisterCoordinator: Coordinator {
     
     func start() {
         let registerViewController = RegisterBuilder.build()
+        
         registerViewController.routeToLoginCallBack = { [weak self] in
             self?.navigateToLogin()
         }
+        
+        registerViewController.routeToSuccessScreenCallBack = { [weak self] in
+            self?.navigateToSuccessScreen()
+        }
+        
         navigationController.pushViewController(registerViewController, animated: true)
+    }
+    
+    func navigateToSuccessScreen() {
+        let successViewController = RegisterSucceedBuilder.build()
+        
+        successViewController.routeToLoginCallback = { [weak self] in
+            self?.navigationController.popToViewController(ofClass: LoginViewController.self)
+        }
+        
+        navigationController.pushViewController(successViewController, animated: true)
     }
     
     func navigateToLogin() {

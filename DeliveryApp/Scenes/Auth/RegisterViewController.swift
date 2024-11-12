@@ -1,7 +1,7 @@
 import UIKit
 
 class RegisterViewController: UIViewController {
-//MARK: - Properties
+    //MARK: - Properties
     private lazy var customView: RegisterScreen = {
         guard let view = view as? RegisterScreen else {
             fatalError("View is not of type RegisterScreen")
@@ -10,9 +10,11 @@ class RegisterViewController: UIViewController {
     }()
     
     var routeToLoginCallBack: (() -> Void)?
+    var routeToSuccessScreenCallBack: (() -> Void)?
+    
     var viewModel: RegisterViewModelProtocol
     
-//MARK: - Initializers
+    //MARK: - Initializers
     init(viewModel: RegisterViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -22,17 +24,24 @@ class RegisterViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-//MARK: - Lifecycle
+    //MARK: - Lifecycle
     override func loadView() {
         super.loadView()
-        view = RegisterScreen(delegate: self,
-                              textFieldDelegate: self,
-                              checkBoxDelegate: self
+        
+        view = RegisterScreen(
+            delegate: self,
+            textFieldDelegate: self,
+            checkBoxDelegate: self
         )
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        viewModel.createdAccountCallBack = { [weak self] in
+            self?.routeToSuccessScreenCallBack?()
+        }
+        
         viewModel.loadingHandler = { [weak self] loadingState in
             self?.customView.handleLoadingView(with: loadingState)
         }
@@ -41,6 +50,12 @@ class RegisterViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         hideNavigationBar()
+    }
+    
+    private func registerAccount() {
+        if let registerRequest = customView.getRegisterUserRequest() {
+            viewModel.createAccount(userRequest: registerRequest)
+        }
     }
 }
 
@@ -51,8 +66,7 @@ extension RegisterViewController: RegisterScreenDelegate {
     }
     
     func registerButtonDidTapped() {
-        guard let registerRequest = customView.getRegisterUserRequest() else { return }
-        viewModel.createUser(userRequest: registerRequest)
+        registerAccount()
     }
 }
 
@@ -60,9 +74,7 @@ extension RegisterViewController: RegisterScreenDelegate {
 extension RegisterViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         customView.goToNextField(textField) { [weak self] in
-            if let registerRequest = self?.customView.getRegisterUserRequest() {
-                self?.viewModel.createUser(userRequest: registerRequest)
-            }
+            self?.registerAccount()
         }
         return true
     }
@@ -85,8 +97,7 @@ extension RegisterViewController: CheckBoxDelegate {
 //MARK: - AlertView
 extension RegisterViewController: AlertViewProtocol {
     func showMessage(viewModel: AlertViewModel) {
-        let alert = makeAlertVIew(title: viewModel.title, message: viewModel.message)
-        present(alert, animated: true)
+        showAlertView(title: viewModel.title, message: viewModel.message)
     }
 }
 

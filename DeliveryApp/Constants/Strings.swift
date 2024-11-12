@@ -2,16 +2,31 @@ import Foundation
 
 
 struct Strings {
-    struct AlertViewMessages {
-        static let errorTitle = "Erro"
-        static let errorMessage = "Algo inesperado aconteceu, tente novamente em instantes."
-        static let validationFailureTitle = "Falha na validação"
-        static let validationFailureDescription = "Para criar sua conta, confirme que você leu e concorda com os Termos de Serviço."
+    struct RegistrationAccount {
+        struct Success {
+            static let title = "Sua conta foi criada!"
+            static let description = "Agora você pode entrar em sua conta com email e senha cadastradas."
+            static let verifyAccountTitle = "Verificar conta."
+        }
+        
+        struct Failure {
+            static let unexpectedError = "Não foi possível criar a conta, tente novamente em instantes."
+            static let validationFailureTitle = "Falha na validação."
+            static let unsignedTerms = "Para criar sua conta, confirme que você leu e concorda com os Termos de Serviço."
+        }
     }
-
-    struct RegistrationSuccess {
-        static let title = "Sua conta foi Criada!"
-        static let description = "Agora você pode entrar em sua conta com email e senha cadastradas."
-        static let buttonTitle = "Verificar conta"
+    
+    struct LoginAccount {
+        struct Failure {
+            static let invalidCredentials = "Email e/ou senha inválidos."
+        }
+    }
+    
+    struct NetworkErrorMessages {
+        static let noConnectivity = "Você está offline. Por favor, verifique sua conexão de internet."
+        static let serverError = "O servidor está temporariamente indisponível. Tente novamente mais tarde."
+        static let timeout = "A conexão está demorando muito. Por favor, tente novamente."
+        static let unexpectedError = "Ocorreu um erro inesperado. Tente novamente."
+        static let errorTitle = "Erro"
     }
 }

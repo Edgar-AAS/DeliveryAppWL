@@ -1,6 +1,6 @@
 import Foundation
 
-class RequiredFieldValidator: ValidationProtocol {
+final class RequiredFieldValidator: ValidationProtocol {
     private let fieldName: String
     private let fieldLabel: String
     private let fieldType: FieldType

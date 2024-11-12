@@ -1,7 +1,7 @@
 import Foundation
 
 protocol LoginViewModelProtocol {
-    func signIn(credential: LoginCredential)
+    func login(credential: LoginCredential)
     var onLoginSuccess: (() -> Void)? { get set }
     var loadingHandler: ((LoadingStateModel) -> ())? { get set }
 }

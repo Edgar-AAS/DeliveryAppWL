@@ -1,6 +1,6 @@
 import UIKit
 
-class RegisterSucceedViewController: UIViewController {
+final class RegisterSucceedViewController: UIViewController {
 //MARK: - Properties
     private lazy var customView: RegisterSucceedScreen = {
         guard let view = view as? RegisterSucceedScreen else {
@@ -8,6 +8,8 @@ class RegisterSucceedViewController: UIViewController {
         }
         return view
     }()
+    
+    var routeToLoginCallback: (() -> Void)?
     
     private let viewModel: RegisterSucceedViewModelProtocol
     
@@ -30,11 +32,7 @@ class RegisterSucceedViewController: UIViewController {
 
 //MARK: - RegistrationSuccessScreenDelegate
 extension RegisterSucceedViewController: RegisterSucceedScreenDelegate {
-    func handleButtonDidTapped(_ view: RegisterSucceedScreen) {
-        
-    }
-    
-    func handleButtonDidTapped() {
-        viewModel.goToLogin()
+    func verifyAccountButtonDidTapped(_ view: RegisterSucceedScreen) {
+        routeToLoginCallback?()
     }
 }

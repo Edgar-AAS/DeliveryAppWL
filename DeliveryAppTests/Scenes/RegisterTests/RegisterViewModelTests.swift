@@ -13,13 +13,7 @@ final class RegisterViewModelTests: XCTestCase {
         )
         
         sut.toggleTerms(assined: true)
-        sut.createUser(userRequest: makeRegisterUserRequest(
-            email: "any_email@gmail.com",
-            username: "any_name",
-            password: "any_password",
-            confirmPassword: "any_password"
-        ))
-        
+        sut.createAccount(userRequest: makeRegisterUserRequest())
         XCTAssertEqual(createAccountSpy.userRequest, accountModel)
     }
     
@@ -36,7 +30,7 @@ final class RegisterViewModelTests: XCTestCase {
         }
         
         sut.toggleTerms(assined: true)
-        sut.createUser(userRequest: makeRegisterUserRequest())
+        sut.createAccount(userRequest: makeRegisterUserRequest())
         userRegisterSpy.completeWithFailure(httpError: .badRequest)
         
         wait(for: [exp], timeout: 1)
@@ -55,7 +49,7 @@ final class RegisterViewModelTests: XCTestCase {
         }
         
         validationSpy.simulateError(ValidationFieldModel(message: "O campo E-mail é obrigatório", type: .email))
-        sut.createUser(userRequest: makeRegisterUserRequest(email: ""))
+        sut.createAccount(userRequest: makeRegisterUserRequest(email: ""))
         wait(for: [exp], timeout: 1)
     }
     
@@ -73,7 +67,7 @@ final class RegisterViewModelTests: XCTestCase {
         
         validationSpy.simulateError(ValidationFieldModel(message: "O campo E-mail é obrigatório", type: .email))
         
-        sut.createUser(userRequest: makeRegisterUserRequest(email: "", password: "any_password"))
+        sut.createAccount(userRequest: makeRegisterUserRequest(email: "", password: "any_password"))
         wait(for: [exp], timeout: 1)
     }
     
@@ -90,7 +84,7 @@ final class RegisterViewModelTests: XCTestCase {
         }
         
         validationSpy.simulateError(ValidationFieldModel(message: "O campo E-mail está inválido", type: .email))
-        sut.createUser(userRequest: makeRegisterUserRequest(email: "invalid.email", password: ""))
+        sut.createAccount(userRequest: makeRegisterUserRequest(email: "invalid.email", password: ""))
         
         wait(for: [exp], timeout: 1)
     }
@@ -108,7 +102,7 @@ final class RegisterViewModelTests: XCTestCase {
         }
         
         validationSpy.simulateError(ValidationFieldModel(message: "O campo E-mail está inválido", type: .email))
-        sut.createUser(userRequest: makeRegisterUserRequest(email: "invalid.email", password: "any_password"))
+        sut.createAccount(userRequest: makeRegisterUserRequest(email: "invalid.email", password: "any_password"))
         wait(for: [exp], timeout: 1)
     }
     
@@ -127,7 +121,7 @@ final class RegisterViewModelTests: XCTestCase {
         
         validationSpy.simulateError(ValidationFieldModel(message: "O campo Nome é obrigatório", type: .regular))
         
-        sut.createUser(userRequest: makeRegisterUserRequest(username: ""))
+        sut.createAccount(userRequest: makeRegisterUserRequest(username: ""))
         
         wait(for: [exp], timeout: 1)
     }
@@ -145,7 +139,7 @@ final class RegisterViewModelTests: XCTestCase {
         }
         
         validationSpy.simulateError(ValidationFieldModel(message: "O campo Senha é obrigatório", type: .password))
-        sut.createUser(userRequest: makeRegisterUserRequest(password: ""))
+        sut.createAccount(userRequest: makeRegisterUserRequest(password: ""))
         wait(for: [exp], timeout: 1)
     }
     
@@ -164,7 +158,7 @@ final class RegisterViewModelTests: XCTestCase {
         
         validationSpy.simulateError(ValidationFieldModel(message: "O campo Confirmação de senha é obrigatório", type: .passwordConfirm))
         
-        sut.createUser(userRequest: makeRegisterUserRequest(confirmPassword: ""))
+        sut.createAccount(userRequest: makeRegisterUserRequest(confirmPassword: ""))
         wait(for: [exp], timeout: 1)
     }
     
@@ -182,7 +176,7 @@ final class RegisterViewModelTests: XCTestCase {
         
         validationSpy.simulateError(ValidationFieldModel(message: "Os campos de senha devem coincidir", type: .passwordConfirm))
         
-        sut.createUser(userRequest: makeRegisterUserRequest(password: "123456", confirmPassword: "5445667"))
+        sut.createAccount(userRequest: makeRegisterUserRequest(password: "123456", confirmPassword: "5445667"))
         wait(for: [exp], timeout: 1)
     }
     
@@ -199,7 +193,7 @@ final class RegisterViewModelTests: XCTestCase {
             exp.fulfill()
         }
         
-        sut.createUser(userRequest: makeRegisterUserRequest())
+        sut.createAccount(userRequest: makeRegisterUserRequest())
         wait(for: [exp], timeout: 1)
     }
     
@@ -215,7 +209,7 @@ final class RegisterViewModelTests: XCTestCase {
         }
         
         sut.toggleTerms(assined: true)
-        sut.createUser(userRequest: makeRegisterUserRequest())
+        sut.createAccount(userRequest: makeRegisterUserRequest())
         userRegisterSpy.completeWithFailure(httpError: .badRequest)
         
         wait(for: [exp], timeout: 1)
@@ -234,7 +228,7 @@ final class RegisterViewModelTests: XCTestCase {
         }
         
         sut.toggleTerms(assined: true)
-        sut.createUser(userRequest: makeRegisterUserRequest())
+        sut.createAccount(userRequest: makeRegisterUserRequest())
         userRegisterSpy.completeWithSuccess(reponse: .init(message: "Conta criada com sucesso"))
         
         wait(for: [exp], timeout: 1)

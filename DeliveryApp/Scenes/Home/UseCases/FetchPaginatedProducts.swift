@@ -6,7 +6,7 @@ class FetchPaginatedProducts: FetchPaginatedProductsUseCase {
     private var productsDataSource = [Product]()
     private var isFetching = false
     
-    var productsResponseCallBack: ((ResourceProductsPagination) -> Resource)?
+    var productsResponseCallBack: ((ResourceProductsPagination) -> ResourceModel)?
     
     private var currentPage: Int = .zero
     private var totalProducts: Int = .zero

@@ -1,5 +1,5 @@
 import Foundation
 
 protocol RegisterSucceedScreenDelegate: AnyObject {
-    func handleButtonDidTapped(_ view: RegisterSucceedScreen)
+    func verifyAccountButtonDidTapped(_ view: RegisterSucceedScreen)
 }

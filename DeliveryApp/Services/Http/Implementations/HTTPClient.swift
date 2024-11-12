@@ -1,6 +1,5 @@
 import Foundation
 
-
 class HTTPClient: HTTPClientProtocol {
     private let session: URLSession
     
@@ -8,7 +7,7 @@ class HTTPClient: HTTPClientProtocol {
         self.session = session
     }
     
-    func load(_ resource: Resource, completion: @escaping ((Result<Data?, HttpError>) -> Void)) {
+    func load(_ resource: ResourceModel, completion: @escaping ((Result<Data?, HttpError>) -> Void)) {
         var request = URLRequest(url: resource.url)
         
         switch resource.method {

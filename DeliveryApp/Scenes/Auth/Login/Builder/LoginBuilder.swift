@@ -1,12 +1,12 @@
 import Foundation
 
-class LoginBuilder {
+final class LoginBuilder {
     static func build() -> LoginViewController {
         let httpClient: HTTPClientProtocol = HTTPClient()
         let userAccountLogin = UserAccountLogin(httpClient: httpClient)
         
         userAccountLogin.loginResourceCallBack = { credential in
-            return Resource(url: URL(string: "http://localhost:5177/v1/accounts/login")!,
+            return ResourceModel(url: URL(string: "http://localhost:5177/v1/accounts/login")!,
                                     method: .post(credential.toData()),
                                     headers: ["Content-Type": "application/json"])
         }

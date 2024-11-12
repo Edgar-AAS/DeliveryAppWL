@@ -2,9 +2,9 @@ import Foundation
 
 class FetchProductCategories: FetchProductCategoriesUseCase {
     private let httpClient: HTTPClientProtocol
-    private let resource: Resource
+    private let resource: ResourceModel
     
-    init(httpClient: HTTPClientProtocol, resource: Resource) {
+    init(httpClient: HTTPClientProtocol, resource: ResourceModel) {
         self.httpClient = httpClient
         self.resource = resource
     }

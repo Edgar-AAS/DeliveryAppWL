@@ -18,7 +18,7 @@ final class LoginViewModel: LoginViewModelProtocol {
     }
     
     //MARK: - signIn
-    func signIn(credential: LoginCredential) {
+    func login(credential: LoginCredential) {
         if let fieldValidatorModel = validatorComposite.validate(data: credential.toJson()) {
             fieldValidationDelegate?.display(viewModel: fieldValidatorModel)
         } else {
@@ -31,19 +31,28 @@ final class LoginViewModel: LoginViewModelProtocol {
                     self?.onLoginSuccess?()
                 case .failure(let httpError):
                     self?.loadingHandler?(LoadingStateModel(isLoading: false))
-                    switch httpError {
-                    case .badRequest:
-                        self?.alertView?.showMessage(
-                            viewModel: AlertViewModel(title: "Falha na validação",
-                                                      message: "Email e/ou senha inválida.")
-                        )
-                    default:
-                        self?.alertView?.showMessage(viewModel: AlertViewModel(
-                            title: "Erro",
-                            message: "Algo inesperado aconteceu, tente novamente em instantes."))
-                    }
+                    self?.handleNetworkError(httpError)
                 }
             }
         }
+    }
+    
+    private func handleNetworkError(_ error: HttpError) {
+        var message = ""
+        
+        switch error {
+        case .noConnectivity:
+            message = Strings.NetworkErrorMessages.noConnectivity
+        case .serverError:
+            message = Strings.NetworkErrorMessages.serverError
+        case .timeout:
+            message = Strings.NetworkErrorMessages.timeout
+        case .badRequest:
+            message = Strings.LoginAccount.Failure.invalidCredentials
+        default:
+            message = Strings.NetworkErrorMessages.unexpectedError
+        }
+        
+        alertView?.showMessage(viewModel: AlertViewModel(title: Strings.NetworkErrorMessages.errorTitle, message: message))
     }
 }

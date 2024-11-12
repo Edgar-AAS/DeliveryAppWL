@@ -5,9 +5,9 @@ protocol AccountLoginUseCase {
     func login(with credential: LoginCredential, completion: @escaping (Result<AccountModelResponse, HttpError>) -> Void)
 }
 
-class UserAccountLogin: AccountLoginUseCase {
+final class UserAccountLogin: AccountLoginUseCase {
     private let httpClient: HTTPClientProtocol
-    var loginResourceCallBack: ((LoginCredential) -> Resource)?
+    var loginResourceCallBack: ((LoginCredential) -> ResourceModel)?
     
     init(httpClient: HTTPClientProtocol) {
         self.httpClient = httpClient

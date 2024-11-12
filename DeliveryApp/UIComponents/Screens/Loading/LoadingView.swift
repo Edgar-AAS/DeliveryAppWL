@@ -22,9 +22,10 @@ final class LoadingView: UIView, CodeView {
     func handleLoading(with state: LoadingStateModel) {
         let isLoading = state.isLoading
         isHidden = !isLoading
-        isUserInteractionEnabled = isLoading
+        isUserInteractionEnabled = !isLoading
         isLoading ? loadingIndicator.startAnimating() : loadingIndicator.stopAnimating()
     }
+
     
     func buildViewHierarchy() {
         addSubview(loadingIndicator)

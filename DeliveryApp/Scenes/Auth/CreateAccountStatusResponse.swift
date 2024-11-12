@@ -1,5 +1,6 @@
 import Foundation
 
-struct CreateAccountStatusResponse: Codable {
+struct CreateAccountResponse: Codable {
     let message: String
+    
 }

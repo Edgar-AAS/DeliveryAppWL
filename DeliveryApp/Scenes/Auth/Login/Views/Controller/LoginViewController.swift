@@ -68,7 +68,7 @@ extension LoginViewController: LoginScreenDelegate {
     
     func signInButtonDidTapped() {
         guard let loginRequest = customView.getUserLoginRequest() else { return }
-        viewModel.signIn(credential: loginRequest)
+        viewModel.login(credential: loginRequest)
     }
     
     func forgotPasswordButtonDidTapped() {
@@ -83,7 +83,7 @@ extension LoginViewController: UITextFieldDelegate {
             textField,
             action: { [weak self] in
                 if let loginRequest = self?.customView.getUserLoginRequest() {
-                    self?.viewModel.signIn(credential: loginRequest)
+                    self?.viewModel.login(credential: loginRequest)
                 }
             }
         )
@@ -101,7 +101,6 @@ extension LoginViewController: FieldValidationDelegate {
 //MARK: - AlertView
 extension LoginViewController: AlertViewProtocol {
     func showMessage(viewModel: AlertViewModel) {
-        let alert = makeAlertVIew(title: viewModel.title, message: viewModel.message)
-        present(alert, animated: true)
+        showAlertView(title: viewModel.title, message: viewModel.message)
     }
 }

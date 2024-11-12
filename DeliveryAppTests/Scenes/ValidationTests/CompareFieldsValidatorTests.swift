@@ -24,7 +24,6 @@ class CompareFieldsValidatorTests: XCTestCase {
     func test_validate_should_return_error_message_if_data_is_not_provided() {
         let sut = makeSut(fieldName: "password", fieldNameToCompare: "passwordConfirmation", fieldLabel: "Senha", type: .password)
         let validationFieldModel = sut.validate(data: nil)
-        print(validationFieldModel?.message)
         XCTAssertEqual(validationFieldModel, ValidationFieldModel(message: "O campo Senha está inválido", type: .password))
     }
 }

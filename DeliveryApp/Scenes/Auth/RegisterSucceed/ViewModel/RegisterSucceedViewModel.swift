@@ -1,7 +1,7 @@
 import Foundation
 
-class RegisterSucceedViewModel: RegisterSucceedViewModelProtocol {
+final class RegisterSucceedViewModel: RegisterSucceedViewModelProtocol {    
     func goToLogin() {
-        
+    
     }
 }

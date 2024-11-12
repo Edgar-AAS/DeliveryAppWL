@@ -1,6 +1,6 @@
 import UIKit
 
-class RegisterSucceedScreen: UIView {
+final class RegisterSucceedScreen: UIView {
     private weak var delegate: RegisterSucceedScreenDelegate?
     
     init(delegate: RegisterSucceedScreenDelegate) {
@@ -29,7 +29,7 @@ class RegisterSucceedScreen: UIView {
     }()
     
     private lazy var titleLabel = makeLabel(
-        text: Strings.RegistrationSuccess.title,
+        text: Strings.RegistrationAccount.Success.title,
         font: Fonts.semiBold(size: 24).weight,
         color: .black,
         textAlignment: .center,
@@ -37,21 +37,21 @@ class RegisterSucceedScreen: UIView {
     )
     
     private lazy var descriptionLabel = makeLabel(
-        text: Strings.RegistrationSuccess.description,
+        text: Strings.RegistrationAccount.Success.description,
         font: Fonts.regular(size: 16).weight,
         color: Colors.descriptionText,
         textAlignment: .center,
         numberOfLines: 0
     )
     
-    private lazy var handleButton = RoundedButton(
-        title: Strings.RegistrationSuccess.buttonTitle,
+    private lazy var verifyAccountButton = RoundedButton(
+        title: Strings.RegistrationAccount.Success.verifyAccountTitle,
         titleColor: .white,
         backgroundColor: Colors.primary,
         icon: nil,
         action: { [weak self] in
             guard let self else { return }
-            self.delegate?.handleButtonDidTapped(self)
+            self.delegate?.verifyAccountButtonDidTapped(self)
         }
     )
 }
@@ -59,7 +59,7 @@ class RegisterSucceedScreen: UIView {
 extension RegisterSucceedScreen: CodeView {
     func buildViewHierarchy() {
         addSubview(customScrollView)
-        addSubview(handleButton)
+        addSubview(verifyAccountButton)
         customScrollView.addSubview(illustrationImageView)
         customScrollView.addSubview(titleLabel)
         customScrollView.addSubview(descriptionLabel)
@@ -71,7 +71,7 @@ extension RegisterSucceedScreen: CodeView {
             customScrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
             customScrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
         
-            illustrationImageView.topAnchor.constraint(equalTo: customScrollView.container.topAnchor, constant: 48),
+            illustrationImageView.centerYAnchor.constraint(equalTo: customScrollView.container.centerYAnchor),
             illustrationImageView.leadingAnchor.constraint(equalTo: customScrollView.container.leadingAnchor),
             illustrationImageView.trailingAnchor.constraint(equalTo: customScrollView.container.trailingAnchor),
             illustrationImageView.heightAnchor.constraint(equalToConstant: 200),
@@ -85,11 +85,11 @@ extension RegisterSucceedScreen: CodeView {
             descriptionLabel.trailingAnchor.constraint(equalTo: customScrollView.container.trailingAnchor, constant: -24),
             descriptionLabel.bottomAnchor.constraint(equalTo: customScrollView.container.bottomAnchor),
             
-            handleButton.topAnchor.constraint(equalTo: customScrollView.bottomAnchor, constant: 32),
-            handleButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            handleButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
-            handleButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16),
-            handleButton.heightAnchor.constraint(equalToConstant: 52)
+            verifyAccountButton.topAnchor.constraint(equalTo: customScrollView.bottomAnchor, constant: 32),
+            verifyAccountButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            verifyAccountButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            verifyAccountButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            verifyAccountButton.heightAnchor.constraint(equalToConstant: 52)
         ])
     }
     

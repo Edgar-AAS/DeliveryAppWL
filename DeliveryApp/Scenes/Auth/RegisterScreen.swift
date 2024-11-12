@@ -243,15 +243,16 @@ final class RegisterScreen: UIView {
               let username = userNameTextField.text,
               let password = passwordTextField.text,
               let confirmPassword = passwordConfirmTextField.text
-        else { return nil }
+        else {
+            return nil
+        }
             
-        let registerRequest = RegisterUserRequest(
+        return RegisterUserRequest(
             email: email,
             username: username,
             password: password,
             confirmPassword: confirmPassword
         )
-        return registerRequest
     }
     
     func setupValidationErrors(viewModel: ValidationFieldModel) {

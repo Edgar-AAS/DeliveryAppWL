@@ -5,7 +5,7 @@ class HomeBuilder {
     static func build(coordinator: HomeCoordinator) -> HomeViewController {
         let httpClient: HTTPClientProtocol = HTTPClient()
         
-        let categoriesResource = Resource(
+        let categoriesResource = ResourceModel(
             url: URL(string: "http://localhost:5177/v1/categories")!,
             headers: ["Content-Type": "application/json"]
         )
@@ -13,7 +13,7 @@ class HomeBuilder {
         let fetchPaginatedProducts = FetchPaginatedProducts(httpClient: httpClient)
         
         fetchPaginatedProducts.productsResponseCallBack = { resource in
-            return Resource(
+            return ResourceModel(
                 url: URL(string: "http://localhost:5177/v1/products/category/\(resource.categoryId)")!,
                 method: .get([
                     URLQueryItem(name: "page", value: "\(resource.currentPage)"),

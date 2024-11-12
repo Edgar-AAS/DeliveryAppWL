@@ -1,6 +1,6 @@
 import Foundation
 
-class EmailValidator: EmailValidationProtocol {
+final class EmailValidator: EmailValidationProtocol {
    private let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
    
    func isValid(email: String) -> Bool {

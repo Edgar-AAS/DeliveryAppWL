@@ -19,7 +19,7 @@ final class RegisterViewModel: RegisterViewModelProtocol{
     }
     
     //MARK: - createUsers
-    func createUser(userRequest: RegisterUserRequest) {
+    func createAccount(userRequest: RegisterUserRequest) {
         if let validationFieldModel = validatorComposite.validate(data: userRequest.toJson()) {
             fieldValidationDelegate?.display(viewModel: validationFieldModel)
             return
@@ -27,32 +27,27 @@ final class RegisterViewModel: RegisterViewModelProtocol{
         
         if !hasAssignedTerms {
             showAlert(
-                title: Strings.AlertViewMessages.validationFailureTitle,
-                message: Strings.AlertViewMessages.validationFailureDescription
+                title: Strings.RegistrationAccount.Failure.validationFailureTitle,
+                message: Strings.RegistrationAccount.Failure.unsignedTerms
             )
             return
         }
         
         let createAccountModel = CreateAccountModel(
             name: userRequest.username,
-            email: userRequest.email,            
+            email: userRequest.email,
             password: userRequest.password
         )
         
+        loadingHandler?(.init(isLoading: true))
         createAccount.create(with: createAccountModel) { [weak self] result in
-            self?.loadingHandler?(.init(isLoading: true))
-            
             switch result {
-                case .success(let accountStatusResponse):
-                    self?.loadingHandler?(.init(isLoading: false))
-                    self?.alertView?.showMessage(viewModel: AlertViewModel(title: "Conta Criada",
-                                                                           message: accountStatusResponse.message))
-                    self?.createdAccountCallBack?()
-                case .failure(_):
-                    self?.loadingHandler?(.init(isLoading: false))
-                    self?.alertView?.showMessage(viewModel: AlertViewModel(
-                        title: "Erro",
-                        message: "Algo inesperado aconteceu, tente novamente em instantes."))
+            case .success(_):
+                self?.loadingHandler?(.init(isLoading: false))
+                self?.createdAccountCallBack?()
+            case .failure(let httpError):
+                self?.loadingHandler?(.init(isLoading: false))
+                self?.handleNetworkError(httpError)
             }
         }
     }
@@ -61,8 +56,24 @@ final class RegisterViewModel: RegisterViewModelProtocol{
         hasAssignedTerms = assined
     }
     
-    private func showAlert(title: String, message: String) {
-        let alertViewModel = AlertViewModel(title: title, message: message)
-        alertView?.showMessage(viewModel: alertViewModel)
+    private func handleNetworkError(_ error: HttpError) {
+        var message = ""
+        
+        switch error {
+        case .noConnectivity:
+            message = Strings.NetworkErrorMessages.noConnectivity
+        case .serverError:
+            message = Strings.NetworkErrorMessages.serverError
+        case .timeout:
+            message = Strings.NetworkErrorMessages.timeout
+        default:
+            message = Strings.NetworkErrorMessages.unexpectedError
+        }
+        
+        showAlert(title: Strings.NetworkErrorMessages.errorTitle, message: message)
+    }
+    
+    func showAlert(title: String, message: String) {
+        alertView?.showMessage(viewModel: AlertViewModel(title: title, message: message))
     }
 }
