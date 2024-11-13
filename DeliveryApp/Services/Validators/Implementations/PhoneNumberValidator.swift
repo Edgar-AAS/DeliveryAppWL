@@ -1,0 +1,9 @@
+import Foundation
+
+final class PhoneNumberValidator: PhoneNumberValidationProtocol {
+    func isValid(phoneNumber: String) -> Bool {
+        let phoneRegex = "^\\(\\d{2}\\) 9\\d{4}-\\d{4}$"
+        let phoneTest = NSPredicate(format: "SELF MATCHES %@", phoneRegex)
+        return phoneTest.evaluate(with: phoneNumber)
+    }
+}
