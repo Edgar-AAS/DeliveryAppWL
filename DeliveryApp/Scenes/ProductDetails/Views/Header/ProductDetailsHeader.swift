@@ -34,24 +34,28 @@ final class ProductDetailsHeader: UIView {
     }()
     
     private lazy var backButton: CircularButton = {
-        let button = CircularButton(iconImage: .init(named: "arrow_drop"), size: 44)
-        button.tintColor = .white
-        button.backgroundColor = UIColor(hexString: "0B0C0E").withAlphaComponent(0.5)
-        let action = UIAction { [weak self] _ in
-            guard let self else { return }
-            self.delegate?.backButtonDidTapped(self)
-        }
-        button.addAction(action, for: .touchUpInside)
-        return button
+        return CircularButton(
+            iconImage: .init(systemName: Assets.SFSymbols.arrowDown),
+            size: 44,
+            tint: .white,
+            backgroundColor: UIColor(hexString: "0B0C0E").withAlphaComponent(0.5),
+            onTap: { [weak self] in
+                guard let self else { return }
+                self.delegate?.backButtonDidTapped(self)
+            }
+        )
     }()
     
     private lazy var favoriteButton: CircularButton = {
-        let button = CircularButton(iconImage: .init(systemName: "heart"), size: 44)
-        button.backgroundColor = UIColor(hexString: "0B0C0E").withAlphaComponent(0.5)
-        button.tintColor = .white
-        let action = UIAction { [weak self] _ in }
-        button.addAction(action, for: .touchUpInside)
-        return button
+        return CircularButton(
+            iconImage: .init(systemName: Assets.SFSymbols.favorite),
+            size: 44,
+            tint: .white,
+            backgroundColor: UIColor(hexString: "0B0C0E").withAlphaComponent(0.5),
+            onTap: {
+                print(#function)
+            }
+        )
     }()
     
     private lazy var topButtonsStack: UIStackView = {

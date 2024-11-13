@@ -93,26 +93,10 @@ extension RegisterViewController: CheckBoxDelegate {
         viewModel.toggleTerms(assined: isChecked)
     }
 }
-
+    
 //MARK: - AlertView
 extension RegisterViewController: AlertViewProtocol {
     func showMessage(viewModel: AlertViewModel) {
-        guard let image = UIImage(named: Assets.Images.warning) else { return }
-        
-        let alertView = AlertView(
-            image: image,
-            title: viewModel.title,
-            descriptionText: viewModel.message
-        )
-            
-        alertView.showAlert(in: view)
-        
-        NSLayoutConstraint.activate([
-            alertView.topAnchor.constraint(equalTo: view.topAnchor),
-            alertView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            alertView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            alertView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+        showAlertView(title: viewModel.title, description: viewModel.message)
     }
 }
-

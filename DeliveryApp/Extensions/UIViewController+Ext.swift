@@ -17,9 +17,13 @@ extension UIViewController {
         }
     }
     
-    func showAlertView(title: String = "", message: String = "") {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
+    func showAlertView(title: String, description: String = "", image: UIImage? = nil, onClose: (() -> Void)? = nil) {
+        let alertView = AlertView(
+            image: image ?? UIImage(systemName: Assets.SFSymbols.warning),
+            title: title,
+            descriptionText: description,
+            onClose: onClose
+        )
+        alertView.showAlert(in: view)
     }
 }

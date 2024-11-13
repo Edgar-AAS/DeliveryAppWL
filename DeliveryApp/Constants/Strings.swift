@@ -28,6 +28,6 @@ struct Strings {
         static let serverError = "O servidor está temporariamente indisponível. Tente novamente mais tarde."
         static let timeout = "A conexão está demorando muito. Por favor, tente novamente."
         static let unexpectedError = "Ocorreu um erro inesperado. Tente novamente."
-        static let errorTitle = "Erro"
+        static let errorTitle = "Error"
     }
 }

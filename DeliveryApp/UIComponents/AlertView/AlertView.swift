@@ -1,13 +1,18 @@
 import UIKit
 
 final class AlertView: UIView {
-    private let image: UIImage
+    private let image: UIImage?
     private let title: String
     private let descriptionText: String
     private let buttonTitle: String
     private var onClose: (() -> Void)?
 
-    init(image: UIImage, title: String, descriptionText: String, buttonTitle: String = "OK", onClose: (() -> Void)? = nil) {
+    init(image: UIImage?,
+         title: String,
+         descriptionText: String = "",
+         buttonTitle: String = "OK",
+         onClose: (() -> Void)? = nil)
+    {
         self.image = image
         self.title = title
         self.descriptionText = descriptionText
@@ -34,6 +39,7 @@ final class AlertView: UIView {
         let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = Colors.primary
         return imageView
     }()
 
@@ -43,6 +49,7 @@ final class AlertView: UIView {
         label.text = title
         label.font = Fonts.bold(size: 16).weight
         label.textAlignment = .center
+        label.textColor = .black
         label.accessibilityLabel = title
         return label
     }()
@@ -52,6 +59,7 @@ final class AlertView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = descriptionText
         label.font = Fonts.regular(size: 14).weight
+        label.textColor = .black
         label.textAlignment = .center
         label.numberOfLines = 0
         return label
@@ -75,8 +83,17 @@ final class AlertView: UIView {
     }
 
     func showAlert(in view: UIView) {
-        view.addSubview(self)
+        view.endEditing(true)
         
+        view.addSubview(self)
+                
+        NSLayoutConstraint.activate([
+            topAnchor.constraint(equalTo: view.topAnchor),
+            leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+                
         alpha = 0
         UIView.animate(withDuration: 0.3) {
             self.alpha = 1
@@ -131,6 +148,5 @@ extension AlertView: CodeView {
     
     func setupAdditionalConfiguration() {
         backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        isAccessibilityElement = true
     }
 }

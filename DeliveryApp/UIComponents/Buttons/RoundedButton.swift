@@ -7,7 +7,12 @@ final class RoundedButton: UIButton {
     private let image: UIImage?
     private var completionHandler: (() -> Void)
     
-    init(title: String?, titleColor: UIColor, backgroundColor: UIColor, icon: UIImage?, action: @escaping (() -> Void)) {
+    init(title: String?,
+         titleColor: UIColor,
+         backgroundColor: UIColor,
+         icon: UIImage?,
+         action: @escaping (() -> Void)
+    ) {
         self.title = title
         self.titleColor = titleColor
         self.color = backgroundColor
@@ -43,7 +48,8 @@ final class RoundedButton: UIButton {
         }
         
         let action = UIAction { [weak self] _ in
-            self?.completionHandler()
+            guard let self else { return }
+            self.completionHandler()
         }
         addAction(action, for: .touchUpInside)
     }

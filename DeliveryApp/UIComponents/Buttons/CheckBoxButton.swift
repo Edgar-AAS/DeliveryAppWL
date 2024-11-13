@@ -26,8 +26,8 @@ final class CheckBoxButton: UIButton {
     }
     
     private func setupUI() {
-        let normalImage = UIImage(named: "square-logo")?.resized(to: .init(width: 30, height: 30))
-        let selectedImage = UIImage(named: "checkmark-logo")?.resized(to: .init(width: 30, height: 30))
+        let normalImage = UIImage(named: "square-logo")
+        let selectedImage = UIImage(named: "checkmark-logo")
         
         setImage(normalImage, for: .normal)
         setImage(selectedImage, for: .selected)
@@ -37,17 +37,14 @@ final class CheckBoxButton: UIButton {
             addTouchFeedback(style: .light)
             isChecked = !isChecked
         }
+        
         addAction(action, for: .touchUpInside)
+    
+        NSLayoutConstraint.activate([
+            centerXAnchor.constraint(equalTo: centerXAnchor),
+            centerYAnchor.constraint(equalTo: centerYAnchor),
+            heightAnchor.constraint(equalToConstant: 30),
+            widthAnchor.constraint(equalToConstant: 30)
+        ])
     }
 }
-
-extension UIImage {
-    func resized(to newSize: CGSize) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
-        defer { UIGraphicsEndImageContext() }
-        draw(in: CGRect(origin: .zero, size: newSize))
-        return UIGraphicsGetImageFromCurrentImageContext() ?? self
-    }
-}
-
-

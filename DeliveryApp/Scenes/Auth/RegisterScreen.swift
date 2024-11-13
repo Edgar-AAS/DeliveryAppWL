@@ -143,31 +143,53 @@ final class RegisterScreen: UIView {
         }
     )
     
-    private lazy var termsStackView: UIStackView = {
-        let leftLabel = makeLabel(
-            text: "I Agree with",
-            font: Fonts.medium(size: 14).weight,
-            color: .black
-        )
+    
+    private lazy var termsAndPrivacyPolicyTextView: UITextView = {
+        let textView = UITextView()
+        textView.delegate = self
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        textView.textContainer.lineFragmentPadding = 0.0
+        textView.textContainerInset = .zero
         
-        let rightLabel = makeLabel(
-            text: "and",
-            font: Fonts.medium(size: 14).weight,
-            color: .black
-        )
+        let text = "I Agree with Terms of Service and Privacy Policy"
         
-        let stackView = makeStackView(
-            with: [leftLabel,
-                   termsOfServiceButton,
-                   rightLabel,
-                   privacyPolicyButton],
-            aligment: .center,
-            spacing: 4,
-            axis: .horizontal
-        )
+        let serviceTermsLinkText = "Terms of Service"
+        let privacyPolicyLinkText = "Privacy Policy"
         
-        return stackView
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: Fonts.regular(size: 14).weight,
+            .foregroundColor: UIColor.black
+        ]
+        
+        let serviceTermsLinkTextAttributes: [NSAttributedString.Key: Any] = [
+            .font: Fonts.bold(size: 14).weight,
+            .underlineStyle: NSUnderlineStyle.single.rawValue,
+            .foregroundColor: Colors.primary,
+            .link: URL(string: "https://www.google.com")!
+        ]
+        
+        let privacyPolicyLinkTextAttributes: [NSAttributedString.Key: Any] = [
+            .font: Fonts.bold(size: 14).weight,
+            .underlineStyle: NSUnderlineStyle.single.rawValue,
+            .foregroundColor: Colors.primary,
+            .link: URL(string: "https://www.apple.com")!
+        ]
+        
+        let attributedString = NSMutableAttributedString(string: text, attributes: attributes)
+        
+        let termsRange = (text as NSString).range(of: serviceTermsLinkText)
+        let privacyPolicyRange = (text as NSString).range(of: privacyPolicyLinkText)
+        
+        attributedString.addAttributes(serviceTermsLinkTextAttributes, range: termsRange)
+        attributedString.addAttributes(privacyPolicyLinkTextAttributes, range: privacyPolicyRange)
+        
+        textView.attributedText = attributedString
+        textView.backgroundColor = .clear
+        return textView
     }()
+    
     
     private lazy var registerButton = RoundedButton(
         title: "Register",
@@ -246,7 +268,7 @@ final class RegisterScreen: UIView {
         else {
             return nil
         }
-            
+        
         return RegisterUserRequest(
             email: email,
             username: username,
@@ -267,6 +289,16 @@ final class RegisterScreen: UIView {
     }
 }
 
+extension RegisterScreen: UITextViewDelegate {
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return false
+    }
+
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        return false
+    }
+}
+
 extension RegisterScreen: CodeView {
     func buildViewHierarchy() {
         addSubview(customScrollView)
@@ -282,7 +314,7 @@ extension RegisterScreen: CodeView {
         customScrollView.addSubview(passwordConfirmLabel)
         customScrollView.addSubview(passwordConfirmTextField)
         customScrollView.addSubview(checkBox)
-        customScrollView.addSubview(termsStackView)
+        customScrollView.addSubview(termsAndPrivacyPolicyTextView)
         customScrollView.addSubview(registerButton)
         customScrollView.addSubview(loginStack)
     }
@@ -319,7 +351,7 @@ extension RegisterScreen: CodeView {
             userNameTextField.leadingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.leadingAnchor),
             userNameTextField.trailingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.trailingAnchor),
             userNameTextField.heightAnchor.constraint(equalToConstant: 52),
-                                   
+            
             passwordLabel.topAnchor.constraint(equalTo: userNameTextField.bottomAnchor, constant: 24),
             passwordLabel.leadingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.leadingAnchor),
             passwordLabel.trailingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.trailingAnchor),
@@ -341,15 +373,15 @@ extension RegisterScreen: CodeView {
             checkBox.topAnchor.constraint(equalTo: passwordConfirmTextField.bottomAnchor, constant: 30),
             checkBox.leadingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.leadingAnchor),
             
-            termsStackView.centerYAnchor.constraint(equalTo: checkBox.centerYAnchor),
-            termsStackView.leadingAnchor.constraint(equalTo: checkBox.trailingAnchor, constant: 4),
-            termsStackView.trailingAnchor.constraint(equalTo: customScrollView.container.trailingAnchor, constant: -24),
+            termsAndPrivacyPolicyTextView.centerYAnchor.constraint(equalTo: checkBox.centerYAnchor),
+            termsAndPrivacyPolicyTextView.leadingAnchor.constraint(equalTo: checkBox.trailingAnchor, constant: 4),
+            termsAndPrivacyPolicyTextView.trailingAnchor.constraint(equalTo: customScrollView.container.trailingAnchor, constant: -24),
             
-            registerButton.topAnchor.constraint(equalTo: termsStackView.bottomAnchor, constant: 24),
+            registerButton.topAnchor.constraint(equalTo: termsAndPrivacyPolicyTextView.bottomAnchor, constant: 24),
             registerButton.leadingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.leadingAnchor),
             registerButton.trailingAnchor.constraint(equalTo: createNewAccountHeadlineLabel.trailingAnchor),
             registerButton.heightAnchor.constraint(equalToConstant: 52),
-
+            
             loginStack.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 16),
             loginStack.centerXAnchor.constraint(equalTo: customScrollView.container.centerXAnchor),
             loginStack.heightAnchor.constraint(equalToConstant: 44),

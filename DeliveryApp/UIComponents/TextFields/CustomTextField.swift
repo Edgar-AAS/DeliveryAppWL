@@ -53,6 +53,7 @@ final class CustomTextField: UITextField {
         textColor = .black
         layer.cornerRadius = 8
         layer.borderWidth = 2
+        textContentType = .none
         layer.borderColor = Colors.grayBorder.cgColor
         placeholder = exampleText
         addSubview(feedbackLabel)
@@ -106,8 +107,8 @@ final class CustomTextField: UITextField {
     
     private lazy var eyeButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "eye.slash"), for: .normal)
-        button.setImage(UIImage(systemName: "eye"), for: .selected)
+        button.setImage(UIImage(systemName: Assets.SFSymbols.closeEye), for: .normal)
+        button.setImage(UIImage(systemName: Assets.SFSymbols.openEye), for: .selected)
         button.frame.size = .init(width: 24, height: 24)
         button.tintColor = .black
         
