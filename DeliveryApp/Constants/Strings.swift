@@ -11,14 +11,15 @@ struct Strings {
         
         struct Failure {
             static let unexpectedError = "Não foi possível criar a conta, tente novamente em instantes."
-            static let validationFailureTitle = "Falha na validação."
+            static let validationFailureTitle = "Falha na validação"
             static let unsignedTerms = "Para criar sua conta, confirme que você leu e concorda com os Termos de Serviço."
+            static let emailInUse = "Este Email já esta cadastrado a uma conta"
         }
     }
     
     struct LoginAccount {
         struct Failure {
-            static let invalidCredentials = "Email e/ou senha inválidos."
+            static let invalidCredentials = "Email e/ou senha inválidos"
         }
     }
     

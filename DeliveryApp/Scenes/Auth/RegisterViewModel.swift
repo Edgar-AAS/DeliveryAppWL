@@ -66,6 +66,8 @@ final class RegisterViewModel: RegisterViewModelProtocol{
             message = Strings.NetworkErrorMessages.serverError
         case .timeout:
             message = Strings.NetworkErrorMessages.timeout
+        case .badRequest:
+            message = Strings.RegistrationAccount.Failure.emailInUse
         default:
             message = Strings.NetworkErrorMessages.unexpectedError
         }

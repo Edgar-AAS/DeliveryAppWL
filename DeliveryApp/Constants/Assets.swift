@@ -1,8 +1,8 @@
 import Foundation
 
-
 struct Assets {
-    struct RegistrationSuccess {
-        static let image = "Illustration-Success"
+    struct Images {
+        static let successRegister = "Illustration-Success"
+        static let warning = "warning"
     }
 }

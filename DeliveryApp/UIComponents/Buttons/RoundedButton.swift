@@ -7,12 +7,7 @@ final class RoundedButton: UIButton {
     private let image: UIImage?
     private var completionHandler: (() -> Void)
     
-    init(title: String?,
-         titleColor: UIColor,
-         backgroundColor: UIColor,
-         icon: UIImage?,
-         action: @escaping (() -> Void))
-    {
+    init(title: String?, titleColor: UIColor, backgroundColor: UIColor, icon: UIImage?, action: @escaping (() -> Void)) {
         self.title = title
         self.titleColor = titleColor
         self.color = backgroundColor

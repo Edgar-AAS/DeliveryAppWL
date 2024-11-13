@@ -21,7 +21,10 @@ class HomeViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
-        view = HomeScreen()
+        view = HomeScreen(
+            delegate: self,
+            dataSource: self
+        )
     }
     
     override func viewDidLoad() {
@@ -31,7 +34,6 @@ class HomeViewController: UIViewController {
     
     private func configure() {
         hideNavigationBar()
-        customView?.setupTableViewProtocols(delegate: self, dataSource: self)
         
         viewModel.categoriesOnComplete = { [weak self] in
             self?.customView?.reloadTablewViewData()

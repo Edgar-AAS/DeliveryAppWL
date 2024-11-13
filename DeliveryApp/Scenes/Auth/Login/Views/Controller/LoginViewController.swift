@@ -56,7 +56,6 @@ class LoginViewController: UIViewController {
     }
 }
 
-//MARK: - LoginScreenDelegateProtocol
 extension LoginViewController: LoginScreenDelegate {
     func loginWithGoogleButtonDidTapped() {
         //
@@ -101,6 +100,21 @@ extension LoginViewController: FieldValidationDelegate {
 //MARK: - AlertView
 extension LoginViewController: AlertViewProtocol {
     func showMessage(viewModel: AlertViewModel) {
-        showAlertView(title: viewModel.title, message: viewModel.message)
+        guard let image = UIImage(named: Assets.Images.warning) else { return }
+        
+        let alertView = AlertView(
+            image: image,
+            title: viewModel.title,
+            descriptionText: viewModel.message
+        )
+            
+        alertView.showAlert(in: view)
+        
+        NSLayoutConstraint.activate([
+            alertView.topAnchor.constraint(equalTo: view.topAnchor),
+            alertView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            alertView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            alertView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
 }

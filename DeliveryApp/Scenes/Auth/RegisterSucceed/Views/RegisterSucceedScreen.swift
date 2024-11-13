@@ -24,7 +24,7 @@ final class RegisterSucceedScreen: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = Colors.primary
-        imageView.image = UIImage(named: Assets.RegistrationSuccess.image)
+        imageView.image = UIImage(named: Assets.Images.successRegister)
         return imageView
     }()
     
@@ -51,7 +51,7 @@ final class RegisterSucceedScreen: UIView {
         icon: nil,
         action: { [weak self] in
             guard let self else { return }
-            self.delegate?.verifyAccountButtonDidTapped(self)
+            delegate?.verifyAccountButtonDidTapped(self)
         }
     )
 }

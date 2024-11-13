@@ -1,8 +1,13 @@
 import UIKit
 
 final class HomeScreen: UIView {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    private weak var delegate: UITableViewDelegate?
+    private weak var dataSource: UITableViewDataSource?
+    
+    init(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
+        self.delegate = delegate
+        self.dataSource = dataSource
+        super.init(frame: .zero)
         setupView()
     }
     
@@ -11,8 +16,10 @@ final class HomeScreen: UIView {
         return header
     }()
     
-    private lazy var homeTableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.delegate = delegate
+        tableView.dataSource = dataSource
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.allowsSelection = false
@@ -29,19 +36,15 @@ final class HomeScreen: UIView {
     }
     
     func reloadTablewViewData() {
-        homeTableView.reloadData()
-    }
-    
-    func setupTableViewProtocols(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
-        homeTableView.delegate = delegate
-        homeTableView.dataSource = dataSource
+        tableView.reloadData()
     }
 }
 
 extension HomeScreen: CodeView {
     func buildViewHierarchy() {
         addSubview(homeHeader)
-        addSubview(homeTableView)
+        addSubview(tableView)
+        
     }
     
     func setupConstraints() {
@@ -50,10 +53,10 @@ extension HomeScreen: CodeView {
             homeHeader.leadingAnchor.constraint(equalTo: leadingAnchor),
             homeHeader.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            homeTableView.topAnchor.constraint(equalTo: homeHeader.bottomAnchor),
-            homeTableView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            homeTableView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            homeTableView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            tableView.topAnchor.constraint(equalTo: homeHeader.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     
