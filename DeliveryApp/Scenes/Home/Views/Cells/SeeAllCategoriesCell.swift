@@ -29,13 +29,13 @@ class SeeAllCategoriesCell: UITableViewCell {
         return label
     }()
     
-    private lazy var seeAllButton = makeTitleButton(
+    private lazy var seeAllButton = TitleButton(
         title: "See All",
         titleColor: Colors.primary,
         font:  Fonts.bold(size: 14).weight,
-        action: UIAction { [weak self] _ in
-            guard let self else { return }
-            self.delegate?.seeAllButtonDidTapped(self)
+        action: { [weak self] in
+            guard let self else  { return }
+            delegate?.seeAllButtonDidTapped(self)
         }
     )
 

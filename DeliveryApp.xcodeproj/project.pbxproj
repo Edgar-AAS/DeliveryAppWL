@@ -78,6 +78,7 @@
 		D37A48D22C7AE1D0009A3481 /* CustomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37A48D12C7AE1D0009A3481 /* CustomScrollView.swift */; };
 		D37A48D42C7AF08F009A3481 /* HttpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37A48D32C7AF08F009A3481 /* HttpError.swift */; };
 		D37A48E52C7BEF41009A3481 /* EmailValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37A48E42C7BEF41009A3481 /* EmailValidator.swift */; };
+		D37AFED42CE6337200B9EE0A /* TitleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37AFED32CE6337200B9EE0A /* TitleButton.swift */; };
 		D37C27462BD98F4600B97901 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37C27452BD98F4600B97901 /* HomeViewModel.swift */; };
 		D37C27482BD98F6800B97901 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37C27472BD98F6800B97901 /* HomeViewController.swift */; };
 		D37C274A2BD98F8100B97901 /* HomeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37C27492BD98F8100B97901 /* HomeBuilder.swift */; };
@@ -253,6 +254,7 @@
 		D37A48D12C7AE1D0009A3481 /* CustomScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomScrollView.swift; sourceTree = "<group>"; };
 		D37A48D32C7AF08F009A3481 /* HttpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpError.swift; sourceTree = "<group>"; };
 		D37A48E42C7BEF41009A3481 /* EmailValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidator.swift; sourceTree = "<group>"; };
+		D37AFED32CE6337200B9EE0A /* TitleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleButton.swift; sourceTree = "<group>"; };
 		D37C27452BD98F4600B97901 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		D37C27472BD98F6800B97901 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		D37C27492BD98F8100B97901 /* HomeBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBuilder.swift; sourceTree = "<group>"; };
@@ -961,6 +963,7 @@
 				D37A48CF2C7AC1F9009A3481 /* RoundedButton.swift */,
 				D3528C402B6446F500FD5554 /* CheckBoxButton.swift */,
 				D3F00ED62B66DEFC0029BAF1 /* CircularButton.swift */,
+				D37AFED32CE6337200B9EE0A /* TitleButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -1468,6 +1471,7 @@
 				D36383062C8F90D9003E2637 /* RegisterSucceedViewModelProtocol.swift in Sources */,
 				D3AABB472CC2FDEE000234E4 /* ResourceProductsPagination.swift in Sources */,
 				D37E265B2CDD8C6A00D82E0A /* AccountCreationStatus.swift in Sources */,
+				D37AFED42CE6337200B9EE0A /* TitleButton.swift in Sources */,
 				D37A48D02C7AC1F9009A3481 /* RoundedButton.swift in Sources */,
 				D30CE4002CB9E5420070AD73 /* FetchProductDetailsUseCase.swift in Sources */,
 				D37A48D42C7AF08F009A3481 /* HttpError.swift in Sources */,

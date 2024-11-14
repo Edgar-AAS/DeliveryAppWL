@@ -2,7 +2,7 @@ import UIKit
 
 final class CustomSearchTextField: UITextField {
     private let searchIcon: UIImageView = {
-        let searchIcon = UIImage(systemName: Assets.SFSymbols.search)
+        let searchIcon = UIImage(systemName: SFSymbols.search)
         let imageView = UIImageView(image: searchIcon)
         imageView.tintColor = .gray
         return imageView

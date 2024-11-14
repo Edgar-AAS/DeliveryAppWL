@@ -107,8 +107,8 @@ final class CustomTextField: UITextField {
     
     private lazy var eyeButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: Assets.SFSymbols.closeEye), for: .normal)
-        button.setImage(UIImage(systemName: Assets.SFSymbols.openEye), for: .selected)
+        button.setImage(UIImage(named: Assets.Icons.closeEye), for: .normal)
+        button.setImage(UIImage(named: Assets.Icons.openEye), for: .selected)
         button.frame.size = .init(width: 24, height: 24)
         button.tintColor = .black
         
@@ -121,7 +121,7 @@ final class CustomTextField: UITextField {
     }()
     
     private func eyeButtonTap() {
-        addTouchFeedback(style: .rigid)
+        addTouchFeedback(style: .light)
         isHide = !isHide
     }
     
@@ -194,8 +194,12 @@ extension CustomTextField: UITextFieldDelegate {
     }
     
     func resetField() {
-        layer.borderColor = Colors.grayBorder.cgColor
         text = ""
         feedbackLabel.text = ""
+        layer.borderColor = Colors.grayBorder.cgColor
+        
+        if (fieldType == .password) || (fieldType == .passwordConfirm) {
+            isHide = true
+        }
     }
 }

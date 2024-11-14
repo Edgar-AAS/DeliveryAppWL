@@ -23,12 +23,7 @@ final class RegisterScreen: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var customScrollView: CustomScrollView = {
-        let scrollView = CustomScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        return scrollView
-    }()
-    
+    private lazy var customScrollView = CustomScrollView()
     private lazy var loadingView = LoadingView()
     
     private lazy var createNewAccountHeadlineLabel = makeLabel(
@@ -51,8 +46,7 @@ final class RegisterScreen: UIView {
         text: "Email Address",
         font: Fonts.medium(size: 14).weight,
         color: .black,
-        textAlignment: .left,
-        numberOfLines: 0
+        textAlignment: .left
     )
     
     private lazy var emailTextField = CustomTextField(
@@ -73,21 +67,6 @@ final class RegisterScreen: UIView {
     private lazy var userNameTextField = CustomTextField(
         placeholder: "Enter Name",
         fieldType: .regular,
-        tag: 1,
-        returnKeyType: .next,
-        delegate: textFieldDelegate
-    )
-    
-    private lazy var phoneLabel = makeLabel(
-        text: "Phone",
-        font: Fonts.medium(size: 14).weight,
-        color: .black,
-        textAlignment: .left
-    )
-    
-    private lazy var phoneTextField = CustomTextField(
-        placeholder: "Enter Phone",
-        fieldType: .phone,
         tag: 1,
         returnKeyType: .next,
         delegate: textFieldDelegate
@@ -125,29 +104,19 @@ final class RegisterScreen: UIView {
     
     private lazy var checkBox = CheckBoxButton(delegate: checkBoxDelegate)
     
-    private lazy var termsOfServiceButton = makeTitleButton(
+    private lazy var termsOfServiceButton = TitleButton(
         title: "Terms of Service",
         titleColor: Colors.primary,
         font:  Fonts.medium(size: 14).weight,
-        action: UIAction { [weak self] _ in
+        action: {
             print("show Terms of Service")
         }
     )
     
-    private lazy var privacyPolicyButton = makeTitleButton(
-        title: "Privacy Policy",
-        titleColor: Colors.primary,
-        font: Fonts.medium(size: 14).weight,
-        action: UIAction { [weak self] _ in
-            print("show Privacy Policy")
-        }
-    )
-    
-    
     private lazy var termsAndPrivacyPolicyTextView: UITextView = {
         let textView = UITextView()
-        textView.delegate = self
         textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.delegate = self
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.textContainer.lineFragmentPadding = 0.0
@@ -166,14 +135,12 @@ final class RegisterScreen: UIView {
         let serviceTermsLinkTextAttributes: [NSAttributedString.Key: Any] = [
             .font: Fonts.bold(size: 14).weight,
             .underlineStyle: NSUnderlineStyle.single.rawValue,
-            .foregroundColor: Colors.primary,
             .link: URL(string: "https://www.google.com")!
         ]
         
         let privacyPolicyLinkTextAttributes: [NSAttributedString.Key: Any] = [
             .font: Fonts.bold(size: 14).weight,
             .underlineStyle: NSUnderlineStyle.single.rawValue,
-            .foregroundColor: Colors.primary,
             .link: URL(string: "https://www.apple.com")!
         ]
         
@@ -207,17 +174,7 @@ final class RegisterScreen: UIView {
         color: .black,
         textAlignment: .center
     )
-    
-    private lazy var separatorStackView = makeStackView(
-        with: [makeSeparatorView(color: Colors.descriptionText),
-               alternativeLoginLabel,
-               makeSeparatorView(color: Colors.descriptionText)],
-        aligment: .center,
-        distribution: .fillEqually,
-        spacing: 16,
-        axis: .horizontal
-    )
-    
+        
     private lazy var alreadyHaveAccountLabel = makeLabel(
         text: "Already have an account?",
         font: Fonts.medium(size: 14).weight,
@@ -225,23 +182,22 @@ final class RegisterScreen: UIView {
         textAlignment: .center
     )
     
-    private lazy var goToLoginButton = makeTitleButton(
+    private lazy var goToLoginButton = TitleButton(
         title: "Login here",
         titleColor: Colors.primary,
         font: Fonts.semiBold(size: 14).weight,
-        action: UIAction { [weak self] _ in
+        action: { [weak self] in
             self?.delegate?.goToLoginButtonDidTapped()
         }
     )
     
-    private lazy var loginStack: UIStackView =  {
-        let stackView = makeStackView(
+    private lazy var loginStack: UIStackView = {
+        return makeStackView(
             with: [alreadyHaveAccountLabel,
                    goToLoginButton],
             aligment: .center,
             spacing: 2,
             axis: .horizontal)
-        return stackView
     }()
     
     func goToNextField(_ textField: UITextField, action: (() -> Void)) {

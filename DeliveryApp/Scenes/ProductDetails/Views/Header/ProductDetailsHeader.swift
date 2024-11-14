@@ -35,7 +35,7 @@ final class ProductDetailsHeader: UIView {
     
     private lazy var backButton: CircularButton = {
         return CircularButton(
-            iconImage: .init(systemName: Assets.SFSymbols.arrowDown),
+            iconImage: .init(systemName: SFSymbols.arrowDown),
             size: 44,
             tint: .white,
             backgroundColor: UIColor(hexString: "0B0C0E").withAlphaComponent(0.5),
@@ -48,7 +48,7 @@ final class ProductDetailsHeader: UIView {
     
     private lazy var favoriteButton: CircularButton = {
         return CircularButton(
-            iconImage: .init(systemName: Assets.SFSymbols.favorite),
+            iconImage: .init(systemName: SFSymbols.favorite),
             size: 44,
             tint: .white,
             backgroundColor: UIColor(hexString: "0B0C0E").withAlphaComponent(0.5),

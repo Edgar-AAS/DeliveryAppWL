@@ -75,12 +75,13 @@ final class LoginScreen: UIView {
         textAlignment: .left
     )
     
-    private lazy var forgotPasswordButton = makeTitleButton(
+    private lazy var forgotPasswordButton = TitleButton(
         title: "Forgot password?",
         titleColor: Colors.primary,
         font: Fonts.medium(size: 14).weight,
-        action: UIAction { [weak self] _ in
-            self?.delegate?.forgotPasswordButtonDidTapped()
+        action: { [weak self] in
+            guard let self else { return }
+            self.delegate?.forgotPasswordButtonDidTapped(self)
         }
     )
     
@@ -90,7 +91,8 @@ final class LoginScreen: UIView {
         backgroundColor: Colors.primary,
         icon: nil,
         action: { [weak self] in
-            self?.delegate?.signInButtonDidTapped()
+            guard let self else { return }
+            delegate?.signInButtonDidTapped(self)
         }
     )
     
@@ -99,16 +101,6 @@ final class LoginScreen: UIView {
         font: Fonts.medium(size: 14).weight,
         color: .lightGray,
         textAlignment: .center
-    )
-    
-    private lazy var loginWithGoogleButton = RoundedButton(
-        title: "Login with Google",
-        titleColor: .black,
-        backgroundColor: Colors.background,
-        icon: UIImage(named: "google-icon"),
-        action: { [weak self] in
-            self?.delegate?.loginWithGoogleButtonDidTapped()
-        }
     )
     
     private lazy var dontHaveAccountLabel = makeLabel(
@@ -124,7 +116,8 @@ final class LoginScreen: UIView {
             backgroundColor: .white,
             icon: nil,
             action: { [weak self] in
-                self?.delegate?.registerButtonDidTapped()
+                guard let self else { return }
+                delegate?.registerButtonDidTapped(self)
             }
         )
     }()
@@ -252,7 +245,6 @@ extension LoginScreen: CodeView {
     
     
     func setupAdditionalConfiguration() {
-        forgotPasswordButton.contentHorizontalAlignment = .right
         backgroundColor = .white
     }
 }

@@ -5,14 +5,14 @@ final class CircularButton: UIButton {
     private let iconImage: UIImage?
     private let tint: UIColor
     private let background: UIColor
-    private let onTap: (() -> Void)
+    private let action: (() -> Void)
     
     init(iconImage: UIImage?, size: CGFloat, tint: UIColor = .black, backgroundColor: UIColor = .white, onTap: @escaping (() -> Void)) {
         self.size = size
         self.iconImage = iconImage
         self.tint = tint
         self.background = backgroundColor
-        self.onTap = onTap
+        self.action = onTap
         super.init(frame: .zero)
         setup()
     }
@@ -32,7 +32,7 @@ final class CircularButton: UIButton {
         layer.masksToBounds = true
         
         let tapAction =  UIAction(handler: { [weak self] _ in
-            self?.onTap()
+            self?.action()
         })
         
         addAction(tapAction, for: .touchUpInside)

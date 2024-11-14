@@ -81,26 +81,7 @@ extension UIView {
         stack.axis = axis
         return stack
     }
-    
-    func makeTitleButton(title: String? = "",
-                         titleColor: UIColor,
-                         font: UIFont,
-                         backgroundColor: UIColor? = nil,
-                         action: UIAction? = nil) -> UIButton {
-        
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(title, for: .normal)
-        button.setTitleColor(titleColor, for: .normal)
-        button.titleLabel?.font = font
-        button.backgroundColor = backgroundColor
-        
-        if let action = action {
-            button.addAction(action, for: .touchUpInside)
-        }
-        return button
-    }
-    
+
     func makeIconButton(icon: UIImage, backgroundColor: UIColor? = nil, action: UIAction) -> UIButton {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -131,14 +112,6 @@ extension UIView {
         label.textAlignment = textAlignment
         label.numberOfLines = numberOfLines
         return label
-    }
-    
-    func makeSeparatorView(height: CGFloat = 0.5, color: UIColor = .black) -> UIView {
-        let separatorView = UIView()
-        separatorView.translatesAutoresizingMaskIntoConstraints = false
-        separatorView.backgroundColor = color
-        separatorView.heightAnchor.constraint(equalToConstant: height).isActive = true
-        return separatorView
     }
     
     func hideKeyboardOnTap() {

@@ -12,7 +12,7 @@ final class LoadingView: UIView, CodeView {
     }
     
     private lazy var loadingIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .large)
+        let indicator = UIActivityIndicatorView(style: .large)  
         indicator.translatesAutoresizingMaskIntoConstraints = false
         indicator.color = Colors.primary
         indicator.hidesWhenStopped = true
@@ -23,9 +23,18 @@ final class LoadingView: UIView, CodeView {
         let isLoading = state.isLoading
         isHidden = !isLoading
         isUserInteractionEnabled = !isLoading
-        isLoading ? loadingIndicator.startAnimating() : loadingIndicator.stopAnimating()
+        
+        if isLoading {
+            alpha = 0
+            loadingIndicator.startAnimating()
+        
+            UIView.animate(withDuration: 0.3) {
+                self.alpha = 1
+            }
+        } else {
+            loadingIndicator.stopAnimating()
+        }
     }
-
     
     func buildViewHierarchy() {
         addSubview(loadingIndicator)
@@ -40,6 +49,6 @@ final class LoadingView: UIView, CodeView {
     
     func setupAdditionalConfiguration() {
         isHidden = true
-        backgroundColor = .black.withAlphaComponent(0.6)
+        backgroundColor = UIColor.black.withAlphaComponent(0.5)
     }
 }

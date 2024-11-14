@@ -21,6 +21,7 @@ final class RoundedButton: UIButton {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         setup()
+        addTouchAnimation()
     }
     
     required init?(coder: NSCoder) {
@@ -48,9 +49,36 @@ final class RoundedButton: UIButton {
         }
         
         let action = UIAction { [weak self] _ in
-            guard let self else { return }
+            guard let self = self else { return }
             self.completionHandler()
         }
+        
         addAction(action, for: .touchUpInside)
+    }
+    
+    private func addTouchAnimation() {
+        addTarget(self, action: #selector(handleTouchDown), for: .touchDown)
+        addTarget(self, action: #selector(handleTouchUpInside), for: .touchUpInside)
+        addTarget(self, action: #selector(handleTouchUpOutside), for: .touchUpOutside)
+    }
+    
+    @objc private func handleTouchDown() {
+        UIView.animate(withDuration: 0.1, animations: {
+            self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+        })
+    }
+    
+    @objc private func handleTouchUpInside() {
+        animateRelease()
+    }
+    
+    @objc private func handleTouchUpOutside() {
+        animateRelease()
+    }
+    
+    private func animateRelease() {
+        UIView.animate(withDuration: 0.1, animations: {
+            self.transform = CGAffineTransform.identity
+        })
     }
 }

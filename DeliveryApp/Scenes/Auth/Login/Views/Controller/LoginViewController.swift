@@ -57,21 +57,17 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController: LoginScreenDelegate {
-    func loginWithGoogleButtonDidTapped() {
+    func forgotPasswordButtonDidTapped(_ view: LoginScreen) {
         //
     }
     
-    func registerButtonDidTapped() {
-        routeToRegisterCallBack?()
-    }
-    
-    func signInButtonDidTapped() {
+    func signInButtonDidTapped(_ view: LoginScreen) {
         guard let loginRequest = customView.getUserLoginRequest() else { return }
         viewModel.login(credential: loginRequest)
     }
     
-    func forgotPasswordButtonDidTapped() {
-        
+    func registerButtonDidTapped(_ view: LoginScreen) {
+        routeToRegisterCallBack?()
     }
 }
 
