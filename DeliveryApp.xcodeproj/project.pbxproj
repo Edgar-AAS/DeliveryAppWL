@@ -431,7 +431,6 @@
 		D32900A72B681DEB00D39016 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				D37A48E32C7BEF30009A3481 /* Validators */,
 				D37C27542BD9A20600B97901 /* Http */,
 				D32900AA2B682D4600D39016 /* Model */,
 			);
@@ -543,6 +542,7 @@
 				D3528C272B63157D00FD5554 /* Extensions */,
 				D32900B22B6842FC00D39016 /* ViewProtocols */,
 				D3528C322B633DD900FD5554 /* UIComponents */,
+				D37A48E32C7BEF30009A3481 /* FieldValidators */,
 				D3528C1D2B6311F600FD5554 /* Scenes */,
 				D3528C122B62FDFA00FD5554 /* Assets.xcassets */,
 				D3528C172B62FDFA00FD5554 /* Info.plist */,
@@ -687,13 +687,13 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		D37A48E32C7BEF30009A3481 /* Validators */ = {
+		D37A48E32C7BEF30009A3481 /* FieldValidators */ = {
 			isa = PBXGroup;
 			children = (
 				D3C99C282CDA6F390052DBBB /* Protocols */,
 				D3C99C292CDA6F770052DBBB /* Implementations */,
 			);
-			path = Validators;
+			path = FieldValidators;
 			sourceTree = "<group>";
 		};
 		D37C27412BD98EFC00B97901 /* Home */ = {
@@ -861,12 +861,12 @@
 			path = Responses;
 			sourceTree = "<group>";
 		};
-		D3AABB4E2CC31DE7000234E4 /* Responses */ = {
+		D3AABB4E2CC31DE7000234E4 /* Response */ = {
 			isa = PBXGroup;
 			children = (
 				D3BC4A9B2C3DC967009141C9 /* ProductDetailsResponse.swift */,
 			);
-			path = Responses;
+			path = Response;
 			sourceTree = "<group>";
 		};
 		D3AABB4F2CC32149000234E4 /* Header */ = {
@@ -927,7 +927,7 @@
 		D3BC4A902C3C8107009141C9 /* ProductDetails */ = {
 			isa = PBXGroup;
 			children = (
-				D3AABB4E2CC31DE7000234E4 /* Responses */,
+				D3AABB4E2CC31DE7000234E4 /* Response */,
 				D30CE3F12CB9BB5F0070AD73 /* Commons */,
 				D30CE3F42CB9BB830070AD73 /* Protocols */,
 				D30CE3FB2CB9BCB30070AD73 /* UseCases */,

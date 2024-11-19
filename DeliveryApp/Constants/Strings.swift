@@ -19,7 +19,7 @@ struct Strings {
     
     struct LoginAccount {
         struct Failure {
-            static let invalidCredentials = "Email e/ou senha inválidos"
+            static let invalidCredentials = "Email e/ou senha inválidos."
         }
     }
     

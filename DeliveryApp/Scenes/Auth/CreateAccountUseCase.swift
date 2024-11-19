@@ -1,5 +1,5 @@
 import Foundation
 
 protocol CreateAccountUseCase {
-    func create(with request: CreateAccountModel, completion: @escaping (Result<CreateAccountResponse, HttpError>) -> Void)
+    func create(with request: CreateAccountModel, completion: @escaping (Result<Void, HttpError>) -> Void)
 }

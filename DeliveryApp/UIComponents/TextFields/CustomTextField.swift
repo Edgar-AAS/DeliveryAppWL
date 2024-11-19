@@ -125,14 +125,14 @@ final class CustomTextField: UITextField {
         isHide = !isHide
     }
     
-    func setDescriptionField(viewModel: ValidationFieldModel) {
-        if fieldType != viewModel.type {
+    func setDescriptionField(type: FieldType, message: String) {
+        if fieldType != type {
             feedbackLabel.isHidden = true
             return
         }
         
         feedbackLabel.isHidden = false
-        feedbackLabel.text = viewModel.message
+        feedbackLabel.text = message
     }
     
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {

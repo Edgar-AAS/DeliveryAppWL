@@ -6,7 +6,7 @@ final class LoginViewModelTests: XCTestCase {
         let userLoginSpy = AccountLoginSpy()
         let sut = makeSut(userLoginSpy: userLoginSpy)
         let loginCredential = makeLoginCredential()
-        sut.signIn(credential: loginCredential)
+        sut.login(credential: loginCredential)
         XCTAssertEqual(userLoginSpy.loginCredential, loginCredential)
     }
 
@@ -17,12 +17,12 @@ final class LoginViewModelTests: XCTestCase {
         let exp = expectation(description: "waiting")
         
         fieldValidationDelegateSpy.observe { viewModel in
-            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo E-mail é obrigatório", type: .email))
+            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo E-mail é obrigatório"))
             exp.fulfill()
         }
         
-        validationSpy.simulateError(.init(message: "O campo E-mail é obrigatório", type: .email))
-        sut.signIn(credential: makeLoginCredential(email: "", password: ""))
+        validationSpy.simulateError(.init(message: "O campo E-mail é obrigatório"))
+        sut.login(credential: makeLoginCredential(email: "", password: ""))
         
         wait(for: [exp], timeout: 1)
     }
@@ -34,12 +34,12 @@ final class LoginViewModelTests: XCTestCase {
         let exp = expectation(description: "waiting")
         
         fieldValidationDelegateSpy.observe { viewModel in
-            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo E-mail é obrigatório", type: .email))
+            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo E-mail é obrigatório"))
             exp.fulfill()
         }
 
-        validationSpy.simulateError(.init(message: "O campo E-mail é obrigatório", type: .email))
-        sut.signIn(credential: makeLoginCredential(email: "", password: "password"))
+        validationSpy.simulateError(.init(message: "O campo E-mail é obrigatório"))
+        sut.login(credential: makeLoginCredential(email: "", password: "password"))
         wait(for: [exp], timeout: 1)
     }
 
@@ -50,13 +50,13 @@ final class LoginViewModelTests: XCTestCase {
         let exp = expectation(description: "waiting")
         
         fieldValidationDelegateSpy.observe { viewModel in
-            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo E-mail está inválido", type: .email))
+            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo E-mail está inválido"))
             exp.fulfill()
         }
         
-        validationSpy.simulateError(ValidationFieldModel(message: "O campo E-mail está inválido", type: .email))
+        validationSpy.simulateError(ValidationFieldModel(message: "O campo E-mail está inválido"))
 
-        sut.signIn(credential: makeLoginCredential(email: "invalid.email", password: ""))
+        sut.login(credential: makeLoginCredential(email: "invalid.email", password: ""))
         wait(for: [exp], timeout: 1)
     }
 
@@ -67,12 +67,12 @@ final class LoginViewModelTests: XCTestCase {
         let exp = expectation(description: "waiting")
         
         fieldValidationDelegateSpy.observe { viewModel in
-            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo E-mail está inválido", type: .email))
+            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo E-mail está inválido"))
             exp.fulfill()
         }
 
-        validationSpy.simulateError(ValidationFieldModel(message: "O campo E-mail está inválido", type: .email))
-        sut.signIn(credential: makeLoginCredential(email: "invalid.email", password: "password"))
+        validationSpy.simulateError(ValidationFieldModel(message: "O campo E-mail está inválido"))
+        sut.login(credential: makeLoginCredential(email: "invalid.email", password: "password"))
         wait(for: [exp], timeout: 1)
     }
 
@@ -83,12 +83,12 @@ final class LoginViewModelTests: XCTestCase {
         let exp = expectation(description: "waiting")
         
         fieldValidationDelegateSpy.observe { viewModel in
-            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo Senha é obrigatório", type: .password))
+            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo Senha é obrigatório"))
             exp.fulfill()
         }
 
-        validationSpy.simulateError(ValidationFieldModel(message: "O campo Senha é obrigatório", type: .password))
-        sut.signIn(credential: makeLoginCredential(email: "valid_email@gmail.com", password: ""))
+        validationSpy.simulateError(ValidationFieldModel(message: "O campo Senha é obrigatório"))
+        sut.login(credential: makeLoginCredential(email: "valid_email@gmail.com", password: ""))
         wait(for: [exp], timeout: 1)
     }
 
@@ -99,11 +99,11 @@ final class LoginViewModelTests: XCTestCase {
         let exp = expectation(description: "waiting")
         
         alertViewSpy.observe { viewModel in
-            XCTAssertEqual(viewModel, AlertViewModel(title: "Falha na validação", message: "Email e/ou senha inválida."))
+            XCTAssertEqual(viewModel, AlertViewModel(title: "Error", message: "Email e/ou senha inválidos."))
             exp.fulfill()
         }
 
-        sut.signIn(credential: makeLoginCredential())
+        sut.login(credential: makeLoginCredential())
         userLoginSpy.completeWithFailure(httpError: .badRequest)
         wait(for: [exp], timeout: 1)
     }
@@ -115,11 +115,11 @@ final class LoginViewModelTests: XCTestCase {
         let exp = expectation(description: "waiting")
         
         alertViewSpy.observe { viewModel in
-            XCTAssertEqual(viewModel, AlertViewModel(title: "Erro", message: "Algo inesperado aconteceu, tente novamente em instantes."))
+            XCTAssertEqual(viewModel, AlertViewModel(title: "Error", message: "Você está offline. Por favor, verifique sua conexão de internet."))
             exp.fulfill()
         }
 
-        sut.signIn(credential: makeLoginCredential(email: "email@gmail.com", password: "123456"))
+        sut.login(credential: makeLoginCredential(email: "email@gmail.com", password: "123456"))
         userLoginSpy.completeWithFailure(httpError: .noConnectivity)
         wait(for: [exp], timeout: 1)
     }
@@ -137,7 +137,7 @@ final class LoginViewModelTests: XCTestCase {
             if loadingStates.count == 2 { exp2.fulfill() }
         }
 
-        sut.signIn(credential: makeLoginCredential())
+        sut.login(credential: makeLoginCredential())
         userLoginSpy.completeWithFailure(httpError: .badRequest)
         
         wait(for: [exp, exp2], timeout: 1)
@@ -157,7 +157,7 @@ final class LoginViewModelTests: XCTestCase {
             if loadingStates.count == 2 { exp2.fulfill() }
         }
 
-        sut.signIn(credential: makeLoginCredential())
+        sut.login(credential: makeLoginCredential())
         userLoginSpy.completeWithSuccess()
         
         wait(for: [exp, exp2], timeout: 1)

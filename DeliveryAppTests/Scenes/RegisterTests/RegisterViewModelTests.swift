@@ -7,9 +7,9 @@ final class RegisterViewModelTests: XCTestCase {
         let createAccountSpy = CreateAccountUseCaseSpy()
         let sut = makeSut(userRegisterSpy: createAccountSpy, alertViewSpy: alertViewSpy)
         let accountModel = CreateAccountModel(
-            name: "any_name",
-            email: "any_email@gmail.com",
-            password: "any_password"
+            name: "any_Name",
+            email: "valid_email@gmail.com",
+            password: "any_Password"
         )
         
         sut.toggleTerms(assined: true)
@@ -24,8 +24,8 @@ final class RegisterViewModelTests: XCTestCase {
         let exp = expectation(description: "waiting")
         
         alertViewSpy.observe { viewModel in
-            XCTAssertEqual(viewModel, AlertViewModel(title: "Erro",
-                                                   message: "Algo inesperado aconteceu, tente novamente em instantes."))
+            XCTAssertEqual(viewModel, AlertViewModel(title: "Error",
+                                                   message: "Este Email já esta cadastrado a uma conta"))
             exp.fulfill()
         }
         
@@ -44,11 +44,11 @@ final class RegisterViewModelTests: XCTestCase {
         let exp = expectation(description: "waiting")
         
         fieldValidationDelegateSpy.observe { viewModel in
-            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo E-mail é obrigatório", type: .email))
+            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo E-mail é obrigatório"))
             exp.fulfill()
         }
         
-        validationSpy.simulateError(ValidationFieldModel(message: "O campo E-mail é obrigatório", type: .email))
+        validationSpy.simulateError(ValidationFieldModel(message: "O campo E-mail é obrigatório"))
         sut.createAccount(userRequest: makeRegisterUserRequest(email: ""))
         wait(for: [exp], timeout: 1)
     }
@@ -61,11 +61,11 @@ final class RegisterViewModelTests: XCTestCase {
         let exp = expectation(description: "waiting")
         
         fieldValidationDelegateSpy.observe { viewModel in
-            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo E-mail é obrigatório", type: .email))
+            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo E-mail é obrigatório"))
             exp.fulfill()
         }
         
-        validationSpy.simulateError(ValidationFieldModel(message: "O campo E-mail é obrigatório", type: .email))
+        validationSpy.simulateError(ValidationFieldModel(message: "O campo E-mail é obrigatório"))
         
         sut.createAccount(userRequest: makeRegisterUserRequest(email: "", password: "any_password"))
         wait(for: [exp], timeout: 1)
@@ -79,11 +79,11 @@ final class RegisterViewModelTests: XCTestCase {
         let exp = expectation(description: "waiting")
         
         fieldValidationDelegateSpy.observe { viewModel in
-            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo E-mail está inválido", type: .email))
+            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo E-mail está inválido"))
             exp.fulfill()
         }
         
-        validationSpy.simulateError(ValidationFieldModel(message: "O campo E-mail está inválido", type: .email))
+        validationSpy.simulateError(ValidationFieldModel(message: "O campo E-mail está inválido"))
         sut.createAccount(userRequest: makeRegisterUserRequest(email: "invalid.email", password: ""))
         
         wait(for: [exp], timeout: 1)
@@ -97,11 +97,11 @@ final class RegisterViewModelTests: XCTestCase {
         let exp = expectation(description: "waiting")
         
         fieldValidationDelegateSpy.observe { viewModel in
-            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo E-mail está inválido", type: .email))
+            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo E-mail está inválido"))
             exp.fulfill()
         }
         
-        validationSpy.simulateError(ValidationFieldModel(message: "O campo E-mail está inválido", type: .email))
+        validationSpy.simulateError(ValidationFieldModel(message: "O campo E-mail está inválido"))
         sut.createAccount(userRequest: makeRegisterUserRequest(email: "invalid.email", password: "any_password"))
         wait(for: [exp], timeout: 1)
     }
@@ -115,11 +115,11 @@ final class RegisterViewModelTests: XCTestCase {
         
         
         fieldValidationDelegateSpy.observe { viewModel in
-            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo Nome é obrigatório", type: .regular))
+            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo Nome é obrigatório"))
             exp.fulfill()
         }
         
-        validationSpy.simulateError(ValidationFieldModel(message: "O campo Nome é obrigatório", type: .regular))
+        validationSpy.simulateError(ValidationFieldModel(message: "O campo Nome é obrigatório"))
         
         sut.createAccount(userRequest: makeRegisterUserRequest(username: ""))
         
@@ -134,11 +134,11 @@ final class RegisterViewModelTests: XCTestCase {
         let exp = expectation(description: "waiting")
         
         fieldValidationDelegateSpy.observe { viewModel in
-            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo Senha é obrigatório", type: .password))
+            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo Senha é obrigatório"))
             exp.fulfill()
         }
         
-        validationSpy.simulateError(ValidationFieldModel(message: "O campo Senha é obrigatório", type: .password))
+        validationSpy.simulateError(ValidationFieldModel(message: "O campo Senha é obrigatório"))
         sut.createAccount(userRequest: makeRegisterUserRequest(password: ""))
         wait(for: [exp], timeout: 1)
     }
@@ -152,11 +152,11 @@ final class RegisterViewModelTests: XCTestCase {
         
         
         fieldValidationDelegateSpy.observe { viewModel in
-            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo Confirmação de senha é obrigatório", type: .passwordConfirm))
+            XCTAssertEqual(viewModel, ValidationFieldModel(message: "O campo Confirmação de senha é obrigatório"))
             exp.fulfill()
         }
         
-        validationSpy.simulateError(ValidationFieldModel(message: "O campo Confirmação de senha é obrigatório", type: .passwordConfirm))
+        validationSpy.simulateError(ValidationFieldModel(message: "O campo Confirmação de senha é obrigatório"))
         
         sut.createAccount(userRequest: makeRegisterUserRequest(confirmPassword: ""))
         wait(for: [exp], timeout: 1)
@@ -170,11 +170,11 @@ final class RegisterViewModelTests: XCTestCase {
         let exp = expectation(description: "waiting")
         
         fieldValidationDelegateSpy.observe { viewModel in
-            XCTAssertEqual(viewModel, ValidationFieldModel(message: "Os campos de senha devem coincidir", type: .passwordConfirm))
+            XCTAssertEqual(viewModel, ValidationFieldModel(message: "Os campos de senha devem coincidir"))
             exp.fulfill()
         }
         
-        validationSpy.simulateError(ValidationFieldModel(message: "Os campos de senha devem coincidir", type: .passwordConfirm))
+        validationSpy.simulateError(ValidationFieldModel(message: "Os campos de senha devem coincidir"))
         
         sut.createAccount(userRequest: makeRegisterUserRequest(password: "123456", confirmPassword: "5445667"))
         wait(for: [exp], timeout: 1)
@@ -229,7 +229,8 @@ final class RegisterViewModelTests: XCTestCase {
         
         sut.toggleTerms(assined: true)
         sut.createAccount(userRequest: makeRegisterUserRequest())
-        userRegisterSpy.completeWithSuccess(reponse: .init(message: "Conta criada com sucesso"))
+        
+        userRegisterSpy.completeWithSuccess()
         
         wait(for: [exp], timeout: 1)
         XCTAssertEqual(loadingStates, [true, false])

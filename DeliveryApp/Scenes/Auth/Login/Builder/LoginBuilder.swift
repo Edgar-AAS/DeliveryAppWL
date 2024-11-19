@@ -15,9 +15,9 @@ final class LoginBuilder {
         let emailValidator = EmailValidator()
         
         let validatorComposite = ValidationComposite(validations: [
-            RequiredFieldValidator(fieldName: "email", fieldLabel: "Email", fieldType: .email),
-            EmailFieldValidator(fieldName: "email", fieldLabel: "Email", fieldType: .email, emailValidator: emailValidator),
-            RequiredFieldValidator(fieldName: "password", fieldLabel: "Senha", fieldType: .password)
+            RequiredFieldValidator(fieldName: "email", fieldLabel: "Email"),
+            EmailFieldValidator(fieldName: "email", fieldLabel: "Email", emailValidator: emailValidator),
+            RequiredFieldValidator(fieldName: "password", fieldLabel: "Senha")
         ])
         
         let viewModel = LoginViewModel(

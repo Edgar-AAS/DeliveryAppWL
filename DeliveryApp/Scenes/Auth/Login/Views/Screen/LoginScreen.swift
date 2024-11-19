@@ -157,8 +157,7 @@ final class LoginScreen: UIView {
     }
     
     func setupValidationErrors(viewModel: ValidationFieldModel) {
-        emailTextField.setDescriptionField(viewModel: viewModel)
-        passwordTextField.setDescriptionField(viewModel: viewModel)
+        
     }
     
     func handleLoadingView(with state: LoadingStateModel) {

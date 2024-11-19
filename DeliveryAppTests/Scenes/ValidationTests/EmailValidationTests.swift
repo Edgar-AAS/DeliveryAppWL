@@ -9,7 +9,7 @@ class EmailValidationTests: XCTestCase {
         emailValidatorSpy.simulateError()
         
         let validationFieldModel = sut.validate(data: ["email": "invalid_email@gmail.com"])
-        XCTAssertEqual(validationFieldModel,  ValidationFieldModel(message: "O campo Email está inválido", type: .email))
+        XCTAssertEqual(validationFieldModel,  ValidationFieldModel(message: "O campo Email está inválido"))
     }
     
     func test_validate_should_return_error_with_correct_fieldLabel() {
@@ -19,7 +19,7 @@ class EmailValidationTests: XCTestCase {
         emailValidatorSpy.simulateError()
         
         let validationFieldModel = sut.validate(data: ["email": "invalid_email@gmail.com"])
-        XCTAssertEqual(validationFieldModel,  ValidationFieldModel(message: "O campo Email2 está inválido", type: .email))
+        XCTAssertEqual(validationFieldModel,  ValidationFieldModel(message: "O campo Email2 está inválido"))
     }
     
     func test_validate_should_return_nil_if_valid_email_is_provided() {
@@ -31,13 +31,13 @@ class EmailValidationTests: XCTestCase {
     func test_validate_should_return_nil_if_no_data_is_provided() {
         let sut = makeSut(fieldName: "email", fieldLabel: "Email", type: .email, emailValidatorSpy: EmailValidatorSpy())
         let validationFieldModel = sut.validate(data: nil)
-        XCTAssertEqual(validationFieldModel,  ValidationFieldModel(message: "O campo Email está inválido", type: .email))
+        XCTAssertEqual(validationFieldModel,  ValidationFieldModel(message: "O campo Email está inválido"))
     }
 }
 
 extension EmailValidationTests {
     func makeSut(fieldName: String, fieldLabel: String, type: FieldType, emailValidatorSpy: EmailValidatorSpy, file: StaticString = #filePath, line: UInt = #line) -> ValidationProtocol {
-        let sut = EmailFieldValidator(fieldName: fieldName, fieldLabel: fieldLabel, fieldType: type, emailValidator: emailValidatorSpy)
+        let sut = EmailFieldValidator(fieldName: fieldName, fieldLabel: fieldLabel, emailValidator: emailValidatorSpy)
         checkMemoryLeak(for: sut, file: file, line: line)
         return sut
     }

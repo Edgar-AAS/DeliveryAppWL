@@ -9,14 +9,14 @@ final class CreateAccount: CreateAccountUseCase {
         self.httpClient = httpClient
     }
     
-    func create(with request: CreateAccountModel, completion: @escaping (Result<CreateAccountResponse, HttpError>) -> Void) {
+    func create(with request: CreateAccountModel, completion: @escaping (Result<Void, HttpError>) -> Void) {
         guard let httpResource = registerAccountResource?(request) else { return }
         
         httpClient.load(httpResource) { result in
             switch result {
             case .success(let data):
                 if let model: CreateAccountResponse = data?.toModel() {
-                    completion(.success(model))
+                    completion(.success(()))
                 }
             case .failure(let httpError):
                 completion(.failure(httpError))

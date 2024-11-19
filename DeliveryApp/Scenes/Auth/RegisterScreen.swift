@@ -233,12 +233,6 @@ final class RegisterScreen: UIView {
         )
     }
     
-    func setupValidationErrors(viewModel: ValidationFieldModel) {
-        emailTextField.setDescriptionField(viewModel: viewModel)
-        userNameTextField.setDescriptionField(viewModel: viewModel)
-        passwordTextField.setDescriptionField(viewModel: viewModel)
-        passwordConfirmTextField.setDescriptionField(viewModel: viewModel)
-    }
     
     func handleLoadingView(with state: LoadingStateModel) {
         loadingView.handleLoading(with: state)

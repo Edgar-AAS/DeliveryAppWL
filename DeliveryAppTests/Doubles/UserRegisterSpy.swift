@@ -3,15 +3,15 @@ import Foundation
 
 class CreateAccountUseCaseSpy: CreateAccountUseCase {
     private(set) var userRequest: CreateAccountModel?
-    private(set) var emit: ((Result<CreateAccountStatusResponse, HttpError>) -> Void)?
+    private(set) var emit: ((Result<Void, HttpError>) -> Void)?
     
-    func create(with request: CreateAccountModel, completion: @escaping (Result<CreateAccountStatusResponse, HttpError>) -> Void) {
+    func create(with request: CreateAccountModel, completion: @escaping (Result<Void, HttpError>) -> Void) {
         self.userRequest = request
         self.emit = completion
     }
 
-    func completeWithSuccess(reponse: CreateAccountStatusResponse) {
-        self.emit?(.success(reponse))
+    func completeWithSuccess() {
+        self.emit?(.success(()))
     }
 
     func completeWithFailure(httpError: HttpError) {
