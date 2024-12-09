@@ -88,7 +88,7 @@ extension ProductDetailsViewController: ProductDetailsHeaderDelegateProtocol {
     }
 }
 
-//MARK: - ProductDetailsViewModelDelegate
+//MARK: - ProductDetailsViewModel Delegate Actions
 extension ProductDetailsViewController: ProductDetailsViewModelDelegate {
     func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, shouldEnableUserInteraction: Bool) {
         customView?.handleUserInteraction(isEnable: shouldEnableUserInteraction)
@@ -127,9 +127,7 @@ extension ProductDetailsViewController: ProductDetailsViewModelDelegate {
     }
     
     func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateHeaderWith viewData: ProductHeaderViewData) {
-        let headerView = ProductDetailsHeader(frame: .init(x: .zero, y: .zero, width: view.frame.width, height: 540))
-        customView?.tableView.tableHeaderView = headerView
-        headerView.configure(with: viewData, delegate: self)
+        customView?.setupHeader(with: viewData)
     }
 }
 

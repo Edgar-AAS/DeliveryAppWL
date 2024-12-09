@@ -1,5 +1,5 @@
 import Foundation
 
 protocol FetchPaginatedProductsUseCase {
-    func fetch(for categoryId: Int, resetPagination: Bool, completion: @escaping (Result<[Product], HttpError>) -> Void)
+    func fetch(for categoryId: Int, resetPagination: Bool, completion: @escaping (Result<[Product], HTTPError>) -> Void)
 }

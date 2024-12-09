@@ -11,9 +11,22 @@ func makeRegisterUserRequest(email: String = "valid_email@gmail.com",
                              password: String = "any_Password",
                              confirmPassword: String = "any_Password") -> RegisterUserRequest {
     
-    return RegisterUserRequest(email: email, username: username, password: password, confirmPassword: confirmPassword)
+    return RegisterUserRequest(
+        email: email,
+        username: username,
+        password: password,
+        confirmPassword: confirmPassword
+    )
 }
 
+func makeAccountModel() -> CreateAccountModel {
+    return CreateAccountModel(
+            name: "SomeName",
+            email: "someEmail@gmail.com",
+            password: "someValidPasword"
+    )
+}
+    
 
 func makeUrl() -> URL {
     return URL(string: "htttp://someurl.com")!

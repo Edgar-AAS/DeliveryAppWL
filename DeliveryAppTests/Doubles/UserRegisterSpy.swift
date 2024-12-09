@@ -2,10 +2,12 @@ import Foundation
 @testable import DeliveryApp
 
 class CreateAccountUseCaseSpy: CreateAccountUseCase {
-    private(set) var userRequest: CreateAccountModel?
-    private(set) var emit: ((Result<Void, HttpError>) -> Void)?
+    var registerAccountResource: ((CreateAccountModel) -> ResourceModel)?
     
-    func create(with request: CreateAccountModel, completion: @escaping (Result<Void, HttpError>) -> Void) {
+    private(set) var userRequest: CreateAccountModel?
+    private(set) var emit: ((Result<Void, RegisterError>) -> Void)?
+    
+    func create(with request: CreateAccountModel, completion: @escaping (Result<Void, RegisterError>) -> Void) {
         self.userRequest = request
         self.emit = completion
     }
@@ -14,7 +16,7 @@ class CreateAccountUseCaseSpy: CreateAccountUseCase {
         self.emit?(.success(()))
     }
 
-    func completeWithFailure(httpError: HttpError) {
-        self.emit?(.failure(httpError))
+    func completeWithFailure(registerError: RegisterError) {
+        self.emit?(.failure(registerError))
     }
 }

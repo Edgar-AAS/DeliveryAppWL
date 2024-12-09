@@ -1,16 +1,8 @@
 import UIKit
 
-enum FieldType: Equatable {
-    case email
-    case password
-    case passwordConfirm
-    case regular
-    case phone
-}
-
 final class CustomTextField: UITextField {
     private let exampleText: String
-    private let fieldType: FieldType?
+    private let fieldType: String
     private let fieldTag: Int
     private let returnType: UIReturnKeyType
     private weak var fieldDelegate: UITextFieldDelegate?
@@ -25,7 +17,7 @@ final class CustomTextField: UITextField {
     }
     
     init(placeholder: String,
-         fieldType: FieldType = .regular,
+         fieldType: String = "",
          tag: Int = 0,
          returnKeyType: UIReturnKeyType = .default,
          delegate: UITextFieldDelegate? = nil
@@ -61,23 +53,20 @@ final class CustomTextField: UITextField {
         let attributes = [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
         let attributedPlaceholder = NSAttributedString(string: self.placeholder ?? "", attributes: attributes)
         self.attributedPlaceholder = attributedPlaceholder
-        
-        
-        if let fieldType = fieldType {
-            switch fieldType {
-            case .email:
-                keyboardType = .emailAddress
-                autocapitalizationType = .none
-                autocorrectionType = .no
-            case .password, .passwordConfirm:
-                isSecureTextEntry = true
-                autocorrectionType = .no
-                showEyeButton()
-            case .phone:
-                keyboardType = .numberPad
-            default:
-                break
-            }
+    
+        switch fieldType {
+        case "email":
+            keyboardType = .emailAddress
+            autocapitalizationType = .none
+            autocorrectionType = .no
+        case "password", "passwordConfirm":
+            isSecureTextEntry = true
+            autocorrectionType = .no
+            showEyeButton()
+        case "phone":
+            keyboardType = .numberPad
+        default:
+            break
         }
         
         NSLayoutConstraint.activate([
@@ -101,14 +90,15 @@ final class CustomTextField: UITextField {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .red
         label.isHidden = true
+        label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
         return label
     }()
     
     private lazy var eyeButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: Assets.Icons.closeEye), for: .normal)
-        button.setImage(UIImage(named: Assets.Icons.openEye), for: .selected)
+        button.setImage(UIImage(systemName: SFSymbols.closeEye), for: .normal)
+        button.setImage(UIImage(systemName: SFSymbols.openEye), for: .selected)
         button.frame.size = .init(width: 24, height: 24)
         button.tintColor = .black
         
@@ -125,14 +115,32 @@ final class CustomTextField: UITextField {
         isHide = !isHide
     }
     
-    func setDescriptionField(type: FieldType, message: String) {
-        if fieldType != type {
+    func clearFeddback() {
+        feedbackLabel.text = ""
+    }
+    
+    func hidePassword() {
+        isHide = true
+    }
+    
+    func setDescriptionField(with model: ValidationFieldModel) {
+        if fieldType != model.fieldType {
             feedbackLabel.isHidden = true
             return
         }
         
         feedbackLabel.isHidden = false
-        feedbackLabel.text = message
+        feedbackLabel.text = model.message
+    }
+    
+    func resetField() {
+        text = ""
+        feedbackLabel.text = ""
+        layer.borderColor = Colors.grayBorder.cgColor
+        
+        if fieldType == "password" || fieldType == "passwordConfirm" {
+            isHide = true
+        }
     }
     
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
@@ -153,10 +161,10 @@ final class CustomTextField: UITextField {
 
 extension CustomTextField: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let fieldType = fieldType else { return true }
+        let fieldType = fieldType
         
         switch fieldType {
-        case .phone:
+        case "phone":
             guard let currentText = textField.text as NSString? else { return false }
             let newString = currentText.replacingCharacters(in: range, with: string)
             
@@ -191,15 +199,5 @@ extension CustomTextField: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return fieldDelegate?.textFieldShouldReturn?(textField) ?? true
-    }
-    
-    func resetField() {
-        text = ""
-        feedbackLabel.text = ""
-        layer.borderColor = Colors.grayBorder.cgColor
-        
-        if (fieldType == .password) || (fieldType == .passwordConfirm) {
-            isHide = true
-        }
     }
 }

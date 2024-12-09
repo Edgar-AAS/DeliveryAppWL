@@ -26,8 +26,8 @@ final class CheckBoxButton: UIButton {
     }
     
     private func setupUI() {
-        let normalImage = UIImage(named: "square-logo")
-        let selectedImage = UIImage(named: "checkmark-logo")
+        let normalImage = UIImage(named: Assets.Icons.checkBoxUnchecked)
+        let selectedImage = UIImage(named: Assets.Icons.checkBoxChecked)
         
         setImage(normalImage, for: .normal)
         setImage(selectedImage, for: .selected)

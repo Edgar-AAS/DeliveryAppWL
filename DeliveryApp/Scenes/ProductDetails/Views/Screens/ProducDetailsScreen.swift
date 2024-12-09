@@ -1,6 +1,6 @@
 import UIKit
 
-class ProducDetailsScreen: UIView {
+final class ProducDetailsScreen: UIView {
     convenience init(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
         self.init(frame: .zero)
         tableView.delegate = delegate
@@ -17,7 +17,14 @@ class ProducDetailsScreen: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    lazy var tableView: UITableView = {
+   
+    func setupHeader(with viewData: ProductHeaderViewData) {
+        let headerView = ProductDetailsHeader(frame: .init(x: .zero, y: .zero, width: frame.width, height: 540))
+        headerView.configure(with: viewData, delegate: self)
+        tableView.tableHeaderView = headerView
+    }
+    
+    private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.estimatedSectionHeaderHeight = 60
@@ -33,7 +40,6 @@ class ProducDetailsScreen: UIView {
         bottomView.translatesAutoresizingMaskIntoConstraints = false
         return bottomView
     }()
-    
     
     func handleUserInteraction(isEnable: Bool) {
         isUserInteractionEnabled = isEnable
@@ -67,6 +73,12 @@ class ProducDetailsScreen: UIView {
     
     func reloadRows(at indexPath: IndexPath) {
         tableView.reloadRows(at: [indexPath], with: .none)
+    }
+}
+
+extension ProducDetailsScreen: ProductDetailsHeaderDelegateProtocol {
+    func backButtonDidTapped(_ header: ProductDetailsHeader) {
+        print(#function)
     }
 }
 

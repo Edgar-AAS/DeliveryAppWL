@@ -5,14 +5,17 @@ protocol ValidationProtocol: AnyObject {
 }
 
 class ValidationFieldModel: Equatable {
+    let fieldType: String
     let message: String
     
-    init(message: String) {
+    init(fieldType: String, message: String) {
+        self.fieldType = fieldType
         self.message = message
     }
     
     static func == (lhs: ValidationFieldModel, rhs: ValidationFieldModel) -> Bool {
         return
-            lhs.message == rhs.message
+            lhs.message == rhs.message &&
+            lhs.fieldType == rhs.fieldType
        }
 }

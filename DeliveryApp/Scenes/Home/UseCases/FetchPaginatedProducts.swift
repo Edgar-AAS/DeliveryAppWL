@@ -18,7 +18,7 @@ class FetchPaginatedProducts: FetchPaginatedProductsUseCase {
     
     func fetch(for categoryId: Int,
                resetPagination: Bool,
-               completion: @escaping (Result<[Product], HttpError>) -> Void) {
+               completion: @escaping (Result<[Product], HTTPError>) -> Void) {
         
         guard !isFetching else {
             return

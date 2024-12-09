@@ -14,7 +14,7 @@ final class EmailFieldValidator: ValidationProtocol {
     func validate(data: [String : Any]?) -> ValidationFieldModel? {
         guard let fieldValue = data?[fieldName] as? String, emailValidator.isValid(email: fieldValue) else {
             return ValidationFieldModel(
-                message: "O campo \(fieldLabel) está inválido"
+                fieldType: "email", message: "O campo \(fieldLabel) está inválido"
             )
         }
         return nil

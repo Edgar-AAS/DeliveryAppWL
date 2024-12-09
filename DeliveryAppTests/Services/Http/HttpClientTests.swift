@@ -171,7 +171,7 @@ extension HttpClientTests {
         action(request!)
     }
     
-    func expectResult(_ expectedResult: Result<Data?, HttpError>, for resource: ResourceModel, when stub: (data: Data?, response: HTTPURLResponse?, error: Error?), file: StaticString = #filePath, line: UInt = #line) {
+    func expectResult(_ expectedResult: Result<Data?, HTTPError>, for resource: ResourceModel, when stub: (data: Data?, response: HTTPURLResponse?, error: Error?), file: StaticString = #filePath, line: UInt = #line) {
         let sut = makeSut()
         UrlProtocolStub.simulate(data: stub.data, response: stub.response, error: stub.error)
         let exp = expectation(description: "waiting")

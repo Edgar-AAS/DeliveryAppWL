@@ -1,20 +1,22 @@
 import Foundation
 @testable import DeliveryApp
 
-class AccountLoginSpy: AccountLoginUseCase {
+class AccountLoginSpy: LoginAccountUseCase {
+    var loginResourceCallBack: ((LoginCredential) -> ResourceModel)?
+    
     private(set) var loginCredential: LoginCredential?
-    private(set) var emit: ((Result<AccountModelResponse, HttpError>) -> Void)?
-
-    func login(with credential: LoginCredential, completion: @escaping (Result<AccountModelResponse, HttpError>) -> Void) {
+    private(set) var completion: ((Result<AccountModelResponse, LoginError>) -> Void)?
+    
+    func login(with credential: LoginCredential, completion: @escaping (Result<AccountModelResponse, LoginError>) -> Void) {
         self.loginCredential = credential
-        self.emit = completion
+        self.completion = completion
     }
     
     func completeWithSuccess() {
-        self.emit?(.success(AccountModelResponse(accessToken: "any_token")))
+        self.completion?(.success(AccountModelResponse(accessToken: "any_token")))
     }
 
-    func completeWithFailure(httpError: HttpError) {
-        self.emit?(.failure(httpError))
+    func completeWithFailure(loginError: LoginError) {
+        self.completion?(.failure(loginError))
     }
 }

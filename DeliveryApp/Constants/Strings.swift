@@ -6,7 +6,7 @@ struct Strings {
         struct Success {
             static let title = "Sua conta foi criada!"
             static let description = "Agora você pode entrar em sua conta com email e senha cadastradas."
-            static let verifyAccountTitle = "Verificar conta."
+            static let verifyAccountTitle = "Verificar conta"
         }
         
         struct Failure {
@@ -17,13 +17,19 @@ struct Strings {
         }
     }
     
+    struct CreateAccount {
+        struct Failure {
+            static let emailInUse = "Este Email já esta cadastrado a uma conta."
+        }
+    }
+    
     struct LoginAccount {
         struct Failure {
             static let invalidCredentials = "Email e/ou senha inválidos."
         }
     }
-    
-    struct NetworkErrorMessages {
+        
+    struct NetworkError {
         static let noConnectivity = "Você está offline. Por favor, verifique sua conexão de internet."
         static let serverError = "O servidor está temporariamente indisponível. Tente novamente mais tarde."
         static let timeout = "A conexão está demorando muito. Por favor, tente novamente."

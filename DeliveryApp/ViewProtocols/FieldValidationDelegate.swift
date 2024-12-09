@@ -1,5 +1,6 @@
 import Foundation
 
 protocol FieldValidationDelegate: AnyObject {
-    func display(viewModel: ValidationFieldModel)
+    func clearError()
+    func displayError(validationModel: ValidationFieldModel)
 }

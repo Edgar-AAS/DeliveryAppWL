@@ -44,7 +44,12 @@ extension ProductDetailsViewModel {
     }
     
     private func setupInitialStepperValue() {
-        delegate?.productDetailsViewModel(self, didChangeBottomViewStepperValue: .init(currentValue: footerViewStepperValue, minValue: footerViewStepperMinValue, isEnabled: true, isAnimated: false))
+        delegate?.productDetailsViewModel(self,
+                                          didChangeBottomViewStepperValue: .init(currentValue: footerViewStepperValue,
+                                                                                       minValue: footerViewStepperMinValue,
+                                                                                       isEnabled: true,
+                                                                                       isAnimated: false)
+        )
     }
     
     private func configureActiveSections(from response: ProductDetailsResponse) {

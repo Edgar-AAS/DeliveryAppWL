@@ -6,30 +6,32 @@ class ValidationCompositeTests: XCTestCase {
     func test_validate_should_return_error_if_validation_fails() {
         let validationSpy = ValidationSpy()
         let sut = makeSut(validations: [validationSpy])
-        validationSpy.simulateError(.init(message: "Error 1"))
+        validationSpy.simulateError(.init(fieldType: "someField", message: "Error 1"))
         
         let errorModel = sut.validate(data: ["name": "any_name"])
-        XCTAssertEqual(errorModel, (.init(message: "Error 1")))
+        XCTAssertEqual(errorModel, (.init(fieldType: "someField", message: "Error 1")))
     }
     
     func test_validate_should_return_correct_error_message() {
         let validationSpy2 = ValidationSpy()
         let sut = makeSut(validations: [ValidationSpy(), validationSpy2])
         
-        validationSpy2.simulateError(.init(message: "Error 2"))
+        validationSpy2.simulateError(.init(fieldType: "someField", message: "Error 2"))
         
         let errorModel = sut.validate(data: ["name": "any_name"])
-        XCTAssertEqual(errorModel, .init(message: "Error 2"))
+        XCTAssertEqual(errorModel, .init(fieldType: "someField", message: "Error 2"))
     }
     
     func test_validate_should_return_the_first_error_message() {
         let validationSpy2 = ValidationSpy()
         let validationSpy3 = ValidationSpy()
         let sut = makeSut(validations: [ValidationSpy(), validationSpy2, validationSpy3])
-        validationSpy2.simulateError(.init(message: "Error 2"))
-        validationSpy3.simulateError(.init(message: "Error 3"))
+        
+        validationSpy2.simulateError(.init(fieldType: "someField", message: "Error 2"))
+        validationSpy3.simulateError(.init(fieldType: "someField", message: "Error 3"))
+        
         let errorModel = sut.validate(data: ["name": "any_name"])
-        XCTAssertEqual(errorModel, .init(message: "Error 2"))
+        XCTAssertEqual(errorModel, .init(fieldType: "someField", message: "Error 2"))
     }
     
     func test_validate_should_return_nil_if_validation_succeeds() {
