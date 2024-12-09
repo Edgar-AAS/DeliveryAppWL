@@ -64,7 +64,7 @@ final class CustomTextField: UITextField {
             autocorrectionType = .no
             showEyeButton()
         case "phone":
-            keyboardType = .numberPad
+            keyboardType = .default
         default:
             break
         }

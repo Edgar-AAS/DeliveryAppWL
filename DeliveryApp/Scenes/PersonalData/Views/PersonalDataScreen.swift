@@ -109,7 +109,7 @@ final class PersonalDataScreen: UIView {
         placeholder: "Enter Email",
         fieldType: "email",
         tag: 4,
-        returnKeyType: .next,
+        returnKeyType: .done,
         delegate: textFieldDelegate
     )
         
