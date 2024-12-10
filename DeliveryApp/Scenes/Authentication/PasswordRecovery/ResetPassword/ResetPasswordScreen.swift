@@ -57,8 +57,8 @@ class ResetPasswordScreen: UIView {
         return label
     }()
     
-    private lazy var newPasswordField: CustomTextField = {
-        let textField = CustomTextField(placeholder: "New Password", fieldType: "password")
+    private lazy var newPasswordField: FormTextField = {
+        let textField = FormTextField(placeholder: "New Password", fieldType: "password")
         return textField
     }()
     
@@ -72,7 +72,7 @@ class ResetPasswordScreen: UIView {
         return label
     }()
     
-    let confirmPasswordField = CustomTextField(placeholder: "Confirm Password", fieldType: "password")
+    let confirmPasswordField = FormTextField(placeholder: "Confirm Password", fieldType: "password")
     
     private  lazy var verifyAccountButton: UIButton = {
         let button = UIButton(type: .system)

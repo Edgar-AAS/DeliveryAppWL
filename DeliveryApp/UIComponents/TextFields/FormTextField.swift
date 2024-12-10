@@ -1,12 +1,12 @@
 import UIKit
 
-final class CustomTextField: UITextField {
+final class FormTextField: UITextField {
     private let exampleText: String
     private let fieldType: String
     private let fieldTag: Int
     private let returnType: UIReturnKeyType
-    private weak var fieldDelegate: UITextFieldDelegate?
     
+    private weak var fieldDelegate: UITextFieldDelegate?
     private var padding: CGFloat = 20.0
     
     private var isHide: Bool = true {
@@ -35,7 +35,7 @@ final class CustomTextField: UITextField {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setup() {
         tag = fieldTag
         delegate = self
@@ -63,8 +63,13 @@ final class CustomTextField: UITextField {
             isSecureTextEntry = true
             autocorrectionType = .no
             showEyeButton()
+        case "date":
+            inputView = datePicker
+            setupToolBar()
         case "phone":
-            keyboardType = .default
+            placeholder = "(__)____-____"
+            setupToolBar()
+            keyboardType = .phonePad
         default:
             break
         }
@@ -76,6 +81,33 @@ final class CustomTextField: UITextField {
         ])
     }
     
+    private  func setupToolBar() {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneTapped))
+        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.setItems([space, doneButton], animated: false)
+        self.inputAccessoryView = toolbar
+    }
+    
+    @objc private func doneTapped() {
+        if fieldType == "date" {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd/MM/yyyy"
+            text = formatter.string(from: datePicker.date)
+        }
+        resignFirstResponder()
+    }
+    
+    private lazy var datePicker: UIDatePicker = {
+        let picker = UIDatePicker()
+        picker.datePickerMode = .date
+        picker.locale = Locale(identifier: "pt_BR")
+        picker.preferredDatePickerStyle = .wheels
+        picker.maximumDate = Date()
+        return picker
+    }()
+            
     private func showEyeButton() {
         padding = 48.0
         let frame = CGRect(x: 0, y: 0, width: eyeButton.frame.size.width + 10, height: eyeButton.frame.size.height)
@@ -159,7 +191,7 @@ final class CustomTextField: UITextField {
     }
 }
 
-extension CustomTextField: UITextFieldDelegate {
+extension FormTextField: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let fieldType = fieldType
         

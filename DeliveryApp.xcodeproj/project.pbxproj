@@ -62,7 +62,7 @@
 		D3528C262B6314AD00FD5554 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3528C252B6314AD00FD5554 /* LoginScreen.swift */; };
 		D3528C292B63159300FD5554 /* CodeView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3528C282B63159300FD5554 /* CodeView+Ext.swift */; };
 		D3528C2F2B63295100FD5554 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3528C2E2B63295100FD5554 /* UIColor+Ext.swift */; };
-		D3528C342B633DF800FD5554 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3528C332B633DF800FD5554 /* CustomTextField.swift */; };
+		D3528C342B633DF800FD5554 /* FormTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3528C332B633DF800FD5554 /* FormTextField.swift */; };
 		D3528C362B63EB0800FD5554 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3528C352B63EB0800FD5554 /* UIView+Ext.swift */; };
 		D3528C3A2B64385B00FD5554 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3528C392B64385B00FD5554 /* RegisterViewController.swift */; };
 		D3528C3D2B64389A00FD5554 /* RegisterScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3528C3C2B64389A00FD5554 /* RegisterScreen.swift */; };
@@ -245,7 +245,7 @@
 		D3528C252B6314AD00FD5554 /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 		D3528C282B63159300FD5554 /* CodeView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodeView+Ext.swift"; sourceTree = "<group>"; };
 		D3528C2E2B63295100FD5554 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
-		D3528C332B633DF800FD5554 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		D3528C332B633DF800FD5554 /* FormTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTextField.swift; sourceTree = "<group>"; };
 		D3528C352B63EB0800FD5554 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		D3528C392B64385B00FD5554 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		D3528C3C2B64389A00FD5554 /* RegisterScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScreen.swift; sourceTree = "<group>"; };
@@ -1034,7 +1034,7 @@
 		D3C99C202CDA67870052DBBB /* TextFields */ = {
 			isa = PBXGroup;
 			children = (
-				D3528C332B633DF800FD5554 /* CustomTextField.swift */,
+				D3528C332B633DF800FD5554 /* FormTextField.swift */,
 				D3515F3F2C98D30D006A94F4 /* CustomSearchTextField.swift */,
 			);
 			path = TextFields;
@@ -1577,7 +1577,7 @@
 				D38AD2012BE1AE8A00FEC569 /* ProductCell.swift in Sources */,
 				D32900C02B686A7F00D39016 /* LoginCredential.swift in Sources */,
 				D36383082C8F9761003E2637 /* RegisterSucceedScreenDelegate.swift in Sources */,
-				D3528C342B633DF800FD5554 /* CustomTextField.swift in Sources */,
+				D3528C342B633DF800FD5554 /* FormTextField.swift in Sources */,
 				D310FE642D039C9D00ACC354 /* PasswordStrongValidator.swift in Sources */,
 				D3814F0A2BFD933A00474D99 /* EmailVerificationViewController.swift in Sources */,
 				D3EA6F762CA4AF9600298675 /* ProductItemCell.swift in Sources */,

@@ -52,7 +52,7 @@ final class LoginScreen: UIView {
         textAlignment: .left
     )
     
-    private lazy var emailTextField = CustomTextField(
+    private lazy var emailTextField = FormTextField(
         placeholder: "Enter Email",
         fieldType: "email",
         tag: 0,
@@ -60,7 +60,7 @@ final class LoginScreen: UIView {
         delegate: textFieldDelegate
     )
     
-    private lazy var passwordTextField = CustomTextField(
+    private lazy var passwordTextField = FormTextField(
         placeholder: "Enter Password",
         fieldType: "password",
         tag: 1,

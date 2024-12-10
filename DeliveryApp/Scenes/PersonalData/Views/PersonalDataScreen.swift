@@ -1,11 +1,22 @@
 import UIKit
 
+protocol PersonalDataScreenDelegate: AnyObject {
+    func personalImageDidTapped(_ view: PersonalDataScreen)
+}
+
 final class PersonalDataScreen: UIView {
-    weak var textFieldDelegate: UITextFieldDelegate?
+    private weak var textFieldDelegate: UITextFieldDelegate?
+    private weak var delegate: PersonalDataScreenDelegate?
     
-    init(textFieldDelegate: UITextFieldDelegate? = nil)
-    {
+    var profileImage: UIImage? {
+        didSet {
+            personalImageView.image = profileImage
+        }
+    }
+    
+    init(textFieldDelegate: UITextFieldDelegate? = nil, delegate: PersonalDataScreenDelegate) {
         self.textFieldDelegate = textFieldDelegate
+        self.delegate = delegate
         super.init(frame: .zero)
         
         setupView()
@@ -20,22 +31,22 @@ final class PersonalDataScreen: UIView {
     private lazy var customScrollView = CustomScrollView()
     private lazy var loadingView = LoadingView()
     
-    private lazy var personalImage: UIImageView = {
+    private lazy var personalImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
         imageView.layer.cornerRadius = 50
-        imageView.backgroundColor = .lightGray
         imageView.isUserInteractionEnabled = true
         imageView.clipsToBounds = true
+        imageView.backgroundColor = .lightGray
         let gestureRecoginizer = UITapGestureRecognizer(target: self,action: #selector(handleImageTap))
         imageView.addGestureRecognizer(gestureRecoginizer)
         return imageView
     }()
     
     @objc private func handleImageTap() {
-        print("handleImageTap")
+        delegate?.personalImageDidTapped(self)
     }
     
     private lazy var userNameLabel = makeLabel(
@@ -45,7 +56,7 @@ final class PersonalDataScreen: UIView {
         textAlignment: .left
     )
     
-    private lazy var userNameTextField = CustomTextField(
+    private lazy var userNameTextField = FormTextField(
         placeholder: "Enter Name",
         fieldType: "regular",
         tag: 0,
@@ -60,29 +71,14 @@ final class PersonalDataScreen: UIView {
         textAlignment: .left
     )
     
-    private lazy var dateOfBirthTextField = CustomTextField(
+    private lazy var dateOfBirthTextField = FormTextField(
         placeholder: "Enter Date",
         fieldType: "date",
         tag: 1,
         returnKeyType: .next,
         delegate: textFieldDelegate
     )
-    
-    private lazy var genderLabel = makeLabel(
-        text: "Gender",
-        font: Fonts.medium(size: 14).weight,
-        color: .black,
-        textAlignment: .left
-    )
-    
-    private lazy var genderTextField = CustomTextField(
-        placeholder: "Enter Gender",
-        fieldType: "gender",
-        tag: 2,
-        returnKeyType: .next,
-        delegate: textFieldDelegate
-    )
-    
+        
     private lazy var phoneLabel = makeLabel(
         text: "Phone",
         font: Fonts.medium(size: 14).weight,
@@ -90,7 +86,7 @@ final class PersonalDataScreen: UIView {
         textAlignment: .left
     )
     
-    private lazy var phoneTextField = CustomTextField(
+    private lazy var phoneTextField = FormTextField(
         placeholder: "Enter Phone",
         fieldType: "phone",
         tag: 3,
@@ -105,7 +101,7 @@ final class PersonalDataScreen: UIView {
         textAlignment: .left
     )
     
-    private lazy var emailTextField = CustomTextField(
+    private lazy var emailTextField = FormTextField(
         placeholder: "Enter Email",
         fieldType: "email",
         tag: 4,
@@ -127,18 +123,16 @@ final class PersonalDataScreen: UIView {
         loadingView.handleLoading(with: state)
     }
     
-    func goToNextField(_ textField: UITextField, action: (() -> Void)) {
+    func goToNextField(_ textField: UITextField, action: (() -> Void)? = nil) {
         switch textField.tag {
         case 0:
             dateOfBirthTextField.becomeFirstResponder()
         case 1:
-            genderTextField.becomeFirstResponder()
-        case 2:
             phoneTextField.becomeFirstResponder()
-        case 3:
+        case 2:
             emailTextField.becomeFirstResponder()
-        case 4:
-            action()
+        case 3:
+            action?()
             emailTextField.resignFirstResponder()
         default:
             return
@@ -150,13 +144,11 @@ extension PersonalDataScreen: CodeView {
     func buildViewHierarchy() {
         addSubview(customScrollView)
         addSubview(loadingView)
-        customScrollView.addSubview(personalImage)
+        customScrollView.addSubview(personalImageView)
         customScrollView.addSubview(userNameLabel)
         customScrollView.addSubview(userNameTextField)
         customScrollView.addSubview(dateOfBirthLabel)
         customScrollView.addSubview(dateOfBirthTextField)
-        customScrollView.addSubview(genderLabel)
-        customScrollView.addSubview(genderTextField)
         customScrollView.addSubview(phoneLabel)
         customScrollView.addSubview(phoneTextField)
         customScrollView.addSubview(emailAdressLabel)
@@ -174,10 +166,10 @@ extension PersonalDataScreen: CodeView {
             customScrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
             customScrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            personalImage.topAnchor.constraint(equalTo: customScrollView.container.safeAreaLayoutGuide.topAnchor, constant: 36),
-            personalImage.centerXAnchor.constraint(equalTo: centerXAnchor),
+            personalImageView.topAnchor.constraint(equalTo: customScrollView.container.safeAreaLayoutGuide.topAnchor, constant: 36),
+            personalImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             
-            userNameLabel.topAnchor.constraint(equalTo: personalImage.bottomAnchor, constant: paddingBetweenFields),
+            userNameLabel.topAnchor.constraint(equalTo: personalImageView.bottomAnchor, constant: paddingBetweenFields),
             userNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leftRightPadding),
             userNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -leftRightPadding),
             
@@ -195,16 +187,7 @@ extension PersonalDataScreen: CodeView {
             dateOfBirthTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -leftRightPadding),
             dateOfBirthTextField.heightAnchor.constraint(equalToConstant: 52),
             
-            genderLabel.topAnchor.constraint(equalTo: dateOfBirthTextField.bottomAnchor, constant: paddingBetweenFields),
-            genderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leftRightPadding),
-            genderLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -leftRightPadding),
-            
-            genderTextField.topAnchor.constraint(equalTo: genderLabel.bottomAnchor, constant: 8),
-            genderTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leftRightPadding),
-            genderTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -leftRightPadding),
-            genderTextField.heightAnchor.constraint(equalToConstant: 52),
-            
-            phoneLabel.topAnchor.constraint(equalTo: genderTextField.bottomAnchor, constant: paddingBetweenFields),
+            phoneLabel.topAnchor.constraint(equalTo: dateOfBirthTextField.bottomAnchor, constant: paddingBetweenFields),
             phoneLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leftRightPadding),
             phoneLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -leftRightPadding),
             
@@ -222,7 +205,7 @@ extension PersonalDataScreen: CodeView {
             emailTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -leftRightPadding),
             emailTextField.heightAnchor.constraint(equalToConstant: 52),
             
-            saveButton.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: paddingBetweenFields),
+            saveButton.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 32),
             saveButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leftRightPadding),
             saveButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -leftRightPadding),
             saveButton.bottomAnchor.constraint(equalTo: customScrollView.container.bottomAnchor),

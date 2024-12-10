@@ -49,7 +49,7 @@ final class RegisterScreen: UIView {
         textAlignment: .left
     )
     
-    private lazy var emailTextField = CustomTextField(
+    private lazy var emailTextField = FormTextField(
         placeholder: "Enter Email",
         fieldType: "email",
         tag: 0,
@@ -64,7 +64,7 @@ final class RegisterScreen: UIView {
         textAlignment: .left
     )
     
-    private lazy var userNameTextField = CustomTextField(
+    private lazy var userNameTextField = FormTextField(
         placeholder: "Enter Name",
         fieldType: "regular",
         tag: 1,
@@ -79,7 +79,7 @@ final class RegisterScreen: UIView {
         textAlignment: .left
     )
     
-    private lazy var passwordTextField = CustomTextField(
+    private lazy var passwordTextField = FormTextField(
         placeholder: "Enter Password",
         fieldType: "password",
         tag: 2,
@@ -94,7 +94,7 @@ final class RegisterScreen: UIView {
         textAlignment: .left
     )
     
-    private lazy var passwordConfirmTextField = CustomTextField(
+    private lazy var passwordConfirmTextField = FormTextField(
         placeholder: "Password Confirm",
         fieldType: "passwordConfirm",
         tag: 3,
