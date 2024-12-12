@@ -15,7 +15,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         navigationController.setNavigationBarHidden(true, animated: false)
         let coordinator = MainCoordinator(navigationController: navigationController)
         coordinator.start()
-        appWindow.rootViewController = PersonalDataViewController()
+        
+        
+        let httpClient = HTTPClient()
+        let updateProfile = UpdateProfile(httpClient: httpClient)
+        let viewModel = PersonalDataViewModel(updateProfile: updateProfile)
+        
+        appWindow.rootViewController = PersonalDataViewController(viewModel: viewModel)
         appWindow.makeKeyAndVisible()
         window = appWindow
     }

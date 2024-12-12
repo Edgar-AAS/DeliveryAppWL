@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class HomeBuilder {
+final class HomeBuilder {
     static func build(coordinator: HomeCoordinator) -> HomeViewController {
         let httpClient: HTTPClientProtocol = HTTPClient()
         

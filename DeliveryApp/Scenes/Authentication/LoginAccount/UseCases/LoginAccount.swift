@@ -3,13 +3,13 @@ import Foundation
 
 final class LoginAccount: LoginAccountUseCase {
     private let httpClient: HTTPClientProtocol
-    var loginResourceCallBack: ((LoginCredential) -> ResourceModel)?
+    var loginResourceCallBack: ((LoginAccountCredentialDTO) -> ResourceModel)?
     
     init(httpClient: HTTPClientProtocol) {
         self.httpClient = httpClient
     }
     
-    func login(with credential: LoginCredential, completion: @escaping  (Result<AccountModelResponse, LoginError>) -> Void) {
+    func login(with credential: LoginAccountCredentialDTO, completion: @escaping  (Result<LoginAccountResponseDTO, LoginError>) -> Void) {
         guard let httpResource = loginResourceCallBack?(credential) else { return }
         
         httpClient.load(httpResource) { [weak self] result in
@@ -26,7 +26,7 @@ final class LoginAccount: LoginAccountUseCase {
                         completion(.failure(.unexpected))
                 }
                 case .success(let data):
-                    if let model: AccountModelResponse = data?.toModel() {
+                    if let model: LoginAccountResponseDTO = data?.toModel() {
                         completion(.success(model))
                     }
             }

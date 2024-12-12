@@ -2,8 +2,8 @@ import Foundation
 @testable import DeliveryApp
 
 func makeLoginCredential(email: String = "any_email@gmail.com",
-                             password: String = "any_Password") -> LoginCredential {
-    return LoginCredential(email: email, password: password)
+                             password: String = "any_Password") -> LoginAccountCredentialDTO {
+    return LoginAccountCredentialDTO(email: email, password: password)
 }
 
 func makeRegisterUserRequest(email: String = "valid_email@gmail.com",

@@ -6,11 +6,12 @@ final class LoginBuilder {
         let userAccountLogin = LoginAccount(httpClient: httpClient)
         
         userAccountLogin.loginResourceCallBack = { credential in
-            return ResourceModel(url: URL(string: "http://localhost:5177/v1/account/login")!,
-                                    method: .post(credential.toData()),
-                                    headers: ["Content-Type": "application/json"])
+            return ResourceModel(
+                url: URL(string: "http://localhost:5177/v1/account/login")!,
+                method: .post(credential.toData()),
+                headers: ["Content-Type": "application/json"]
+            )
         }
-        
         
         let emailValidator: EmailValidationProtocol = EmailValidator()
         let passwordValidator: PasswordValidationProtocol = PasswordValidator()

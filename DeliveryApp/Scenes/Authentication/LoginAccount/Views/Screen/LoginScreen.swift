@@ -149,11 +149,11 @@ final class LoginScreen: UIView {
         passwordTextField.resetField()
     }
     
-    func getUserLoginRequest() -> LoginCredential? {
+    func getUserLoginRequest() -> LoginAccountCredentialDTO? {
         guard let email = emailTextField.text,
               let password = passwordTextField.text
         else { return nil }
-        return LoginCredential(email: email, password: password)
+        return LoginAccountCredentialDTO(email: email, password: password)
     }
     
     func showValidationError(validationModel: ValidationFieldModel) {

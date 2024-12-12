@@ -1,6 +1,6 @@
 import Foundation
 
-struct LoginCredential: Model {
+struct LoginAccountCredentialDTO: Model {
     let email: String
     let password: String
 

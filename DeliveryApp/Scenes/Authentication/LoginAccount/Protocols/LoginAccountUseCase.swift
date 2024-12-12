@@ -1,6 +1,6 @@
 import Foundation
 
 protocol LoginAccountUseCase {
-    var loginResourceCallBack: ((LoginCredential) -> ResourceModel)? { get set }
-    func login(with credential: LoginCredential, completion: @escaping (Result<AccountModelResponse, LoginError>) -> Void)
+    var loginResourceCallBack: ((LoginAccountCredentialDTO) -> ResourceModel)? { get set }
+    func login(with credential: LoginAccountCredentialDTO, completion: @escaping (Result<LoginAccountResponseDTO, LoginError>) -> Void)
 }

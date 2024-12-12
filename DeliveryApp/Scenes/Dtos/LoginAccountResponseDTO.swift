@@ -1,6 +1,6 @@
 import Foundation
 
-struct AccountModelResponse: Model {
+struct LoginAccountResponseDTO: Model {
     let accessToken: String
     
     init(accessToken: String) {
