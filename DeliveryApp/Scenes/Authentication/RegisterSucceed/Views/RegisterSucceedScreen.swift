@@ -13,8 +13,8 @@ final class RegisterSucceedScreen: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var customScrollView: CustomScrollView = {
-        let scrollView = CustomScrollView()
+    private lazy var customScrollView: DAScrollView = {
+        let scrollView = DAScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
@@ -44,7 +44,7 @@ final class RegisterSucceedScreen: UIView {
         numberOfLines: 0
     )
     
-    private lazy var verifyAccountButton = RoundedButton(
+    private lazy var verifyAccountButton = DARoundedButton(
         title: Strings.RegistrationAccount.Success.verifyAccountTitle,
         titleColor: .white,
         backgroundColor: Colors.primary,

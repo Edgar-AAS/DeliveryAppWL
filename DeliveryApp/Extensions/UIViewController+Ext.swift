@@ -18,7 +18,7 @@ extension UIViewController {
     }
     
     func showAlertView(title: String, description: String = "", image: UIImage? = nil, onClose: (() -> Void)? = nil) {
-        let alertView = AlertView(
+        let alertView = DAAlertView(
             image: image ?? UIImage(systemName: SFSymbols.warning),
             title: title,
             descriptionText: description,

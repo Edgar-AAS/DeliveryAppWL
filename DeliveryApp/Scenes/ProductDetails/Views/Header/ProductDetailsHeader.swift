@@ -33,8 +33,8 @@ final class ProductDetailsHeader: UIView {
         return label
     }()
     
-    private lazy var backButton: CircularButton = {
-        return CircularButton(
+    private lazy var backButton: DACircularButton = {
+        return DACircularButton(
             iconImage: .init(systemName: SFSymbols.arrowDown),
             size: 44,
             tint: .white,
@@ -46,8 +46,8 @@ final class ProductDetailsHeader: UIView {
         )
     }()
     
-    private lazy var favoriteButton: CircularButton = {
-        return CircularButton(
+    private lazy var favoriteButton: DACircularButton = {
+        return DACircularButton(
             iconImage: .init(systemName: SFSymbols.favorite),
             size: 44,
             tint: .white,

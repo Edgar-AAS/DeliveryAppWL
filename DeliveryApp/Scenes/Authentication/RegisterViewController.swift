@@ -93,7 +93,7 @@ extension RegisterViewController: FieldValidationDelegate {
 
 //MARK: - CheckBoxDelegate
 extension RegisterViewController: CheckBoxDelegate {
-    func checkBoxDidChange(_ checkBox: CheckBoxButton, isChecked: Bool) {
+    func checkBoxDidChange(_ checkBox: DACheckBoxButton, isChecked: Bool) {
         viewModel.toggleTerms(assined: isChecked)
     }
 }

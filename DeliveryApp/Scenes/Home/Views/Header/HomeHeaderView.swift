@@ -56,8 +56,8 @@ final class HeaderView: UIView {
         return label
     }()
     
-    private lazy var searchDishesTextField: CustomSearchTextField = {
-        let texField = CustomSearchTextField(placeholder: "Search Dishes")
+    private lazy var searchDishesTextField: DASearchTextField = {
+        let texField = DASearchTextField(placeholder: "Search Dishes")
         texField.translatesAutoresizingMaskIntoConstraints = false
         return texField
     }()

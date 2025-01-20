@@ -1,16 +1,16 @@
 import Foundation
 
-class FetchProductCategories: FetchProductCategoriesUseCase {
+final class FetchProductCategories: FetchProductCategoriesUseCase {
     private let httpClient: HTTPClientProtocol
-    private let resource: ResourceModel
+    private let httpResource: ResourceModel
     
     init(httpClient: HTTPClientProtocol, resource: ResourceModel) {
         self.httpClient = httpClient
-        self.resource = resource
+        self.httpResource = resource
     }
         
     func fetch(completion: @escaping (Result<[ProductCategoryResponse], HTTPError>) -> Void) {
-        httpClient.load(resource) { result in
+        httpClient.load(httpResource) { result in
             switch result {
             case .success(let data):
                 if let model: [ProductCategoryResponse] = data?.toModel() {

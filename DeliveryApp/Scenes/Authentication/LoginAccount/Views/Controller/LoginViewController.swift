@@ -56,11 +56,8 @@ class LoginViewController: UIViewController {
     }
 }
 
+//MARK: - LoginScreenDelegate
 extension LoginViewController: LoginScreenDelegate {
-    func forgotPasswordButtonDidTapped(_ view: LoginScreen) {
-        //
-    }
-    
     func signInButtonDidTapped(_ view: LoginScreen) {
         guard let loginRequest = customView.getUserLoginRequest() else { return }
         viewModel.login(credential: loginRequest)

@@ -56,6 +56,7 @@ class HttpClientTests: XCTestCase {
     // MARK: - POST Tests
     func test_postRequest_createsCorrectPOSTRequest() {
         let url = makeUrl()
+        
         let resource = ResourceModel(url: url, method: .post(makeValidData()))
         testRequestFor(resource: resource) { request in
             XCTAssertEqual(url, request.url)

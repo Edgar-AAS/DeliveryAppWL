@@ -76,8 +76,8 @@ extension ProductDetailsViewController: UITableViewDelegate {
 }
 
 //MARK: - ProductDetailsBottomViewDelegate
-extension ProductDetailsViewController: ProductDetailsBottomViewDelegate {
-    func productDetailsBottomView(_ view: ProductDetailsBottomView, didTapStepperWithAction action: StepperActionType) {
+extension ProductDetailsViewController: ProductQuantityFooterViewDelegate {
+    func productQuantityFooterView(_ footer: ProductQuantityFooterView, didTapStepperWithAction action: StepperActionType) {
         viewModel.updateFooterViewStepper(action: action)
     }
 }

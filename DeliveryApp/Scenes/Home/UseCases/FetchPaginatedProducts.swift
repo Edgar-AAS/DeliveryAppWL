@@ -1,15 +1,16 @@
 import Foundation
 
-class FetchPaginatedProducts: FetchPaginatedProductsUseCase {
+final class FetchPaginatedProducts: FetchPaginatedProductsUseCase {
     private let httpClient: HTTPClientProtocol
     
     private var productsDataSource = [Product]()
+    
     private var isFetching = false
     
     var productsResponseCallBack: ((ResourceProductsPagination) -> ResourceModel)?
     
-    private var currentPage: Int = .zero
-    private var totalProducts: Int = .zero
+    private var currentPage: Int = 0
+    private var totalProducts: Int = 0
     private let pageSize: Int = 10
     
     init(httpClient: HTTPClientProtocol) {
@@ -18,8 +19,8 @@ class FetchPaginatedProducts: FetchPaginatedProductsUseCase {
     
     func fetch(for categoryId: Int,
                resetPagination: Bool,
-               completion: @escaping (Result<[Product], HTTPError>) -> Void) {
-        
+               completion: @escaping (Result<[Product], HTTPError>) -> Void)
+    {
         guard !isFetching else {
             return
         }

@@ -7,7 +7,12 @@ struct ProductCellViewData {
     private let isFavorite: Bool
     private let images: [ProductImage]?
     
-    init(name: String, price: Double, rating: Float, isFavorite: Bool, images: [ProductImage]?) {
+    init(name: String,
+         price: Double,
+         rating: Float,
+         isFavorite: Bool,
+         images: [ProductImage]?)
+    {
         self.name = name
         self.price = price
         self.rating = rating

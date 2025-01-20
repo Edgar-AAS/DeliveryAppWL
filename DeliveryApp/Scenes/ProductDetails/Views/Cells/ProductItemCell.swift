@@ -61,8 +61,8 @@ class ProductItemCell: UITableViewCell {
         return button
     }()
     
-    private lazy var customStepper: CustomStepper = {
-        let stepper = CustomStepper()
+    private lazy var customStepper: DAStepper = {
+        let stepper = DAStepper()
         stepper.translatesAutoresizingMaskIntoConstraints = false
         stepper.delegate = self
         return stepper
@@ -92,7 +92,7 @@ class ProductItemCell: UITableViewCell {
 }
 
 extension ProductItemCell: CustomStepperDelegate {
-    func customStepper(_ stepper: CustomStepper, stepperDidTapped action: StepperActionType) {
+    func customStepper(_ stepper: DAStepper, stepperDidTapped action: StepperActionType) {
         guard let indexPath = indexPath else { return }
         delegate?.productItemCell(self, didTapStepperWithAction: action, at: indexPath)
     }

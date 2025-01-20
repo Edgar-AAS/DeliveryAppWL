@@ -278,11 +278,8 @@ extension ProductDetailsViewModel {
         }
         return false
     }
-}
-
-//MARK: - HeaderView DataSource
-extension ProductDetailsViewModel {
-    private func updateHeaderView(with data: ProductDetailsResponse) {
+    
+    private func updateHeader(data: ProductDetailsResponse) {
         let viewData = ProductHeaderViewData(
             name: data.name,
             description: data.description,
@@ -292,6 +289,13 @@ extension ProductDetailsViewModel {
             images: data.images
         )
         delegate?.productDetailsViewModel(self, didUpdateHeaderWith: viewData)
+    }
+}
+
+//MARK: - HeaderView DataSource
+extension ProductDetailsViewModel {
+    private func updateHeaderView(with data: ProductDetailsResponse) {
+        updateHeader(data: data)
     }
 }
 
@@ -320,15 +324,13 @@ extension ProductDetailsViewModel {
             }
             .count
         
-        return areAllRequiredOptionsSelected(
-            sections: sections,
-            requiredSideItemSections,
-            requiredAdditionalItemsCount
-        ) ? .done : .pending
+        return ifRequiredOptionsAreSelected(sections: sections,
+                                            requiredSideItemSections,
+                                            requiredAdditionalItemsCount) ? .done : .pending
     }
     
     
-    private func areAllRequiredOptionsSelected(sections: [Section], _ requiredSideItemSections: Int, _ requiredAdditionalItemsSections: Int) -> Bool {
+    private func ifRequiredOptionsAreSelected(sections: [Section], _ requiredSideItemSections: Int, _ requiredAdditionalItemsSections: Int) -> Bool {
         let requiredSideItemsSectionsCount = sections.filter { $0.isRequired && $0.isSideItem }.count
         let requiredAdditionalItemsSectionsCount = sections.filter { $0.isRequired && !$0.isSideItem }.count
         

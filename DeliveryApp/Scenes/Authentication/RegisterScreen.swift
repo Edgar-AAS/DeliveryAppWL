@@ -23,8 +23,8 @@ final class RegisterScreen: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var customScrollView = CustomScrollView()
-    private lazy var loadingView = LoadingView()
+    private lazy var customScrollView = DAScrollView()
+    private lazy var loadingView = DALoadingView()
     
     private lazy var createNewAccountHeadlineLabel = makeLabel(
         text: "Create your new account",
@@ -49,7 +49,7 @@ final class RegisterScreen: UIView {
         textAlignment: .left
     )
     
-    private lazy var emailTextField = FormTextField(
+    private lazy var emailTextField = DAFormTextField(
         placeholder: "Enter Email",
         fieldType: "email",
         tag: 0,
@@ -64,7 +64,7 @@ final class RegisterScreen: UIView {
         textAlignment: .left
     )
     
-    private lazy var userNameTextField = FormTextField(
+    private lazy var userNameTextField = DAFormTextField(
         placeholder: "Enter Name",
         fieldType: "regular",
         tag: 1,
@@ -79,7 +79,7 @@ final class RegisterScreen: UIView {
         textAlignment: .left
     )
     
-    private lazy var passwordTextField = FormTextField(
+    private lazy var passwordTextField = DAFormTextField(
         placeholder: "Enter Password",
         fieldType: "password",
         tag: 2,
@@ -94,7 +94,7 @@ final class RegisterScreen: UIView {
         textAlignment: .left
     )
     
-    private lazy var passwordConfirmTextField = FormTextField(
+    private lazy var passwordConfirmTextField = DAFormTextField(
         placeholder: "Password Confirm",
         fieldType: "passwordConfirm",
         tag: 3,
@@ -102,9 +102,9 @@ final class RegisterScreen: UIView {
         delegate: textFieldDelegate
     )
     
-    private lazy var checkBox = CheckBoxButton(delegate: checkBoxDelegate)
+    private lazy var checkBox = DACheckBoxButton(delegate: checkBoxDelegate)
     
-    private lazy var termsOfServiceButton = TitleButton(
+    private lazy var termsOfServiceButton = DATitleButton(
         title: "Terms of Service",
         titleColor: Colors.primary,
         font:  Fonts.medium(size: 14).weight,
@@ -158,7 +158,7 @@ final class RegisterScreen: UIView {
     }()
     
     
-    private lazy var registerButton = RoundedButton(
+    private lazy var registerButton = DARoundedButton(
         title: "Register",
         titleColor: .white,
         backgroundColor: Colors.primary,
@@ -182,7 +182,7 @@ final class RegisterScreen: UIView {
         textAlignment: .center
     )
     
-    private lazy var goToLoginButton = TitleButton(
+    private lazy var goToLoginButton = DATitleButton(
         title: "Login here",
         titleColor: Colors.primary,
         font: Fonts.semiBold(size: 14).weight,

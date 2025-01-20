@@ -35,8 +35,8 @@ final class ProducDetailsScreen: UIView {
         return tableView
     }()
     
-    private lazy var bottomView: ProductDetailsBottomView = {
-        let bottomView = ProductDetailsBottomView()
+    private lazy var footerView: ProductQuantityFooterView = {
+        let bottomView = ProductQuantityFooterView()
         bottomView.translatesAutoresizingMaskIntoConstraints = false
         return bottomView
     }()
@@ -45,20 +45,20 @@ final class ProducDetailsScreen: UIView {
         isUserInteractionEnabled = isEnable
     }
     
-    func setupBottomViewDelegate(_ delegate: ProductDetailsBottomViewDelegate) {
-        bottomView.delegate = delegate
+    func setupBottomViewDelegate(_ delegate: ProductQuantityFooterViewDelegate) {
+        footerView.delegate = delegate
     }
         
     func updateAmount(animateInfo: ValueAnimateInfo) {
-        bottomView.configureTotalAmount(animateInfo: animateInfo)
+        footerView.configureTotalAmount(animateInfo: animateInfo)
     }
     
     func updateStepper(dto: StepperModel) {
-        bottomView.configureStepper(with: dto)
+        footerView.configureStepper(with: dto)
     }
     
     func updateRequiredOptionsStatus(with status: OptionsStatusType) {
-        bottomView.configureButtonState(status: status)
+        footerView.configureButtonState(status: status)
     }
     
     func reloadData() {
@@ -85,7 +85,7 @@ extension ProducDetailsScreen: ProductDetailsHeaderDelegateProtocol {
 extension ProducDetailsScreen: CodeView {
     func buildViewHierarchy() {
         addSubview(tableView)
-        addSubview(bottomView)
+        addSubview(footerView)
     }
     
     func setupConstraints() {
@@ -94,11 +94,11 @@ extension ProducDetailsScreen: CodeView {
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            bottomView.topAnchor.constraint(equalTo: tableView.bottomAnchor),
-            bottomView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            bottomView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            bottomView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            bottomView.heightAnchor.constraint(equalToConstant: 110)
+            footerView.topAnchor.constraint(equalTo: tableView.bottomAnchor),
+            footerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            footerView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            footerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            footerView.heightAnchor.constraint(equalToConstant: 110)
         ])
     }
     

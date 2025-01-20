@@ -24,8 +24,8 @@ final class LoginScreen: UIView {
         return view
     }()
     
-    private lazy var customScrollView: CustomScrollView = {
-        let scrollView = CustomScrollView()
+    private lazy var customScrollView: DAScrollView = {
+        let scrollView = DAScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
@@ -52,7 +52,7 @@ final class LoginScreen: UIView {
         textAlignment: .left
     )
     
-    private lazy var emailTextField = FormTextField(
+    private lazy var emailTextField = DAFormTextField(
         placeholder: "Enter Email",
         fieldType: "email",
         tag: 0,
@@ -60,7 +60,7 @@ final class LoginScreen: UIView {
         delegate: textFieldDelegate
     )
     
-    private lazy var passwordTextField = FormTextField(
+    private lazy var passwordTextField = DAFormTextField(
         placeholder: "Enter Password",
         fieldType: "password",
         tag: 1,
@@ -75,17 +75,16 @@ final class LoginScreen: UIView {
         textAlignment: .left
     )
     
-    private lazy var forgotPasswordButton = TitleButton(
+    private lazy var forgotPasswordButton = DATitleButton(
         title: "Forgot password?",
         titleColor: Colors.primary,
         font: Fonts.medium(size: 14).weight,
         action: { [weak self] in
             guard let self else { return }
-            self.delegate?.forgotPasswordButtonDidTapped(self)
         }
     )
     
-    private lazy var loginButton = RoundedButton(
+    private lazy var loginButton = DARoundedButton(
         title: "Log in",
         titleColor: .white,
         backgroundColor: Colors.primary,
@@ -110,7 +109,7 @@ final class LoginScreen: UIView {
     )
     
     private lazy var registerButton: UIButton = {
-        return RoundedButton(
+        return DARoundedButton(
             title: "Register here",
             titleColor: Colors.primary,
             backgroundColor: .white,
@@ -129,7 +128,7 @@ final class LoginScreen: UIView {
         return imageView
     }()
     
-    private lazy var loadingView = LoadingView()
+    private lazy var loadingView = DALoadingView()
     
     func goToNextField(_ textField: UITextField, action: (() -> Void)) {
         switch textField.tag {
@@ -149,11 +148,11 @@ final class LoginScreen: UIView {
         passwordTextField.resetField()
     }
     
-    func getUserLoginRequest() -> LoginAccountCredentialDTO? {
+    func getUserLoginRequest() -> AuthResquest? {
         guard let email = emailTextField.text,
               let password = passwordTextField.text
         else { return nil }
-        return LoginAccountCredentialDTO(email: email, password: password)
+        return AuthResquest(email: email, password: password)
     }
     
     func showValidationError(validationModel: ValidationFieldModel) {

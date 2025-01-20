@@ -2,18 +2,18 @@ import Foundation
 @testable import DeliveryApp
 
 class AccountLoginSpy: LoginAccountUseCase {
-    var loginResourceCallBack: ((LoginAccountCredentialDTO) -> ResourceModel)?
+    var loginResourceCallBack: ((AuthResquest) -> ResourceModel)?
     
-    private(set) var loginCredential: LoginAccountCredentialDTO?
-    private(set) var completion: ((Result<LoginAccountResponseDTO, LoginError>) -> Void)?
+    private(set) var loginCredential: AuthResquest?
+    private(set) var completion: ((Result<AuthResponse, LoginError>) -> Void)?
     
-    func login(with credential: LoginAccountCredentialDTO, completion: @escaping (Result<LoginAccountResponseDTO, LoginError>) -> Void) {
+    func login(with credential: AuthResquest, completion: @escaping (Result<AuthResponse, LoginError>) -> Void) {
         self.loginCredential = credential
         self.completion = completion
     }
     
     func completeWithSuccess() {
-        self.completion?(.success(LoginAccountResponseDTO(accessToken: "any_token")))
+        self.completion?(.success(AuthResponse(accessToken: "any_token")))
     }
 
     func completeWithFailure(loginError: LoginError) {

@@ -1,5 +1,5 @@
 import Foundation
 
-protocol ProductDetailsBottomViewDelegate: AnyObject {
-    func productDetailsBottomView(_ view: ProductDetailsBottomView, didTapStepperWithAction action: StepperActionType)
+protocol ProductQuantityFooterViewDelegate: AnyObject {
+    func productQuantityFooterView(_ footer: ProductQuantityFooterView, didTapStepperWithAction action: StepperActionType)
 }

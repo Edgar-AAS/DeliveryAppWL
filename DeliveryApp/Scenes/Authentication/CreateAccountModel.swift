@@ -1,5 +1,7 @@
 import Foundation
 
+//Will change to own user Model
+
 struct CreateAccountModel: Model {
     let name: String
     let email: String

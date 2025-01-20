@@ -18,7 +18,7 @@ final class LoginViewModel: LoginViewModelProtocol {
     }
     
     //MARK: - signIn
-    func login(credential: LoginAccountCredentialDTO) {
+    func login(credential: AuthResquest) {
         if let validationModel = validatorComposite.validate(data: credential.toJson()) {
             fieldValidationDelegate?.displayError(validationModel: validationModel)
         } else {

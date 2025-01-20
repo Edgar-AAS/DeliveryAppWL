@@ -29,7 +29,7 @@ class SeeAllCategoriesCell: UITableViewCell {
         return label
     }()
     
-    private lazy var seeAllButton = TitleButton(
+    private lazy var seeAllButton = DATitleButton(
         title: "See All",
         titleColor: Colors.primary,
         font:  Fonts.bold(size: 14).weight,
