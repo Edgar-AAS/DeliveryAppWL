@@ -4,11 +4,9 @@ final class UpdateProfileData: UpdateProfileDataUseCase {
     var httpResource: ((UpdateProfileDataRequest) -> ResourceModel)?
     
     private let httpClient: HTTPClientProtocol
-    private let logger: LoggerProtocol?
    
-   init(httpClient: HTTPClientProtocol, logger: LoggerProtocol? = nil) {
+   init(httpClient: HTTPClientProtocol) {
        self.httpClient = httpClient
-       self.logger = logger
    }
     
     
@@ -19,19 +17,23 @@ final class UpdateProfileData: UpdateProfileDataUseCase {
         }
         
         httpClient.load(httpResourceModel) { [weak self] result in
+            guard let self else {
+                return
+            }
+            
             switch result {
             case .success(_):
                 onComplete(.success(()))
             case .failure(let httpError):
                 switch httpError {
                     case .badRequest:
-                        self?.logger?.log("O corpo da requisição é inválido")
+                        print("O corpo da requisição é inválido")
                     case .unauthorized:
-                        self?.logger?.log("O usuário não esta autorizado para editar os detalhes do perfil")
+                    print("O usuário não esta autorizado para editar os detalhes do perfil")
                     case .notFound:
-                        self?.logger?.log("Não existe usuário para o ID informado")
+                    print("Não existe usuário para o ID informado")
                 default:
-                    self?.logger?.log("Erro do servidor")
+                    print("Erro do servidor")
                 }
                 onComplete(.failure(.unexpectedError))
             }

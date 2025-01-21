@@ -3,8 +3,7 @@ import UIKit
 final class ProfileDataBuilder {
     static func build(userId: Int) -> UpdateProfileDataViewController {
         let httpClient = HTTPClient()
-        let logger = ConsoleLogger()
-        let updateProfile = UpdateProfileData(httpClient: httpClient, logger: logger)
+        let updateProfile = UpdateProfileData(httpClient: httpClient)
         
         let fetchProfileDataResource = ResourceModel(
             url: URL(string: "http://localhost:5177/v1/account/details/\(userId)")!,
@@ -12,7 +11,7 @@ final class ProfileDataBuilder {
             headers: ["Content-Type": "application/json"]
         )
         
-        let fetchProfileData = FetchProfileData(httpClient: httpClient, httpResource: fetchProfileDataResource, logger: logger)
+        let fetchProfileData = FetchProfileData(httpClient: httpClient, httpResource: fetchProfileDataResource)
         let viewModel = ProfileDataViewModel(updateProfile: updateProfile, fetchProfileData: fetchProfileData)
         let viewController = UpdateProfileDataViewController(viewModel: viewModel)
         
