@@ -17,7 +17,7 @@ final class UpdateProfileData: UpdateProfileDataUseCase {
         }
         
         httpClient.load(httpResourceModel) { [weak self] result in
-            guard let self else {
+            guard self != nil else {
                 return
             }
             
@@ -40,3 +40,5 @@ final class UpdateProfileData: UpdateProfileDataUseCase {
         }
     }
 }
+
+

@@ -6,7 +6,7 @@ final class RegisterViewModel: RegisterViewModelProtocol{
     var createdAccountCallBack: (() -> Void)?
     
     weak var alertView: AlertViewProtocol?
-    weak var fieldValidationDelegate: FieldValidationDelegate?
+    weak var fieldValidationDelegate: FeedBackTextFieldProtocol?
     
     private let createAccount: CreateAccountUseCase
     private let validatorComposite: ValidationProtocol

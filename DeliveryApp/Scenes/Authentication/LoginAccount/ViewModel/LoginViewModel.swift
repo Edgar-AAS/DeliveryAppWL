@@ -8,7 +8,7 @@ final class LoginViewModel: LoginViewModelProtocol {
     private let validatorComposite: ValidationProtocol
     private let userAccountLogin: LoginAccountUseCase
     
-    weak var fieldValidationDelegate: FieldValidationDelegate?
+    weak var fieldValidationDelegate: FeedBackTextFieldProtocol?
     weak var alertView: AlertViewProtocol?
     
     //MARK: - Initializers

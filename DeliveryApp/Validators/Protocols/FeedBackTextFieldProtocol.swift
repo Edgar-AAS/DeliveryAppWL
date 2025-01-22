@@ -1,6 +1,6 @@
 import Foundation
 
-protocol FieldValidationDelegate: AnyObject {
+protocol FeedBackTextFieldProtocol: AnyObject {
     func clearError()
     func displayError(validationModel: ValidationFieldModel)
 }

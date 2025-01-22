@@ -1,6 +1,6 @@
 import UIKit
 
-class ResetPasswordViewController: UIViewController {
+final class ResetPasswordViewController: UIViewController {
     private lazy var customView: ResetPasswordScreen? = {
         return view as? ResetPasswordScreen
     }()
@@ -15,7 +15,7 @@ class ResetPasswordViewController: UIViewController {
     }
 }
 
-extension ResetPasswordViewController: FieldValidationDelegate {
+extension ResetPasswordViewController: FeedBackTextFieldProtocol {
     func displayError(validationModel: ValidationFieldModel) {
         
     }

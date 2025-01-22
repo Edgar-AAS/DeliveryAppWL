@@ -40,7 +40,7 @@
 		D329D89D2C7FA96600EB2733 /* RegisterScreenDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D329D89C2C7FA96600EB2733 /* RegisterScreenDelegate.swift */; };
 		D329D89F2C7FE40D00EB2733 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = D329D89E2C7FE40D00EB2733 /* HTTPMethod.swift */; };
 		D329D8A12C7FE59A00EB2733 /* ResourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D329D8A02C7FE59A00EB2733 /* ResourceModel.swift */; };
-		D34411AC2BE58C3200AC85EC /* FieldValidationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34411AB2BE58C3200AC85EC /* FieldValidationDelegate.swift */; };
+		D33F427B2D41754D00CA1A54 /* FeedBackTextFieldProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33F427A2D41754D00CA1A54 /* FeedBackTextFieldProtocol.swift */; };
 		D349C2C82BDFD6EA001FBF33 /* ProductCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D349C2C72BDFD6EA001FBF33 /* ProductCategoryCell.swift */; };
 		D349C2CA2BDFE269001FBF33 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D349C2C92BDFE269001FBF33 /* CategoryCell.swift */; };
 		D349EC2D2C8E4B2900DF96A2 /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D349EC2C2C8E4B2900DF96A2 /* AuthResponse.swift */; };
@@ -226,7 +226,7 @@
 		D329D89C2C7FA96600EB2733 /* RegisterScreenDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScreenDelegate.swift; sourceTree = "<group>"; };
 		D329D89E2C7FE40D00EB2733 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		D329D8A02C7FE59A00EB2733 /* ResourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceModel.swift; sourceTree = "<group>"; };
-		D34411AB2BE58C3200AC85EC /* FieldValidationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldValidationDelegate.swift; sourceTree = "<group>"; };
+		D33F427A2D41754D00CA1A54 /* FeedBackTextFieldProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedBackTextFieldProtocol.swift; sourceTree = "<group>"; };
 		D349C2C72BDFD6EA001FBF33 /* ProductCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCategoryCell.swift; sourceTree = "<group>"; };
 		D349C2C92BDFE269001FBF33 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		D349EC2C2C8E4B2900DF96A2 /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
@@ -388,12 +388,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D30B81EB2CCFF5FC003E1DBD /* Http */ = {
+		D30B81EB2CCFF5FC003E1DBD /* Networking */ = {
 			isa = PBXGroup;
 			children = (
 				D30B81EC2CCFF641003E1DBD /* HttpClientTests.swift */,
 			);
-			path = Http;
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		D30CE3F12CB9BB5F0070AD73 /* Enums */ = {
@@ -455,15 +455,6 @@
 				D3C99C312CDA71420052DBBB /* HttpResource */,
 			);
 			path = Networking;
-			sourceTree = "<group>";
-		};
-		D32900B22B6842FC00D39016 /* ViewProtocols */ = {
-			isa = PBXGroup;
-			children = (
-				D32900B32B68432600D39016 /* AlertViewProtocol.swift */,
-				D34411AB2BE58C3200AC85EC /* FieldValidationDelegate.swift */,
-			);
-			path = ViewProtocols;
 			sourceTree = "<group>";
 		};
 		D32900B62B685E8200D39016 /* Coordinators */ = {
@@ -550,8 +541,7 @@
 				D3528C272B63157D00FD5554 /* Extensions */,
 				D32900A72B681DEB00D39016 /* Networking */,
 				D32900B62B685E8200D39016 /* Coordinators */,
-				D32900B22B6842FC00D39016 /* ViewProtocols */,
-				D3528C322B633DD900FD5554 /* UIComponents */,
+				D3528C322B633DD900FD5554 /* Components */,
 				D37A48E32C7BEF30009A3481 /* Validators */,
 				D3528C1D2B6311F600FD5554 /* Scenes */,
 				D3AB4F202D3F09DA00B0C5E6 /* Assets */,
@@ -588,7 +578,7 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		D3528C322B633DD900FD5554 /* UIComponents */ = {
+		D3528C322B633DD900FD5554 /* Components */ = {
 			isa = PBXGroup;
 			children = (
 				D3E7CBB82CE41559005B9B45 /* DAAlertView.swift */,
@@ -603,26 +593,18 @@
 				D3EA6F7B2CA4E6D200298675 /* DAStepper.swift */,
 				D3637D9D2C651A7300C604E6 /* DALoadingView.swift */,
 			);
-			path = UIComponents;
+			path = Components;
 			sourceTree = "<group>";
 		};
 		D35704D82C45E25C002FB010 /* DeliveryAppTests */ = {
 			isa = PBXGroup;
 			children = (
 				D393CFFD2C461A7C00C7A5A6 /* Helpers */,
-				D3637D9F2C66A46800C604E6 /* Services */,
+				D30B81EB2CCFF5FC003E1DBD /* Networking */,
 				D393CFFC2C461A6F00C7A5A6 /* Scenes */,
 				D393CFFB2C461A6900C7A5A6 /* Doubles */,
 			);
 			path = DeliveryAppTests;
-			sourceTree = "<group>";
-		};
-		D3637D9F2C66A46800C604E6 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				D30B81EB2CCFF5FC003E1DBD /* Http */,
-			);
-			path = Services;
 			sourceTree = "<group>";
 		};
 		D37172292D0271DE0084154A /* Enums */ = {
@@ -1101,9 +1083,11 @@
 		D3C99C282CDA6F390052DBBB /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				D32900B32B68432600D39016 /* AlertViewProtocol.swift */,
 				D3A53E932CD956B9003FD731 /* ValidationProtocol.swift */,
 				D36383162C9128BD003E2637 /* PhoneNumberValidationProtocol.swift */,
 				D310FE672D039E5800ACC354 /* PasswordValidationProtocol.swift */,
+				D33F427A2D41754D00CA1A54 /* FeedBackTextFieldProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1522,7 +1506,6 @@
 				D3515F602C9CD356006A94F4 /* RegisterCoordinator.swift in Sources */,
 				D3515F552C9C9381006A94F4 /* Coordinator.swift in Sources */,
 				D37C27562BD9A33400B97901 /* HTTPClient.swift in Sources */,
-				D34411AC2BE58C3200AC85EC /* FieldValidationDelegate.swift in Sources */,
 				D32900AC2B682D4F00D39016 /* Model.swift in Sources */,
 				D3515F3E2C989243006A94F4 /* ProductGridCellDataSource.swift in Sources */,
 				D36383062C8F90D9003E2637 /* RegisterSucceedViewModelProtocol.swift in Sources */,
@@ -1597,6 +1580,7 @@
 				D3C99C1F2CD961D20052DBBB /* ValidationComposite.swift in Sources */,
 				D3EA9D812C7E55D2008CA87A /* RegisterSucceedViewModel.swift in Sources */,
 				D37C27482BD98F6800B97901 /* HomeViewController.swift in Sources */,
+				D33F427B2D41754D00CA1A54 /* FeedBackTextFieldProtocol.swift in Sources */,
 				D3B2049A2D09383B00B68265 /* UpdateProfileDataUseCase.swift in Sources */,
 				D38DF51A2C93D8E9006131EF /* CategoryCellViewData.swift in Sources */,
 				D32900B42B68432600D39016 /* AlertViewProtocol.swift in Sources */,

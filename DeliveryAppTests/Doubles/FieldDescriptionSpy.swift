@@ -1,7 +1,7 @@
 import Foundation
 @testable import DeliveryApp
 
-class FieldDescriptionSpy: FieldValidationDelegate {
+class FieldDescriptionSpy: FeedBackTextFieldProtocol {
     private(set) var clearErrorCallsCount = 0
     private(set) var emit: ((ValidationFieldModel) -> Void)?
     

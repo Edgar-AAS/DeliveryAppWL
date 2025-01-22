@@ -1,6 +1,6 @@
 import UIKit
 
-class LoginViewController: UIViewController {
+final class LoginViewController: UIViewController {
 //MARK: - Properties
     private var viewModel: LoginViewModelProtocol
     
@@ -84,7 +84,7 @@ extension LoginViewController: UITextFieldDelegate {
 }
 
 //MARK: - FieldValidationDelegate
-extension LoginViewController: FieldValidationDelegate {
+extension LoginViewController: FeedBackTextFieldProtocol {
     func clearError() {
         customView.clearFeedBackMessages()
     }

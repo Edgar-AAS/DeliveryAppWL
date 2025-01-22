@@ -1,6 +1,6 @@
 import UIKit
 
-class RegisterViewController: UIViewController {
+final class RegisterViewController: UIViewController {
 //MARK: - Properties
     private lazy var customView: RegisterScreen = {
         guard let view = view as? RegisterScreen else {
@@ -81,7 +81,7 @@ extension RegisterViewController: UITextFieldDelegate {
 }
 
 //MARK: - FieldValidationDelegate
-extension RegisterViewController: FieldValidationDelegate {
+extension RegisterViewController: FeedBackTextFieldProtocol {
     func clearError() {
         customView.clearFeedBackMessages()
     }
