@@ -1,9 +1,9 @@
 import Foundation
 
-final class LoginViewModel: LoginViewModelProtocol {
+final class LoginViewModel: UserLoginHandler {
     //MARK: - Properties
-    var loadingHandler: ((LoadingStateModel) -> ())?
-    var onLoginSuccess: (() -> Void)?
+    var loadingHandler: ((LoadingState) -> ())?
+    var onSuccess: (() -> Void)?
     
     private let validatorComposite: ValidationProtocol
     private let userAccountLogin: LoginAccountUseCase
@@ -17,21 +17,21 @@ final class LoginViewModel: LoginViewModelProtocol {
         self.validatorComposite = validatorComposite
     }
     
-    //MARK: - signIn
-    func login(credential: AuthResquest) {
+    //MARK: - login
+    func login(credential: AuthRequest) {
         if let validationModel = validatorComposite.validate(data: credential.toJson()) {
             fieldValidationDelegate?.displayError(validationModel: validationModel)
         } else {
             fieldValidationDelegate?.clearError()
-            loadingHandler?(LoadingStateModel(isLoading: true))
+            loadingHandler?(LoadingState(isLoading: true))
             
             userAccountLogin.login(with: credential) { [weak self] result in
                 switch result {
                 case .success(_):
-                    self?.loadingHandler?(LoadingStateModel(isLoading: false))
-                    self?.onLoginSuccess?()
+                    self?.loadingHandler?(LoadingState(isLoading: false))
+                    self?.onSuccess?()
                 case .failure(let loginError):
-                    self?.loadingHandler?(LoadingStateModel(isLoading: false))
+                    self?.loadingHandler?(LoadingState(isLoading: false))
                     self?.handleLoginError(loginError)
                 }
             }
@@ -39,17 +39,7 @@ final class LoginViewModel: LoginViewModelProtocol {
     }
     
     private func handleLoginError(_ error: LoginError) {
-        var message = ""
-        
-        switch error {
-        case .noConnectivity:
-            message = Strings.NetworkError.noConnectivity
-        case .invalidCredentials:
-            message = Strings.LoginAccount.Failure.invalidCredentials
-        case .unexpected:
-            message = Strings.NetworkError.unexpectedError
-        }
-        
-        alertView?.showMessage(viewModel: AlertViewModel(title: Strings.NetworkError.errorTitle, message: message))
+        let alertViewModel = AlertViewModel(title: Strings.NetworkError.errorTitle, message: error.message)
+        alertView?.showMessage(viewModel: alertViewModel)
     }
 }

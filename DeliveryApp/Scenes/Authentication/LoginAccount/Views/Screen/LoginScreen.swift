@@ -148,11 +148,11 @@ final class LoginScreen: UIView {
         passwordTextField.resetField()
     }
     
-    func getUserLoginRequest() -> AuthResquest? {
+    func getUserLoginRequest() -> AuthRequest? {
         guard let email = emailTextField.text,
               let password = passwordTextField.text
         else { return nil }
-        return AuthResquest(email: email, password: password)
+        return AuthRequest(email: email, password: password)
     }
     
     func showValidationError(validationModel: ValidationFieldModel) {
@@ -166,7 +166,7 @@ final class LoginScreen: UIView {
         passwordTextField.hidePassword()
     }
     
-    func handleLoadingView(with state: LoadingStateModel) {
+    func handleLoadingView(with state: LoadingState) {
         loadingView.handleLoading(with: state)
     }
 }

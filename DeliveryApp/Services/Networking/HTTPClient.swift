@@ -1,6 +1,6 @@
 import Foundation
 
-class HTTPClient: HTTPClientProtocol {
+final class HTTPClient: HTTPClientProtocol {
     private let session: URLSession
     
     init(session: URLSession = .shared) {

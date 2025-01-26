@@ -9,7 +9,7 @@ final class LoginAccountTests: XCTestCase {
         
         let expectedRequest = makeLoginCredential()
         
-        sut.loginResourceCallBack = { request in
+        sut.httpResource = { request in
             XCTAssertEqual(request.email, expectedRequest.email)
             XCTAssertEqual(request.password, expectedRequest.password)
             return ResourceModel(url: makeUrl(), method: .post(request.toData()))
@@ -87,7 +87,7 @@ final class LoginAccountTests: XCTestCase {
 extension LoginAccountTests {
     func makeSut(httpClientMock: HTTPClientProtocol = HTTPClientMock()) -> LoginAccount {
         let sut = LoginAccount(httpClient: httpClientMock)
-        sut.loginResourceCallBack = { _ in
+        sut.httpResource = { _ in
             return ResourceModel(url: makeUrl(), method: .post(makeValidData()))
         }
         return sut

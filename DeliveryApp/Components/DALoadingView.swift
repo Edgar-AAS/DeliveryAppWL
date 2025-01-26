@@ -1,6 +1,6 @@
 import UIKit
 
-struct LoadingStateModel {
+struct LoadingState {
     let isLoading: Bool
 }
 
@@ -23,7 +23,7 @@ final class DALoadingView: UIView, CodeView {
         return indicator
     }()
     
-    func handleLoading(with state: LoadingStateModel) {
+    func handleLoading(with state: LoadingState) {
         let isLoading = state.isLoading
         isHidden = !isLoading
         

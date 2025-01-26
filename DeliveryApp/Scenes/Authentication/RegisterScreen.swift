@@ -249,7 +249,7 @@ final class RegisterScreen: UIView {
         passwordConfirmTextField.hidePassword()
     }
     
-    func handleLoadingView(with state: LoadingStateModel) {
+    func handleLoadingView(with state: LoadingState) {
         loadingView.handleLoading(with: state)
     }
 }

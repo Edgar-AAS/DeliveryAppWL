@@ -33,7 +33,7 @@ struct Strings {
         static let noConnectivity = "Você está offline. Por favor, verifique sua conexão de internet."
         static let serverError = "O servidor está temporariamente indisponível. Tente novamente mais tarde."
         static let timeout = "A conexão está demorando muito. Por favor, tente novamente."
-        static let unexpectedError = "Ocorreu um erro inesperado. Tente novamente."
+        static let unexpected = "Ocorreu um erro inesperado. Tente novamente."
         static let errorTitle = "Error"
     }
 }

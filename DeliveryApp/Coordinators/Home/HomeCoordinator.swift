@@ -11,7 +11,7 @@ class HomeCoordinator: Coordinator {
     
     func start() {
         let homeViewController = HomeBuilder.build(coordinator: self)
-        homeViewController.productDetailsCallback = { [weak self] id in
+        homeViewController.productCardBlock = { [weak self] id in
             self?.navigateToProductDetails(productId: id)
         }
         navigationController.setViewControllers([homeViewController], animated: false)

@@ -1,4 +1,4 @@
 protocol UpdateProfileDataUseCase {
-    var httpResource: ((UpdateProfileDataRequest) -> ResourceModel)? { get set }
-    func update(with request: UpdateProfileDataRequest, onComplete: @escaping (Result<Void, UpdateProfileDataError>) -> Void)
+    var httpResource: ((UserRequest) -> ResourceModel)? { get set }
+    func update(with request: UserRequest, onComplete: @escaping (Result<Void, UpdateProfileDataError>) -> Void)
 }

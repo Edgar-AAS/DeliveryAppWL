@@ -2,7 +2,7 @@ import Foundation
 
 final class RegisterViewModel: RegisterViewModelProtocol{
     private var hasAssignedTerms = false
-    var loadingHandler: ((LoadingStateModel) -> ())?
+    var loadingHandler: ((LoadingState) -> ())?
     var createdAccountCallBack: (() -> Void)?
     
     weak var alertView: AlertViewProtocol?
@@ -67,7 +67,7 @@ final class RegisterViewModel: RegisterViewModelProtocol{
         case .emailInUse:
             message = Strings.CreateAccount.Failure.emailInUse
         default:
-            message = Strings.NetworkError.unexpectedError
+            message = Strings.NetworkError.unexpected
         }
         
         showAlert(

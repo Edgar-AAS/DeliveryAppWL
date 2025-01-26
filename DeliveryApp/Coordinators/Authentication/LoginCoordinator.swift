@@ -12,11 +12,11 @@ final class LoginCoordinator: Coordinator {
     func start() {
         let loginViewController = LoginBuilder.build()
         
-        loginViewController.routeToRegisterCallBack = { [weak self] in
+        loginViewController.routeToRegister = { [weak self] in
             self?.navigateToRegister()
         }
         
-        loginViewController.routeToMainFlowCallBack = { [weak self]  in
+        loginViewController.routeToMainFlow = { [weak self]  in
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
                 self?.parentCoordinator?.showMainTabBarFlow()
             })

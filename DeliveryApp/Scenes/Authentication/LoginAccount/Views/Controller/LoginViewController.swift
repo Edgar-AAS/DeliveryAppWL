@@ -2,10 +2,10 @@ import UIKit
 
 final class LoginViewController: UIViewController {
 //MARK: - Properties
-    private var viewModel: LoginViewModelProtocol
+    private var viewModel: UserLoginHandler
     
-    var routeToRegisterCallBack: (() -> Void)?
-    var routeToMainFlowCallBack: (() -> Void)?
+    var routeToRegister: (() -> Void)?
+    var routeToMainFlow: (() -> Void)?
     
     private lazy var customView: LoginScreen = {
         guard let view = view as? LoginScreen else {
@@ -15,7 +15,7 @@ final class LoginViewController: UIViewController {
     }()
     
 //MARK: - Initializers
-    init(viewModel: LoginViewModelProtocol) {
+    init(viewModel: UserLoginHandler) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -46,8 +46,8 @@ final class LoginViewController: UIViewController {
     }
     
     private func configure() {
-        viewModel.onLoginSuccess = { [weak self] in
-            self?.routeToMainFlowCallBack?()
+        viewModel.onSuccess = { [weak self] in
+            self?.routeToMainFlow?()
         }
         
         viewModel.loadingHandler = { [weak self] loadingState in
@@ -64,7 +64,7 @@ extension LoginViewController: LoginScreenDelegate {
     }
     
     func registerButtonDidTapped(_ view: LoginScreen) {
-        routeToRegisterCallBack?()
+        routeToRegister?()
     }
 }
 

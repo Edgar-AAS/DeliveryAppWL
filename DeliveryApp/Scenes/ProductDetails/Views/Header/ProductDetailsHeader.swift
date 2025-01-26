@@ -21,7 +21,7 @@ final class ProductDetailsHeader: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
         imageView.isUserInteractionEnabled = true
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -203,10 +203,9 @@ final class ProductDetailsHeader: UIView {
     
     func configure(with viewData: ProductHeaderViewData, delegate: ProductDetailsHeaderDelegateProtocol) {
         self.delegate = delegate
-        
+        setupBasePriceTextLabel(prefix: viewData.prefixBasePrice, price: viewData.formattedBasePrice)
         productNameLabel.text = viewData.displayName
         descriptionLabel.text = viewData.displayDescription
-        setupBasePriceTextLabel(prefix: viewData.prefixBasePrice, price: viewData.formattedBasePrice)
         deliveryFeeLabel.text = viewData.displayDeliveryFee
         ratingLabel.text = viewData.stringRating
         

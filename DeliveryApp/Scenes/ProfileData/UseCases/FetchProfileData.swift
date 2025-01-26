@@ -9,7 +9,7 @@ final class FetchProfileData: FetchProfileDataUseCase {
         self.httpResource = httpResource
     }
     
-    func fetch(onComplete: @escaping (Result<ProfileDataRequest, FetchProfileDataError>) -> Void) {
+    func fetch(onComplete: @escaping (Result<UserRequest, FetchProfileDataError>) -> Void) {
         httpClient.load(httpResource) { [weak self] result in
             guard self != nil else {
                 return
@@ -17,7 +17,7 @@ final class FetchProfileData: FetchProfileDataUseCase {
             
             switch result {
             case .success(let data):
-                if let profileResponse: ProfileDataRequest  = data?.toModel() {
+                if let profileResponse: UserRequest  = data?.toModel() {
                     onComplete(.success(profileResponse))
                 } else {
                     print("Erro ao decodificar o JSON")

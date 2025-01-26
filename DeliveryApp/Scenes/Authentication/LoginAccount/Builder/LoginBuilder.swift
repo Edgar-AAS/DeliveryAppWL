@@ -5,7 +5,7 @@ final class LoginBuilder {
         let httpClient: HTTPClientProtocol = HTTPClient()
         let userAccountLogin = LoginAccount(httpClient: httpClient)
         
-        userAccountLogin.loginResourceCallBack = { credential in
+        userAccountLogin.httpResource = { credential in
             return ResourceModel(
                 url: URL(string: "http://localhost:5177/v1/account/login")!,
                 method: .post(credential.toData()),
@@ -23,10 +23,8 @@ final class LoginBuilder {
             PasswordStrongValidator(fieldName: "password", fieldType: "password", passwordValidator: passwordValidator)
         ])
         
-        let viewModel = LoginViewModel(
-            userAccountLogin: userAccountLogin,
-            validatorComposite: validatorComposite
-        )
+        let viewModel = LoginViewModel(userAccountLogin: userAccountLogin,
+                                       validatorComposite: validatorComposite)
         
         let viewController = LoginViewController(viewModel: viewModel)
         viewModel.alertView = viewController

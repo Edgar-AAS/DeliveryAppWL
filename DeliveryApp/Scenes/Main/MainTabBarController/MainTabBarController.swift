@@ -4,7 +4,7 @@ final class MainTabBarController: UITabBarController {
     weak var coordinator: MainCoordinator?
     
     private let homeCoordinator = HomeCoordinator(navigationController: DANavigationController())
-    private let personalDataCoordinator = ProfileDataCoordinator(navigationController: DANavigationController())
+    private let profileDataCoordinator = ProfileDataCoordinator(navigationController: DANavigationController())
     
     init(coordinator: MainCoordinator? = nil) {
         self.coordinator = coordinator
@@ -21,23 +21,22 @@ final class MainTabBarController: UITabBarController {
         configureTabBarAppearance()
         
         homeCoordinator.parentCoordinator = coordinator
-        personalDataCoordinator.parentCoordinator = coordinator
+        profileDataCoordinator.parentCoordinator = coordinator
 
-        for item in [homeCoordinator, personalDataCoordinator] {
+        for item in [homeCoordinator, profileDataCoordinator] {
             coordinator?.addChild(item as? Coordinator)
         }
         
         homeCoordinator.start()
-        personalDataCoordinator.start()
+        profileDataCoordinator.start()
         
-        viewControllers = [homeCoordinator.navigationController, personalDataCoordinator.navigationController]
+        viewControllers = [homeCoordinator.navigationController, profileDataCoordinator.navigationController]
     }
     
     private func configureTabBarAppearance() {
         tabBar.tintColor = Colors.primary
         tabBar.backgroundColor = .white
         tabBar.unselectedItemTintColor = .gray
-        
         tabBar.layer.shadowColor = UIColor.black.cgColor
         tabBar.layer.shadowOffset = CGSize(width: 0, height: 2)
         tabBar.layer.shadowRadius = 4

@@ -7,9 +7,9 @@ final class ProductDetailsViewModel: ProductDetailsViewModelProtocol {
     private var activeSections: [Section]?
     private var sideItems: [IndexPath: SideItem] = [:]
     
-    private var fromValue: Double = .zero
+    private var fromValue: Double = 0.0
     private var footerViewStepperValue = 1
-    private var footerViewStepperMinValue = 1
+    private var initialStepperValue = 1
     
     weak var delegate: ProductDetailsViewModelDelegate?
     
@@ -46,7 +46,7 @@ extension ProductDetailsViewModel {
     private func setupInitialStepperValue() {
         delegate?.productDetailsViewModel(self,
                                           didChangeBottomViewStepperValue: .init(currentValue: footerViewStepperValue,
-                                                                                       minValue: footerViewStepperMinValue,
+                                                                                       minValue: initialStepperValue,
                                                                                        isEnabled: true,
                                                                                        isAnimated: false)
         )
@@ -66,14 +66,14 @@ extension ProductDetailsViewModel {
         case .add:
             footerViewStepperValue += 1
         case .remove:
-            if footerViewStepperValue > footerViewStepperMinValue {
+            if footerViewStepperValue > initialStepperValue {
                 footerViewStepperValue -= 1
             }
         }
         
         let stepperDto = StepperModel(
             currentValue: footerViewStepperValue,
-            minValue: footerViewStepperMinValue,
+            minValue: initialStepperValue,
             isEnabled: true,
             isAnimated: false
         )

@@ -2,16 +2,14 @@ import Foundation
 
 final class FetchPaginatedProducts: FetchPaginatedProductsUseCase {
     private let httpClient: HTTPClientProtocol
-    
     private var productsDataSource = [Product]()
-    
     private var isFetching = false
-    
-    var productsResponseCallBack: ((ResourceProductsPagination) -> ResourceModel)?
     
     private var currentPage: Int = 0
     private var totalProducts: Int = 0
     private let pageSize: Int = 10
+    
+    var httpProductListResource: ((ProductsPaginationResource) -> ResourceModel)?
     
     init(httpClient: HTTPClientProtocol) {
         self.httpClient = httpClient
@@ -35,7 +33,7 @@ final class FetchPaginatedProducts: FetchPaginatedProductsUseCase {
         
         isFetching = true
         
-        guard let httpResource = productsResponseCallBack?(
+        guard let httpResource = httpProductListResource?(
             .init(categoryId: categoryId,
                   pageSize: pageSize,
                   currentPage: currentPage)

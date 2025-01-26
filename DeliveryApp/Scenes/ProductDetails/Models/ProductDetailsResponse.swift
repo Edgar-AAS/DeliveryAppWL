@@ -2,7 +2,6 @@ import Foundation
 
 struct ProductDetailsResponse: Codable {
     let id: Int
-    let categoryId: Int
     let name: String
     let price: Double
     let rating: Float

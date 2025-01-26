@@ -9,11 +9,11 @@ final class FetchProductCategories: FetchProductCategoriesUseCase {
         self.httpResource = resource
     }
         
-    func fetch(completion: @escaping (Result<[ProductCategoryResponse], HTTPError>) -> Void) {
+    func fetch(completion: @escaping (Result<[CategoryResponse], HTTPError>) -> Void) {
         httpClient.load(httpResource) { result in
             switch result {
             case .success(let data):
-                if let model: [ProductCategoryResponse] = data?.toModel() {
+                if let model: [CategoryResponse] = data?.toModel() {
                     let activeCategories = model.filter { $0.isActive }
                     completion(.success(activeCategories))
                 } else {

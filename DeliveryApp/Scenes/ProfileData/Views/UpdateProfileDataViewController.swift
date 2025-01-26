@@ -56,7 +56,7 @@ class UpdateProfileDataViewController: UIViewController {
 }
 
 extension UpdateProfileDataViewController: UpdateProfileDataViewModelDelegate {
-    func updateUI(with response: ProfileDataRequest) {
+    func updateUI(with response: UserRequest) {
         customView.updateUI(with: response)
     }
 }

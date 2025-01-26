@@ -6,15 +6,15 @@ final class HomeBuilder {
         let httpClient: HTTPClientProtocol = HTTPClient()
         
         let categoriesResource = ResourceModel(
-            url: URL(string: "http://localhost:5177/v1/categories")!,
+            url: URL(string: "http://localhost:5177/v1/product/categories")!,
             headers: ["Content-Type": "application/json"]
         )
         
         let fetchPaginatedProducts = FetchPaginatedProducts(httpClient: httpClient)
         
-        fetchPaginatedProducts.productsResponseCallBack = { resource in
+        fetchPaginatedProducts.httpProductListResource = { resource in
             return ResourceModel(
-                url: URL(string: "http://localhost:5177/v1/products/category/\(resource.categoryId)")!,
+                url: URL(string: "http://localhost:5177/v1/product/list/\(resource.categoryId)")!,
                 method: .get([
                     URLQueryItem(name: "page", value: "\(resource.currentPage)"),
                     URLQueryItem(name: "pageSize", value: "\(resource.pageSize)")

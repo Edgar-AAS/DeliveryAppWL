@@ -1,11 +1,11 @@
 import Foundation
 
 protocol UpdateProfileDataViewModelDelegate: AnyObject {
-    func updateUI(with response: ProfileDataRequest)
+    func updateUI(with response: UserRequest)
 }
 
 final class ProfileDataViewModel: UpdateProfileDataViewModelProtocol {
-    var loadingHandler: ((LoadingStateModel) -> ())?
+    var loadingHandler: ((LoadingState) -> ())?
     weak var alertView: AlertViewProtocol?
     weak var delegate: UpdateProfileDataViewModelDelegate?
     
@@ -28,7 +28,7 @@ final class ProfileDataViewModel: UpdateProfileDataViewModelProtocol {
         }
     }
     
-    func updateProfileData(request: UpdateProfileDataRequest) {
+    func updateProfileData(request: UserRequest) {
         loadingHandler?(.init(isLoading: true))
         
         updateProfile.update(with: request) { [weak self] result in

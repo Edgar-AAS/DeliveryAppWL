@@ -4,14 +4,13 @@ class HomeViewModel: HomeViewModelProtocol {
     var productsOnComplete: ((ProductGridCellDataSource) -> Void)?
     var categoriesOnComplete: (() -> Void)?
     
-    private var productsDataSource = [Product]()
-    private var categoriesDataSource = [ProductCategoryResponse]()
+    private var products = [Product]()
+    private var categories = [CategoryResponse]()
     
     private let fetchCategories: FetchProductCategoriesUseCase
     private let fetchPaginatedProducts: FetchPaginatedProductsUseCase
     
-    init(fetchCategories: FetchProductCategoriesUseCase,
-         fetchPaginatedProducts: FetchPaginatedProductsUseCase) {
+    init(fetchCategories: FetchProductCategoriesUseCase, fetchPaginatedProducts: FetchPaginatedProductsUseCase) {
         self.fetchCategories = fetchCategories
         self.fetchPaginatedProducts = fetchPaginatedProducts
     }
@@ -20,37 +19,33 @@ class HomeViewModel: HomeViewModelProtocol {
         return 3
     }
     
-    func getCategories() -> [CategoryCellViewData] {
-        return categoriesDataSource.map { category in
-            return CategoryCellViewData(
-                id: category.id,
-                name: category.name,
-                image: category.image
-            )
-        }
-    }
-    
     func loadInitialData() {
         loadCategories { [weak self] categoriesResponse in
             guard let self = self else { return }
-            self.categoriesDataSource = categoriesResponse
+            self.categories = categoriesResponse
             self.categoriesOnComplete?()
             
             if let firstCategoryId = categoriesResponse.first?.id {
-                self.loadProducts(for: firstCategoryId, resetPagination: true)
+                self.loadProducts(by: firstCategoryId, resetPagination: true)
             }
         }
     }
     
+    func getCategories() -> [CategoryCellViewData] {
+        return categories.map { category in
+            return category.toCategoryCellViewData()
+        }
+    }
+    
     func loadMoreProducts(for categoryId: Int) {
-        loadProducts(for: categoryId, resetPagination: false)
+        loadProducts(by: categoryId, resetPagination: false)
     }
     
     func switchCategory(to categoryId: Int) {
-        loadProducts(for: categoryId, resetPagination: true)
+        loadProducts(by: categoryId, resetPagination: true)
     }
     
-    private func loadCategories(completion: @escaping ([ProductCategoryResponse]) -> Void) {
+    private func loadCategories(completion: @escaping ([CategoryResponse]) -> Void) {
         fetchCategories.fetch { result in
             switch result {
             case .success(let activeCategories):
@@ -60,7 +55,7 @@ class HomeViewModel: HomeViewModelProtocol {
         }
     }
     
-    private func loadProducts(for categoryId: Int, resetPagination: Bool) {
+    private func loadProducts(by categoryId: Int, resetPagination: Bool) {
         fetchPaginatedProducts.fetch(for: categoryId, resetPagination: resetPagination) { [weak self] result in
             switch result {
             case .success(let productsPaginated):

@@ -120,7 +120,7 @@ final class UpdateProfileDataScreen: UIView {
         }
     )
     
-    func updateUI(with response: ProfileDataRequest) {
+    func updateUI(with response: UserRequest) {
         userNameTextField.text = response.name
         emailTextField.text = response.email
         phoneTextField.text = response.phone
@@ -133,7 +133,7 @@ final class UpdateProfileDataScreen: UIView {
         }
     }
     
-    func getRequestData(image: String?) -> UpdateProfileDataRequest? {
+    func getRequestData(image: String?) -> UserRequest? {
         if let name = userNameTextField.text, !name.isEmpty,
            let email = emailTextField.text, !email.isEmpty {
             
@@ -148,7 +148,7 @@ final class UpdateProfileDataScreen: UIView {
                 formattedDate = dateFormatter.string(from: date)
             }
             
-            let requestData = UpdateProfileDataRequest(
+            let requestData = UserRequest(
                 name: name,
                 email: email,
                 imageBase64: image,

@@ -16,7 +16,7 @@ final class LoginViewModelTests: XCTestCase {
         sut.login(credential: makeLoginCredential())
         
         let exp = expectation(description: "Waiting for onLoginSuccess to be called")
-        sut.onLoginSuccess = {
+        sut.onSuccess = {
             exp.fulfill()
             XCTAssert(true)
         }

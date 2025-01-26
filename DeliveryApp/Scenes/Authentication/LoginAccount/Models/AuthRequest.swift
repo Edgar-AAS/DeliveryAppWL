@@ -1,6 +1,6 @@
 import Foundation
 
-struct AuthResquest: Model {
+struct AuthRequest: Model {
     let email: String
     let password: String
 

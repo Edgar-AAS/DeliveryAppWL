@@ -1,7 +1,7 @@
 import Foundation
 
 protocol UpdateProfileDataViewModelProtocol {
-    var loadingHandler: ((LoadingStateModel) -> ())? { get set }
-    func updateProfileData(request: UpdateProfileDataRequest)
+    var loadingHandler: ((LoadingState) -> ())? { get set }
+    func updateProfileData(request: UserRequest)
     func loadProfileData()
 }

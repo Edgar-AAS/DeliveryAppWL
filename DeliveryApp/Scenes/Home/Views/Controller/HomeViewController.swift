@@ -8,7 +8,7 @@ class HomeViewController: UIViewController {
     private var viewModel: HomeViewModelProtocol
     private var dataSourceCallBack: ((ProductGridCellDataSource) -> Void)?
     
-    var productDetailsCallback: ((Int) -> Void)?
+    var productCardBlock: ((Int) -> Void)?
     
     init(viewModel: HomeViewModelProtocol) {
         self.viewModel = viewModel
@@ -117,7 +117,7 @@ extension HomeViewController: ProductCategoryCellDelegate {
 
 extension HomeViewController: ProductGridCellDelegate {
     func productGridCell(_ cell: ProductGridCell, didTapProductWithId productId: Int) {
-        productDetailsCallback?(productId)
+        productCardBlock?(productId)
     }
     
     func productGridCell(_ cell: ProductGridCell, shouldFetchMoreProductsForCategory categoryId: Int) {

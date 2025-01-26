@@ -3,7 +3,7 @@ import UIKit
 class ProductDetailsBuilder {
     static func build(productId: Int) -> ProductDetailsViewController {
         let resource = ResourceModel(
-            url: URL(string: "http://localhost:5177/v1/products/details/\(productId)")!,
+            url: URL(string: "http://localhost:5177/v1/product/details/\(productId)")!,
             headers: ["Content-Type": "application/json"]
         )
         

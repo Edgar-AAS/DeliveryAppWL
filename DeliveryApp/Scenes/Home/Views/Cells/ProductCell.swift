@@ -63,13 +63,19 @@ class ProductCell: UICollectionViewCell {
         return imageView
     }()
     
-    private lazy var productRateLabel = makeLabel(font: Fonts.medium(size: 12).weight, color: .black)
-    
+    private lazy var productRateLabel: UILabel = {
+        let label = makeLabel(font: Fonts.medium(size: 12).weight, color: .black)
+        label.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        label.textAlignment = .center
+        return label
+    }()
+        
     private lazy var distanceLabel = makeLabel(font: Fonts.medium(size: 12).weight, color: .black)
     
     private lazy var productInfoStack = makeStackView(with: [productPriceLabel,
                                                              productRateIcon,
                                                              productRateLabel],
+                                                      aligment: .center,
                                                       spacing: 4,
                                                       axis: .horizontal)
     
@@ -82,10 +88,11 @@ class ProductCell: UICollectionViewCell {
         productNameLabel.text = viewData.displayName
         productPriceLabel.text = viewData.formattedPrice
         productRateLabel.text = viewData.stringRating
-        favoriteButton.imageView?.image = viewData.favoriteStatus ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+        favoriteButton.imageView?.image = viewData.favoriteStatus
+            ? UIImage(systemName: "heart.fill")
+            : UIImage(systemName: "heart")
         
         let imageUrl = viewData.sortedImages()?.first?.url ?? String()
-        
         productImageView.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
         productImageView.sd_setImage(with: URL(string: imageUrl))
     }
