@@ -4,7 +4,7 @@ class ProductDetailsViewController: UIViewController {
     private var viewModel: ProductDetailsViewModelProtocol
     private var productDetailsHeader: ProductDetailsHeader?
 
-    var routeToHomeCallBack: (() -> Void)?
+    var backToHome: (() -> Void)?
     
     private lazy var customView: ProducDetailsScreen? = {
         return view as? ProducDetailsScreen
@@ -37,6 +37,13 @@ class ProductDetailsViewController: UIViewController {
     }
 }
 
+//MARK: - ProductDetailsHeaderDelegate
+extension ProductDetailsViewController: ProductDetailsHeaderDelegateProtocol {
+    func backButtonDidTapped(_ header: ProductDetailsHeader) {
+        backToHome?()
+    }
+}
+
 //MARK: - TableViewDataSource
 extension ProductDetailsViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -51,7 +58,7 @@ extension ProductDetailsViewController: UITableViewDataSource {
         switch viewModel.getItemInSection(indexPath) {
         case .sideItem(let sideItemCellViewData):
             return makeSideItemCell(tableView, cellForRowAt: indexPath, viewData: sideItemCellViewData)
-        case .regularItem(let productItemCellViewData):
+        case .quantitativeItem(let productItemCellViewData):
             return makeProductItemCell(tableView, cellForRowAt: indexPath, viewData: productItemCellViewData)
         default:
             return UITableViewCell()
@@ -79,12 +86,6 @@ extension ProductDetailsViewController: UITableViewDelegate {
 extension ProductDetailsViewController: ProductQuantityFooterViewDelegate {
     func productQuantityFooterView(_ footer: ProductQuantityFooterView, didTapStepperWithAction action: StepperActionType) {
         viewModel.updateFooterViewStepper(action: action)
-    }
-}
-
-extension ProductDetailsViewController: ProductDetailsHeaderDelegateProtocol {
-    func backButtonDidTapped(_ header: ProductDetailsHeader) {
-        routeToHomeCallBack?()
     }
 }
 
@@ -127,7 +128,7 @@ extension ProductDetailsViewController: ProductDetailsViewModelDelegate {
     }
     
     func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateHeaderWith viewData: ProductHeaderViewData) {
-        customView?.setupHeader(with: viewData)
+        customView?.setupHeader(with: viewData, delegate: self)
     }
 }
 
@@ -140,12 +141,12 @@ extension ProductDetailsViewController: ProductItemCellDelegate {
 
 //MARK: - Cell Factories
 extension ProductDetailsViewController {
-    func makeProductItemCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, viewData: ProductItemCellViewData) -> UITableViewCell {
+    func makeProductItemCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, viewData: QuantitativeItemViewData) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ProductItemCell.reuseIdentifier, for: indexPath) as? ProductItemCell
         
         if let stepperDto = viewModel.getStepperDto(in: indexPath) {
             cell?.delegate = self
-            cell?.configure(with: viewData, stepperDto: stepperDto, indexPath: indexPath)
+            cell?.configure(with: viewData, stepper: stepperDto, indexPath: indexPath)
         }
         
         return cell ?? UITableViewCell()

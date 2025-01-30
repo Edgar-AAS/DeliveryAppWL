@@ -9,7 +9,10 @@ final class LoginBuilder {
             return ResourceModel(
                 url: URL(string: "http://localhost:5177/v1/account/login")!,
                 method: .post(credential.toData()),
-                headers: ["Content-Type": "application/json"]
+                headers: [
+                    "Content-Type": "application/json",
+                    "Authorization": ""
+                ]
             )
         }
         

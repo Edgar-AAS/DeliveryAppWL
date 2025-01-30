@@ -68,16 +68,16 @@ class ProductItemCell: UITableViewCell {
         return stepper
     }()
     
-    func configure(with viewData: ProductItemCellViewData, stepperDto: StepperModel, indexPath: IndexPath) {
+    func configure(with viewData: QuantitativeItemViewData, stepper: StepperModel, indexPath: IndexPath) {
         self.indexPath = indexPath
         
-        productNameLabel.text = viewData.getName()
-        productPriceLabel.text = viewData.getPrice()
-        productImageView.sd_setImage(with: URL(string: viewData.getUrlImage()))
-        plusButton.isEnabled = stepperDto.isEnabled
-        customStepper.isHidden = stepperDto.currentValue == .zero
+        productNameLabel.text = viewData.name
+        productPriceLabel.text = viewData.price
+        productImageView.sd_setImage(with: URL(string: viewData.image ?? ""))
+        plusButton.isEnabled = stepper.isEnabled
+        customStepper.isHidden = stepper.currentValue == .zero
         
-        customStepper.configure(with: stepperDto)
+        customStepper.configure(with: stepper)
             
         if viewData.isRemovable {
             productPriceLabel.isHidden = true

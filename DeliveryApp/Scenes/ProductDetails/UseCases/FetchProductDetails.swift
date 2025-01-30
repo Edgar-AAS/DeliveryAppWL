@@ -9,11 +9,11 @@ class FetchProductDetails: FetchProductDetailsUseCase {
         self.resource = resource
     }
     
-    func fetch(completion: @escaping ((Result<ProductDetailsResponse, HTTPError>) -> Void)) {
+    func fetch(completion: @escaping ((Result<Product, HTTPError>) -> Void)) {
         httpClient.load(resource) { result in
             switch result {
             case .success(let data):
-                if let model: ProductDetailsResponse = data?.toModel() {
+                if let model: Product = data?.toModel() {
                     completion(.success(model))
                 } else {
                     completion(.failure(.unknown))

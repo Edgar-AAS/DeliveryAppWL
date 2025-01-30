@@ -1,6 +1,5 @@
 import Foundation
 
-
 struct SideItemCellViewData {
     private let sideItem: SideItem
     
@@ -16,7 +15,7 @@ struct SideItemCellViewData {
         "\(sideItem.name)"
     }
     
-    var image: String {
+    var image: String? {
         sideItem.imageUrl
     }
     

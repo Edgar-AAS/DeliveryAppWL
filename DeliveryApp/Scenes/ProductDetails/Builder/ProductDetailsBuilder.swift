@@ -1,10 +1,22 @@
 import UIKit
 
-class ProductDetailsBuilder {
+final class ProductDetailsBuilder {
     static func build(productId: Int) -> ProductDetailsViewController {
+        let result = KeychainManager.retrieve(key: KeychainConstants.Keys.accessToken)
+        var accessToken: String?
+        
+        switch result {
+            case .failure: break
+            case .success(let tokenStored):
+            accessToken = tokenStored
+        }
+        
         let resource = ResourceModel(
             url: URL(string: "http://localhost:5177/v1/product/details/\(productId)")!,
-            headers: ["Content-Type": "application/json"]
+            headers: [
+                "Content-Type": "application/json",
+                "Authorization": "Bearer \(accessToken ?? "")"
+            ]
         )
         
         let httpClient: HTTPClientProtocol = HTTPClient()

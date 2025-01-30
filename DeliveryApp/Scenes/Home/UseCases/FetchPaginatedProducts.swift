@@ -51,7 +51,7 @@ final class FetchPaginatedProducts: FetchPaginatedProductsUseCase {
             case .failure(let httpError):
                 completion(.failure(httpError))
             case .success(let data):
-                guard let productResponse: ProductResponse = data?.toModel() else {
+                guard let productResponse: ProductPaginatedResponse = data?.toModel() else {
                     completion(.failure(.unknown))
                     return
                 }

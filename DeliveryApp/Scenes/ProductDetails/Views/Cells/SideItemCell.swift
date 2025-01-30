@@ -67,7 +67,7 @@ class SideItemCell: UITableViewCell {
         radioButton.isSelected = viewData.isSelected
         productNameLabel.text = viewData.name
         productPriceLabel.text = viewData.price
-        productImageView.sd_setImage(with: URL(string: viewData.image))
+        productImageView.sd_setImage(with: URL(string: viewData.image ?? ""))
     }
 }
 

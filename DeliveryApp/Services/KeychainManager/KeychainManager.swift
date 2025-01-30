@@ -21,7 +21,7 @@ final class KeychainManager {
         SecItemDelete(query as CFDictionary)
         let status = SecItemAdd(query as CFDictionary, nil)
         
-        if status == errSecSuccess { 
+        if status == errSecSuccess {
             return .success(())
         } else {
             return .failure(.keychainError(status))

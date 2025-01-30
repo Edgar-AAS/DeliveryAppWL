@@ -20,7 +20,7 @@ class HomeCoordinator: Coordinator {
     func navigateToProductDetails(productId: Int) {
         let productsDetailsController = ProductDetailsBuilder.build(productId: productId)
         
-        productsDetailsController.routeToHomeCallBack  = { [weak self] in
+        productsDetailsController.backToHome  = { [weak self] in
             self?.navigateToHome()
         }
         navigationController.present(productsDetailsController, animated: true)
