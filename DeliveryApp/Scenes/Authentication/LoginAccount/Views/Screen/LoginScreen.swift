@@ -87,7 +87,7 @@ final class LoginScreen: UIView {
     private lazy var loginButton = DARoundedButton(
         title: "Log in",
         titleColor: .white,
-        backgroundColor: Colors.primary,
+        color: Colors.primary,
         icon: nil,
         action: { [weak self] in
             guard let self else { return }
@@ -112,7 +112,7 @@ final class LoginScreen: UIView {
         return DARoundedButton(
             title: "Register here",
             titleColor: Colors.primary,
-            backgroundColor: .white,
+            color: .white,
             icon: nil,
             action: { [weak self] in
                 guard let self else { return }
@@ -175,7 +175,7 @@ extension LoginScreen: CodeView {
     func buildViewHierarchy() {
         addSubview(customScrollView)
         addSubview(loadingView)
-        
+    
         customScrollView.addSubview(greetingLabel)
         customScrollView.addSubview(greetingDescriptionLabel)
         customScrollView.addSubview(emailAdressLabel)
@@ -196,48 +196,48 @@ extension LoginScreen: CodeView {
             customScrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             greetingLabel.topAnchor.constraint(equalTo: customScrollView.container.topAnchor, constant: 36),
-            greetingLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            greetingLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            greetingLabel.leadingAnchor.constraint(equalTo: customScrollView.container.leadingAnchor, constant: 24),
+            greetingLabel.trailingAnchor.constraint(equalTo: customScrollView.container.trailingAnchor, constant: -24),
             
             greetingDescriptionLabel.topAnchor.constraint(equalTo: greetingLabel.bottomAnchor, constant: 8),
-            greetingDescriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            greetingDescriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            greetingDescriptionLabel.leadingAnchor.constraint(equalTo: customScrollView.container.leadingAnchor, constant: 24),
+            greetingDescriptionLabel.trailingAnchor.constraint(equalTo: customScrollView.container.trailingAnchor, constant: -24),
             
             emailAdressLabel.topAnchor.constraint(equalTo: greetingDescriptionLabel.bottomAnchor, constant: 80),
-            emailAdressLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            emailAdressLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            emailAdressLabel.leadingAnchor.constraint(equalTo: customScrollView.container.leadingAnchor, constant: 24),
+            emailAdressLabel.trailingAnchor.constraint(equalTo: customScrollView.container.trailingAnchor, constant: -24),
             
             emailTextField.topAnchor.constraint(equalTo: emailAdressLabel.bottomAnchor, constant: 8),
-            emailTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            emailTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            emailTextField.leadingAnchor.constraint(equalTo: customScrollView.container.leadingAnchor, constant: 24),
+            emailTextField.trailingAnchor.constraint(equalTo: customScrollView.container.trailingAnchor, constant: -24),
             emailTextField.heightAnchor.constraint(equalToConstant: 52),
             
             passwordLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 32),
-            passwordLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            passwordLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            passwordLabel.leadingAnchor.constraint(equalTo: customScrollView.container.leadingAnchor, constant: 24),
+            passwordLabel.trailingAnchor.constraint(equalTo: customScrollView.container.trailingAnchor, constant: -24),
             
             passwordTextField.topAnchor.constraint(equalTo: passwordLabel.bottomAnchor, constant: 8),
-            passwordTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            passwordTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            passwordTextField.leadingAnchor.constraint(equalTo: customScrollView.container.leadingAnchor, constant: 24),
+            passwordTextField.trailingAnchor.constraint(equalTo: customScrollView.container.trailingAnchor, constant: -24),
             passwordTextField.heightAnchor.constraint(equalToConstant: 52),
             
             forgotPasswordButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 8),
-            forgotPasswordButton.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 24),
-            forgotPasswordButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            forgotPasswordButton.leadingAnchor.constraint(greaterThanOrEqualTo: customScrollView.container.leadingAnchor, constant: 24),
+            forgotPasswordButton.trailingAnchor.constraint(equalTo: customScrollView.container.trailingAnchor, constant: -24),
             forgotPasswordButton.heightAnchor.constraint(equalToConstant: 44),
             
             loginButton.topAnchor.constraint(equalTo: forgotPasswordButton.bottomAnchor, constant: 24),
-            loginButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            loginButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            loginButton.leadingAnchor.constraint(equalTo: customScrollView.container.leadingAnchor, constant: 24),
+            loginButton.trailingAnchor.constraint(equalTo: customScrollView.container.trailingAnchor, constant: -24),
             loginButton.heightAnchor.constraint(equalToConstant: 52),
             
             signInOptionsLabel.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16),
-            signInOptionsLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            signInOptionsLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            signInOptionsLabel.leadingAnchor.constraint(equalTo: customScrollView.container.leadingAnchor, constant: 24),
+            signInOptionsLabel.trailingAnchor.constraint(equalTo: customScrollView.container.trailingAnchor, constant: -24),
             
             registerButton.topAnchor.constraint(equalTo: signInOptionsLabel.bottomAnchor, constant: 16),
-            registerButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            registerButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            registerButton.leadingAnchor.constraint(equalTo: customScrollView.container.leadingAnchor, constant: 24),
+            registerButton.trailingAnchor.constraint(equalTo: customScrollView.container.trailingAnchor, constant: -24),
             registerButton.bottomAnchor.constraint(equalTo: customScrollView.container.bottomAnchor),
             registerButton.heightAnchor.constraint(equalToConstant: 52),
             

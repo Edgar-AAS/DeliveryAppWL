@@ -1,6 +1,6 @@
 import UIKit
 
-class HomeCoordinator: Coordinator {
+final class HomeCoordinator: Coordinator {
     var navigationController: UINavigationController
     var parentCoordinator: MainCoordinator?
     var childCoordinators = [Coordinator]()
@@ -11,10 +11,20 @@ class HomeCoordinator: Coordinator {
     
     func start() {
         let homeViewController = HomeBuilder.build(coordinator: self)
-        homeViewController.productCardBlock = { [weak self] id in
+        homeViewController.routeToProductDetailsPage = { [weak self] id in
             self?.navigateToProductDetails(productId: id)
         }
+        
+        homeViewController.routeToNetworkErrorPage =  { [weak self] in
+            self?.navigateToNetworkErrorPage()
+        }
+        
         navigationController.setViewControllers([homeViewController], animated: false)
+    }
+    
+    func navigateToNetworkErrorPage() {
+        let networkErrorController = NetworkErrorViewController()
+        navigationController.present(networkErrorController, animated: true)
     }
     
     func navigateToProductDetails(productId: Int) {

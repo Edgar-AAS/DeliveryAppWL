@@ -21,11 +21,11 @@ final class DAScrollView: UIScrollView {
         super.addSubview(container)
         
         NSLayoutConstraint.activate([
-            container.topAnchor.constraint(equalTo: self.topAnchor),
-            container.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            container.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            container.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            container.widthAnchor.constraint(equalTo: self.widthAnchor)
+            container.topAnchor.constraint(equalTo: topAnchor),
+            container.leadingAnchor.constraint(equalTo: leadingAnchor),
+            container.trailingAnchor.constraint(equalTo: trailingAnchor),
+            container.bottomAnchor.constraint(equalTo: bottomAnchor),
+            container.widthAnchor.constraint(equalTo: widthAnchor)
         ])
         
         backgroundColor = Colors.background

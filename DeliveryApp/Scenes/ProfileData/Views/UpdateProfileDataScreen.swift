@@ -112,7 +112,7 @@ final class UpdateProfileDataScreen: UIView {
     private lazy var saveButton = DARoundedButton(
         title: "Save",
         titleColor: .white,
-        backgroundColor: Colors.primary,
+        color: Colors.primary,
         icon: nil,
         action: { [weak self] in
             guard let self else { return }

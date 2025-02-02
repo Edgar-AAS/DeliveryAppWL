@@ -14,7 +14,7 @@ final class FetchPaginatedProducts: FetchPaginatedProductsUseCase {
     init(httpClient: HTTPClientProtocol) {
         self.httpClient = httpClient
     }
-    
+
     func fetch(for categoryId: Int,
                resetPagination: Bool,
                completion: @escaping (Result<[Product], HTTPError>) -> Void)

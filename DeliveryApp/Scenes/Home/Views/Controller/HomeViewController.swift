@@ -8,7 +8,8 @@ class HomeViewController: UIViewController {
     private var viewModel: HomeViewModelProtocol
     private var dataSourceCallBack: ((ProductGridCellDataSource) -> Void)?
     
-    var productCardBlock: ((Int) -> Void)?
+    var routeToNetworkErrorPage: (() -> Void)?
+    var routeToProductDetailsPage: ((Int) -> Void)?
     
     init(viewModel: HomeViewModelProtocol) {
         self.viewModel = viewModel
@@ -21,11 +22,7 @@ class HomeViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
-        
-        view = HomeScreen(
-            delegate: self,
-            dataSource: self
-        )
+        view = HomeScreen(delegate: self,dataSource: self)
     }
     
     override func viewDidLoad() {
@@ -36,6 +33,8 @@ class HomeViewController: UIViewController {
     private func configure() {
         hideNavigationBar()
         
+        viewModel.loadInitialData()
+        
         viewModel.categoriesOnComplete = { [weak self] in
             self?.customView?.reloadTablewViewData()
         }
@@ -43,8 +42,6 @@ class HomeViewController: UIViewController {
         viewModel.productsOnComplete = { [weak self] dataSource in
             self?.dataSourceCallBack?(dataSource)
         }
-        
-        viewModel.loadInitialData()
     }
 }
 
@@ -117,11 +114,17 @@ extension HomeViewController: ProductCategoryCellDelegate {
 
 extension HomeViewController: ProductGridCellDelegate {
     func productGridCell(_ cell: ProductGridCell, didTapProductWithId productId: Int) {
-        productCardBlock?(productId)
+        routeToProductDetailsPage?(productId)
     }
     
     func productGridCell(_ cell: ProductGridCell, shouldFetchMoreProductsForCategory categoryId: Int) {
         viewModel.loadMoreProducts(for: categoryId)
+    }
+}
+
+extension HomeViewController: HomeViewModelDelegate {
+    func didLoseNetworkConnection() {
+        routeToNetworkErrorPage?()
     }
 }
 

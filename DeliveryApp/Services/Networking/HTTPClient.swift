@@ -42,7 +42,7 @@ final class HTTPClient: HTTPClientProtocol {
                     case NSURLErrorNotConnectedToInternet, NSURLErrorNetworkConnectionLost:
                         completion(.failure(.noConnectivity))
                     case NSURLErrorTimedOut:
-                        completion(.failure(.timeout))
+                        completion(.failure(.noConnectivity))
                     default:
                         completion(.failure(.unknown))
                     }

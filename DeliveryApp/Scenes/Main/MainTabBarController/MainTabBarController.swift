@@ -42,7 +42,6 @@ final class MainTabBarController: UITabBarController {
         tabBar.layer.shadowRadius = 4
         tabBar.layer.shadowOpacity = 0.3
         tabBar.layer.masksToBounds = false
-        
         tabBar.layer.cornerRadius = 8
     }
     

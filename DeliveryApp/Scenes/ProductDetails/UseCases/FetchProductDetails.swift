@@ -19,7 +19,12 @@ class FetchProductDetails: FetchProductDetailsUseCase {
                     completion(.failure(.unknown))
                 }
             case .failure(let httpError):
-                completion(.failure(httpError))
+                switch httpError {
+                    case .noConnectivity:
+                        completion(.failure(.noConnectivity))
+                    default:
+                        completion(.failure(.unknown))
+                }
             }
         }
     }

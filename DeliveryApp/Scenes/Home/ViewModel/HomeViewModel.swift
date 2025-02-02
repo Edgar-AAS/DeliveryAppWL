@@ -1,16 +1,23 @@
 import Foundation
 
+
+enum HomeError: Error {
+    case noConnectivity
+}
 class HomeViewModel: HomeViewModelProtocol {
     var productsOnComplete: ((ProductGridCellDataSource) -> Void)?
     var categoriesOnComplete: (() -> Void)?
     
+    weak var delegate: HomeViewModelDelegate?
+
     private var products = [Product]()
     private var categories = [CategoryResponse]()
     
     private let fetchCategories: FetchProductCategoriesUseCase
     private let fetchPaginatedProducts: FetchPaginatedProductsUseCase
     
-    init(fetchCategories: FetchProductCategoriesUseCase, fetchPaginatedProducts: FetchPaginatedProductsUseCase) {
+    init(fetchCategories: FetchProductCategoriesUseCase,
+         fetchPaginatedProducts: FetchPaginatedProductsUseCase) {
         self.fetchCategories = fetchCategories
         self.fetchPaginatedProducts = fetchPaginatedProducts
     }
@@ -22,6 +29,7 @@ class HomeViewModel: HomeViewModelProtocol {
     func loadInitialData() {
         loadCategories { [weak self] categoriesResponse in
             guard let self = self else { return }
+            
             self.categories = categoriesResponse
             self.categoriesOnComplete?()
             
@@ -50,19 +58,26 @@ class HomeViewModel: HomeViewModelProtocol {
             switch result {
             case .success(let activeCategories):
                 completion(activeCategories)
-            case .failure(let httpError): print(httpError)
+            case .failure(let httpError):
+                print(httpError)
             }
         }
     }
     
     private func loadProducts(by categoryId: Int, resetPagination: Bool) {
         fetchPaginatedProducts.fetch(for: categoryId, resetPagination: resetPagination) { [weak self] result in
+            guard let self else { return }
             switch result {
             case .success(let productsPaginated):
                 let dataSource = ProductGridCellDataSource(categoryId: categoryId, products: productsPaginated)
-                self?.productsOnComplete?(dataSource)
+                self.productsOnComplete?(dataSource)
             case .failure(let httpError):
-                print(httpError)
+                switch httpError {
+                case .noConnectivity:
+                    self.delegate?.didLoseNetworkConnection()
+                default:
+                    print(httpError)
+                }
             }
         }
     }

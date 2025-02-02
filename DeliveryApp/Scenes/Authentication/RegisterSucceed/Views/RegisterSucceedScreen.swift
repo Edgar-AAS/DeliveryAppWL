@@ -47,7 +47,7 @@ final class RegisterSucceedScreen: UIView {
     private lazy var verifyAccountButton = DARoundedButton(
         title: Strings.RegistrationAccount.Success.verifyAccountTitle,
         titleColor: .white,
-        backgroundColor: Colors.primary,
+        color: Colors.primary,
         icon: nil,
         action: { [weak self] in
             guard let self else { return }

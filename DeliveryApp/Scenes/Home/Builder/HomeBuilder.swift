@@ -39,9 +39,13 @@ final class HomeBuilder {
         }
         
         let fetchCategories = FetchProductCategories(httpClient: httpClient, resource: categoriesResource)
-        let viewModel = HomeViewModel(fetchCategories: fetchCategories, fetchPaginatedProducts: fetchPaginatedProducts)
+        let viewModel = HomeViewModel(
+            fetchCategories: fetchCategories,
+            fetchPaginatedProducts: fetchPaginatedProducts
+        )
         let viewController = HomeViewController(viewModel: viewModel)
-        
+        viewModel.delegate = viewController
+                
         viewController.tabBarItem = UITabBarItem(
             title: "Home",
             image: UIImage(systemName: "house"),

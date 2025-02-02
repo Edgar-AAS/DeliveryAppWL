@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "loadingError-logo.png",
+      "idiom" : "iphone"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

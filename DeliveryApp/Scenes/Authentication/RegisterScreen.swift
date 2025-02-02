@@ -161,7 +161,7 @@ final class RegisterScreen: UIView {
     private lazy var registerButton = DARoundedButton(
         title: "Register",
         titleColor: .white,
-        backgroundColor: Colors.primary,
+        color: Colors.primary,
         icon: nil,
         action: { [weak self] in
             self?.delegate?.registerButtonDidTapped()

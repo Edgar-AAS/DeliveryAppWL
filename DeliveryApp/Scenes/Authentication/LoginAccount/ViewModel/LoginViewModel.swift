@@ -1,6 +1,7 @@
 import Foundation
 
 final class LoginViewModel: UserLoginHandler {
+    
     //MARK: - Properties
     var loadingHandler: ((LoadingState) -> ())?
     var onSuccess: (() -> Void)?
