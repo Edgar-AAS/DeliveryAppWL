@@ -4,7 +4,7 @@
 
 # 🍔 DeliveryAppWL - Aplicação de Delivery Personalizável
 
-DeliveryApp é um projeto white label para mobile desenvolvido em Swift, com o objetivo de criar uma experiência de compra intuitiva e personalizável para os usuários. Este app permite a navegação por categorias de produtos, personalização de combos e escolha de acompanhamentos. O projeto segue uma estrutura modular e utiliza boas práticas de arquitetura e testes.
+DeliveryApp é um projeto para mobile desenvolvido em Swift, com o objetivo de criar uma experiência de compra intuitiva e personalizável para os usuários. Este app permite a navegação por categorias de produtos, personalização de combos e escolha de acompanhamentos. O projeto segue uma estrutura modular e utiliza boas práticas de arquitetura e testes.
 
 # Layout
 <img src="https://github.com/user-attachments/assets/75600a69-fd24-42a2-a65e-99ad4ec21189" width="150"/>
