@@ -38,10 +38,6 @@ final class LoginViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         hideNavigationBar()
-        resetTextFields()
-    }
-    
-    private func resetTextFields() {
         customView.resetTextFieldState()
     }
     
@@ -50,8 +46,8 @@ final class LoginViewController: UIViewController {
             self?.routeToMainFlow?()
         }
         
-        viewModel.loadingHandler = { [weak self] loadingState in
-            self?.customView.handleLoadingView(with: loadingState)
+        viewModel.loadingHandler = { [weak self] state in
+            self?.customView.handleLoadingView(with: state)
         }
     }
 }
@@ -86,7 +82,7 @@ extension LoginViewController: UITextFieldDelegate {
 //MARK: - FieldValidationDelegate
 extension LoginViewController: FeedBackTextFieldProtocol {
     func clearError() {
-        customView.clearFeedBackMessages()
+        customView.resetTextFieldState()
     }
     
     func displayError(validationModel: ValidationFieldModel) {

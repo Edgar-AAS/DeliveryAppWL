@@ -13,7 +13,7 @@ class AccountLoginSpy: LoginAccountUseCase {
     }
     
     func completeWithSuccess() {
-        self.completion?(.success(AuthResponse(accessToken: "any_token")))
+        self.completion?(.success(AuthResponse(accessToken: "any_token", userId: 0)))
     }
 
     func completeWithFailure(loginError: LoginError) {

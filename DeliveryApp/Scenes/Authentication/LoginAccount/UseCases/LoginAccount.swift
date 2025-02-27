@@ -33,10 +33,8 @@ final class LoginAccount: LoginAccountUseCase {
                     return
                 }
                 
-                DispatchQueue.global(qos: .userInitiated).async {
-                    let result = KeychainManager.save(
-                        key: KeychainConstants.Keys.accessToken,
-                        value: response.accessToken)
+                DispatchQueue.global().async {                    
+                    self?.storeToken(token: response.accessToken)
                     
                     DispatchQueue.main.async {
                         switch result {
@@ -49,5 +47,9 @@ final class LoginAccount: LoginAccountUseCase {
                 }
             }
         }
+    }
+    
+    private func storeToken(token: String) {
+        KeychainManager.save(key: KeychainConstants.Keys.accessToken, value: token)
     }
 }

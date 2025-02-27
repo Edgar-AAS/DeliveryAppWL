@@ -5,14 +5,7 @@ final class HomeBuilder {
     static func build(coordinator: HomeCoordinator) -> HomeViewController {
         let httpClient: HTTPClientProtocol = HTTPClient()
         
-        let result = KeychainManager.retrieve(key: KeychainConstants.Keys.accessToken)
-        var accessToken: String?
-        
-        switch result {
-            case .failure: break
-            case .success(let tokenStored):
-            accessToken = tokenStored
-        }
+        let accessToken = KeychainManager.retrieve(key: KeychainConstants.Keys.accessToken)
         
         let categoriesResource = ResourceModel(
             url: URL(string: "http://localhost:5177/v1/product/categories")!,
@@ -39,10 +32,7 @@ final class HomeBuilder {
         }
         
         let fetchCategories = FetchProductCategories(httpClient: httpClient, resource: categoriesResource)
-        let viewModel = HomeViewModel(
-            fetchCategories: fetchCategories,
-            fetchPaginatedProducts: fetchPaginatedProducts
-        )
+        let viewModel = HomeViewModel(fetchCategories: fetchCategories, fetchPaginatedProducts: fetchPaginatedProducts)
         let viewController = HomeViewController(viewModel: viewModel)
         viewModel.delegate = viewController
                 

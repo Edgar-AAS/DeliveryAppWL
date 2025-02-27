@@ -1,9 +1,5 @@
 import UIKit
 
-struct LoadingState {
-    let isLoading: Bool
-}
-
 final class DALoadingView: UIView, CodeView {
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,8 +19,7 @@ final class DALoadingView: UIView, CodeView {
         return indicator
     }()
     
-    func handleLoading(with state: LoadingState) {
-        let isLoading = state.isLoading
+    func handleLoading(with isLoading: Bool) {
         isHidden = !isLoading
         
         if isLoading {

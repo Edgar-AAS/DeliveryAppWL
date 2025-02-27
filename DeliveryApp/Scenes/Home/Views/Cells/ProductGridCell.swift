@@ -32,7 +32,7 @@ class ProductGridCell: UITableViewCell {
         return collectionView
     }()
     
-    func loadProducts(dataSource: ProductGridCellDataSource) {
+    func loadProducts(dataSource: ProductDataSource) {
         self.products = dataSource.products
         self.currentCategoryId = dataSource.categoryId
         productCollectionView.reloadData()
@@ -73,7 +73,7 @@ extension ProductGridCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath) as? ProductCell
         let product = products[indexPath.item]
-        let viewData = productCellViewDataMapper(from: product)
+        let viewData = product.mapToProductCellViewData()
         cell?.configure(with: viewData)
         return cell ?? UICollectionViewCell()
     }
@@ -99,17 +99,5 @@ extension ProductGridCell: UICollectionViewDataSource {
 extension ProductGridCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: collectionView.frame.size.width / 2.4, height: 230)
-    }
-}
-
-extension ProductGridCell {
-    private func productCellViewDataMapper(from product: Product) -> ProductCellViewData {
-        return ProductCellViewData(
-            name: product.name,
-            price: product.price,
-            rating: product.rating,
-            isFavorite: product.isFavorite,
-            images: product.images
-        )
     }
 }

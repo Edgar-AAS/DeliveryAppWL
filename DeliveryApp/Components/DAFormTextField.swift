@@ -7,6 +7,7 @@ final class DAFormTextField: UITextField {
     private let returnType: UIReturnKeyType
     
     private weak var fieldDelegate: UITextFieldDelegate?
+    
     private var padding: CGFloat = 20.0
     
     private var isHide: Bool = true {
@@ -147,10 +148,6 @@ final class DAFormTextField: UITextField {
         isHide = !isHide
     }
     
-    func clearFeddback() {
-        feedbackLabel.text = ""
-    }
-    
     func hidePassword() {
         isHide = true
     }
@@ -169,10 +166,6 @@ final class DAFormTextField: UITextField {
         text = ""
         feedbackLabel.text = ""
         layer.borderColor = Colors.grayBorder.cgColor
-        
-        if fieldType == "password" || fieldType == "passwordConfirm" {
-            isHide = true
-        }
     }
     
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {

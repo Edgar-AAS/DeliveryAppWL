@@ -9,7 +9,7 @@ final class FetchPaginatedProducts: FetchPaginatedProductsUseCase {
     private var totalProducts: Int = 0
     private let pageSize: Int = 10
     
-    var httpProductListResource: ((ProductsPaginationResource) -> ResourceModel)?
+    var httpProductListResource: ((ProductPagination) -> ResourceModel)?
     
     init(httpClient: HTTPClientProtocol) {
         self.httpClient = httpClient
@@ -17,8 +17,9 @@ final class FetchPaginatedProducts: FetchPaginatedProductsUseCase {
 
     func fetch(for categoryId: Int,
                resetPagination: Bool,
-               completion: @escaping (Result<[Product], HTTPError>) -> Void)
+               completion: @escaping (Result<[Product], RequestError>) -> Void)
     {
+        
         guard !isFetching else {
             return
         }
@@ -51,7 +52,7 @@ final class FetchPaginatedProducts: FetchPaginatedProductsUseCase {
             case .failure(let httpError):
                 completion(.failure(httpError))
             case .success(let data):
-                guard let productResponse: ProductPaginatedResponse = data?.toModel() else {
+                guard let productResponse: ProductResponse = data?.toModel() else {
                     completion(.failure(.unknown))
                     return
                 }

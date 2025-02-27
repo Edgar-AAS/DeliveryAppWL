@@ -1,20 +1,19 @@
 import Foundation
 
 final class LoginViewModel: UserLoginHandler {
-    
     //MARK: - Properties
-    var loadingHandler: ((LoadingState) -> ())?
+    var loadingHandler: ((Bool) -> ())?
     var onSuccess: (() -> Void)?
     
     private let validatorComposite: ValidationProtocol
-    private let userAccountLogin: LoginAccountUseCase
+    private let loginAccount: LoginAccountUseCase
     
     weak var fieldValidationDelegate: FeedBackTextFieldProtocol?
     weak var alertView: AlertViewProtocol?
     
     //MARK: - Initializers
     init(userAccountLogin: LoginAccountUseCase, validatorComposite: ValidationProtocol) {
-        self.userAccountLogin = userAccountLogin
+        self.loginAccount = userAccountLogin
         self.validatorComposite = validatorComposite
     }
     
@@ -23,24 +22,26 @@ final class LoginViewModel: UserLoginHandler {
         if let validationModel = validatorComposite.validate(data: credential.toJson()) {
             fieldValidationDelegate?.displayError(validationModel: validationModel)
         } else {
-            fieldValidationDelegate?.clearError()
-            loadingHandler?(LoadingState(isLoading: true))
+            loadingHandler?(true)
             
-            userAccountLogin.login(with: credential) { [weak self] result in
+            loginAccount.login(with: credential) { [weak self] result in
                 switch result {
                 case .success(_):
-                    self?.loadingHandler?(LoadingState(isLoading: false))
+                    self?.loadingHandler?(false)
                     self?.onSuccess?()
-                case .failure(let loginError):
-                    self?.loadingHandler?(LoadingState(isLoading: false))
-                    self?.handleLoginError(loginError)
+                case .failure(let error):
+                    self?.loadingHandler?(false)
+                    self?.handleLoginError(error)
                 }
             }
         }
     }
     
     private func handleLoginError(_ error: LoginError) {
-        let alertViewModel = AlertViewModel(title: Strings.NetworkError.errorTitle, message: error.message)
+        let alertViewModel = AlertViewModel(
+            title: Strings.error,
+            message: error.customMessage
+        )
         alertView?.showMessage(viewModel: alertViewModel)
     }
 }

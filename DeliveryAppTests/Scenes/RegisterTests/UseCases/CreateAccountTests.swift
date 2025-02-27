@@ -16,7 +16,7 @@ final class CreateAccountTests: XCTestCase {
         }
                     
         let exp = expectation(description: "completion is called")
-        sut.create(with: expectedRequest) { result in
+        sut.register(with: expectedRequest) { result in
             if case .success = result {
                 exp.fulfill()
             } else {
@@ -33,7 +33,7 @@ final class CreateAccountTests: XCTestCase {
         let sut = makeSut(httpClientMock: httpClientMock)
         
         let exp = expectation(description: "waiting")
-        sut.create(with: makeAccountModel()) { result in
+        sut.register(with: makeAccountModel()) { result in
             switch result {
                 case .success(_):  XCTFail("Expected failure but got \(result) instead.")
                 case .failure(let registerError):
@@ -52,7 +52,7 @@ final class CreateAccountTests: XCTestCase {
         let sut = makeSut(httpClientMock: httpClientMock)
         let exp = expectation(description: "waiting")
         
-        sut.create(with: makeAccountModel()) { result in
+        sut.register(with: makeAccountModel()) { result in
             switch result {
             case .success(_): XCTFail("Expected success but got \(result) instead.")
             case .failure(let registerError):
@@ -70,7 +70,7 @@ final class CreateAccountTests: XCTestCase {
         let sut = makeSut(httpClientMock: httpClientMock)
         let exp = expectation(description: "waiting")
         
-        sut.create(with: makeAccountModel()) { result in
+        sut.register(with: makeAccountModel()) { result in
             switch result {
                 case .success(_): XCTFail("Expected success but got \(result) instead.")
                 case .failure(let registerError):
@@ -85,8 +85,8 @@ final class CreateAccountTests: XCTestCase {
 }
 
 extension CreateAccountTests {
-    func makeSut(httpClientMock: HTTPClientProtocol = HTTPClientMock()) -> CreateAccount {
-        let sut = CreateAccount(httpClient: httpClientMock)
+    func makeSut(httpClientMock: HTTPClientProtocol = HTTPClientMock()) -> RegisterAccount {
+        let sut = RegisterAccount(httpClient: httpClientMock)
         sut.registerAccountResource = { accountModel in
             return ResourceModel(
                 url: makeUrl(),

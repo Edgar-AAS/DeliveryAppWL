@@ -1,6 +1,6 @@
 import Foundation
 
-struct AuthRequest: Model {
+struct AuthRequest: Serializable {
     let email: String
     let password: String
 

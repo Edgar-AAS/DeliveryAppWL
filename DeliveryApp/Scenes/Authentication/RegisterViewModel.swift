@@ -2,23 +2,23 @@ import Foundation
 
 final class RegisterViewModel: RegisterViewModelProtocol{
     private var hasAssignedTerms = false
-    var loadingHandler: ((LoadingState) -> ())?
+    var loadingHandler: ((Bool) -> ())?
     var createdAccountCallBack: (() -> Void)?
     
     weak var alertView: AlertViewProtocol?
     weak var fieldValidationDelegate: FeedBackTextFieldProtocol?
     
-    private let createAccount: CreateAccountUseCase
+    private let createAccount: RegisterAccountUseCase
     private let validatorComposite: ValidationProtocol
     
     //MARK: - Initializers
-    init(validatorComposite: ValidationProtocol, createAccount: CreateAccountUseCase) {
+    init(validatorComposite: ValidationProtocol, createAccount: RegisterAccountUseCase) {
         self.createAccount = createAccount
         self.validatorComposite = validatorComposite
     }
     
     //MARK: - createUsers
-    func createAccount(userRequest: RegisterUserRequest) {
+    func createAccount(userRequest: RegisterAccountModel) {
         if let validationFieldModel = validatorComposite.validate(data: userRequest.toJson()) {
             fieldValidationDelegate?.displayError(validationModel: validationFieldModel)
             return
@@ -34,21 +34,21 @@ final class RegisterViewModel: RegisterViewModelProtocol{
             return
         }
         
-        let createAccountModel = CreateAccountModel(
+        let createAccountModel = RegisterAccountRequest(
             name: userRequest.username,
             email: userRequest.email,
             password: userRequest.password
         )
         
-        loadingHandler?(.init(isLoading: true))
+        loadingHandler?(true)
         
-        createAccount.create(with: createAccountModel) { [weak self] result in
+        createAccount.register(with: createAccountModel) { [weak self] result in
             switch result {
             case .success(_):
-                self?.loadingHandler?(.init(isLoading: false))
+                self?.loadingHandler?(false)
                 self?.createdAccountCallBack?()
             case .failure(let error):
-                self?.loadingHandler?(.init(isLoading: false))
+                self?.loadingHandler?(false)
                 self?.handleRegisterError(error)
             }
         }
@@ -59,20 +59,9 @@ final class RegisterViewModel: RegisterViewModelProtocol{
     }
     
     private func handleRegisterError(_ error: RegisterError) {
-        var message = ""
-        
-        switch error {
-        case .noConnectivity:
-            message = Strings.NetworkError.noConnectivity
-        case .emailInUse:
-            message = Strings.CreateAccount.Failure.emailInUse
-        default:
-            message = Strings.NetworkError.unexpected
-        }
-        
         showAlert(
-            title: Strings.NetworkError.errorTitle,
-            message: message
+            title: Strings.error,
+            message: error.customMessage
         )
     }
     

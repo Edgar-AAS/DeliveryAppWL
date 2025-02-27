@@ -42,8 +42,8 @@ final class RegisterViewController: UIViewController {
             self?.routeToSuccessScreenCallBack?()
         }
         
-        viewModel.loadingHandler = { [weak self] loadingState in
-            self?.customView.handleLoadingView(with: loadingState)
+        viewModel.loadingHandler = { [weak self] state in
+            self?.customView.handleLoadingView(with: state)
         }
     }
     
@@ -53,7 +53,7 @@ final class RegisterViewController: UIViewController {
     }
     
     private func registerAccount() {
-        if let registerRequest = customView.getRegisterUserRequest() {
+        if let registerRequest = customView.getRequest() {
             viewModel.createAccount(userRequest: registerRequest)
         }
     }
@@ -61,11 +61,11 @@ final class RegisterViewController: UIViewController {
 
 //MARK: - SignUpScreenDelegateProtocol
 extension RegisterViewController: RegisterScreenDelegate {
-    func goToLoginButtonDidTapped() {
+    func goToLoginButtonDidTapped(_ view: RegisterScreen) {
         routeToLoginCallBack?()
     }
     
-    func registerButtonDidTapped() {
+    func registerButtonDidTapped(_ view: RegisterScreen) {
         registerAccount()
     }
 }
@@ -83,7 +83,7 @@ extension RegisterViewController: UITextFieldDelegate {
 //MARK: - FieldValidationDelegate
 extension RegisterViewController: FeedBackTextFieldProtocol {
     func clearError() {
-        customView.clearFeedBackMessages()
+        customView.resetTextFieldsState()
     }
     
     func displayError(validationModel: ValidationFieldModel) {

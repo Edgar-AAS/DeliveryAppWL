@@ -4,7 +4,7 @@ final class RegisterBuilder {
     static func build() -> RegisterViewController {
         let httpClient: HTTPClientProtocol = HTTPClient()
     
-        let createAccountUseCase = CreateAccount(httpClient: httpClient)
+        let createAccountUseCase = RegisterAccount(httpClient: httpClient)
         createAccountUseCase.registerAccountResource = { registerRequest in
             return ResourceModel(
                 url: URL(string: "http://localhost:5177/v1/account/create")!,

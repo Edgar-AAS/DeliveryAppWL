@@ -26,7 +26,7 @@ class RegisterCoordinator: Coordinator {
     func navigateToSuccessScreen() {
         let successViewController = RegisterSucceedBuilder.build()
         
-        successViewController.routeToLoginCallback = { [weak self] in
+        successViewController.routeToLogin = { [weak self] in
             self?.navigationController.popToViewController(ofClass: LoginViewController.self)
         }
         

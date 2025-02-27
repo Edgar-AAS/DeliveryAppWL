@@ -1,8 +1,13 @@
 import UIKit
 
 final class LoginScreen: UIView {
+    private lazy var loadingView = DALoadingView()
     weak var delegate: LoginScreenDelegate?
     weak var textFieldDelegate: UITextFieldDelegate?
+    
+    private var textFields: [DAFormTextField] {
+        return [emailTextField, passwordTextField]
+    }
     
     init(delegate: LoginScreenDelegate, textFieldDelegate: UITextFieldDelegate) {
         self.delegate = delegate
@@ -17,18 +22,7 @@ final class LoginScreen: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var backView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = Colors.primary.withAlphaComponent(0.9)
-        return view
-    }()
-    
-    private lazy var customScrollView: DAScrollView = {
-        let scrollView = DAScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        return scrollView
-    }()
+    private lazy var customScrollView = DAScrollView()
     
     private lazy var greetingLabel = makeLabel(
         text: "Welcome back",
@@ -121,15 +115,6 @@ final class LoginScreen: UIView {
         )
     }()
     
-    private lazy var backgroundImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "background-image")
-        return imageView
-    }()
-    
-    private lazy var loadingView = DALoadingView()
-    
     func goToNextField(_ textField: UITextField, action: (() -> Void)) {
         switch textField.tag {
         case 0:
@@ -144,15 +129,24 @@ final class LoginScreen: UIView {
         
     func resetTextFieldState() {
         emailTextField.becomeFirstResponder()
-        emailTextField.resetField()
-        passwordTextField.resetField()
+        
+        textFields.forEach {
+            $0.resetField()
+            
+            if $0 == passwordTextField {
+                $0.hidePassword()
+            }
+        }
     }
     
     func getUserLoginRequest() -> AuthRequest? {
-        guard let email = emailTextField.text,
-              let password = passwordTextField.text
-        else { return nil }
-        return AuthRequest(email: email, password: password)
+        if let email = emailTextField.text,
+           let password = passwordTextField.text {
+            
+            return AuthRequest(email: email, password: password)
+        } else {
+            return nil
+        }
     }
     
     func showValidationError(validationModel: ValidationFieldModel) {
@@ -160,13 +154,7 @@ final class LoginScreen: UIView {
         passwordTextField.setDescriptionField(with: validationModel)
     }
     
-    func clearFeedBackMessages() {
-        emailTextField.clearFeddback()
-        passwordTextField.clearFeddback()
-        passwordTextField.hidePassword()
-    }
-    
-    func handleLoadingView(with state: LoadingState) {
+    func handleLoadingView(with state: Bool) {
         loadingView.handleLoading(with: state)
     }
 }
@@ -250,6 +238,6 @@ extension LoginScreen: CodeView {
     
     
     func setupAdditionalConfiguration() {
-        backgroundColor = .white
+        backgroundColor = Colors.background
     }
 }

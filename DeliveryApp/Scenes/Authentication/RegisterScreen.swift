@@ -5,8 +5,12 @@ final class RegisterScreen: UIView {
     weak var textFieldDelegate: UITextFieldDelegate?
     weak var checkBoxDelegate: CheckBoxDelegate?
     
-    init(delegate: RegisterScreenDelegate?,
-         textFieldDelegate: UITextFieldDelegate?,
+    private var textFields: [DAFormTextField] {
+        return [emailTextField, userNameTextField, passwordTextField, passwordConfirmTextField]
+    }
+
+    init(delegate: RegisterScreenDelegate,
+         textFieldDelegate: UITextFieldDelegate,
          checkBoxDelegate: CheckBoxDelegate) {
         
         self.delegate = delegate
@@ -164,7 +168,8 @@ final class RegisterScreen: UIView {
         color: Colors.primary,
         icon: nil,
         action: { [weak self] in
-            self?.delegate?.registerButtonDidTapped()
+            guard let self else { return }
+            self.delegate?.registerButtonDidTapped(self)
         }
     )
     
@@ -174,7 +179,7 @@ final class RegisterScreen: UIView {
         color: .black,
         textAlignment: .center
     )
-        
+    
     private lazy var alreadyHaveAccountLabel = makeLabel(
         text: "Already have an account?",
         font: Fonts.medium(size: 14).weight,
@@ -187,7 +192,8 @@ final class RegisterScreen: UIView {
         titleColor: Colors.primary,
         font: Fonts.semiBold(size: 14).weight,
         action: { [weak self] in
-            self?.delegate?.goToLoginButtonDidTapped()
+            guard let self else { return }
+            self.delegate?.goToLoginButtonDidTapped(self)
         }
     )
     
@@ -216,40 +222,37 @@ final class RegisterScreen: UIView {
         }
     }
     
-    func getRegisterUserRequest() -> RegisterUserRequest? {
-        guard let email = emailTextField.text,
-              let username = userNameTextField.text,
-              let password = passwordTextField.text,
-              let confirmPassword = passwordConfirmTextField.text
-        else {
+    func getRequest() -> RegisterAccountModel? {
+        if let email = emailTextField.text,
+           let username = userNameTextField.text,
+           let password = passwordTextField.text,
+           let confirmPassword = passwordConfirmTextField.text {
+            
+            return RegisterAccountModel(
+                email: email,
+                username: username,
+                password: password,
+                confirmPassword: confirmPassword)
+        } else {
             return nil
         }
-        
-        return RegisterUserRequest(
-            email: email,
-            username: username,
-            password: password,
-            confirmPassword: confirmPassword
-        )
     }
     
     func showValidationError(validationModel: ValidationFieldModel) {
-        emailTextField.setDescriptionField(with: validationModel)
-        userNameTextField.setDescriptionField(with: validationModel)
-        passwordTextField.setDescriptionField(with: validationModel)
-        passwordConfirmTextField.setDescriptionField(with: validationModel)
+        textFields.forEach { $0.setDescriptionField(with: validationModel)}
     }
     
-    func clearFeedBackMessages() {
-        emailTextField.clearFeddback()
-        userNameTextField.clearFeddback()
-        passwordTextField.clearFeddback()
-        passwordConfirmTextField.clearFeddback()
-        passwordTextField.hidePassword()
-        passwordConfirmTextField.hidePassword()
+    func resetTextFieldsState() {
+        textFields.forEach {
+            $0.resetField()
+            
+            if $0 == passwordTextField || $0 == passwordConfirmTextField {
+                $0.hidePassword()
+            }
+        }
     }
     
-    func handleLoadingView(with state: LoadingState) {
+    func handleLoadingView(with state: Bool) {
         loadingView.handleLoading(with: state)
     }
 }
@@ -258,7 +261,7 @@ extension RegisterScreen: UITextViewDelegate {
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         return false
     }
-
+    
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         return false
     }

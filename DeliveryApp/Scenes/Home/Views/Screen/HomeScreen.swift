@@ -11,20 +11,17 @@ final class HomeScreen: UIView {
         setupView()
     }
     
-    lazy var homeHeader: HeaderView = {
-        let header = HeaderView()
-        return header
-    }()
+    lazy var homeHeader = HeaderView()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = delegate
         tableView.dataSource = dataSource
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.allowsSelection = false
         tableView.isScrollEnabled = false
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(SeeAllCategoriesCell.self, forCellReuseIdentifier: SeeAllCategoriesCell.reuseIdentifier)
         tableView.register(ProductCategoryCell.self, forCellReuseIdentifier: ProductCategoryCell.reuseIdentifier)
         tableView.register(ProductGridCell.self, forCellReuseIdentifier: ProductGridCell.reuseIdentifier)

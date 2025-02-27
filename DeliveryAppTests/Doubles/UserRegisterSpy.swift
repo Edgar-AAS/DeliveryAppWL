@@ -1,13 +1,13 @@
 import Foundation
 @testable import DeliveryApp
 
-class CreateAccountUseCaseSpy: CreateAccountUseCase {
-    var registerAccountResource: ((CreateAccountModel) -> ResourceModel)?
+class CreateAccountUseCaseSpy: RegisterAccountUseCase {
+    var registerAccountResource: ((RegisterAccountRequest) -> ResourceModel)?
     
-    private(set) var userRequest: CreateAccountModel?
+    private(set) var userRequest: RegisterAccountRequest?
     private(set) var emit: ((Result<Void, RegisterError>) -> Void)?
     
-    func create(with request: CreateAccountModel, completion: @escaping (Result<Void, RegisterError>) -> Void) {
+    func register(with request: RegisterAccountRequest, completion: @escaping (Result<Void, RegisterError>) -> Void) {
         self.userRequest = request
         self.emit = completion
     }

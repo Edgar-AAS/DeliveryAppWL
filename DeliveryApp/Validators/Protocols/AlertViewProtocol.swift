@@ -4,7 +4,7 @@ public protocol AlertViewProtocol: AnyObject {
     func showMessage(viewModel: AlertViewModel)
 }
 
-public struct AlertViewModel: Model {
+public struct AlertViewModel: Serializable {
     public let title: String
     public let message: String
     

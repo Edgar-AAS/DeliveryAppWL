@@ -6,7 +6,7 @@ final class RegisterViewModelTests: XCTestCase {
         let alertViewSpy = AlertViewSpy()
         let createAccountSpy = CreateAccountUseCaseSpy()
         let sut = makeSut(userRegisterSpy: createAccountSpy, alertViewSpy: alertViewSpy)
-        let accountModel = CreateAccountModel(
+        let accountModel = RegisterAccountRequest(
             name: "any_Name",
             email: "valid_email@gmail.com",
             password: "any_Password"

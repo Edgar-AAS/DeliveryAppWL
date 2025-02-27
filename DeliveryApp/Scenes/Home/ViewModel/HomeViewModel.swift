@@ -5,13 +5,13 @@ enum HomeError: Error {
     case noConnectivity
 }
 class HomeViewModel: HomeViewModelProtocol {
-    var productsOnComplete: ((ProductGridCellDataSource) -> Void)?
+    var productsOnComplete: ((ProductDataSource) -> Void)?
     var categoriesOnComplete: (() -> Void)?
     
     weak var delegate: HomeViewModelDelegate?
 
     private var products = [Product]()
-    private var categories = [CategoryResponse]()
+    private var categories = [ProductCategory]()
     
     private let fetchCategories: FetchProductCategoriesUseCase
     private let fetchPaginatedProducts: FetchPaginatedProductsUseCase
@@ -41,7 +41,7 @@ class HomeViewModel: HomeViewModelProtocol {
     
     func getCategories() -> [CategoryCellViewData] {
         return categories.map { category in
-            return category.toCategoryCellViewData()
+            return category.mapToCategoryViewData()
         }
     }
     
@@ -53,7 +53,7 @@ class HomeViewModel: HomeViewModelProtocol {
         loadProducts(by: categoryId, resetPagination: true)
     }
     
-    private func loadCategories(completion: @escaping ([CategoryResponse]) -> Void) {
+    private func loadCategories(completion: @escaping ([ProductCategory]) -> Void) {
         fetchCategories.fetch { result in
             switch result {
             case .success(let activeCategories):
@@ -69,7 +69,7 @@ class HomeViewModel: HomeViewModelProtocol {
             guard let self else { return }
             switch result {
             case .success(let productsPaginated):
-                let dataSource = ProductGridCellDataSource(categoryId: categoryId, products: productsPaginated)
+                let dataSource = ProductDataSource(categoryId: categoryId, products: productsPaginated)
                 self.productsOnComplete?(dataSource)
             case .failure(let httpError):
                 switch httpError {

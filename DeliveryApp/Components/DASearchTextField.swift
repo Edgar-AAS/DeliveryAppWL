@@ -15,8 +15,7 @@ final class DASearchTextField: UITextField {
     
     convenience init(placeholder: String) {
         self.init(frame: .zero)
-        self.placeholder = placeholder
-        setup()
+        setup(placeholder: placeholder)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -24,12 +23,21 @@ final class DASearchTextField: UITextField {
         setup()
     }
     
-    private func setup() {
+    private func setup(placeholder: String? = nil) {
         borderStyle = .none
         layer.cornerRadius = 16
         backgroundColor = UIColor(white: 0.9, alpha: 0.6)
         tintColor = .black
+        textColor = .black
         font = UIFont.systemFont(ofSize: 16)
+        self.placeholder = placeholder
+        
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.lightGray,
+            .font: Fonts.medium(size: 14).weight
+        ]
+        
+        attributedPlaceholder = NSAttributedString(string: placeholder ?? "", attributes: attributes)
         
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: frame.height))
         leftView = paddingView

@@ -40,17 +40,13 @@ class HttpClientTests: XCTestCase {
         expectResult(.failure(.notFound), for: resource, when: (data: makeValidData(), response: makeHttpResponse(statusCode: 404), error: nil))
         expectResult(.failure(.serverError), for: resource, when: (data: makeValidData(), response: makeHttpResponse(statusCode: 500), error: nil))
         expectResult(.failure(.serverError), for: resource, when: (data: makeValidData(), response: makeHttpResponse(statusCode: 503), error: nil))
-        
         expectResult(.failure(.unknown), for: resource, when: (data: makeValidData(), response: makeHttpResponse(statusCode: 600), error: makeError()))
-        
-        expectResult(.failure(.unknown), for: resource, when: (data: makeValidData(), response: makeHttpResponse(statusCode: 600), error: makeError()))
-        
         expectResult(.failure(.unknown), for: resource, when: (data: makeValidData(), response: makeHttpResponse(statusCode: 600), error: nil))
         
         expectResult(.failure(.invalidResponse), for: resource, when: (data: nil, response: nil, error: nil))
         expectResult(.failure(.invalidResponse), for: resource, when: (data: makeValidData(), response: nil, error: nil))
         expectResult(.failure(.noConnectivity), for: resource, when: (data: nil, response: nil, error: URLError(.notConnectedToInternet)))
-        expectResult(.failure(.timeout), for: resource, when: (data: nil, response: nil, error: URLError(.timedOut)))
+        expectResult(.failure(.noConnectivity), for: resource, when: (data: nil, response: nil, error: URLError(.timedOut)))
     }
     
     // MARK: - POST Tests
@@ -155,6 +151,7 @@ extension HttpClientTests {
     func makeSut(file: StaticString = #filePath, line: UInt = #line) -> HTTPClient {
         let configuration = URLSessionConfiguration.default
         configuration.protocolClasses = [UrlProtocolStub.self]
+        
         let session = URLSession(configuration: configuration)
         let sut = HTTPClient(session: session)
         checkMemoryLeak(for: sut, file: file, line: line)
@@ -172,7 +169,10 @@ extension HttpClientTests {
         action(request!)
     }
     
-    func expectResult(_ expectedResult: Result<Data?, HTTPError>, for resource: ResourceModel, when stub: (data: Data?, response: HTTPURLResponse?, error: Error?), file: StaticString = #filePath, line: UInt = #line) {
+    func expectResult(_ expectedResult: Result<Data?, RequestError>, for resource: ResourceModel,
+                      when stub: (data: Data?, response: HTTPURLResponse?, error: Error?),
+                      file: StaticString = #filePath, line: UInt = #line)
+    {
         let sut = makeSut()
         UrlProtocolStub.simulate(data: stub.data, response: stub.response, error: stub.error)
         let exp = expectation(description: "waiting")

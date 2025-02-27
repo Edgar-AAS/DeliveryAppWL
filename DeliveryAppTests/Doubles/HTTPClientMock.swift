@@ -2,13 +2,13 @@ import Foundation
 @testable import DeliveryApp
 
 final class HTTPClientMock: HTTPClientProtocol {
-    private(set) var completion: ((Result<Data?, HTTPError>) -> Void)?
+    private(set) var completion: ((Result<Data?, RequestError>) -> Void)?
     
-    func load(_ resource: ResourceModel, completion: @escaping ((Result<Data?, HTTPError>) -> Void)) {
+    func load(_ resource: ResourceModel, completion: @escaping ((Result<Data?, RequestError>) -> Void)) {
         self.completion = completion
     }
     
-    func failure(_ error: HTTPError) {
+    func failure(_ error: RequestError) {
         completion?(.failure(error))
     }
     

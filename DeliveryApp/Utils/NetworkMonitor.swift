@@ -1,7 +1,6 @@
 import Network
 import Foundation
 
-
 final class NetworkMonitor {
     static let shared = NetworkMonitor()
     

@@ -1,6 +1,6 @@
 import Foundation
 
-struct AuthResponse: Model {
+struct AuthResponse: Serializable {
     let accessToken: String
     let userId: Int
 }

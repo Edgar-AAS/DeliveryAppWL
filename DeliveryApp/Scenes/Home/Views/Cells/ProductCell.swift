@@ -1,7 +1,7 @@
 import UIKit
 import SDWebImage
 
-class ProductCell: UICollectionViewCell {
+final class ProductCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: ProductCell.self)
     
     override init(frame: CGRect) {
@@ -85,16 +85,17 @@ class ProductCell: UICollectionViewCell {
     )
     
     func configure(with viewData: ProductCellViewData) {
-        productNameLabel.text = viewData.displayName
-        productPriceLabel.text = viewData.formattedPrice
-        productRateLabel.text = viewData.stringRating
-        favoriteButton.imageView?.image = viewData.favoriteStatus
-            ? UIImage(systemName: "heart.fill")
-            : UIImage(systemName: "heart")
+        productNameLabel.text = viewData.name
+        productPriceLabel.text = viewData.price
+        productRateLabel.text = viewData.rating
+        favoriteButton.imageView?.image = viewData.isFavorite ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
         
-        let imageUrl = viewData.sortedImages()?.first?.url ?? String()
-        productImageView.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
-        productImageView.sd_setImage(with: URL(string: imageUrl))
+        if let imageUrlString = viewData.image?.url, let urlImage = URL(string: imageUrlString) {
+            productImageView.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
+            productImageView.sd_setImage(with: urlImage)
+        } else {
+            productImageView.image = UIImage(systemName: "photo")
+        }
     }
 
     

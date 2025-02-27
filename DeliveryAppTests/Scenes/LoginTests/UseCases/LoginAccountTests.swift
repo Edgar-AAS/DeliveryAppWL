@@ -14,8 +14,9 @@ final class LoginAccountTests: XCTestCase {
             XCTAssertEqual(request.password, expectedRequest.password)
             return ResourceModel(url: makeUrl(), method: .post(request.toData()))
         }
-                    
+        
         let exp = expectation(description: "waiting for completion")
+        
         sut.login(with: expectedRequest) { result in
             if case .success = result {
                 exp.fulfill()
@@ -24,7 +25,7 @@ final class LoginAccountTests: XCTestCase {
             }
         }
         
-        httpClientMock.success(Data("{\"accessToken\":\"someToken123321\"}".utf8))
+        httpClientMock.success(makeLoginAccountResponse())
         wait(for: [exp], timeout: 1.0)
     }
     

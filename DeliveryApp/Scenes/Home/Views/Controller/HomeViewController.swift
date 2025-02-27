@@ -6,7 +6,7 @@ class HomeViewController: UIViewController {
     }()
 
     private var viewModel: HomeViewModelProtocol
-    private var dataSourceCallBack: ((ProductGridCellDataSource) -> Void)?
+    private var dataSourceCallBack: ((ProductDataSource) -> Void)?
     
     var routeToNetworkErrorPage: (() -> Void)?
     var routeToProductDetailsPage: ((Int) -> Void)?

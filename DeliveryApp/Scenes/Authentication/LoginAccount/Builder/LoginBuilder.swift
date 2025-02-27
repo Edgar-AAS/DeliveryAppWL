@@ -11,7 +11,7 @@ final class LoginBuilder {
                 method: .post(credential.toData()),
                 headers: [
                     "Content-Type": "application/json",
-                    "Authorization": ""
+            
                 ]
             )
         }

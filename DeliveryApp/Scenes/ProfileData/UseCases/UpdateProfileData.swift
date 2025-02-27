@@ -1,7 +1,7 @@
 import Foundation
 
 final class UpdateProfileData: UpdateProfileDataUseCase {
-    var httpResource: ((UserRequest) -> ResourceModel)?
+    var httpResource: ((UserProfileRequest) -> ResourceModel)?
     
     private let httpClient: HTTPClientProtocol
     
@@ -9,9 +9,9 @@ final class UpdateProfileData: UpdateProfileDataUseCase {
         self.httpClient = httpClient
     }
     
-    func update(with request: UserRequest, onComplete: @escaping (Result<Void, UpdateProfileDataError>) -> Void) {
+    func update(with request: UserProfileRequest, completion: @escaping (Result<Void, ProfileDataError>) -> Void) {
         guard let httpResourceModel = httpResource?(request) else {
-            onComplete(.failure(.unexpectedError))
+            completion(.failure(.unexpected))
             return
         }
         
@@ -22,19 +22,14 @@ final class UpdateProfileData: UpdateProfileDataUseCase {
             
             switch result {
             case .success(_):
-                onComplete(.success(()))
+                completion(.success(()))
             case .failure(let httpError):
                 switch httpError {
-                case .badRequest:
-                    print("O corpo da requisição é inválido")
                 case .unauthorized:
-                    print("O usuário não esta autorizado para editar os detalhes do perfil")
-                case .notFound:
-                    print("Não existe usuário para o ID informado")
+                    completion(.failure(.unauthorized))
                 default:
-                    print("Erro do servidor")
+                    completion(.failure(.unexpected))
                 }
-                onComplete(.failure(.unexpectedError))
             }
         }
     }
