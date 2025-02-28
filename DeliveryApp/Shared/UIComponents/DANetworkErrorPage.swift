@@ -42,14 +42,14 @@ final class DANetworkErrorPage: UIViewController {
         let button = DARoundedButton(
             title: "Try Again",
             font: Fonts.bold(size: 16).weight,
-            titleColor: Colors.primary,
+            titleColor: .primary1,
             color: Colors.background,
             action: {
                 print(#function)
             })
         button.layer.cornerRadius = 22
         button.clipsToBounds = true
-        button.layer.borderColor = Colors.primary.cgColor
+        button.layer.borderColor = UIColor(resource: .primary1).cgColor
         button.layer.borderWidth = 2
         return button
     }()

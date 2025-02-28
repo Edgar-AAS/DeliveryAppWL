@@ -16,7 +16,7 @@ final class HeaderView: UIView {
     private lazy var locationLabel = makeLabel(
         text: "ENTREGAR EM",
         font: Fonts.medium(size: 14).weight,
-        color: Colors.primary
+        color: .primary1
     )
     
     private let locationButton: UIButton = {

@@ -71,7 +71,7 @@ final class LoginScreen: UIView {
     
     private lazy var forgotPasswordButton = DATitleButton(
         title: "Forgot password?",
-        titleColor: Colors.primary,
+        titleColor: .primary1,
         font: Fonts.medium(size: 14).weight,
         action: { [weak self] in
             guard let self else { return }
@@ -81,7 +81,7 @@ final class LoginScreen: UIView {
     private lazy var loginButton = DARoundedButton(
         title: "Log in",
         titleColor: .white,
-        color: Colors.primary,
+        color: .primary1,
         icon: nil,
         action: { [weak self] in
             guard let self else { return }
@@ -105,7 +105,7 @@ final class LoginScreen: UIView {
     private lazy var registerButton: UIButton = {
         return DARoundedButton(
             title: "Register here",
-            titleColor: Colors.primary,
+            titleColor: .primary1,
             color: .white,
             icon: nil,
             action: { [weak self] in
@@ -127,18 +127,6 @@ final class LoginScreen: UIView {
         }
     }
         
-    func resetTextFieldState() {
-        emailTextField.becomeFirstResponder()
-        
-        textFields.forEach {
-            $0.resetField()
-            
-            if $0 == passwordTextField {
-                $0.hidePassword()
-            }
-        }
-    }
-    
     func getUserLoginRequest() -> AuthRequest? {
         if let email = emailTextField.text,
            let password = passwordTextField.text {
@@ -147,11 +135,6 @@ final class LoginScreen: UIView {
         } else {
             return nil
         }
-    }
-    
-    func showValidationError(validationModel: ValidationFieldModel) {
-        emailTextField.setDescriptionField(with: validationModel)
-        passwordTextField.setDescriptionField(with: validationModel)
     }
     
     func handleLoadingView(with state: Bool) {

@@ -110,7 +110,7 @@ final class RegisterScreen: UIView {
     
     private lazy var termsOfServiceButton = DATitleButton(
         title: "Terms of Service",
-        titleColor: Colors.primary,
+        titleColor: .primary1,
         font:  Fonts.medium(size: 14).weight,
         action: {
             print("show Terms of Service")
@@ -165,7 +165,7 @@ final class RegisterScreen: UIView {
     private lazy var registerButton = DARoundedButton(
         title: "Register",
         titleColor: .white,
-        color: Colors.primary,
+        color: .primary1,
         icon: nil,
         action: { [weak self] in
             guard let self else { return }
@@ -189,7 +189,7 @@ final class RegisterScreen: UIView {
     
     private lazy var goToLoginButton = DATitleButton(
         title: "Login here",
-        titleColor: Colors.primary,
+        titleColor: .primary1,
         font: Fonts.semiBold(size: 14).weight,
         action: { [weak self] in
             guard let self else { return }
@@ -235,20 +235,6 @@ final class RegisterScreen: UIView {
                 confirmPassword: confirmPassword)
         } else {
             return nil
-        }
-    }
-    
-    func showValidationError(validationModel: ValidationFieldModel) {
-        textFields.forEach { $0.setDescriptionField(with: validationModel)}
-    }
-    
-    func resetTextFieldsState() {
-        textFields.forEach {
-            $0.resetField()
-            
-            if $0 == passwordTextField || $0 == passwordConfirmTextField {
-                $0.hidePassword()
-            }
         }
     }
     

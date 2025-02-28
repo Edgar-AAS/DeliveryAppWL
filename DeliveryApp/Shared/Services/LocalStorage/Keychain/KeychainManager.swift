@@ -2,27 +2,6 @@ import Foundation
 import Security
 
 final class KeychainManager {
-    enum KeychainError: Error {
-        case invalidData
-        case itemNotFound
-        case keychainError(OSStatus)
-
-        var message: String {
-            switch self {
-            case .invalidData:
-                return "Os dados fornecidos não puderam ser convertidos para Data."
-            case .itemNotFound:
-                return "O item solicitado não foi encontrado no Keychain."
-            case .keychainError(let status):
-                if let message = SecCopyErrorMessageString(status, nil) {
-                    return "Erro do Keychain: \(message)"
-                } else {
-                    return "Erro desconhecido do Keychain (código: \(status))."
-                }
-            }
-        }
-    }
-    
     static func save(key: String, value: String) {
         guard let data = value.data(using: .utf8) else {
             print(KeychainError.invalidData.message)
@@ -76,6 +55,29 @@ final class KeychainManager {
         
         if status != errSecSuccess && status != errSecItemNotFound {
             print(KeychainError.keychainError(status).message)
+        }
+    }
+}
+
+extension KeychainManager {
+    enum KeychainError: Error {
+        case invalidData
+        case itemNotFound
+        case keychainError(OSStatus)
+
+        var message: String {
+            switch self {
+            case .invalidData:
+                return "Os dados fornecidos não puderam ser convertidos para Data."
+            case .itemNotFound:
+                return "O item solicitado não foi encontrado no Keychain."
+            case .keychainError(let status):
+                if let message = SecCopyErrorMessageString(status, nil) {
+                    return "Erro do Keychain: \(message)"
+                } else {
+                    return "Erro desconhecido do Keychain (código: \(status))."
+                }
+            }
         }
     }
 }

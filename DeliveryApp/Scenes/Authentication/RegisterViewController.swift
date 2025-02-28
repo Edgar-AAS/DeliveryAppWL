@@ -80,17 +80,6 @@ extension RegisterViewController: UITextFieldDelegate {
     }
 }
 
-//MARK: - FieldValidationDelegate
-extension RegisterViewController: FeedBackTextFieldProtocol {
-    func clearError() {
-        customView.resetTextFieldsState()
-    }
-    
-    func displayError(validationModel: ValidationFieldModel) {
-        customView.showValidationError(validationModel: validationModel)
-    }
-}
-
 //MARK: - CheckBoxDelegate
 extension RegisterViewController: CheckBoxDelegate {
     func checkBoxDidChange(_ checkBox: DACheckBoxButton, isChecked: Bool) {

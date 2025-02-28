@@ -29,7 +29,7 @@ class RequiredFieldsValidationTests: XCTestCase {
 }
 
 extension RequiredFieldsValidationTests {
-    func makeSut(fieldName: String, fieldLabel: String, fieldType: String, file: StaticString = #filePath, line: UInt = #line) -> ValidationProtocol {
+    func makeSut(fieldName: String, fieldLabel: String, fieldType: String, file: StaticString = #filePath, line: UInt = #line) -> Validation {
         let sut = RequiredFieldValidator(fieldName: fieldName, fieldLabel: fieldLabel, fieldType: fieldType)
         checkMemoryLeak(for: sut, file: file, line: line)
         return sut

@@ -31,7 +31,7 @@ class SeeAllCategoriesCell: UITableViewCell {
     
     private lazy var seeAllButton = DATitleButton(
         title: "See All",
-        titleColor: Colors.primary,
+        titleColor: .primary1,
         font:  Fonts.bold(size: 14).weight,
         action: { [weak self] in
             guard let self else  { return }

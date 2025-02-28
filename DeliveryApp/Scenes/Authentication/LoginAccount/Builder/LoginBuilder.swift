@@ -15,15 +15,12 @@ final class LoginBuilder {
                 ]
             )
         }
-        
-        let emailValidator: EmailValidationProtocol = EmailValidator()
-        let passwordValidator: PasswordValidationProtocol = PasswordValidator()
-        
+    
         let validatorComposite = ValidationComposite(validations: [
-            RequiredFieldValidator(fieldName: "email", fieldLabel: "Email", fieldType: "email"),
-            EmailFieldValidator(fieldName: "email", fieldLabel: "Email", emailValidator: emailValidator),
-            RequiredFieldValidator(fieldName: "password", fieldLabel: "Senha", fieldType: "password"),
-            PasswordStrongValidator(fieldName: "password", fieldType: "password", passwordValidator: passwordValidator)
+            RequiredFieldValidation(fieldName: "email", fieldLabel: "Email"),
+            EmailValidation(fieldName: "email", fieldLabel: "Email"),
+            RequiredFieldValidation(fieldName: "password", fieldLabel: "Senha"),
+            PasswordValidation(fieldName: "password", fieldLabel: "Senha")
         ])
         
         let viewModel = LoginViewModel(userAccountLogin: userAccountLogin,
@@ -31,7 +28,6 @@ final class LoginBuilder {
         
         let viewController = LoginViewController(viewModel: viewModel)
         viewModel.alertView = viewController
-        viewModel.fieldValidationDelegate = viewController
         return viewController
     }
 }

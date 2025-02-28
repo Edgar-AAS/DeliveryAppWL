@@ -32,7 +32,7 @@ final class ProductQuantityFooterView: UIView {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 8
-        button.backgroundColor = Colors.primary
+        button.backgroundColor = .primary1
         button.setTitleColor(.white, for: .normal)
         return button
     }()
@@ -58,7 +58,7 @@ final class ProductQuantityFooterView: UIView {
     func configureButtonState(status: OptionsStatusType) {
         let isRequiredOptionsSelect = status == .done
         addToCartButton.isEnabled = isRequiredOptionsSelect
-        addToCartButton.backgroundColor = isRequiredOptionsSelect ? Colors.primary : Colors.inactiveButton
+        addToCartButton.backgroundColor = isRequiredOptionsSelect ? .primary1 : Colors.inactiveButton
     }
     
     func configureStepper(with dto: StepperModel) {

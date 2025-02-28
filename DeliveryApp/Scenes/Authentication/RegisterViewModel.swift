@@ -2,29 +2,27 @@ import Foundation
 
 final class RegisterViewModel: RegisterViewModelProtocol{
     private var hasAssignedTerms = false
+    
     var loadingHandler: ((Bool) -> ())?
     var createdAccountCallBack: (() -> Void)?
     
     weak var alertView: AlertViewProtocol?
-    weak var fieldValidationDelegate: FeedBackTextFieldProtocol?
     
     private let createAccount: RegisterAccountUseCase
-    private let validatorComposite: ValidationProtocol
+    private let validatorComposite: Validation
     
     //MARK: - Initializers
-    init(validatorComposite: ValidationProtocol, createAccount: RegisterAccountUseCase) {
+    init(validatorComposite: Validation, createAccount: RegisterAccountUseCase) {
         self.createAccount = createAccount
         self.validatorComposite = validatorComposite
     }
     
     //MARK: - createUsers
     func createAccount(userRequest: RegisterAccountModel) {
-        if let validationFieldModel = validatorComposite.validate(data: userRequest.toJson()) {
-            fieldValidationDelegate?.displayError(validationModel: validationFieldModel)
+        if let message = validatorComposite.validate(data: userRequest.toJson()) {
+            showAlert(title: "Falha na validaçāo.", message: message)
             return
         }
-        
-        fieldValidationDelegate?.clearError()
         
         if !hasAssignedTerms {
             showAlert(
@@ -41,7 +39,6 @@ final class RegisterViewModel: RegisterViewModelProtocol{
         )
         
         loadingHandler?(true)
-        
         createAccount.register(with: createAccountModel) { [weak self] result in
             switch result {
             case .success(_):
@@ -49,7 +46,7 @@ final class RegisterViewModel: RegisterViewModelProtocol{
                 self?.createdAccountCallBack?()
             case .failure(let error):
                 self?.loadingHandler?(false)
-                self?.handleRegisterError(error)
+                self?.showAlert(title: Strings.error, message: error.customMessage)
             }
         }
     }
@@ -58,14 +55,7 @@ final class RegisterViewModel: RegisterViewModelProtocol{
         hasAssignedTerms = assined
     }
     
-    private func handleRegisterError(_ error: RegisterError) {
-        showAlert(
-            title: Strings.error,
-            message: error.customMessage
-        )
-    }
-    
-    func showAlert(title: String, message: String) {
+    private func showAlert(title: String, message: String) {
         alertView?.showMessage(viewModel: AlertViewModel(title: title, message: message))
     }
 }

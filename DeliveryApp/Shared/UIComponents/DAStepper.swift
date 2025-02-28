@@ -42,7 +42,7 @@ final class DAStepper: UIView {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "plus"), for: .normal)
-        button.tintColor = Colors.primary
+        button.tintColor = .primary1
         
         let action = UIAction { [weak self] _ in
             guard let self else { return }
@@ -58,7 +58,7 @@ final class DAStepper: UIView {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "minus"), for: .normal)
-        button.tintColor = Colors.primary
+        button.tintColor = .primary1
         
         let action = UIAction { [weak self] _ in
             guard let self else { return }

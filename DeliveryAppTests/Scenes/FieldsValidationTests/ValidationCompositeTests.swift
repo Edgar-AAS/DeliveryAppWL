@@ -50,7 +50,7 @@ class ValidationCompositeTests: XCTestCase {
 }
 
 extension ValidationCompositeTests {
-    func makeSut(validations: [ValidationSpy], file: StaticString = #filePath, line: UInt = #line) -> ValidationProtocol {
+    func makeSut(validations: [ValidationSpy], file: StaticString = #filePath, line: UInt = #line) -> Validation {
         let sut = ValidationComposite(validations: validations)
         checkMemoryLeak(for: sut, file: file, line: line)
         return sut

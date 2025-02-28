@@ -36,7 +36,7 @@ class EmailFieldValidatorTests: XCTestCase {
 }
 
 extension EmailFieldValidatorTests {
-    func makeSut(fieldName: String, fieldLabel: String, emailValidatorSpy: EmailValidatorSpy, file: StaticString = #filePath, line: UInt = #line) -> ValidationProtocol {
+    func makeSut(fieldName: String, fieldLabel: String, emailValidatorSpy: EmailValidatorSpy, file: StaticString = #filePath, line: UInt = #line) -> Validation {
         let sut = EmailFieldValidator(fieldName: fieldName, fieldLabel: fieldLabel, emailValidator: emailValidatorSpy)
         checkMemoryLeak(for: sut, file: file, line: line)
         return sut

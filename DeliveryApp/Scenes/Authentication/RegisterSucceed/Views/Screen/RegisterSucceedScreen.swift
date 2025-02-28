@@ -23,7 +23,7 @@ final class RegisterSucceedScreen: UIView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = Colors.primary
+        imageView.tintColor = .primary1
         imageView.image = UIImage(named: Assets.Images.successRegister)
         return imageView
     }()
@@ -47,7 +47,7 @@ final class RegisterSucceedScreen: UIView {
     private lazy var verifyAccountButton = DARoundedButton(
         title: Strings.RegisterSucceedScreen.buttonTitle,
         titleColor: .white,
-        color: Colors.primary,
+        color: .primary1,
         icon: nil,
         action: { [weak self] in
             guard let self else { return }

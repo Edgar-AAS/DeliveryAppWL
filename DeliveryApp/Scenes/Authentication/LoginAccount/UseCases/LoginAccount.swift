@@ -50,6 +50,6 @@ final class LoginAccount: LoginAccountUseCase {
     }
     
     private func storeToken(token: String) {
-        KeychainManager.save(key: KeychainConstants.Keys.accessToken, value: token)
+        KeychainManager.save(key: Strings.Keychain.Keys.accessToken, value: token)
     }
 }

@@ -1,7 +1,7 @@
 import Foundation
 @testable import DeliveryApp
 
-class ValidationSpy: ValidationProtocol
+class ValidationSpy: Validation
 {
     var validationModel: ValidationFieldModel?
     var data: [String: Any]?

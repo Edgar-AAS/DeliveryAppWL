@@ -5,7 +5,7 @@ final class HomeBuilder {
     static func build(coordinator: HomeCoordinator) -> HomeViewController {
         let httpClient: HTTPClientProtocol = HTTPClient()
         
-        let accessToken = KeychainManager.retrieve(key: KeychainConstants.Keys.accessToken)
+        let accessToken = KeychainManager.retrieve(key: Strings.Keychain.Keys.accessToken)
         
         let categoriesResource = ResourceModel(
             url: URL(string: "http://localhost:5177/v1/product/categories")!,

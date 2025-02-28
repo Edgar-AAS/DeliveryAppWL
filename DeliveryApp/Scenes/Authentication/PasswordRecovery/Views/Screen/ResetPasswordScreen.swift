@@ -80,7 +80,7 @@ class ResetPasswordScreen: UIView {
         button.setTitle("Verify Account", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = Fonts.bold(size: 14).weight
-        button.backgroundColor = Colors.primary
+        button.backgroundColor = .primary1
         button.layer.cornerRadius = 26
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOffset = CGSize(width: 0, height: 2)

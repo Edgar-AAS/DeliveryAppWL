@@ -152,22 +152,6 @@ final class DAFormTextField: UITextField {
         isHide = true
     }
     
-    func setDescriptionField(with model: ValidationFieldModel) {
-        if fieldType != model.fieldType {
-            feedbackLabel.isHidden = true
-            return
-        }
-        
-        feedbackLabel.isHidden = false
-        feedbackLabel.text = model.message
-    }
-    
-    func resetField() {
-        text = ""
-        feedbackLabel.text = ""
-        layer.borderColor = Colors.grayBorder.cgColor
-    }
-    
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
         let bounds = CGRect(x: 10, y: 0, width: bounds.width - padding, height: bounds.height)
         return bounds
@@ -185,37 +169,8 @@ final class DAFormTextField: UITextField {
 }
 
 extension DAFormTextField: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let fieldType = fieldType
-        
-        switch fieldType {
-        case "phone":
-            guard let currentText = textField.text as NSString? else { return false }
-            let newString = currentText.replacingCharacters(in: range, with: string)
-            
-            let cleanPhoneNumber = newString.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
-            let mask = "(##) #####-####"
-            var formattedString = ""
-            var index = cleanPhoneNumber.startIndex
-            
-            for ch in mask where index < cleanPhoneNumber.endIndex {
-                if ch == "#" {
-                    formattedString.append(cleanPhoneNumber[index])
-                    index = cleanPhoneNumber.index(after: index)
-                } else {
-                    formattedString.append(ch)
-                }
-            }
-            
-            textField.text = formattedString
-            return false
-        default:
-            return true
-        }
-    }
-    
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        layer.borderColor = Colors.primary.cgColor
+        layer.borderColor = UIColor(resource: .primary1).cgColor
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {

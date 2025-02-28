@@ -17,4 +17,10 @@ struct Strings {
         static let descriptionLabel = "Agora você pode entrar em sua conta com email e senha cadastradas."
         static let buttonTitle = "Verificar conta"
     }
+    
+    struct Keychain {
+        struct Keys {
+            static let accessToken = "accessToken"
+        }
+    }
 }

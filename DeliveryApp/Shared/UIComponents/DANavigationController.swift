@@ -10,7 +10,7 @@ final class DANavigationController: UINavigationController {
     
     private func setup() {
         navigationBar.barTintColor = Colors.background
-        navigationBar.tintColor = Colors.primary
+        navigationBar.tintColor = .primary1
         navigationBar.shadowImage = UIImage()
         navigationBar.setBackgroundImage(UIImage(), for: .default)
     }

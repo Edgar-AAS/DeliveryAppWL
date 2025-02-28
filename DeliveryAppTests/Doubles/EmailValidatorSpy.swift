@@ -1,7 +1,7 @@
 import Foundation
 @testable import DeliveryApp
 
-class EmailValidatorSpy: EmailValidationProtocol {
+class EmailValidatorSpy: EmailValidation {
     private(set)var isValid: Bool = true
     private(set)var email: String = ""
     

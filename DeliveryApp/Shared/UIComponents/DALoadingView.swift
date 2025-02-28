@@ -14,7 +14,7 @@ final class DALoadingView: UIView, CodeView {
     private lazy var loadingIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .large)  
         indicator.translatesAutoresizingMaskIntoConstraints = false
-        indicator.color = Colors.primary
+        indicator.color = .primary1
         indicator.hidesWhenStopped = true
         return indicator
     }()

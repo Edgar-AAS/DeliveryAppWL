@@ -21,7 +21,7 @@ class CategoryCell: UICollectionViewCell {
     )
         
     func selectedStyle() {
-        backgroundColor = Colors.primary
+        backgroundColor = .primary1
         categoryNameLabel.textColor = .white
     }
     

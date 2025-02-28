@@ -39,7 +39,7 @@ final class DAAlertView: UIView {
         let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = Colors.primary
+        imageView.tintColor = .primary1
         return imageView
     }()
 
@@ -71,7 +71,7 @@ final class DAAlertView: UIView {
         button.setTitle(buttonTitle, for: .normal)
         button.titleLabel?.font =  Fonts.medium(size: 15).weight
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = Colors.primary
+        button.backgroundColor = .primary1
         button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         return button

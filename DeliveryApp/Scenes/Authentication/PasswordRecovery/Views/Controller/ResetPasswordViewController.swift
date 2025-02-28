@@ -14,13 +14,3 @@ final class ResetPasswordViewController: UIViewController {
         super.viewDidLoad()
     }
 }
-
-extension ResetPasswordViewController: FeedBackTextFieldProtocol {
-    func displayError(validationModel: ValidationFieldModel) {
-        
-    }
-    
-    func clearError() {
-        
-    }
-}
