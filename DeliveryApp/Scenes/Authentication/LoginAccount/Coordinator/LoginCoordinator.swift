@@ -17,9 +17,9 @@ final class LoginCoordinator: Coordinator {
         }
         
         loginViewController.routeToMainFlow = { [weak self]  in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+            DispatchQueue.main.async {
                 self?.parentCoordinator?.showMainTabBarFlow()
-            })
+            }
         }
         
         navigationController.pushViewController(loginViewController, animated: true)

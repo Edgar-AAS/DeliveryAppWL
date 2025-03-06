@@ -87,9 +87,11 @@ final class LoginAccountTests: XCTestCase {
 
 extension LoginAccountTests {
     func makeSut(httpClientMock: HTTPClientProtocol = HTTPClientMock()) -> LoginAccount {
-        let sut = LoginAccount(httpClient: httpClientMock)
+        let sut = LoginAccount(httpClient: httpClientMock, keychainService: KeychainServiceDummy())
         sut.httpResource = { _ in
-            return ResourceModel(url: makeUrl(), method: .post(makeValidData()))
+            return ResourceModel(
+                url: makeUrl(),
+                method: .post(makeValidData()))
         }
         return sut
     }

@@ -1,19 +1,16 @@
 import Foundation
 @testable import DeliveryApp
 
-class ValidationSpy: Validation
-{
-    var validationModel: ValidationFieldModel?
+final class ValidationSpy: Validation {
+    var errorMessage: String?
     var data: [String: Any]?
     
-    func validate(data: [String : Any]?) -> ValidationFieldModel? {
+    func validate(data: [String : Any]?) -> String? {
         self.data = data
-        return validationModel
+        return errorMessage
     }
     
-    func simulateError(_ validationModel: ValidationFieldModel) {
-        self.validationModel = validationModel
+    func simulateError(errorMessage: String) {
+        self.errorMessage = errorMessage
     }
 }
-
-

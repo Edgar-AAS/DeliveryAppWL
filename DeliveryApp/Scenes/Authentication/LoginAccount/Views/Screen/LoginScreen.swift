@@ -127,11 +127,11 @@ final class LoginScreen: UIView {
         }
     }
         
-    func getUserLoginRequest() -> AuthRequest? {
+    func getUserLoginRequest() -> LoginAccountRequest? {
         if let email = emailTextField.text,
            let password = passwordTextField.text {
             
-            return AuthRequest(email: email, password: password)
+            return LoginAccountRequest(email: email, password: password)
         } else {
             return nil
         }

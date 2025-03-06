@@ -1,6 +1,6 @@
 import UIKit
 
-class ProductGridCell: UITableViewCell {
+final class ProductGridCell: UITableViewCell {
     static let reuseIdentifier = String(describing: ProductGridCell.self)
     private var products: [Product] = []
     private var currentCategoryId: Int?

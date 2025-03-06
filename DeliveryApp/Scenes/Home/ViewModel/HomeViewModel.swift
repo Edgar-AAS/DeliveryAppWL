@@ -1,10 +1,6 @@
 import Foundation
 
-
-enum HomeError: Error {
-    case noConnectivity
-}
-class HomeViewModel: HomeViewModelProtocol {
+final class HomeViewModel: HomeViewModelProtocol {
     var productsOnComplete: ((ProductDataSource) -> Void)?
     var categoriesOnComplete: (() -> Void)?
     
@@ -13,11 +9,11 @@ class HomeViewModel: HomeViewModelProtocol {
     private var products = [Product]()
     private var categories = [ProductCategory]()
     
-    private let fetchCategories: FetchProductCategoriesUseCase
-    private let fetchPaginatedProducts: FetchPaginatedProductsUseCase
+    private let fetchCategories: FetchFoodCategories
+    private let fetchPaginatedProducts: FetchProductsUseCase
     
-    init(fetchCategories: FetchProductCategoriesUseCase,
-         fetchPaginatedProducts: FetchPaginatedProductsUseCase) {
+    init(fetchCategories: FetchFoodCategories,
+         fetchPaginatedProducts: FetchProductsUseCase) {
         self.fetchCategories = fetchCategories
         self.fetchPaginatedProducts = fetchPaginatedProducts
     }

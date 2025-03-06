@@ -3,7 +3,8 @@ import Foundation
 final class LoginBuilder {
     static func build() -> LoginViewController {
         let httpClient: HTTPClientProtocol = HTTPClient()
-        let userAccountLogin = LoginAccount(httpClient: httpClient)
+        let keychainService: KeychainService = KeychainManager()
+        let userAccountLogin = LoginAccount(httpClient: httpClient, keychainService: keychainService)
         
         userAccountLogin.httpResource = { credential in
             return ResourceModel(
@@ -15,10 +16,12 @@ final class LoginBuilder {
                 ]
             )
         }
+        
+        let emailValidator = EmailValidator()
     
         let validatorComposite = ValidationComposite(validations: [
             RequiredFieldValidation(fieldName: "email", fieldLabel: "Email"),
-            EmailValidation(fieldName: "email", fieldLabel: "Email"),
+            EmailValidation(fieldName: "email", fieldLabel: "Email", emailValidator: emailValidator),
             RequiredFieldValidation(fieldName: "password", fieldLabel: "Senha"),
             PasswordValidation(fieldName: "password", fieldLabel: "Senha")
         ])

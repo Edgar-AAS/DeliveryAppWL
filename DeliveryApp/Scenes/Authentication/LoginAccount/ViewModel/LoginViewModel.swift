@@ -1,9 +1,9 @@
 import Foundation
 
-final class LoginViewModel: UserLoginHandler {
+final class LoginViewModel: LoginViewModelProtocol {
     //MARK: - Properties
     var loadingHandler: ((Bool) -> ())?
-    var onSuccess: (() -> Void)?
+    var loginSuccess: (() -> Void)?
     
     private let validatorComposite: Validation
     private let loginAccount: LoginAccountUseCase
@@ -17,7 +17,7 @@ final class LoginViewModel: UserLoginHandler {
     }
     
     //MARK: - login
-    func login(credential: AuthRequest) {
+    func login(credential: LoginAccountRequest) {
         if let message = validatorComposite.validate(data: credential.toJson()) {
             showAlert(title: Strings.error, message: message)
         } else {
@@ -27,7 +27,7 @@ final class LoginViewModel: UserLoginHandler {
                 switch result {
                 case .success(_):
                     self?.loadingHandler?(false)
-                    self?.onSuccess?()
+                    self?.loginSuccess?()
                 case .failure(let error):
                     self?.loadingHandler?(false)
                     self?.showAlert(title: Strings.error, message: error.customMessage)

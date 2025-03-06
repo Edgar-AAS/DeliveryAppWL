@@ -1,6 +1,6 @@
 import UIKit
 
-class CategoryCell: UICollectionViewCell {
+final class CategoryCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: CategoryCell.self)
     
     override init(frame: CGRect) {

@@ -23,7 +23,7 @@ final class HomeCoordinator: Coordinator {
     }
     
     func navigateToNetworkErrorPage() {
-        let networkErrorController = DANetworkErrorPage()
+        let networkErrorController = DANetworkErrorView()
         navigationController.present(networkErrorController, animated: true)
     }
     

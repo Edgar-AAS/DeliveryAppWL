@@ -1,6 +1,6 @@
 import UIKit
 
-class ResetPasswordScreen: UIView {
+final class ResetPasswordScreen: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()

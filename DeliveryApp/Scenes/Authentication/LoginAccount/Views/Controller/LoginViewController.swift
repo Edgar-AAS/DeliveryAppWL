@@ -2,7 +2,7 @@ import UIKit
 
 final class LoginViewController: UIViewController {
 //MARK: - Properties
-    private var viewModel: UserLoginHandler
+    private var viewModel: LoginViewModelProtocol
     
     var routeToRegister: (() -> Void)?
     var routeToMainFlow: (() -> Void)?
@@ -15,7 +15,7 @@ final class LoginViewController: UIViewController {
     }()
     
 //MARK: - Initializers
-    init(viewModel: UserLoginHandler) {
+    init(viewModel: LoginViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -41,7 +41,7 @@ final class LoginViewController: UIViewController {
     }
     
     private func configure() {
-        viewModel.onSuccess = { [weak self] in
+        viewModel.loginSuccess = { [weak self] in
             self?.routeToMainFlow?()
         }
         

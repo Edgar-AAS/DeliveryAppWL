@@ -1,20 +1,20 @@
 import Foundation
 @testable import DeliveryApp
 
-class EmailValidatorSpy: EmailValidation {
+final class EmailValidatorSpy: EmailValidatable {
     private(set)var isValid: Bool = true
     private(set)var email: String = ""
     
-    func isValid(email: String) -> Bool {
+    func isValid(_ email: String) -> Bool {
         self.email = email
         return isValid
     }
     
-    func completeWithValidEmail() {
-        isValid = true
+    func simuleInvalidEmail() {
+        isValid = false
     }
     
-    func simulateError() {
-        isValid = false
+    func simuleValidEmail() {
+        isValid = true
     }
 }

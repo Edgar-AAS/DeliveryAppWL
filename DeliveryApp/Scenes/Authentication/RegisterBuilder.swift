@@ -13,9 +13,11 @@ final class RegisterBuilder {
             )
         }
         
+        let emailValidator = EmailValidator()
+        
         let validatorComposite = ValidationComposite(validations: [
             RequiredFieldValidation(fieldName: "email", fieldLabel: "Email"),
-            EmailValidation(fieldName: "email", fieldLabel: "Email"),
+            EmailValidation(fieldName: "email", fieldLabel: "Email", emailValidator: emailValidator),
             RequiredFieldValidation(fieldName: "username", fieldLabel: "Nome de Usuário"),
             RequiredFieldValidation(fieldName: "password", fieldLabel: "Senha"),
             PasswordValidation(fieldName: "password", fieldLabel: "Senha"),

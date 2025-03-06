@@ -1,5 +1,6 @@
 import Foundation
 
+//MARK: - ViewModel
 protocol HomeViewModelProtocol {
     func loadInitialData()
     func switchCategory(to categoryId: Int)
@@ -14,14 +15,7 @@ protocol HomeViewModelDelegate: AnyObject {
     func didLoseNetworkConnection()
 }
 
-protocol FetchProductCategoriesUseCase {
-    func fetch(completion: @escaping (Result<[ProductCategory], RequestError>) -> Void)
-}
-
-protocol FetchPaginatedProductsUseCase {
-    func fetch(for categoryId: Int, resetPagination: Bool, completion: @escaping (Result<[Product], RequestError>) -> Void)
-}
-
+//MARK: - Cells
 protocol ProductCategoryCellDelegate: AnyObject {
     func productCategoryCell(_ cell: ProductCategoryCell, didTapCategoryWithId categoryId: Int)
 }
@@ -29,4 +23,8 @@ protocol ProductCategoryCellDelegate: AnyObject {
 protocol ProductGridCellDelegate: AnyObject {
     func productGridCell(_ cell: ProductGridCell, didTapProductWithId productId: Int)
     func productGridCell(_ cell: ProductGridCell, shouldFetchMoreProductsForCategory categoryId: Int)
+}
+
+protocol SeeAllCategoriesCellDelegate: AnyObject {
+    func seeAllButtonDidTapped(_ cell: SeeAllCategoriesCell)
 }

@@ -1,6 +1,6 @@
 import UIKit
 
-class ProductCategoryCell: UITableViewCell {
+final class ProductCategoryCell: UITableViewCell {
     static let reuseIdentifier = String(describing: ProductCategoryCell.self)
     private var categories: [CategoryCellViewData] = []
     private var selectedIndex: IndexPath?

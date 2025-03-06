@@ -1,12 +1,6 @@
 import UIKit
 
-
-
-protocol SeeAllCategoriesCellDelegate: AnyObject {
-    func seeAllButtonDidTapped(_ cell: SeeAllCategoriesCell)
-}
-
-class SeeAllCategoriesCell: UITableViewCell {
+final class SeeAllCategoriesCell: UITableViewCell {
     static let reuseIdentifier = String(describing: SeeAllCategoriesCell.self)
     
     weak var delegate: SeeAllCategoriesCellDelegate?
