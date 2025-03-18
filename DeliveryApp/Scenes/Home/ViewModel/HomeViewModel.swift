@@ -6,8 +6,8 @@ final class HomeViewModel: HomeViewModelProtocol {
     
     weak var delegate: HomeViewModelDelegate?
 
-    private var products = [Product]()
-    private var categories = [ProductCategory]()
+    private var products = [ProductDTO]()
+    private var categories = [CategoryDTO]()
     
     private let fetchCategories: FetchFoodCategories
     private let fetchPaginatedProducts: FetchProductsUseCase
@@ -35,10 +35,8 @@ final class HomeViewModel: HomeViewModelProtocol {
         }
     }
     
-    func getCategories() -> [CategoryCellViewData] {
-        return categories.map { category in
-            return category.mapToCategoryViewData()
-        }
+    func getCategories() -> [HomeViewData.CategoryCell] {
+        return HomeMappers.mapToCategoryViewData(from: categories)
     }
     
     func loadMoreProducts(for categoryId: Int) {
@@ -49,7 +47,7 @@ final class HomeViewModel: HomeViewModelProtocol {
         loadProducts(by: categoryId, resetPagination: true)
     }
     
-    private func loadCategories(completion: @escaping ([ProductCategory]) -> Void) {
+    private func loadCategories(completion: @escaping ([CategoryDTO]) -> Void) {
         fetchCategories.fetch { result in
             switch result {
             case .success(let activeCategories):

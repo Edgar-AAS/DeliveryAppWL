@@ -127,7 +127,7 @@ extension ProductDetailsViewController: ProductDetailsViewModelDelegate {
         customView?.reloadData()
     }
     
-    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateHeaderWith viewData: ProductHeaderViewData) {
+    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateHeaderWith viewData: ProductDetailViewData.ProductHeaderViewData) {
         customView?.setupHeader(with: viewData, delegate: self)
     }
 }
@@ -141,7 +141,7 @@ extension ProductDetailsViewController: ProductItemCellDelegate {
 
 //MARK: - Cell Factories
 extension ProductDetailsViewController {
-    func makeProductItemCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, viewData: QuantitativeItemViewData) -> UITableViewCell {
+    func makeProductItemCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, viewData: ProductDetailViewData.QuantitativeItemViewData) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ProductItemCell.reuseIdentifier, for: indexPath) as? ProductItemCell
         
         if let stepperDto = viewModel.getStepperDto(in: indexPath) {
@@ -152,7 +152,7 @@ extension ProductDetailsViewController {
         return cell ?? UITableViewCell()
     }
     
-    func makeSideItemCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, viewData: SideItemCellViewData) -> UITableViewCell {
+    func makeSideItemCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, viewData: ProductDetailViewData.SideItemCellViewData) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SideItemCell.reuseIdentifier, for: indexPath) as? SideItemCell
         cell?.configure(with: viewData)
         return cell ?? UITableViewCell()

@@ -1,7 +1,7 @@
 import Foundation
 
 protocol FetchFoodCategoriesUseCase {
-    func fetch(completion: @escaping (Result<[ProductCategory], RequestError>) -> Void)
+    func fetch(completion: @escaping (Result<[CategoryDTO], RequestError>) -> Void)
 }
 
 final class FetchFoodCategories: FetchFoodCategoriesUseCase {
@@ -13,13 +13,12 @@ final class FetchFoodCategories: FetchFoodCategoriesUseCase {
         self.httpResource = resource
     }
         
-    func fetch(completion: @escaping (Result<[ProductCategory], RequestError>) -> Void) {
+    func fetch(completion: @escaping (Result<[CategoryDTO], RequestError>) -> Void) {
         httpClient.load(httpResource) { result in
             switch result {
             case .success(let data):
-                if let model: [ProductCategory] = data?.toModel() {
-                    let activeCategories = model.filter { $0.isActive }
-                    completion(.success(activeCategories))
+                if let categories: [CategoryDTO] = data?.toModel() {
+                    completion(.success(categories))
                 } else {
                     completion(.failure(.unknown))
                 }

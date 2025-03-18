@@ -2,8 +2,8 @@ import Foundation
 @testable import DeliveryApp
 
 final class ValidationSpy: Validation {
-    var errorMessage: String?
-    var data: [String: Any]?
+    private(set) var errorMessage: String?
+    private(set) var data: [String: Any]?
     
     func validate(data: [String : Any]?) -> String? {
         self.data = data

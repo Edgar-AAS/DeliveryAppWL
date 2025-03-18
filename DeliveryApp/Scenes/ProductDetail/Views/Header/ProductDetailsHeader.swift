@@ -201,7 +201,7 @@ final class ProductDetailsHeader: UIView {
         basePriceLabel.attributedText = attributedText
     }
     
-    func configure(with viewData: ProductHeaderViewData, delegate: ProductDetailsHeaderDelegateProtocol) {
+    func configure(with viewData: ProductDetailViewData.ProductHeaderViewData, delegate: ProductDetailsHeaderDelegateProtocol) {
         self.delegate = delegate
         setupBasePriceTextLabel(prefix: "A partir de: ", price: viewData.basePrice)
         productNameLabel.text = viewData.name

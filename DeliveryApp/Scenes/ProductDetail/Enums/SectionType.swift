@@ -1,6 +1,6 @@
 import Foundation
 
 enum SectionType {
-    case sideItem(SideItemCellViewData)
-    case quantitativeItem(QuantitativeItemViewData)
+    case sideItem(ProductDetailViewData.SideItemCellViewData)
+    case quantitativeItem(ProductDetailViewData.QuantitativeItemViewData)
 }

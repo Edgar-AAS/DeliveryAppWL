@@ -9,7 +9,7 @@ final class HomeBuilder {
         let accessToken = keychainService.retrieve(key: Strings.Keychain.Keys.accessToken)
         
         let categoriesResource = ResourceModel(
-            url: URL(string: "http://localhost:5177/v1/product/categories")!,
+            url: URL(string: "http://localhost:5177/api/categories")!,
             headers: [
                 "Content-Type": "application/json",
                 "Authorization": "Bearer \(accessToken ?? "")"
@@ -20,7 +20,7 @@ final class HomeBuilder {
         
         fetchPaginatedProducts.httpProductListResource = { resource in
             return ResourceModel(
-                url: URL(string: "http://localhost:5177/v1/product/list/\(resource.categoryId)")!,
+                url: URL(string: "http://localhost:5177/v1/products/\(resource.categoryId)")!,
                 method: .get([
                     URLQueryItem(name: "page", value: "\(resource.currentPage)"),
                     URLQueryItem(name: "pageSize", value: "\(resource.pageSize)")

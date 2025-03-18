@@ -2,7 +2,7 @@ import UIKit
 
 final class ProductGridCell: UITableViewCell {
     static let reuseIdentifier = String(describing: ProductGridCell.self)
-    private var products: [Product] = []
+    private var products: [ProductDTO] = []
     private var currentCategoryId: Int?
     private var debounceTimer: Timer?
     
@@ -72,8 +72,7 @@ extension ProductGridCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath) as? ProductCell
-        let product = products[indexPath.item]
-        let viewData = product.mapToProductCellViewData()
+        let viewData = HomeMappers.mapToProductCellViewData(from: products[indexPath.item])
         cell?.configure(with: viewData)
         return cell ?? UICollectionViewCell()
     }

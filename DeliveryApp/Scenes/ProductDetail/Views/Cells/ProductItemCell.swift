@@ -68,7 +68,7 @@ class ProductItemCell: UITableViewCell {
         return stepper
     }()
     
-    func configure(with viewData: QuantitativeItemViewData, stepper: StepperModel, indexPath: IndexPath) {
+    func configure(with viewData: ProductDetailViewData.QuantitativeItemViewData, stepper: StepperModel, indexPath: IndexPath) {
         self.indexPath = indexPath
         
         productNameLabel.text = viewData.name

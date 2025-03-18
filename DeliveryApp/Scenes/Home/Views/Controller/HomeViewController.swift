@@ -86,7 +86,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 extension HomeViewController {
     func makeSeeAllCategoriesCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SeeAllCategoriesCell.reuseIdentifier, for: indexPath) as? SeeAllCategoriesCell
-        cell?.delegate = self
         return cell ?? UITableViewCell()
     }
     
@@ -125,11 +124,5 @@ extension HomeViewController: ProductGridCellDelegate {
 extension HomeViewController: HomeViewModelDelegate {
     func didLoseNetworkConnection() {
         routeToNetworkErrorPage?()
-    }
-}
-
-extension HomeViewController: SeeAllCategoriesCellDelegate {
-    func seeAllButtonDidTapped(_ cell: SeeAllCategoriesCell) {
-        
     }
 }

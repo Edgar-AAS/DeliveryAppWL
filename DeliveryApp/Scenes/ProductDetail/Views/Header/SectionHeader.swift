@@ -52,7 +52,7 @@ final class SectionHeaderCell: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with viewData: SectionHeaderViewData) {
+    func configure(with viewData: ProductDetailViewData.SectionHeaderViewData) {
         sectionNameLabel.text = viewData.name
         optionsLimitLabel.text = viewData.sectionOptionsLimit
         requiredLabel.text = viewData.requiredText

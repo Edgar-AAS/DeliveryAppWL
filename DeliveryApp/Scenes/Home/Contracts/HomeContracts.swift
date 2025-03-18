@@ -5,7 +5,7 @@ protocol HomeViewModelProtocol {
     func loadInitialData()
     func switchCategory(to categoryId: Int)
     func loadMoreProducts(for categoryId: Int)
-    func getCategories() -> [CategoryCellViewData]
+    func getCategories() -> [HomeViewData.CategoryCell]
     var numberOfRows: Int { get }
     var categoriesOnComplete: (() -> Void)? { get set }
     var productsOnComplete: ((ProductDataSource) -> Void)? { get set }
@@ -23,8 +23,4 @@ protocol ProductCategoryCellDelegate: AnyObject {
 protocol ProductGridCellDelegate: AnyObject {
     func productGridCell(_ cell: ProductGridCell, didTapProductWithId productId: Int)
     func productGridCell(_ cell: ProductGridCell, shouldFetchMoreProductsForCategory categoryId: Int)
-}
-
-protocol SeeAllCategoriesCellDelegate: AnyObject {
-    func seeAllButtonDidTapped(_ cell: SeeAllCategoriesCell)
 }

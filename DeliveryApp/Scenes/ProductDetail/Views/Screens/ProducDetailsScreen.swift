@@ -17,7 +17,7 @@ final class ProducDetailsScreen: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupHeader(with viewData: ProductHeaderViewData, delegate: ProductDetailsHeaderDelegateProtocol) {
+    func setupHeader(with viewData: ProductDetailViewData.ProductHeaderViewData, delegate: ProductDetailsHeaderDelegateProtocol) {
         let headerView = ProductDetailsHeader(frame: .init(x: .zero, y: .zero, width: frame.width, height: 540))
         headerView.configure(with: viewData, delegate: delegate)
         tableView.tableHeaderView = headerView

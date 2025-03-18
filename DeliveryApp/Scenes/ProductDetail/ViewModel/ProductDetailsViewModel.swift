@@ -4,7 +4,7 @@ final class ProductDetailsViewModel: ProductDetailsViewModelProtocol {
     private var optionsReenabled: [Int: Bool] = [:]
     private var lastSelectedIndexPath: [IndexPath : Bool] = [:]
     private var isSectionOptionsEnabled: [Int: Bool] = [:]
-    private var activeSections: [Section]?
+    private var sections: [SectionDTO]?
     private var sideItems: [IndexPath: SideItem] = [:]
     
     private var fromValue: Double = .zero
@@ -28,6 +28,7 @@ extension ProductDetailsViewModel {
             
             switch result {
             case .success(let response):
+                print(response)
                 configure(with: response)
             case .failure(let error):
                 print(error)
@@ -35,9 +36,9 @@ extension ProductDetailsViewModel {
         }
     }
     
-    private func configure(with response: Product) {
+    private func configure(with response: ProductDTO) {
         updateHeaderView(with: response)
-        configureActiveSections(sections: response.sections)
+        configureSections(sections: response.sections)
         delegate?.productDetailsViewModelDidUpdateUI(self)
         setupInitialStepperValue()
         updateOrderPrice()
@@ -53,10 +54,8 @@ extension ProductDetailsViewModel {
         delegate?.productDetailsViewModel(self, didChangeBottomViewStepperValue: stepper)
     }
     
-    private func configureActiveSections(sections: [Section]) {
-        activeSections = sections
-            .filter { $0.isActive }
-            .sorted { $0.selectionOrder < $1.selectionOrder }
+    private func configureSections(sections: [SectionDTO]) {
+        self.sections = sections.sorted { $0.selectionOrder < $1.selectionOrder }
     }
 }
 
@@ -97,7 +96,7 @@ extension ProductDetailsViewModel {
     private func calculateOrderPrice() -> Double {
         var total: Double = .zero
         
-        guard let sections = activeSections else { return .zero }
+        guard let sections = sections else { return .zero }
         
         let regularItemsTotal = calculateRegularItems(sections: sections)
         let sideItemsTotal = calculateSideItems()
@@ -111,7 +110,7 @@ extension ProductDetailsViewModel {
             .reduce(.zero, { $0 + $1.value.price })
     }
     
-    private func calculateRegularItems(sections: [Section]) -> Double {
+    private func calculateRegularItems(sections: [SectionDTO]) -> Double {
         return sections
             .filter( { !$0.isRemovable && !$0.isSideItem })
             .flatMap({ $0.items })
@@ -122,38 +121,37 @@ extension ProductDetailsViewModel {
 // MARK: - Section DataSource
 extension ProductDetailsViewModel {
     func getItemInSection(_ indexPath: IndexPath) -> SectionType? {
-        guard let section = activeSections?[indexPath.section] else  { return nil }
+        guard let section = sections?[indexPath.section] else  { return nil }
         
         let item = section.items[indexPath.row]
         let isSelected = sideItems[indexPath]?.isSelected ?? false
         
         if section.isSideItem {
-            sideItems[indexPath] = item.mapToSideItem(isSelected: isSelected)
-        
+            sideItems[indexPath] = ProductDetailMapper.mapToSideItem(item: item, isSelected: isSelected)
             guard let sideItem = sideItems[indexPath] else { return nil }
-            return .sideItem(SideItemCellViewData(sideItem: sideItem))
+            return .sideItem(ProductDetailViewData.SideItemCellViewData(name: sideItem.name, price: "\(sideItem.price)", image: sideItem.imageUrl, isSelected: isSelected))
         }
         
-        return .quantitativeItem(item.mapToQuantitativeItem(isRemovable: section.isRemovable))
+        return .quantitativeItem(ProductDetailMapper.mapToQuantitativeItem(item: item, isRemovable: section.isRemovable))        
     }
 
     func getNumberOfSections() -> Int {
-        return activeSections?.count ?? .zero
+        return sections?.count ?? .zero
     }
     
     func getNumberOfItemsBySection(_ section: Int) -> Int {
-        return activeSections?[section].items.count ?? .zero
+        return sections?[section].items.count ?? .zero
     }
     
-    func getSectionViewData(to section: Int) -> SectionHeaderViewData? {
-        guard let section = activeSections?[section] else {
+    func getSectionViewData(to section: Int) -> ProductDetailViewData.SectionHeaderViewData? {
+        guard let section = sections?[section] else {
             return nil
         }
         
-        return SectionHeaderViewData(
+        return ProductDetailViewData.SectionHeaderViewData(
             name: section.name,
-            limitOptions: section.limitOptions,
-            isRequired: section.isRequired
+            isRequired: section.isRequired,
+            limitOptions: section.limitOptions
         )
     }
 }
@@ -162,7 +160,7 @@ extension ProductDetailsViewModel {
 //MARK: - SideItem Handle
 extension ProductDetailsViewModel {
     func updateSideItemState(at indexPath: IndexPath) {
-        guard let section = activeSections?[indexPath.section] else  { return }
+        guard let section = sections?[indexPath.section] else  { return }
         
         if section.isSideItem {
             switchSideItemState(indexPath: indexPath)
@@ -198,7 +196,7 @@ extension ProductDetailsViewModel {
 //MARK: - ItemStepper Handle
 extension ProductDetailsViewModel {
     func getStepperDto(in indexPath: IndexPath) -> StepperModel? {
-        guard let section = activeSections?[indexPath.section] else { return nil }
+        guard let section = sections?[indexPath.section] else { return nil }
         
         let isEnabled = isSectionOptionsEnabled[indexPath.section] ?? true
         let item = section.items[indexPath.row]
@@ -221,14 +219,14 @@ extension ProductDetailsViewModel {
     }
     
     private func incrementStepperValue(at indexPath: IndexPath) {
-        guard var section = activeSections?[indexPath.section] else { return }
+        guard var section = sections?[indexPath.section] else { return }
         let item = section.items[indexPath.row]
         
         let currentValue = item.quantity
         
         if currentValue < section.limitOptions {
             section.items[indexPath.row].quantity += 1
-            activeSections?[indexPath.section] = section
+            sections?[indexPath.section] = section
             
             if isLimitExceeded(in: indexPath) {
                 isSectionOptionsEnabled[indexPath.section] = false
@@ -240,14 +238,14 @@ extension ProductDetailsViewModel {
     }
     
     private func decrementStepperValue(at indexPath: IndexPath) {
-        guard var section = activeSections?[indexPath.section] else { return }
+        guard var section = sections?[indexPath.section] else { return }
         var item = section.items[indexPath.row]
         let currentValue = item.quantity
         
         if currentValue > 0 {
             item.quantity -= 1
             section.items[indexPath.row] = item
-            activeSections?[indexPath.section] = section
+            sections?[indexPath.section] = section
             
             let isBackEnableOptions = optionsReenabled[indexPath.section] ?? false
             
@@ -263,7 +261,7 @@ extension ProductDetailsViewModel {
     
     private func isLimitExceeded(in indexPath: IndexPath) -> Bool {
         let section = indexPath.section
-        if let activeSection = activeSections?[section] {
+        if let activeSection = sections?[section] {
             let total = activeSection.items.map { $0.quantity }.reduce(0, +)
             
             if total >= activeSection.limitOptions {
@@ -274,15 +272,15 @@ extension ProductDetailsViewModel {
         return false
     }
     
-    private func updateHeader(data: Product) {
-        let viewData = data.mapToProductHeaderViewData()
+    private func updateHeader(data: ProductDTO) {
+        let viewData = ProductDetailMapper.mapToProductHeaderViewData(data)
         delegate?.productDetailsViewModel(self, didUpdateHeaderWith: viewData)
     }
 }
 
 //MARK: - HeaderView DataSource
 extension ProductDetailsViewModel {
-    private func updateHeaderView(with data: Product) {
+    private func updateHeaderView(with data: ProductDTO) {
         updateHeader(data: data)
     }
 }
@@ -290,13 +288,13 @@ extension ProductDetailsViewModel {
 //MARK: - Required Options Status
 extension ProductDetailsViewModel {
     private func updateRequiredOptionsStatus() {
-        if let sections = activeSections {
+        if let sections = sections {
             let status = checkRequiredOptionsStatus(at: sections)
             delegate?.productDetailsViewModel(self, didUpdateRequiredOptionsStatus: status)
         }
     }
     
-    private func checkRequiredOptionsStatus(at sections: [Section]) -> OptionsStatusType {
+    private func checkRequiredOptionsStatus(at sections: [SectionDTO]) -> OptionsStatusType {
         let requiredSideItemSections = sections.filter { $0.isRequired && $0.isSideItem }
             .filter { section in
                 section.items.contains { item in
@@ -318,7 +316,7 @@ extension ProductDetailsViewModel {
     }
     
     
-    private func ifRequiredOptionsAreSelected(sections: [Section], _ requiredSideItemSections: Int, _ requiredAdditionalItemsSections: Int) -> Bool {
+    private func ifRequiredOptionsAreSelected(sections: [SectionDTO], _ requiredSideItemSections: Int, _ requiredAdditionalItemsSections: Int) -> Bool {
         let requiredSideItemsSectionsCount = sections.filter { $0.isRequired && $0.isSideItem }.count
         let requiredAdditionalItemsSectionsCount = sections.filter { $0.isRequired && !$0.isSideItem }.count
         

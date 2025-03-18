@@ -3,8 +3,6 @@ import UIKit
 final class SeeAllCategoriesCell: UITableViewCell {
     static let reuseIdentifier = String(describing: SeeAllCategoriesCell.self)
     
-    weak var delegate: SeeAllCategoriesCellDelegate?
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
@@ -27,10 +25,7 @@ final class SeeAllCategoriesCell: UITableViewCell {
         title: "See All",
         titleColor: .primary1,
         font:  Fonts.bold(size: 14).weight,
-        action: { [weak self] in
-            guard let self else  { return }
-            delegate?.seeAllButtonDidTapped(self)
-        }
+        action: {}
     )
 
     private lazy var categoryLabelAndButtonStack = makeStackView(

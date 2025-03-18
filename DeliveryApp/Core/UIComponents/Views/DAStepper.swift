@@ -24,7 +24,7 @@ final class DAStepper: UIView {
         }
     }
     
-    private var stepperSize: StepperSize
+    private let stepperSize: StepperSize
     
     init(size: StepperSize = .medium) {
         self.stepperSize = size

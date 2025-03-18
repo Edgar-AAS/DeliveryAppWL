@@ -1,17 +1,18 @@
 import Foundation
 
 protocol FetchProductsUseCase {
-    func fetch(for categoryId: Int, resetPagination: Bool, completion: @escaping (Result<[Product], RequestError>) -> Void)
+    func fetch(for categoryId: Int, resetPagination: Bool, completion: @escaping (Result<[ProductDTO], RequestError>) -> Void)
 }
 
 final class FetchProducts: FetchProductsUseCase {
     private let httpClient: HTTPClientProtocol
-    private var productsDataSource = [Product]()
     private var isFetching = false
     
     private var currentPage: Int = 0
     private var totalProducts: Int = 0
     private let pageSize: Int = 10
+    
+    private var productsDataSource = [ProductDTO]()
     
     var httpProductListResource: ((ProductPagination) -> ResourceModel)?
     
@@ -21,8 +22,7 @@ final class FetchProducts: FetchProductsUseCase {
 
     func fetch(for categoryId: Int,
                resetPagination: Bool,
-               completion: @escaping (Result<[Product], RequestError>) -> Void)
-    {
+               completion: @escaping (Result<[ProductDTO], RequestError>) -> Void) {
         
         guard !isFetching else {
             return
@@ -42,7 +42,7 @@ final class FetchProducts: FetchProductsUseCase {
             .init(categoryId: categoryId,
                   pageSize: pageSize,
                   currentPage: currentPage)
-        ) else { 
+        ) else {
             completion(.failure(.badRequest))
             return
         }
@@ -56,7 +56,7 @@ final class FetchProducts: FetchProductsUseCase {
             case .failure(let httpError):
                 completion(.failure(httpError))
             case .success(let data):
-                guard let productResponse: ProductResponse = data?.toModel() else {
+                guard let productResponse: ProductPaginatedResponseDTO = data?.toModel() else {
                     completion(.failure(.unknown))
                     return
                 }
