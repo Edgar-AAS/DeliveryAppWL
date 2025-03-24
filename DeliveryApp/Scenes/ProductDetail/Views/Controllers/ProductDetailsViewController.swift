@@ -152,7 +152,7 @@ extension ProductDetailsViewController {
         return cell ?? UITableViewCell()
     }
     
-    func makeSideItemCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, viewData: ProductDetailViewData.SideItemCellViewData) -> UITableViewCell {
+    func makeSideItemCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, viewData: ProductDetailViewData.SelectableItemViewData) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SideItemCell.reuseIdentifier, for: indexPath) as? SideItemCell
         cell?.configure(with: viewData)
         return cell ?? UITableViewCell()

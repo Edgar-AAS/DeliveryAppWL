@@ -11,6 +11,13 @@ struct ProductDetailViewData {
         let images: [ProductImageDTO]
     }
     
+    struct SelectableItemViewData {
+        let name: String
+        let price: String
+        let image: String?
+        let isSelected: Bool
+    }
+    
     struct QuantitativeItemViewData {
         let name: String
         let price: String
@@ -30,13 +37,6 @@ struct ProductDetailViewData {
         var sectionOptionsLimit: String {
             "Escolha até \(limitOptions) opções."
         }
-    }
-
-    struct SideItemCellViewData {
-        let name: String
-        let price: String
-        let image: String?
-        let isSelected: Bool
     }
 }
 

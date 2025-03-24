@@ -8,12 +8,9 @@ final class LoginBuilder {
         
         userAccountLogin.httpResource = { credential in
             return ResourceModel(
-                url: URL(string: "http://localhost:5177/v1/account/login")!,
+                url: URL(string: "http://localhost:5177/api/account/login")!,
                 method: .post(credential.toData()),
-                headers: [
-                    "Content-Type": "application/json",
-            
-                ]
+                headers: ["Content-Type": "application/json"]
             )
         }
         

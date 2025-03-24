@@ -5,7 +5,9 @@ final class ProductDetailsViewModel: ProductDetailsViewModelProtocol {
     private var lastSelectedIndexPath: [IndexPath : Bool] = [:]
     private var isSectionOptionsEnabled: [Int: Bool] = [:]
     private var sections: [SectionDTO]?
-    private var sideItems: [IndexPath: SideItem] = [:]
+    
+    private var quantitativeItems: [IndexPath: QuantitativeItem] = [:]
+    private var selectableItems: [IndexPath: SelectableItem] = [:]
     
     private var fromValue: Double = .zero
     private var currentStepperValue = 1
@@ -105,7 +107,7 @@ extension ProductDetailsViewModel {
     }
     
     private func calculateSideItems() -> Double {
-        return sideItems
+        return selectableItems
             .filter({ $0.value.isSelected })
             .reduce(.zero, { $0 + $1.value.price })
     }
@@ -124,15 +126,48 @@ extension ProductDetailsViewModel {
         guard let section = sections?[indexPath.section] else  { return nil }
         
         let item = section.items[indexPath.row]
-        let isSelected = sideItems[indexPath]?.isSelected ?? false
+        
+        let isSelected = selectableItems[indexPath]?.isSelected ?? false
         
         if section.isSideItem {
-            sideItems[indexPath] = ProductDetailMapper.mapToSideItem(item: item, isSelected: isSelected)
-            guard let sideItem = sideItems[indexPath] else { return nil }
-            return .sideItem(ProductDetailViewData.SideItemCellViewData(name: sideItem.name, price: "\(sideItem.price)", image: sideItem.imageUrl, isSelected: isSelected))
+            let selectableItem = SelectableItem(
+                id: item.id,
+                name: item.name,
+                price: item.price,
+                imageUrl: item.imageUrl,
+                isSelected: isSelected)
+            
+            selectableItems[indexPath] = selectableItem
+            
+            guard let selectableSafeItem = selectableItems[indexPath] else { return nil }
+            
+            let selectableItemViewData = ProductDetailViewData.SelectableItemViewData(
+                name: selectableSafeItem.name,
+                price: selectableSafeItem.price.format(with: .currency),
+                image: selectableSafeItem.imageUrl,
+                isSelected: selectableSafeItem.isSelected
+            )
+            
+            return .sideItem(selectableItemViewData)
         }
         
-        return .quantitativeItem(ProductDetailMapper.mapToQuantitativeItem(item: item, isRemovable: section.isRemovable))        
+        let quantitativeItem = QuantitativeItem(
+            name: item.name,
+            price: item.price,
+            imageUrl: item.imageUrl,
+            quantity: quantitativeItems[indexPath]?.quantity ?? .zero)
+        
+        quantitativeItems[indexPath] = quantitativeItem
+        
+        guard let quantitativeSafeItem = quantitativeItems[indexPath] else { return nil }
+        
+        let quantitativeItemViewData = ProductDetailViewData.QuantitativeItemViewData(
+            name: quantitativeSafeItem.name,
+            price: quantitativeSafeItem.price.format(with: .currency),
+            image: quantitativeSafeItem.imageUrl,
+            isRemovable: section.isRemovable)
+
+        return .quantitativeItem(quantitativeItemViewData)
     }
 
     func getNumberOfSections() -> Int {
@@ -170,16 +205,16 @@ extension ProductDetailsViewModel {
     private func switchSideItemState(indexPath: IndexPath) {
         delegate?.productDetailsViewModel(self, shouldEnableUserInteraction: false)
         
-        let isSelected = sideItems[indexPath]?.isSelected ?? false
+        let isSelected = selectableItems[indexPath]?.isSelected ?? false
         
         if let lastIndex = lastSelectedIndexPath.first(where: { $0.key.section == indexPath.section }) {
-            sideItems[lastIndex.key]?.isSelected = false
+            selectableItems[lastIndex.key]?.isSelected = false
             lastSelectedIndexPath.removeValue(forKey: lastIndex.key)
         }
         
-        sideItems[indexPath]?.isSelected = !isSelected
+        selectableItems[indexPath]?.isSelected = !isSelected
         
-        if sideItems[indexPath]?.isSelected == true {
+        if selectableItems[indexPath]?.isSelected == true {
             lastSelectedIndexPath[indexPath] = true
         }
         
@@ -298,7 +333,7 @@ extension ProductDetailsViewModel {
         let requiredSideItemSections = sections.filter { $0.isRequired && $0.isSideItem }
             .filter { section in
                 section.items.contains { item in
-                    sideItems.values.contains { $0.id == item.id && $0.isSelected }
+                    selectableItems.values.contains { $0.id == item.id && $0.isSelected }
                 }
             }
             .count

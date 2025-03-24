@@ -20,7 +20,7 @@ final class HomeBuilder {
         
         fetchPaginatedProducts.httpProductListResource = { resource in
             return ResourceModel(
-                url: URL(string: "http://localhost:5177/v1/products/\(resource.categoryId)")!,
+                url: URL(string: "http://localhost:5177/api/products/\(resource.categoryId)")!,
                 method: .get([
                     URLQueryItem(name: "page", value: "\(resource.currentPage)"),
                     URLQueryItem(name: "pageSize", value: "\(resource.pageSize)")

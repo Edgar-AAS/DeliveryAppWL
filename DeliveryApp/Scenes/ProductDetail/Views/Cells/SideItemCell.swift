@@ -63,7 +63,7 @@ class SideItemCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with viewData: ProductDetailViewData.SideItemCellViewData) {
+    func configure(with viewData: ProductDetailViewData.SelectableItemViewData) {
         radioButton.isSelected = viewData.isSelected
         productNameLabel.text = viewData.name
         productPriceLabel.text = viewData.price

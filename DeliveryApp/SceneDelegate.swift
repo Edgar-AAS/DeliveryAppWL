@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         navigationController.setNavigationBarHidden(true, animated: false)
         
         let coordinator = MainCoordinator(navigationController: navigationController)
-        appWindow.rootViewController = CartViewController()
+        appWindow.rootViewController = coordinator.navigationController
         appWindow.makeKeyAndVisible()
         coordinator.start()
         window = appWindow
