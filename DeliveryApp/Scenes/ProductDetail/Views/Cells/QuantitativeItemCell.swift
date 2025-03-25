@@ -1,7 +1,7 @@
 import UIKit
 
-class ProductItemCell: UITableViewCell {
-    static let reuseIdentifier = String(describing: ProductItemCell.self)
+class QuantitativeItemCell: UITableViewCell {
+    static let reuseIdentifier = String(describing: QuantitativeItemCell.self)
     var indexPath: IndexPath?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -68,18 +68,25 @@ class ProductItemCell: UITableViewCell {
         return stepper
     }()
     
-    func configure(with viewData: ProductDetailViewData.QuantitativeItemViewData, stepper: StepperModel, indexPath: IndexPath) {
+    func configure(with viewData: ProductDetailViewData.QuantitativeItemViewData, indexPath: IndexPath) {
         self.indexPath = indexPath
+        
+        let stepperModel = viewData.stepperModel
         
         productNameLabel.text = viewData.name
         productPriceLabel.text = viewData.price
         productImageView.sd_setImage(with: URL(string: viewData.image ?? ""))
-        plusButton.isEnabled = stepper.isEnabled
-        customStepper.isHidden = stepper.currentValue == .zero
         
-        customStepper.configure(with: stepper)
-            
-        if viewData.isRemovable {
+        plusButton.isEnabled = stepperModel.isEnabled
+        customStepper.isHidden = stepperModel.currentValue == .zero
+         
+        customStepper.configure(with: stepperModel)
+        
+        hidePriceIfItemIsRemovable(viewData.isRemovable)
+    }
+    
+    private func hidePriceIfItemIsRemovable(_ isRemovable: Bool) {
+        if isRemovable {
             productPriceLabel.isHidden = true
             productPriceLabelBottomConstraint?.isActive = false
             productNameLabelBottomConstraint?.isActive = true
@@ -91,14 +98,14 @@ class ProductItemCell: UITableViewCell {
     }
 }
 
-extension ProductItemCell: CustomStepperDelegate {
+extension QuantitativeItemCell: CustomStepperDelegate {
     func customStepper(_ stepper: DAStepper, stepperDidTapped action: StepperActionType) {
         guard let indexPath = indexPath else { return }
         delegate?.productItemCell(self, didTapStepperWithAction: action, at: indexPath)
     }
 }
 
-extension ProductItemCell: CodeView {
+extension QuantitativeItemCell: CodeView {
     func buildViewHierarchy() {
         contentView.addSubview(productNameLabel)
         contentView.addSubview(productImageView)

@@ -1,6 +1,6 @@
 import Foundation
 
-struct ValueAnimateInfo {
+struct ProductAAmountModel {
     let fromValue: Double
     let toValue: Double
 }

@@ -1,6 +1,6 @@
 import UIKit
 
-final class ProductQuantityFooterView: UIView {
+final class ProductPriceFooter: UIView {
     private var displayLink: CADisplayLink?
     private var animationStartValue: Double = 0
     private var animationEndValue: Double = 0
@@ -51,7 +51,7 @@ final class ProductQuantityFooterView: UIView {
         setupShadow()
     }
     
-    func configureTotalAmount(animateInfo: ValueAnimateInfo) {
+    func configureTotalAmount(animateInfo: ProductAAmountModel) {
         animateValueIncrement(fromValue: animateInfo.fromValue, toValue: animateInfo.toValue)
     }
     
@@ -66,13 +66,13 @@ final class ProductQuantityFooterView: UIView {
     }
 }
 
-extension ProductQuantityFooterView: CustomStepperDelegate {
+extension ProductPriceFooter: CustomStepperDelegate {
     func customStepper(_ stepper: DAStepper, stepperDidTapped action: StepperActionType) {
         delegate?.productQuantityFooterView(self, didTapStepperWithAction: action)
     }
 }
 
-extension ProductQuantityFooterView {
+extension ProductPriceFooter {
     private func animateValueIncrement(fromValue: Double, toValue: Double) {
         animationStartValue = fromValue
         animationEndValue = toValue
@@ -114,7 +114,7 @@ extension ProductQuantityFooterView {
     }
 }
 
-extension ProductQuantityFooterView: CodeView {
+extension ProductPriceFooter: CodeView {
     func buildViewHierarchy() {
         addSubview(customStepper)
         addSubview(addToCartButton)

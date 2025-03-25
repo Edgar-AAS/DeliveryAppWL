@@ -1,7 +1,7 @@
 import UIKit
 
-class SideItemCell: UITableViewCell {
-    static let reuseIdentifier = String(describing: SideItemCell.self)
+class SelectableItemCell: UITableViewCell {
+    static let reuseIdentifier = String(describing: SelectableItemCell.self)
     
     private lazy var productNameLabel: UILabel = {
         let label = makeLabel(
@@ -71,7 +71,7 @@ class SideItemCell: UITableViewCell {
     }
 }
 
-extension SideItemCell: CodeView {
+extension SelectableItemCell: CodeView {
     func buildViewHierarchy() {
         contentView.addSubview(horizontalStackView)
     }
