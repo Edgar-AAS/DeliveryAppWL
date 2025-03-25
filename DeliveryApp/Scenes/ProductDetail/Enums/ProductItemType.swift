@@ -1,6 +1,7 @@
 import Foundation
 
 enum ProductItemType {
-    case sideItem(ProductDetailViewData.SelectableItemViewData)
+    case selectableItem(ProductDetailViewData.SelectableItemViewData)
     case quantitativeItem(ProductDetailViewData.QuantitativeItemViewData)
+    case unknown
 }

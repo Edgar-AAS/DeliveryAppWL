@@ -27,15 +27,15 @@ final class ProducDetailsScreen: UIView {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.estimatedSectionHeaderHeight = 60
-        tableView.register(ProductItemCell.self, forCellReuseIdentifier: ProductItemCell.reuseIdentifier)
-        tableView.register(SideItemCell.self, forCellReuseIdentifier: SideItemCell.reuseIdentifier)
+        tableView.register(QuantitativeItemCell.self, forCellReuseIdentifier: QuantitativeItemCell.reuseIdentifier)
+        tableView.register(SelectableItemCell.self, forCellReuseIdentifier: SelectableItemCell.reuseIdentifier)
         tableView.register(SectionHeaderCell.self, forHeaderFooterViewReuseIdentifier: SectionHeaderCell.reuseIdentifier)
         tableView.backgroundColor = .white
         return tableView
     }()
     
-    private lazy var footerView: ProductQuantityFooterView = {
-        let bottomView = ProductQuantityFooterView()
+    private lazy var footerView: ProductPriceFooter = {
+        let bottomView = ProductPriceFooter()
         bottomView.translatesAutoresizingMaskIntoConstraints = false
         return bottomView
     }()
@@ -48,12 +48,12 @@ final class ProducDetailsScreen: UIView {
         footerView.delegate = delegate
     }
         
-    func updateAmount(animateInfo: ValueAnimateInfo) {
-        footerView.configureTotalAmount(animateInfo: animateInfo)
+    func updateAmount(amountModel: ProductAAmountModel) {
+        footerView.configureTotalAmount(animateInfo: amountModel)
     }
     
-    func updateStepper(dto: StepperModel) {
-        footerView.configureStepper(with: dto)
+    func updateStepperWith(footerModel: FooterStepperModel) {
+        footerView.updateValue(with: footerModel)
     }
     
     func updateRequiredOptionsStatus(with status: OptionsStatusType) {

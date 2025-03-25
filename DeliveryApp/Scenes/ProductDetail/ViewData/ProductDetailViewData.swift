@@ -4,7 +4,7 @@ import Foundation
 struct ProductDetailViewData {
     struct ProductHeaderViewData {
         let name: String
-        let description: String
+        let description: String?
         let deliveryFee: String
         let basePrice: String
         let rating: String
@@ -23,6 +23,7 @@ struct ProductDetailViewData {
         let price: String
         let image: String?
         let isRemovable: Bool
+        let stepperModel: StepperModel
     }
     
     struct SectionHeaderViewData {

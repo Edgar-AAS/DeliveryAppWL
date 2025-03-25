@@ -8,7 +8,6 @@ struct StepperModel {
     let currentValue: Int
     let minValue: Int
     let isEnabled: Bool
-    let isAnimated: Bool
 }
 
 final class DAStepper: UIView {
@@ -78,10 +77,10 @@ final class DAStepper: UIView {
         return label
     }()
     
-    func configure(with dto: StepperModel) {
-        minusButton.isEnabled = dto.currentValue > dto.minValue
-        plusButton.isEnabled = dto.isEnabled
-        setValue(dto.currentValue, animated: dto.isAnimated)
+    func configure(with stepperModel: StepperModel) {
+        minusButton.isEnabled = stepperModel.currentValue > stepperModel.minValue
+        plusButton.isEnabled = stepperModel.isEnabled
+        setValue(stepperModel.currentValue)
     }
     
     private func updateSizeConstraints() {

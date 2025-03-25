@@ -26,13 +26,17 @@ class ProductDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configure()
+        configureOptionsView()
+        loadProductDetails()
     }
     
-    private func configure() {
+    private func configureOptionsView() {
+        customView?.setupBottomViewDelegate(self)
         hideNavigationBar()
         hideTabBar()
-        customView?.setupBottomViewDelegate(self)
+    }
+    
+    private func loadProductDetails() {
         viewModel.fetchProductDetails()
     }
 }
@@ -50,18 +54,17 @@ extension ProductDetailsViewController: UITableViewDataSource {
         return viewModel.getNumberOfSections()
     }
     
-     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.getNumberOfItemsBySection(section)
     }
     
-     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch viewModel.getItemInSection(indexPath) {
-        case .sideItem(let sideItemCellViewData):
-            return makeSideItemCell(tableView, cellForRowAt: indexPath, viewData: sideItemCellViewData)
+        case .selectableItem(let selectableItemCellViewData):
+            return makeSelectableItemCell(tableView, cellForRowAt: indexPath, viewData: selectableItemCellViewData)
         case .quantitativeItem(let productItemCellViewData):
-            return makeProductItemCell(tableView, cellForRowAt: indexPath, viewData: productItemCellViewData)
-        default:
-            return UITableViewCell()
+            return makeQuantitativeItemCell(tableView, cellForRowAt: indexPath, viewData: productItemCellViewData)
+        default: return UITableViewCell()
         }
     }
 }
@@ -69,14 +72,12 @@ extension ProductDetailsViewController: UITableViewDataSource {
 //MARK: - UITableViewDelegate
 extension ProductDetailsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.updateSideItemState(at: indexPath)
+        viewModel.updateSelectableItemState(at: indexPath)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let sectionHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: SectionHeaderCell.reuseIdentifier) as? SectionHeaderCell
-        guard let sectionViewData = viewModel.getSectionViewData(to: section) else {
-            return nil
-        }
+        guard let sectionViewData = viewModel.getSectionViewData(to: section) else { return nil }
         sectionHeader?.configure(with: sectionViewData)
         return sectionHeader
     }
@@ -84,47 +85,47 @@ extension ProductDetailsViewController: UITableViewDelegate {
 
 //MARK: - ProductDetailsBottomViewDelegate
 extension ProductDetailsViewController: ProductQuantityFooterViewDelegate {
-    func productQuantityFooterView(_ footer: ProductQuantityFooterView, didTapStepperWithAction action: StepperActionType) {
-        viewModel.updateFooterViewStepper(action: action)
+    func stepperDidChange(_ footer: ProductPriceFooter, action: StepperActionType) {
+        viewModel.updateFooterStepper(with: action)
     }
 }
 
 //MARK: - ProductDetailsViewModel Delegate Actions
 extension ProductDetailsViewController: ProductDetailsViewModelDelegate {
-    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, shouldEnableUserInteraction: Bool) {
-        customView?.handleUserInteraction(isEnable: shouldEnableUserInteraction)
+    func productDetailsViewModelDidRefreshUI(_ viewModel: ProductDetailsViewModel) {
+        customView?.reloadData()
     }
     
-    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateRequiredOptionsStatus status: OptionsStatusType) {
+    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didChangeFooterStepperValue stepperModel: FooterStepperModel) {
+        customView?.updateStepperWith(footerModel: stepperModel)
+    }
+    
+    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, shouldAllowUserInteraction isEnabled: Bool) {
+        customView?.handleUserInteraction(isEnable: isEnabled)
+    }
+    
+    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateRequiredOptionsCompletionStatus status: OptionsStatusType) {
         customView?.updateRequiredOptionsStatus(with: status)
     }
     
-    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didChangeBottomViewStepperValue stepperDto: StepperModel) {
-        customView?.updateStepper(dto: stepperDto)
+    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateTotalPrice amount: ProductAAmountModel) {
+        customView?.updateAmount(amountModel: amount)
     }
     
-    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateTotalAmount amount: ValueAnimateInfo) {
-        customView?.updateAmount(animateInfo: amount)
-    }
-    
-    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didExceedOptionLimitInSection section: Int) {
+    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didExceedSelectionLimitInSection section: Int) {
         customView?.reloadSections(at: section)
     }
     
-    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didChangeStepperValueAt indexPath: IndexPath) {
+    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateStepperValueForItemAt indexPath: IndexPath) {
         customView?.reloadRows(at: indexPath)
     }
     
-    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didSelectItemAt section: Int) {
+    func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didSelectItemInSection section: Int) {
         customView?.reloadSections(at: section)
     }
     
     func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didEnableOptionsInSection section: Int) {
         customView?.reloadSections(at: section)
-    }
-    
-    func productDetailsViewModelDidUpdateUI(_ viewModel: ProductDetailsViewModel) {
-        customView?.reloadData()
     }
     
     func productDetailsViewModel(_ viewModel: ProductDetailsViewModel, didUpdateHeaderWith viewData: ProductDetailViewData.ProductHeaderViewData) {
@@ -134,26 +135,22 @@ extension ProductDetailsViewController: ProductDetailsViewModelDelegate {
 
 //MARK: - ProductItemCellDelegate
 extension ProductDetailsViewController: ProductItemCellDelegate {
-    func productItemCell(_ cell: ProductItemCell, didTapStepperWithAction action: StepperActionType, at indexPath: IndexPath) {
+    func productItemCell(_ cell: QuantitativeItemCell, didTapStepperWithAction action: StepperActionType, at indexPath: IndexPath) {
         viewModel.updateAdditionalItemStepper(action: action, indexPath: indexPath)
     }
 }
 
 //MARK: - Cell Factories
 extension ProductDetailsViewController {
-    func makeProductItemCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, viewData: ProductDetailViewData.QuantitativeItemViewData) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ProductItemCell.reuseIdentifier, for: indexPath) as? ProductItemCell
-        
-        if let stepperDto = viewModel.getStepperDto(in: indexPath) {
-            cell?.delegate = self
-            cell?.configure(with: viewData, stepper: stepperDto, indexPath: indexPath)
-        }
-        
+    func makeQuantitativeItemCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, viewData: ProductDetailViewData.QuantitativeItemViewData) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: QuantitativeItemCell.reuseIdentifier, for: indexPath) as? QuantitativeItemCell
+        cell?.delegate = self
+        cell?.configure(with: viewData, indexPath: indexPath)
         return cell ?? UITableViewCell()
     }
     
-    func makeSideItemCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, viewData: ProductDetailViewData.SelectableItemViewData) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SideItemCell.reuseIdentifier, for: indexPath) as? SideItemCell
+    func makeSelectableItemCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, viewData: ProductDetailViewData.SelectableItemViewData) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SelectableItemCell.reuseIdentifier, for: indexPath) as? SelectableItemCell
         cell?.configure(with: viewData)
         return cell ?? UITableViewCell()
     }

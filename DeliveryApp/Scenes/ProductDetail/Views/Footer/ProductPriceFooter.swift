@@ -6,7 +6,7 @@ final class ProductPriceFooter: UIView {
     private var animationEndValue: Double = 0
     private var animationStartTime: CFTimeInterval = 0
     private let animationDuration: TimeInterval = 0.5
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -17,22 +17,61 @@ final class ProductPriceFooter: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+        
+    private lazy var stepperContainer: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.borderColor = UIColor.lightGray.cgColor
+        view.layer.borderWidth = 1
+        view.layer.cornerRadius = 8
+        return view
+    }()
     
-    private lazy var customStepper: DAStepper = {
-        let stepper = DAStepper(size: .large)
-        stepper.translatesAutoresizingMaskIntoConstraints = false
-        stepper.delegate = self
-        stepper.layer.borderColor = UIColor.lightGray.cgColor
-        stepper.layer.borderWidth = 1
-        stepper.layer.cornerRadius = 8
-        return stepper
+    private lazy var incrementButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "plus"), for: .normal)
+        button.tintColor = .primary1
+        
+        let action = UIAction { [weak self] _ in
+            guard let self else { return }
+            self.addTouchFeedback(style: .light)
+            delegate?.stepperDidChange(self, action: .add)
+        }
+        
+        button.addAction(action, for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var decrementButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "minus"), for: .normal)
+        button.tintColor = .primary1
+        
+        let action = UIAction { [weak self] _ in
+            guard let self else { return }
+            self.addTouchFeedback(style: .light)
+            delegate?.stepperDidChange(self, action: .remove)
+        }
+        
+        button.addAction(action, for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var quantityLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.textColor = .black
+        return label
     }()
     
     private lazy var addToCartButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 8
-        button.backgroundColor = .primary1
+        button.backgroundColor = Colors.inactiveButton
         button.setTitleColor(.white, for: .normal)
         return button
     }()
@@ -45,10 +84,15 @@ final class ProductPriceFooter: UIView {
         label.textColor = .white
         return label
     }()
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         setupShadow()
+    }
+    
+    func updateValue(with footerModel: FooterStepperModel) {
+        quantityLabel.text = "\(footerModel.currentValue)"
+        decrementButton.isEnabled = footerModel.currentValue > footerModel.minValue
     }
     
     func configureTotalAmount(animateInfo: ProductAAmountModel) {
@@ -59,16 +103,6 @@ final class ProductPriceFooter: UIView {
         let isRequiredOptionsSelect = status == .done
         addToCartButton.isEnabled = isRequiredOptionsSelect
         addToCartButton.backgroundColor = isRequiredOptionsSelect ? .primary1 : Colors.inactiveButton
-    }
-    
-    func configureStepper(with dto: StepperModel) {
-        customStepper.configure(with: dto)
-    }
-}
-
-extension ProductPriceFooter: CustomStepperDelegate {
-    func customStepper(_ stepper: DAStepper, stepperDidTapped action: StepperActionType) {
-        delegate?.productQuantityFooterView(self, didTapStepperWithAction: action)
     }
 }
 
@@ -116,19 +150,38 @@ extension ProductPriceFooter {
 
 extension ProductPriceFooter: CodeView {
     func buildViewHierarchy() {
-        addSubview(customStepper)
+        addSubview(stepperContainer)
+        stepperContainer.addSubview(decrementButton)
+        stepperContainer.addSubview(quantityLabel)
+        stepperContainer.addSubview(incrementButton)
         addSubview(addToCartButton)
         addToCartButton.addSubview(valueLabel)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            customStepper.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -10),
-            customStepper.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            stepperContainer.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -10),
+            stepperContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            stepperContainer.heightAnchor.constraint(equalToConstant: 50),
+            stepperContainer.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.35),
             
-            addToCartButton.centerYAnchor.constraint(equalTo: customStepper.centerYAnchor),
-            addToCartButton.heightAnchor.constraint(equalTo: customStepper.heightAnchor),
-            addToCartButton.leadingAnchor.constraint(equalTo: customStepper.trailingAnchor, constant: 16),
+            decrementButton.topAnchor.constraint(equalTo: stepperContainer.topAnchor),
+            decrementButton.leadingAnchor.constraint(equalTo: stepperContainer.leadingAnchor),
+            decrementButton.widthAnchor.constraint(equalTo: stepperContainer.heightAnchor),
+            decrementButton.bottomAnchor.constraint(equalTo: stepperContainer.bottomAnchor),
+            
+            quantityLabel.leadingAnchor.constraint(equalTo: decrementButton.trailingAnchor, constant: 8),
+            quantityLabel.centerYAnchor.constraint(equalTo: stepperContainer.centerYAnchor),
+            
+            incrementButton.topAnchor.constraint(equalTo: stepperContainer.topAnchor),
+            incrementButton.leadingAnchor.constraint(equalTo: quantityLabel.trailingAnchor, constant: 8),
+            incrementButton.widthAnchor.constraint(equalTo: stepperContainer.heightAnchor),
+            incrementButton.trailingAnchor.constraint(equalTo: stepperContainer.trailingAnchor),
+            incrementButton.bottomAnchor.constraint(equalTo: stepperContainer.bottomAnchor),
+            
+            addToCartButton.centerYAnchor.constraint(equalTo: stepperContainer.centerYAnchor),
+            addToCartButton.heightAnchor.constraint(equalTo: stepperContainer.heightAnchor),
+            addToCartButton.leadingAnchor.constraint(equalTo: stepperContainer.trailingAnchor, constant: 16),
             addToCartButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             
             valueLabel.topAnchor.constraint(equalTo: addToCartButton.topAnchor),

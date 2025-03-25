@@ -2,7 +2,7 @@ import UIKit
 
 final class ProductCategoryCell: UITableViewCell {
     static let reuseIdentifier = String(describing: ProductCategoryCell.self)
-    private var categories: [HomeViewData.CategoryCell] = []
+    private var categories: [HomeViewData.CategoryCellViewData] = []
     private var selectedIndex: IndexPath?
     
     weak var delegate: ProductCategoryCellDelegate?
@@ -44,7 +44,7 @@ final class ProductCategoryCell: UITableViewCell {
         layer.shadowOpacity = 0.2
     }
     
-    func configure(with categories: [HomeViewData.CategoryCell]) {
+    func configure(with categories: [HomeViewData.CategoryCellViewData]) {
         self.categories = categories
         categoryCollectionView.reloadData()
     }

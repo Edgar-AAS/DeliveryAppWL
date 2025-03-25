@@ -84,7 +84,7 @@ final class ProductCell: UICollectionViewCell {
         color: .black
     )
     
-    func configure(with viewData: HomeViewData.ProductCell) {
+    func configure(with viewData: HomeViewData.ProductViewData) {
         productNameLabel.text = viewData.name
         productPriceLabel.text = viewData.price
         productRateLabel.text = viewData.rating

@@ -2,13 +2,14 @@ import Foundation
 
 //MARK: - ViewModel
 protocol HomeViewModelProtocol {
-    func loadInitialData()
+    func loadProductsToInitialCategory()
     func switchCategory(to categoryId: Int)
     func loadMoreProducts(for categoryId: Int)
-    func getCategories() -> [HomeViewData.CategoryCell]
+    func getCategories() -> [HomeViewData.CategoryCellViewData]
+    func getHomeCellTypeIn(row: Int) -> HomeCellsType
     var numberOfRows: Int { get }
     var categoriesOnComplete: (() -> Void)? { get set }
-    var productsOnComplete: ((ProductDataSource) -> Void)? { get set }
+    var loadProductsOnComplete: ((HomeViewData.ProductCellViewData) -> Void)? { get set }
 }
 
 protocol HomeViewModelDelegate: AnyObject {
@@ -22,5 +23,5 @@ protocol ProductCategoryCellDelegate: AnyObject {
 
 protocol ProductGridCellDelegate: AnyObject {
     func productGridCell(_ cell: ProductGridCell, didTapProductWithId productId: Int)
-    func productGridCell(_ cell: ProductGridCell, shouldFetchMoreProductsForCategory categoryId: Int)
+    func productGridCell(_ cell: ProductGridCell, shouldFetchMoreProductsToCategory categoryId: Int)
 }

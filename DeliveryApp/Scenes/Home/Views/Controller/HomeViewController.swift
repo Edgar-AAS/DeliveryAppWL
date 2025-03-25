@@ -1,12 +1,15 @@
 import UIKit
 
-class HomeViewController: UIViewController {
-    private lazy var customView: HomeScreen? = {
-        return view as? HomeScreen
+final class HomeViewController: UIViewController {
+    private lazy var customView: HomeScreen = {
+        guard let view = view as? HomeScreen else {
+            fatalError("View is not of type HomeScreen")
+        }
+        return view
     }()
 
     private var viewModel: HomeViewModelProtocol
-    private var dataSourceCallBack: ((ProductDataSource) -> Void)?
+    private var dataSourceCallBack: ((HomeViewData.ProductCellViewData) -> Void)?
     
     var routeToNetworkErrorPage: (() -> Void)?
     var routeToProductDetailsPage: ((Int) -> Void)?
@@ -27,21 +30,24 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configure()
+        configureOptionsView()
+        fetchProducts()
     }
     
-    private func configure() {
-        hideNavigationBar()
-        
-        viewModel.loadInitialData()
+    private func fetchProducts() {
+        viewModel.loadProductsToInitialCategory()
         
         viewModel.categoriesOnComplete = { [weak self] in
-            self?.customView?.reloadTablewViewData()
+            self?.customView.reloadTablewViewData()
         }
         
-        viewModel.productsOnComplete = { [weak self] dataSource in
+        viewModel.loadProductsOnComplete = { [weak self] dataSource in
             self?.dataSourceCallBack?(dataSource)
         }
+    }
+    
+    private func configureOptionsView() {
+        hideNavigationBar()
     }
 }
 
@@ -52,12 +58,13 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == .zero {
-            return makeSeeAllCategoriesCell(tableView, cellForRowAt: indexPath)
-        } else if indexPath.row == 1 {
-            return makeProductCategorieCell(tableView, cellForRowAt: indexPath)
-        } else {
+        switch viewModel.getHomeCellTypeIn(row: indexPath.row) {
+        case .products:
             return makeProductGridCell(tableView, cellForRowAt: indexPath)
+        case .categories:
+            return makeProductCategorieCell(tableView, cellForRowAt: indexPath)
+        case .seeAll:
+            return makeSeeAllCategoriesCell(tableView, cellForRowAt: indexPath)
         }
     }
     
@@ -65,9 +72,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
             var otherCellsHeight: CGFloat = .zero
             
-            guard  let headerHeight = customView?.homeHeader.frame.height else {
-                return UITableView.automaticDimension
-            }
+            let headerHeight = customView.homeHeader.frame.height
                         
             for row in 0..<indexPath.row {
                 otherCellsHeight += tableView.rectForRow(at: IndexPath(row: row, section: indexPath.section)).height
@@ -92,14 +97,15 @@ extension HomeViewController {
     func makeProductCategorieCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ProductCategoryCell.reuseIdentifier, for: indexPath) as? ProductCategoryCell
         cell?.delegate = self
-        cell?.configure(with: viewModel.getCategories())
+        let categories = viewModel.getCategories()
+        cell?.configure(with: categories)
         return cell ?? UITableViewCell()
     }
     
     func makeProductGridCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ProductGridCell.reuseIdentifier, for: indexPath) as? ProductGridCell
         cell?.delegate = self
-        dataSourceCallBack = cell?.loadProducts(dataSource:)
+        dataSourceCallBack = cell?.loadProducts(viewData:)
         return cell ?? UITableViewCell()
     }
 }
@@ -116,7 +122,7 @@ extension HomeViewController: ProductGridCellDelegate {
         routeToProductDetailsPage?(productId)
     }
     
-    func productGridCell(_ cell: ProductGridCell, shouldFetchMoreProductsForCategory categoryId: Int) {
+    func productGridCell(_ cell: ProductGridCell, shouldFetchMoreProductsToCategory categoryId: Int) {
         viewModel.loadMoreProducts(for: categoryId)
     }
 }

@@ -1,28 +1,37 @@
 import Foundation
 
 final class HomeViewModel: HomeViewModelProtocol {
-    var productsOnComplete: ((ProductDataSource) -> Void)?
+    var loadProductsOnComplete: ((HomeViewData.ProductCellViewData) -> Void)?
     var categoriesOnComplete: (() -> Void)?
     
     weak var delegate: HomeViewModelDelegate?
-
+    
     private var products = [ProductDTO]()
     private var categories = [CategoryDTO]()
     
-    private let fetchCategories: FetchFoodCategories
-    private let fetchPaginatedProducts: FetchProductsUseCase
+    private let fetchFoodCategoriesUseCase: FetchFoodCategoriesUseCase
+    private let fetchProductsUseCase: FetchProductsUseCase
     
-    init(fetchCategories: FetchFoodCategories,
-         fetchPaginatedProducts: FetchProductsUseCase) {
-        self.fetchCategories = fetchCategories
-        self.fetchPaginatedProducts = fetchPaginatedProducts
+    init(fetchCategories: FetchFoodCategories, fetchPaginatedProducts: FetchProductsUseCase) {
+        self.fetchFoodCategoriesUseCase = fetchCategories
+        self.fetchProductsUseCase = fetchPaginatedProducts
     }
+    
+    private let selectionOrder: [HomeCellsType] = [
+        .seeAll,
+        .categories,
+        .products
+    ]
     
     var numberOfRows: Int {
-        return 3
+        return selectionOrder.count
     }
     
-    func loadInitialData() {
+    func getHomeCellTypeIn(row: Int) -> HomeCellsType {
+        return selectionOrder[row]
+    }
+    
+    func loadProductsToInitialCategory() {
         loadCategories { [weak self] categoriesResponse in
             guard let self = self else { return }
             
@@ -35,8 +44,14 @@ final class HomeViewModel: HomeViewModelProtocol {
         }
     }
     
-    func getCategories() -> [HomeViewData.CategoryCell] {
-        return HomeMappers.mapToCategoryViewData(from: categories)
+    func getCategories() -> [HomeViewData.CategoryCellViewData] {
+        return categories.map { category in
+            return HomeViewData.CategoryCellViewData(
+                id: category.id,
+                name: category.name,
+                image: category.image
+            )
+        }
     }
     
     func loadMoreProducts(for categoryId: Int) {
@@ -48,7 +63,7 @@ final class HomeViewModel: HomeViewModelProtocol {
     }
     
     private func loadCategories(completion: @escaping ([CategoryDTO]) -> Void) {
-        fetchCategories.fetch { result in
+        fetchFoodCategoriesUseCase.fetch { result in
             switch result {
             case .success(let activeCategories):
                 completion(activeCategories)
@@ -59,12 +74,12 @@ final class HomeViewModel: HomeViewModelProtocol {
     }
     
     private func loadProducts(by categoryId: Int, resetPagination: Bool) {
-        fetchPaginatedProducts.fetch(for: categoryId, resetPagination: resetPagination) { [weak self] result in
+        fetchProductsUseCase.fetch(for: categoryId, resetPagination: resetPagination) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let productsPaginated):
-                let dataSource = ProductDataSource(categoryId: categoryId, products: productsPaginated)
-                self.productsOnComplete?(dataSource)
+                let viewData = mapToProductCellViewData(from: productsPaginated, in: categoryId)
+                self.loadProductsOnComplete?(viewData)
             case .failure(let httpError):
                 switch httpError {
                 case .noConnectivity:
@@ -74,5 +89,21 @@ final class HomeViewModel: HomeViewModelProtocol {
                 }
             }
         }
+    }
+    
+    
+    private func mapToProductCellViewData(from products: [ProductDTO], in categoryId: Int) -> HomeViewData.ProductCellViewData {
+        return HomeViewData.ProductCellViewData(
+            categoryId: categoryId,
+            products: products.map( {
+                return HomeViewData.ProductViewData(
+                    id: $0.id,
+                    name: $0.name,
+                    price: $0.price.format(with: .currency),
+                    rating: "\($0.rating)",
+                    isFavorite: $0.isFavorite,
+                    image: $0.images.first!)
+            } )
+        )
     }
 }

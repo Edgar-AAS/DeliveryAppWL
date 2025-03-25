@@ -8,5 +8,5 @@ struct SectionDTO: Codable {
     let isRemovable: Bool
     let limitOptions: Int
     let selectionOrder: Int
-    var items: [ItemDTO]
+    let items: [ItemDTO]
 }

@@ -30,7 +30,7 @@ final class CategoryCell: UICollectionViewCell {
         categoryNameLabel.textColor = Colors.descriptionText
     }
     
-    func configure(with viewData: HomeViewData.CategoryCell) {
+    func configure(with viewData: HomeViewData.CategoryCellViewData) {
         categoryNameLabel.text = viewData.name
         
         if let image = viewData.image, let imageUrl = URL(string: image) {

@@ -2,7 +2,7 @@ import UIKit
 
 final class ProductGridCell: UITableViewCell {
     static let reuseIdentifier = String(describing: ProductGridCell.self)
-    private var products: [ProductDTO] = []
+    private var products: [HomeViewData.ProductViewData]?
     private var currentCategoryId: Int?
     private var debounceTimer: Timer?
     
@@ -32,9 +32,9 @@ final class ProductGridCell: UITableViewCell {
         return collectionView
     }()
     
-    func loadProducts(dataSource: ProductDataSource) {
-        self.products = dataSource.products
-        self.currentCategoryId = dataSource.categoryId
+    func loadProducts(viewData: HomeViewData.ProductCellViewData) {
+        self.products = viewData.products
+        self.currentCategoryId = viewData.categoryId
         productCollectionView.reloadData()
     }
 }
@@ -60,21 +60,24 @@ extension ProductGridCell: CodeView {
 
 extension ProductGridCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedProductId = products[indexPath.item].id
-        delegate?.productGridCell(self, didTapProductWithId: selectedProductId)
+        if let selectedProductId = products?[indexPath.item].id {
+            delegate?.productGridCell(self, didTapProductWithId: selectedProductId)
+        }
     }
 }
 
 extension ProductGridCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return products.count
+        return products?.count ?? .zero
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath) as? ProductCell
-        let viewData = HomeMappers.mapToProductCellViewData(from: products[indexPath.item])
-        cell?.configure(with: viewData)
-        return cell ?? UICollectionViewCell()
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath) as? ProductCell,
+           let viewData = products?[indexPath.item] {
+            cell.configure(with: viewData)
+            return cell
+        }
+        return UICollectionViewCell()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -88,7 +91,7 @@ extension ProductGridCell: UICollectionViewDataSource {
             debounceTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { [weak self] _ in
                 guard let self = self else { return }
                 if let categoryId = self.currentCategoryId {
-                    self.delegate?.productGridCell(self, shouldFetchMoreProductsForCategory: categoryId)
+                    self.delegate?.productGridCell(self, shouldFetchMoreProductsToCategory: categoryId)
                 }
             }
         }
